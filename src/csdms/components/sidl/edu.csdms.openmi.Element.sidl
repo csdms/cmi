@@ -1,0 +1,71 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.Element.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.Element.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.Element.comment)
+            class Element 
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.Element.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.Element.methods} (Insert your class methods here)
+
+                
+                void setVertices(in array<Vertex, 1> vertices);	                	
+
+                
+                string getID();	                	
+
+                
+                void setID(in string ID);	                	
+
+                
+                Vertex getVertex(in int index);	                	
+
+                
+                int getVertexCount();	                	
+
+                
+                void addVertex(in Vertex vertex);	                	
+
+                
+                int getFaceCount();	                	
+
+                
+                void addFace(in array<int, 1> vertexIndices);	                	
+
+                
+                array<int, 1> getFaceVertexIndices(in int faceIndex);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.Element.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.openmi.Element:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude(in edu.csdms.openmi.Vertex dummy0);
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.openmi.Element:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+

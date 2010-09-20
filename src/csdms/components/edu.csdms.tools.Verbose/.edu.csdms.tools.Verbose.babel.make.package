@@ -1,0 +1,7 @@
+.edu.csdms.tools.Verbose.BABEL_MAKEFILE_NAME =                                \
+  .edu.csdms.tools.Verbose.babel.make
+.edu.csdms.tools.Verbose.IOR_SRC_DIRS =                                       \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.Verbose/glue/
+.edu.csdms.tools.Verbose.PYTHON_SETUP_NAME = .edu.csdms.tools.Verbose.setup.py
+.edu.csdms.tools.Verbose.PYSETUP_DIRS =                                       \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.Verbose/

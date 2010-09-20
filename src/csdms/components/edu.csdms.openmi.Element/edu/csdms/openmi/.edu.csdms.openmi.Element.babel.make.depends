@@ -1,0 +1,10 @@
+# .edu.csdms.openmi.Element.JAVAIMPL dependencies.
+Element_Impl.java:                                                            \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Element.sidl
+
+
+# .edu.csdms.openmi.Element.STUBJAVA dependencies.
+Element.java:                                                                 \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Element.sidl
+
+

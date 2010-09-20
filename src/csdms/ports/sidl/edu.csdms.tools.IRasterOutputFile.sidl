@@ -1,0 +1,46 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.comment)
+        
+// Insert-UserCode-Here {edu.csdms.tools.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.comment)
+        package tools {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.IRasterOutputFile.comment)
+            
+// Insert-UserCode-Here {edu.csdms.tools.IRasterOutputFile.comment} (Insert your interface comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.IRasterOutputFile.comment)
+            interface IRasterOutputFile
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.IRasterOutputFile.methods)
+                
+// Insert-UserCode-Here {edu.csdms.tools.IRasterOutputFile.methods} (Insert your interface methods here)
+
+                
+                void init(in string name, in string units, in array<int, 1> dimen, in array<double, 1> res);	                	
+
+                
+                void open(in string file);	                	
+
+                
+                void append(in array<> value);	                	
+
+                
+                void close();	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.IRasterOutputFile.methods)
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+.edu.csdms.openmi.ElementMapper.BABEL_MAKEFILE_NAME =                         \
+  .edu.csdms.openmi.ElementMapper.babel.make
+.edu.csdms.openmi.ElementMapper.STUB_SRC_DIRS =                               \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ElementMapper/glue/
+.edu.csdms.openmi.ElementMapper.IOR_SRC_DIRS =                                \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ElementMapper/glue/
+.edu.csdms.openmi.ElementMapper.JAVA_SRC_DIRS =                               \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ElementMapper/edu/csdms/openmi/
+.edu.csdms.openmi.ElementMapper.JAVA_SRC_FILES =                              \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ElementMapper/edu/csdms/openmi/ElementMapper.java\
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ElementMapper/edu/csdms/openmi/ElementMapper_Impl.java

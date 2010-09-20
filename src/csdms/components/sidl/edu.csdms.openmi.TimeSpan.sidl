@@ -1,0 +1,50 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.TimeSpan.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.TimeSpan.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.TimeSpan.comment)
+            class TimeSpan implements-all edu.csdms.openmi.ITimeSpan
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.TimeSpan.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.TimeSpan.methods} (Insert your class methods here)
+
+                
+                void setStart(in ITimeStamp start);	                	
+
+                
+                void setEnd(in ITimeStamp end);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.TimeSpan.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.openmi.TimeSpan:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude(in edu.csdms.openmi.TimeStamp dummy0);
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.openmi.TimeSpan:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+

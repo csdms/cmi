@@ -1,0 +1,372 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/HydroTrend/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/hydrotrend/Waipaoa}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>Waipaoa</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>50k</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/HydroTrend/Input/Var/RunDuration">
+      <label>Run duraction (years)</label>
+      <help_brief>Simulation run time in years</help_brief>
+      <default>100</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Temperature">
+    <entry name="/HydroTrend/Input/Var/TempStart">
+      <label>Starting mean annual temperature (C)</label>
+      <help_brief>Starting mean annual temperature (C)</help_brief>
+      <default>14.26</default>
+      <type>Float</type>
+      <range>
+        <min>-50</min>
+        <max>50</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/TempChange">
+      <label>Change in mean annual temperature (C/yr)</label>
+      <help_brief>Change in mean annual temperature (C/yr)</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>-10</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/TempStdDev">
+      <label>Standard deviation of mean annual temperature (C)</label>
+      <help_brief>Standard deviation of mean annual temperature (C)</help_brief>
+      <default>.55</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Precipitation">
+    <entry name="/HydroTrend/Input/Var/PrecipStart">
+      <label>Starting mean annual precipitation (m/yr)</label>
+      <help_brief>Starting mean annual precipitation (m/yr)</help_brief>
+      <default>1.59</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>50</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/PrecipChange">
+      <label>Change in mean annual precipitation (m/yr/yr)</label>
+      <help_brief>Change in mean annual precipitation (m/yr/yr)</help_brief>
+      <default>0.</default>
+      <type>Float</type>
+      <range>
+        <min>-10</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/PrecipStdDev">
+      <label>Standard deviation of mean annual precipitation (m/yr)</label>
+      <help_brief>Standard deviation of mean annual precipitation (m/yr)</help_brief>
+      <default>.3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Basin">
+    <entry name="/HydroTrend/Input/Var/BQRTLithology">
+      <label>Lithology factor (-)</label>
+      <help_brief>Lithology factor for BQRT (-)</help_brief>
+      <default>.3</default>
+      <type>Float</type>
+      <range>
+        <min>.3</min>
+        <max>3</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/BQRTAnthro">
+      <label>Anthropogenic factor (-)</label>
+      <help_brief>Anthropogenic factor for BQRT (-)</help_brief>
+      <default>6</default>
+      <type>Float</type>
+      <range>
+        <min>.5</min>
+        <max>8</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/LapseRate">
+      <label>Lapse rate (C/km)</label>
+      <help_brief>Lapse rate to calculate freezing line (C/km)</help_brief>
+      <default>6.16</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/ELAStart">
+      <label>Starting ELA (m)</label>
+      <help_brief>Starting glacier ELA (m)</help_brief>
+      <default>3269.93</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/ELAChange">
+      <label>Change in ELA (m/yr)</label>
+      <help_brief>Change in ELA (m/yr)</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>-10</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/EvapFraction">
+      <label>Dry precipitation (nival and ice) evaporation fraction</label>
+      <help_brief>Dry precipitation (nival and ice) evaporation fraction</help_brief>
+      <default>0.3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/BasinLength">
+      <label>River basin length (km)</label>
+      <help_brief>River basin length (km)</help_brief>
+      <default>100</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/ReservoirVolume">
+      <label>Mean volume of reservoir (km^3)</label>
+      <help_brief>Mean volume of reservoir (km^3)</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/ReservoirArea">
+      <label>Drainage area of reservoir (km^2)</label>
+      <help_brief>Drainage area of reservoir (km^2)</help_brief>
+      <default>1000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="River Mouth">
+    <entry name="/HydroTrend/Input/Var/RiverVelCoefficient">
+      <label>River mouth velocity coefficent, k (m/s)</label>
+      <help_brief>River mouth velocity coefficent, k, in v=kQ^m (m/s)</help_brief>
+      <default>.87</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/RiverVelExponent">
+      <label>River mouth velocity exponent, m (-)</label>
+      <help_brief>River mouth velocity coefficent, m, in v=kQ^m (-)</help_brief>
+      <default>.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/RiverWidthCoefficient">
+      <label>River mouth width coefficent, a (m)</label>
+      <help_brief>River mouth width coefficent, a, in ack=1 (m)</help_brief>
+      <default>3.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/RiverWidthExponent">
+      <label>River mouth width exponent, b (-)</label>
+      <help_brief>River mouth width coefficent, b, in b+m+f=1 (-)</help_brief>
+      <default>.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/RiverVelocityMean">
+      <label>Average river mouth velocity (m/s)</label>
+      <help_brief>Average river mouth velocity (m/s)</help_brief>
+      <default>1.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/RiverBaseFlow">
+      <label>Constant annual base flow (m^3/s)</label>
+      <help_brief>Constant annual base flow (m^3/s)</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e6</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/TrappingEfficiency">
+      <label>Trapping efficiency (fraction)</label>
+      <help_brief>Delta trapping efficiency</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/DeltaGradient">
+      <label>Delta gradient (-)</label>
+      <help_brief>Delta gradient (-)</help_brief>
+      <default>0.0001</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Groundwater">
+    <entry name="/HydroTrend/Input/Var/GroundwaterStorageMax">
+      <label>Maximum groundwater storage (m^3)</label>
+      <help_brief>Maximum groundwater storage (m^3)</help_brief>
+      <default>7.1e9</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e16</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/GroundwaterStorageMin">
+      <label>Minimum groundwater storage (m^3)</label>
+      <help_brief>Minimum groundwater storage (m^3)</help_brief>
+      <default>4.2e9</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e16</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/GroundwaterStorageStart">
+      <label>Initial groundwater storage (m^3)</label>
+      <help_brief>Initial groundwater storage (m^3)</help_brief>
+      <default>4.2e9</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e16</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/GroundwaterCoefficient">
+      <label>Groundwater coefficient (m^3/s)</label>
+      <help_brief>Groundwater (subsurface storm flow) coefficent (m^3/s)</help_brief>
+      <default>20000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e6</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/GroundwaterExponent">
+      <label>Groundwater exponent (-)</label>
+      <help_brief>Groundwater (subsurface storm flow) exponent (-)</help_brief>
+      <default>1.4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/HydraulicConductivity">
+      <label>Saturated hydraulic conductivity (mm/day)</label>
+      <help_brief>Saturated hydraulic conductivity (mm/day)</help_brief>
+      <default>110</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Output Values">
+    <entry name="/HydroTrend/Output/Scalar/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Output/Scalar/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Velocity"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Width"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Depth"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Water_Discharge"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Sediment_Discharge"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Bedload_Flux"/>
+  </tab>
+  <tab name="About">
+    <entry name="/HydroTrend/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>HydroTrend</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Albert Kettner</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

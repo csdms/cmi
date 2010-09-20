@@ -1,0 +1,44 @@
+# .edu.csdms.tools.Verbose.PYMOD_SRCS dependencies.
+edu_csdms_tools_Verbose_Module.c:                                             \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.Verbose.sidl
+edu_csdms_tools_Verbose_Module.c: sidl_BaseClass.h
+edu_csdms_tools_Verbose_Module.c: sidl_ClassInfo.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_ProtocolFactory.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_InstanceRegistry.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_InstanceHandle.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_Invocation.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_Response.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_ServerRegistry.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_ConnectRegistry.h
+edu_csdms_tools_Verbose_Module.c: sidl_io_Serializable.h
+edu_csdms_tools_Verbose_Module.c: sidl_MemAllocException.h
+edu_csdms_tools_Verbose_Module.c: sidl_NotImplementedException.h
+edu_csdms_tools_Verbose_Module.c: edu_csdms_tools_Verbose_Module.h
+edu_csdms_tools_Verbose_Module.c: edu_csdms_tools_Verbose_IOR.h
+edu_csdms_tools_Verbose_Module.c: sidlObjA.h
+edu_csdms_tools_Verbose_Module.c: sidlPyArrays.h
+edu_csdms_tools_Verbose_Module.c: oldnumeric.h
+edu_csdms_tools_Verbose_Module.c: Numeric/arrayobject.h
+edu_csdms_tools_Verbose_Module.c: sidl_Loader.h
+edu_csdms_tools_Verbose_Module.c: sidl_header.h
+edu_csdms_tools_Verbose_Module.c: sidl_String.h
+edu_csdms_tools_Verbose_Module.c: sidl_Python.h
+edu_csdms_tools_Verbose_Module.c: sidl_interface_IOR.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_NetworkException_Module.h
+edu_csdms_tools_Verbose_Module.c: edu_csdms_tools_IMessageLogger_Module.h
+edu_csdms_tools_Verbose_Module.c: sidl_BaseClass_Module.h
+edu_csdms_tools_Verbose_Module.c: sidl_BaseInterface_Module.h
+edu_csdms_tools_Verbose_Module.c: sidl_ClassInfo_Module.h
+edu_csdms_tools_Verbose_Module.c: sidl_RuntimeException_Module.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_Call_Module.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_Return_Module.h
+edu_csdms_tools_Verbose_Module.c: sidl_rmi_Ticket_Module.h
+
+
+# .edu.csdms.tools.Verbose.PYTHONADMIN dependencies.
+
+# .edu.csdms.tools.Verbose.PYTHONSRC dependencies.
+Verbose_Impl.py:                                                              \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.Verbose.sidl
+
+

@@ -1,0 +1,49 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.IVector.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.IVector.comment} (Insert your interface comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.IVector.comment)
+            interface IVector
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.IVector.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.IVector.methods} (Insert your interface methods here)
+
+                //-----------------------------------
+                //  Vector component in X-direction
+                //-----------------------------------
+                double getXComponent();	                	
+
+                //-----------------------------------
+                //  Vector component in Y-direction
+                //-----------------------------------
+                double getYComponent();	                	
+
+                //-----------------------------------
+                //-----------------------------------
+                //  Vector component in Z-direction
+                double getZComponent();	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.IVector.methods)
+            }
+        }
+    }
+}

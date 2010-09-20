@@ -1,0 +1,10 @@
+# .edu.csdms.openmi.TimeSpan.JAVAIMPL dependencies.
+TimeSpan_Impl.java:                                                           \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.TimeSpan.sidl
+
+
+# .edu.csdms.openmi.TimeSpan.STUBJAVA dependencies.
+TimeSpan.java:                                                                \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.TimeSpan.sidl
+
+

@@ -1,0 +1,10 @@
+# .edu.csdms.openmi.ScalarSet.JAVAIMPL dependencies.
+ScalarSet_Impl.java:                                                          \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.ScalarSet.sidl
+
+
+# .edu.csdms.openmi.ScalarSet.STUBJAVA dependencies.
+ScalarSet.java:                                                               \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.ScalarSet.sidl
+
+

@@ -1,0 +1,13 @@
+running build_ext
+building 'edu.csdms.tools.BOVRasterFile' extension
+creating build
+creating build/temp.linux-x86_64-2.6
+creating build/temp.linux-x86_64-2.6/edu
+creating build/temp.linux-x86_64-2.6/edu/csdms
+creating build/temp.linux-x86_64-2.6/edu/csdms/tools
+gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/data1/progs/cca/20100730/include/cca-spec-babel-0_8_6-babel-1.4.0/python2.6 -I/usr/local/python/include/python2.6 -I/usr/local/python/lib/python2.6/site-packages/numpy/core/include/numpy -I/data1/progs/cca/20100730/include -I/data1/progs/cca/20100730/include/cca-spec-babel-0_8_6-babel-1.4.0/c -I/home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/install/include -I/data1/progs/cca/20100730/include/python2.6/babel -I/home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/install/include/python2.6/babel -I/usr/local/python/include/python2.6 -I/usr/local/python/lib/python2.6/site-packages/numpy/core/include/numpy -I/data1/progs/cca/20100730/include/python2.6/llnl_babel -I/data1/progs/cca/20100730/include/python2.6/llnl_babel_sidl_sidlx -I/usr/local/python/include/python2.6 -I/usr/local/python/lib/python2.6/site-packages/numpy/core/include/numpy -I. -Iglue -I/usr/local/python/include/python2.6 -c edu/csdms/tools/edu_csdms_tools_BOVRasterFile_Module.c -o build/temp.linux-x86_64-2.6/edu/csdms/tools/edu_csdms_tools_BOVRasterFile_Module.o
+creating build/lib.linux-x86_64-2.6
+creating build/lib.linux-x86_64-2.6/edu
+creating build/lib.linux-x86_64-2.6/edu/csdms
+creating build/lib.linux-x86_64-2.6/edu/csdms/tools
+gcc -pthread -shared build/temp.linux-x86_64-2.6/edu/csdms/tools/edu_csdms_tools_BOVRasterFile_Module.o -L/data1/progs/cca/20100730/lib -L/usr/local/python/lib -lsidl -lpython2.6 -o build/lib.linux-x86_64-2.6/edu/csdms/tools/BOVRasterFile.so

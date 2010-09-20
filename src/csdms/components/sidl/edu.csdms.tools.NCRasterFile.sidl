@@ -1,0 +1,43 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.comment)
+        
+// Insert-UserCode-Here {edu.csdms.tools.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.comment)
+        package tools version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.NCRasterFile.comment)
+            
+// Insert-UserCode-Here {edu.csdms.tools.NCRasterFile.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.NCRasterFile.comment)
+            class NCRasterFile implements-all edu.csdms.tools.IRasterOutputFile
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.NCRasterFile.methods)
+                
+// Insert-UserCode-Here {edu.csdms.tools.NCRasterFile.methods} (Insert your class methods here)
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.NCRasterFile.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.NCRasterFile:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude();
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.NCRasterFile:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+

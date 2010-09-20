@@ -1,0 +1,84 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="openmi" language="java">
+
+  <xi:include href="openmi_interface.xml" parse="xml"/>
+
+  <!--- The Alterra SDK implementation of OpenMI -->
+  <class name="openmi.Time" language="java">
+    <implements>ITime</implements>
+  </class>
+  <class name="openmi.TimeStamp" language="java">
+    <implements>ITimeStamp</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.TimeSpan" languag="java">
+    <implements>ITimeSpan</implements>
+    <requires>TimeStamp</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.SpatialReference" language="java">
+    <implements>ISpatialReference</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.ValueSet" language="java">
+    <implements>IValueSet</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.ScalarSet" language="java">
+    <implements>IScalarSet</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.Vector" language="java">
+    <implements>IVector</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.VectorSet" language="java">
+    <implements>IVector</implements>
+    <implements>IVectorSet</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.Vertex" language="java">
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.Element" language="java">
+    <requires>Vertex</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.ElementSet" language="java">
+    <implements>IElementSet</implements>
+    <requires>ISpatialReference</requires>
+    <requires>SpatialReference</requires>
+    <requires>Element</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="openmi.ElementMapper" language="java">
+    <requires>Element</requires>
+    <requires>ElementSet</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>IValueSet</requires>
+    <import-sidl/>
+    <imports-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+</project>

@@ -1,0 +1,42 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.IScalarSet.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.IScalarSet.comment} (Insert your interface comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.IScalarSet.comment)
+            interface IScalarSet extends edu.csdms.openmi.IValueSet
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.IScalarSet.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.IScalarSet.methods} (Insert your interface methods here)
+
+                //  @return double scalar value.
+                //------------------------------------------------
+                //------------------------------------------------
+                //  Value for one of the elements in the set
+                //
+                //  @param elementIndex index in the scalar set.
+                double getScalar(in int elementIndex);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.IScalarSet.methods)
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0"?> 
+<libInfo>
+<!-- # generated component index. -->
+<!-- date=Mon Sep 13 17:51:42 MDT 2010 -->
+<!-- builder=huttone@beach -->
+<!-- /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/buildutils/genSCLCCA.sh  -->
+<scl>
+  <library uri="/home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/install/lib/libedu.csdms.models.Sedflux2D.la" 
+	scope="global" 
+	resolution="now" > 
+    <class name="edu.csdms.models.Sedflux2D" desc="ior/impl" />
+    <class name="edu_csdms_tools_IRFPortQueue" desc="ior/impl" />
+    <class name="edu_csdms_tools_PrintQueue" desc="ior/impl" />
+    <class name="edu_csdms_tools_ConfigDialog" desc="ior/impl" />
+    <class name="edu_csdms_openmi_ScalarSet" desc="ior/impl" />
+    <class name="edu_csdms_openmi_ValueSet" desc="ior/impl" />
+    <class name="edu_csdms_tools_Verbose" desc="ior/impl" />
+    <class name="edu_csdms_openmi_ElementMapper" desc="ior/impl" />
+    <class name="edu_csdms_openmi_ElementSet" desc="ior/impl" />
+    <class name="edu_csdms_openmi_Element" desc="ior/impl" />
+    <class name="edu_csdms_openmi_SpatialReference" desc="ior/impl" />
+    <class name="edu_csdms_openmi_Vertex" desc="ior/impl" />
+  </library>
+</scl>
+<componentDeployment 
+  name="edu.csdms.models.Sedflux2D"
+  paletteClassAlias="edu.csdms.models.Sedflux2D"
+>
+    <environment> 
+        <ccaSpec binding="babel" /> 
+        <library loading="dynamic" />
+    </environment>
+</componentDeployment>
+</libInfo>

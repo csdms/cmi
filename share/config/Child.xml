@@ -1,0 +1,186 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/Child/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/child/Delta}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Child/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>Delta</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Child/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>20x80</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/Child/Input/Var/RunDuration">
+      <label>Run duraction (years)</label>
+      <help_brief>Simulation run time in years</help_brief>
+      <default>5000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Tectonics">
+    <entry name="/Child/Input/Var/UpliftDuration">
+      <label>Duration of uplift (years)</label>
+      <help_brief>Duration of uplift (years)</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/UpliftRate">
+      <label>Uplift rate (m/yr)</label>
+      <help_brief>Uplift rate (m/yr)</help_brief>
+      <default>30</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/SubsidenceRate">
+      <label>Subsidence rate (m/yr)</label>
+      <help_brief>Subsidence rate (m/yr)</help_brief>
+      <default>50</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/FaultPosition">
+      <label>Position of fault (m)</label>
+      <help_brief>Position of fault (m)</help_brief>
+      <default>30000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Ports">
+    <entry name="/Child/Port/SubaqueousErosion">
+      <label>SubaqueousErosion port</label>
+      <help_brief>Use the SubaqueousErosion provides port. {dl;ON;OFF}</help_brief>
+      <default>ON</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Grid">
+    <entry name="/Child/Input/Var/GridXSize">
+      <label>Width of grid in x-direction (m)</label>
+      <help_brief>Width of grid in x-direction (m)</help_brief>
+      <default>20000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e6</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/GridYSize">
+      <label>Width of grid in y-direction (m)</label>
+      <help_brief>Width of grid in y-direction (m)</help_brief>
+      <default>80000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e6</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/GridNodeSpacing">
+      <label>Mean distance between grid nodes (m)</label>
+      <help_brief>Mean distance between grid nodes (m)</help_brief>
+      <default>1000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Output Grids">
+    <entry name="/Child/Output/Grid/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output grid files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Child/Output/Grid/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry name="/Child/Output/Grid/FileFormat">
+      <label>File format</label>
+      <help_brief>Format for output files. {dl;VTK}</help_brief>
+      <default>VTK</default>
+      <type>String</type>
+    </entry>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/elevation"/>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/erosion"/>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/discharge"/>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/sediment"/>
+  </tab>
+  <tab name="Output Cell Grids">
+    <entry name="/Child/Output/CellGrid/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output grid files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Child/Output/CellGrid/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry name="/Child/Output/CellGrid/FileFormat">
+      <label>File format</label>
+      <help_brief>Format for output files. {dl;VTK}</help_brief>
+      <default>VTK</default>
+      <type>String</type>
+    </entry>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Cellelevation"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Cellerosion"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Celldischarge"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Cellsediment"/>
+  </tab>
+  <tab name="About">
+    <entry name="/Child/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>Child</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Child/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Greg Tucker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

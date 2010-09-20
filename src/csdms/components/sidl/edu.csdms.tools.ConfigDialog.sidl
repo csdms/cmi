@@ -1,0 +1,50 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.comment)
+        
+// Insert-UserCode-Here {edu.csdms.tools.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.comment)
+        package tools version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.ConfigDialog.comment)
+            
+// Insert-UserCode-Here {edu.csdms.tools.ConfigDialog.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.ConfigDialog.comment)
+            class ConfigDialog 
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.ConfigDialog.methods)
+                
+// Insert-UserCode-Here {edu.csdms.tools.ConfigDialog.methods} (Insert your class methods here)
+
+                
+                void read(in string file);	                	
+
+                
+                void construct(in gov.cca.ports.ParameterPortFactory ppf, in gov.cca.TypeMap userinput);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.ConfigDialog.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.ConfigDialog:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude(in gov.cca.TypeMap dummy0, in gov.cca.ports.ParameterPortFactory dummy1);
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.ConfigDialog:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+

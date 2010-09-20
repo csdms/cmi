@@ -1,0 +1,98 @@
+IORSRCS:=$(strip $(IORSRCS)  glue/edu_csdms_openmi_Time_IOR.c)
+STUBSRCS:=$(strip $(STUBSRCS)  glue/edu_csdms_openmi_Time_jniStub.c)
+SKELSRCS:=$(strip $(SKELSRCS)  glue/edu_csdms_openmi_Time_jniSkel.c)
+# .edu.csdms.openmi.Time.JAVAIMPL dependencies.
+Time_Impl.java:                                                               \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+
+
+# .edu.csdms.openmi.Time.STUBJAVA dependencies.
+Time.java:                                                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+
+
+# .edu.csdms.openmi.Time.IORHDRS dependencies.
+edu_IOR.h:                                                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_IOR.h: edu_csdms_IOR.h
+
+edu_csdms_IOR.h:                                                              \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_csdms_IOR.h: edu_csdms_openmi_IOR.h
+
+edu_csdms_openmi_IOR.h:                                                       \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_csdms_openmi_IOR.h: edu_csdms_openmi_ITime_IOR.h
+edu_csdms_openmi_IOR.h: edu_csdms_openmi_Time_IOR.h
+
+edu_csdms_openmi_Time_IOR.h:                                                  \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_csdms_openmi_Time_IOR.h: sidl_header.h
+edu_csdms_openmi_Time_IOR.h: edu_csdms_openmi_ITime_IOR.h
+edu_csdms_openmi_Time_IOR.h: sidl_BaseClass_IOR.h
+
+
+# .edu.csdms.openmi.Time.IORSRCS dependencies.
+edu_csdms_openmi_Time_IOR.c:                                                  \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_csdms_openmi_Time_IOR.c: sidlOps.h
+edu_csdms_openmi_Time_IOR.c: edu_csdms_openmi_Time_IOR.h
+edu_csdms_openmi_Time_IOR.c: sidl_BaseClass_Impl.h
+edu_csdms_openmi_Time_IOR.c: sidl_BaseClass.h
+edu_csdms_openmi_Time_IOR.c: sidl_ClassInfo.h
+edu_csdms_openmi_Time_IOR.c: sidl_ClassInfoI.h
+
+
+# .edu.csdms.openmi.Time.SKELSRCS dependencies.
+edu_csdms_openmi_Time_jniSkel.c:                                              \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_csdms_openmi_Time_jniSkel.c: sidl_Java.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_Loader.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_String.h
+edu_csdms_openmi_Time_jniSkel.c: edu_csdms_openmi_Time_IOR.h
+edu_csdms_openmi_Time_jniSkel.c: babel_config.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_Exception.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_BaseException.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_LangSpecificException.h
+edu_csdms_openmi_Time_jniSkel.c: edu_csdms_openmi_ITime_jniStub.h
+edu_csdms_openmi_Time_jniSkel.c: edu_csdms_openmi_Time_jniStub.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_BaseClass_jniStub.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_BaseInterface_jniStub.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_ClassInfo_jniStub.h
+edu_csdms_openmi_Time_jniSkel.c: sidl_RuntimeException_jniStub.h
+
+
+# .edu.csdms.openmi.Time.STUBHDRS dependencies.
+edu_csdms_openmi_Time_jniStub.h:                                              \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_csdms_openmi_Time_jniStub.h: edu_csdms_openmi_Time_IOR.h
+
+
+# .edu.csdms.openmi.Time.STUBSRCS dependencies.
+edu_csdms_openmi_Time_jniStub.c:                                              \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.Time.sidl
+edu_csdms_openmi_Time_jniStub.c: sidl_Java.h
+edu_csdms_openmi_Time_jniStub.c: sidl_Loader.h
+edu_csdms_openmi_Time_jniStub.c: sidl_String.h
+edu_csdms_openmi_Time_jniStub.c: edu_csdms_openmi_Time_IOR.h
+edu_csdms_openmi_Time_jniStub.c: babel_config.h
+edu_csdms_openmi_Time_jniStub.c: edu_csdms_openmi_ITime_jniStub.h
+edu_csdms_openmi_Time_jniStub.c: edu_csdms_openmi_Time_jniStub.h
+edu_csdms_openmi_Time_jniStub.c: sidl_BaseClass_jniStub.h
+edu_csdms_openmi_Time_jniStub.c: sidl_BaseInterface_jniStub.h
+edu_csdms_openmi_Time_jniStub.c: sidl_ClassInfo_jniStub.h
+edu_csdms_openmi_Time_jniStub.c: sidl_RuntimeException_jniStub.h
+edu_csdms_openmi_Time_jniStub.c: sidl_BaseClass.h
+edu_csdms_openmi_Time_jniStub.c: sidl_ClassInfo.h
+edu_csdms_openmi_Time_jniStub.c: sidl_rmi_ProtocolFactory.h
+edu_csdms_openmi_Time_jniStub.c: sidl_rmi_InstanceRegistry.h
+edu_csdms_openmi_Time_jniStub.c: sidl_rmi_InstanceHandle.h
+edu_csdms_openmi_Time_jniStub.c: sidl_rmi_Invocation.h
+edu_csdms_openmi_Time_jniStub.c: sidl_rmi_Response.h
+edu_csdms_openmi_Time_jniStub.c: sidl_rmi_ServerRegistry.h
+edu_csdms_openmi_Time_jniStub.c: sidl_rmi_ConnectRegistry.h
+edu_csdms_openmi_Time_jniStub.c: sidl_io_Serializable.h
+edu_csdms_openmi_Time_jniStub.c: sidl_MemAllocException.h
+edu_csdms_openmi_Time_jniStub.c: sidl_NotImplementedException.h
+
+

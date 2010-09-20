@@ -1,0 +1,22 @@
+#!/bin/bash
+
+## Source this file to load the modules required for the CSDMS project
+
+# Make sure that you have initialized Environment Modules first.  That is,
+# you have run something like:
+#  > source /usr/local/modules/init/bash
+
+module load openmi cem/devel sedflux/devel child csdms
+
+PROJECT_DIR=$(dirname $(readlink -f $0))
+
+if [ -z "${CMT_PROJECT_DIALOG_PATH+x}" ] ; then
+  echo Setting CMT_PROJECT_DIALOG_PATH
+  export CMT_PROJECT_DIALOG_PATH=$PROJECT_DIR/../share/config
+fi
+if [ -z "${CMT_PROJECT_TEMPLATE_PATH+x}" ] ; then
+  export CMT_PROJECT_TEMPLATE_PATH=$PROJECT_DIR/../share/templates
+fi
+
+echo $CMT_PROJECT_DIALOG_PATH
+

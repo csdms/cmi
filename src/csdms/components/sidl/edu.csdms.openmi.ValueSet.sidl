@@ -1,0 +1,56 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ValueSet.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.ValueSet.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ValueSet.comment)
+            class ValueSet implements-all edu.csdms.openmi.IValueSet
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ValueSet.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.ValueSet.methods} (Insert your class methods here)
+
+                
+                void setData(in array<double, 1> values);	                	
+
+                
+                void setValue(in int index, in double value);	                	
+
+                
+                double getValue(in int index);	                	
+
+                
+                void setRasterGrid(in array<double, 2> grid);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ValueSet.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.openmi.ValueSet:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude();
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.openmi.ValueSet:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+

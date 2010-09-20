@@ -1,0 +1,10 @@
+# .edu.csdms.openmi.VectorSet.JAVAIMPL dependencies.
+VectorSet_Impl.java:                                                          \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.VectorSet.sidl
+
+
+# .edu.csdms.openmi.VectorSet.STUBJAVA dependencies.
+VectorSet.java:                                                               \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.openmi.VectorSet.sidl
+
+

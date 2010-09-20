@@ -1,0 +1,11 @@
+.edu.csdms.openmi.VectorSet.BABEL_MAKEFILE_NAME =                             \
+  .edu.csdms.openmi.VectorSet.babel.make
+.edu.csdms.openmi.VectorSet.STUB_SRC_DIRS =                                   \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.VectorSet/glue/
+.edu.csdms.openmi.VectorSet.IOR_SRC_DIRS =                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.VectorSet/glue/
+.edu.csdms.openmi.VectorSet.JAVA_SRC_DIRS =                                   \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.VectorSet/edu/csdms/openmi/
+.edu.csdms.openmi.VectorSet.JAVA_SRC_FILES =                                  \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.VectorSet/edu/csdms/openmi/VectorSet.java\
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.VectorSet/edu/csdms/openmi/VectorSet_Impl.java

@@ -1,0 +1,104 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/Waves/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>Waipaoa</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Waves/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>50k</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/Waves/RunDuration">
+      <label>Run duraction (years)</label>
+      <help_brief>Simulation run time in years</help_brief>
+      <default>100</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/Waves/Height">
+      <label>Incoming wave height (m)</label>
+      <help_brief>Offshore height of incoming waves (m)</help_brief>
+      <default>2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>20</max>
+      </range>
+    </entry>
+    <entry name="/Waves/Period">
+      <label>Incoming wave period (s)</label>
+      <help_brief>Offshore period of incoming waves (s)</help_brief>
+      <default>7</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Waves/AngleAsymmetry">
+      <label>Asymmetry of incoming wave angles</label>
+      <help_brief>Asymmetry of incoming wave angles</help_brief>
+      <default>.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Waves/AngleHighness">
+      <label>Highness factor for incoming wave angles</label>
+      <help_brief>Highness factor for incoming wave angles</help_brief>
+      <default>.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Output Values">
+    <entry name="/Waves/Output/Scalar/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Waves/Output/Scalar/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry class="OutputFile" name="/Waves/Output/Scalar/Var/INCOMING_ANGLE"/>
+    <entry class="OutputFile" name="/Waves/Output/Scalar/Var/INCOMING_ANGLE_MEAN"/>
+    <entry class="OutputFile" name="/Waves/Output/Scalar/Var/INCOMING_ANGLE_MAX"/>
+    <entry class="OutputFile" name="/Waves/Output/Scalar/Var/INCOMING_ANGLE_MIN"/>
+  </tab>
+  <tab name="About">
+    <entry name="/Waves/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>Waves</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Waves/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Andrew Ashton</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

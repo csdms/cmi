@@ -1,0 +1,8 @@
+.edu.csdms.models.Waves.BABEL_MAKEFILE_NAME =                                 \
+  .edu.csdms.models.Waves.babel.make
+.edu.csdms.models.Waves.STUB_SRC_DIRS =                                       \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.Waves/glue/
+.edu.csdms.models.Waves.IMPL_SRC_DIRS =                                       \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.Waves/
+.edu.csdms.models.Waves.IOR_SRC_DIRS =                                        \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.Waves/glue/

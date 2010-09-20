@@ -1,0 +1,8 @@
+.edu.csdms.tools.PrintQueue.BABEL_MAKEFILE_NAME =                             \
+  .edu.csdms.tools.PrintQueue.babel.make
+.edu.csdms.tools.PrintQueue.IOR_SRC_DIRS =                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.PrintQueue/glue/
+.edu.csdms.tools.PrintQueue.PYTHON_SETUP_NAME =                               \
+  .edu.csdms.tools.PrintQueue.setup.py
+.edu.csdms.tools.PrintQueue.PYSETUP_DIRS =                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.PrintQueue/

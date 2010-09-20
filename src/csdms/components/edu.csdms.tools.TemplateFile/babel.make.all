@@ -1,0 +1,115 @@
+PYMOD_SRCS:=$(strip $(PYMOD_SRCS)  edu/csdms/tools/edu_csdms_tools_TemplateFile_Module.c)
+PYTHONADMIN:=$(strip $(PYTHONADMIN)  edu/csdms/tools/__init__.py)
+PYTHONSRC:=$(strip $(PYTHONSRC)  edu/csdms/tools/TemplateFile_Impl.py)
+PYTHONADMIN:=$(strip $(PYTHONADMIN)  edu/csdms/__init__.py)
+PYTHONADMIN:=$(strip $(PYTHONADMIN)  edu/__init__.py)
+IORSRCS:=$(strip $(IORSRCS)  glue/edu_csdms_tools_TemplateFile_IOR.c)
+SKELSRCS:=$(strip $(SKELSRCS)  glue/edu_csdms_tools_TemplateFile_pSkel.c)
+LAUNCHSRCS:=$(strip $(LAUNCHSRCS)  glue/edu_csdms_tools_TemplateFile_pLaunch.c)
+# .edu.csdms.tools.TemplateFile.PYMOD_SRCS dependencies.
+edu_csdms_tools_TemplateFile_Module.c:                                        \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_csdms_tools_TemplateFile_Module.c: sidl_BaseClass.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_ClassInfo.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_ProtocolFactory.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_InstanceRegistry.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_InstanceHandle.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_Invocation.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_Response.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_ServerRegistry.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_ConnectRegistry.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_io_Serializable.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_MemAllocException.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_NotImplementedException.h
+edu_csdms_tools_TemplateFile_Module.c: edu_csdms_tools_TemplateFile_Module.h
+edu_csdms_tools_TemplateFile_Module.c: edu_csdms_tools_TemplateFile_IOR.h
+edu_csdms_tools_TemplateFile_Module.c: sidlObjA.h
+edu_csdms_tools_TemplateFile_Module.c: sidlPyArrays.h
+edu_csdms_tools_TemplateFile_Module.c: oldnumeric.h
+edu_csdms_tools_TemplateFile_Module.c: Numeric/arrayobject.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_Loader.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_header.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_String.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_Python.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_interface_IOR.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_NetworkException_Module.h
+edu_csdms_tools_TemplateFile_Module.c: edu_csdms_tools_ITemplateFile_Module.h
+edu_csdms_tools_TemplateFile_Module.c: gov_cca_TypeMap_Module.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_BaseClass_Module.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_BaseInterface_Module.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_ClassInfo_Module.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_RuntimeException_Module.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_Call_Module.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_Return_Module.h
+edu_csdms_tools_TemplateFile_Module.c: sidl_rmi_Ticket_Module.h
+
+
+# .edu.csdms.tools.TemplateFile.PYTHONADMIN dependencies.
+
+# .edu.csdms.tools.TemplateFile.PYTHONSRC dependencies.
+TemplateFile_Impl.py:                                                         \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+
+
+# .edu.csdms.tools.TemplateFile.IORHDRS dependencies.
+edu_IOR.h:                                                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_IOR.h: edu_csdms_IOR.h
+
+edu_csdms_IOR.h:                                                              \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_csdms_IOR.h: edu_csdms_tools_IOR.h
+
+edu_csdms_tools_IOR.h:                                                        \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_csdms_tools_IOR.h: edu_csdms_tools_ITemplateFile_IOR.h
+edu_csdms_tools_IOR.h: edu_csdms_tools_TemplateFile_IOR.h
+
+edu_csdms_tools_TemplateFile_IOR.h:                                           \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_csdms_tools_TemplateFile_IOR.h: sidl_header.h
+edu_csdms_tools_TemplateFile_IOR.h: edu_csdms_tools_ITemplateFile_IOR.h
+edu_csdms_tools_TemplateFile_IOR.h: gov_cca_Type_IOR.h
+edu_csdms_tools_TemplateFile_IOR.h: sidl_BaseClass_IOR.h
+
+
+# .edu.csdms.tools.TemplateFile.IORSRCS dependencies.
+edu_csdms_tools_TemplateFile_IOR.c:                                           \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_csdms_tools_TemplateFile_IOR.c: sidlOps.h
+edu_csdms_tools_TemplateFile_IOR.c: edu_csdms_tools_TemplateFile_IOR.h
+edu_csdms_tools_TemplateFile_IOR.c: sidl_BaseClass_Impl.h
+edu_csdms_tools_TemplateFile_IOR.c: sidl_BaseClass.h
+edu_csdms_tools_TemplateFile_IOR.c: sidl_ClassInfo.h
+edu_csdms_tools_TemplateFile_IOR.c: sidl_ClassInfoI.h
+
+
+# .edu.csdms.tools.TemplateFile.LAUNCHSRCS dependencies.
+edu_csdms_tools_TemplateFile_pLaunch.c:                                       \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_csdms_tools_TemplateFile_pLaunch.c: sidl_Python.h
+edu_csdms_tools_TemplateFile_pLaunch.c: sidl_Loader.h
+
+
+# .edu.csdms.tools.TemplateFile.PYMOD_HDRS dependencies.
+edu_csdms_tools_TemplateFile_Module.h:                                        \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+
+
+# .edu.csdms.tools.TemplateFile.SKELSRCS dependencies.
+edu_csdms_tools_TemplateFile_pSkel.c:                                         \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/sidl/edu.csdms.tools.TemplateFile.sidl
+edu_csdms_tools_TemplateFile_pSkel.c: edu_csdms_tools_TemplateFile_IOR.h
+edu_csdms_tools_TemplateFile_pSkel.c: sidlObjA.h
+edu_csdms_tools_TemplateFile_pSkel.c: sidlPyArrays.h
+edu_csdms_tools_TemplateFile_pSkel.c: oldnumeric.h
+edu_csdms_tools_TemplateFile_pSkel.c: Numeric/arrayobject.h
+edu_csdms_tools_TemplateFile_pSkel.c: sidl_header.h
+edu_csdms_tools_TemplateFile_pSkel.c: sidl_Python.h
+edu_csdms_tools_TemplateFile_pSkel.c: sidl_BaseInterface_Module.h
+edu_csdms_tools_TemplateFile_pSkel.c: edu_csdms_tools_TemplateFile_Module.h
+edu_csdms_tools_TemplateFile_pSkel.c: gov_cca_TypeMap_Module.h
+edu_csdms_tools_TemplateFile_pSkel.c: sidl_ClassInfo_Module.h
+edu_csdms_tools_TemplateFile_pSkel.c: sidl_RuntimeException_Module.h
+
+

@@ -1,0 +1,66 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.models.comment)
+        
+// Insert-UserCode-Here {edu.csdms.models.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.models.comment)
+        package models version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.models.Waves.comment)
+            
+// Insert-UserCode-Here {edu.csdms.models.Waves.comment} (Insert your component comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.models.Waves.comment)
+            class Waves implements-all gov.cca.Component, gov.cca.ComponentRelease, gov.cca.ports.GoPort, edu.csdms.ports.IRFPort
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.models.Waves.methods)
+                
+// Insert-UserCode-Here {edu.csdms.models.Waves.methods} (Insert your component methods here)
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.models.Waves.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.models.Waves:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                
+                /*
+                 * Function to provide typical setServices behavior. User can bypass it by editing
+                 * their setServices to not call this.
+                 * @param services the services the component receives during the setServices call.
+                 */
+                void boccaSetServices(in gov.cca.Services services) throws gov.cca.CCAException;
+                
+                /*
+                 * Function to provide typical releaseServices behavior. User can bypass it by editing
+                 * their releaseServices to not call this.
+                 * @param services the services the component receives during the releaseServices call.
+                 */
+                void boccaReleaseServices(in gov.cca.Services services) throws gov.cca.CCAException;
+                
+                /*
+                 * Function to display a message if an exception occurs.
+                 * @param excpt the exception to be checked.
+                 * @param msg the message to be printed or added to the exception if fatal is true.
+                 * @param fatal if an exception occured and fatal is false, msg is printed.
+                 *              If fatal is true, msg is printed and exit called.
+                 */
+                void checkException(in sidl.BaseInterface excpt, in string msg, in bool fatal);
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.tools.Verbose dummy1, in edu.csdms.openmi.ScalarSet dummy2, in edu.csdms.tools.ConfigDialog dummy3, in edu.csdms.tools.PrintQueue dummy4);
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.models.Waves:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+

@@ -1,0 +1,39 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ISpatialReference.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.ISpatialReference.comment} (Insert your interface comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ISpatialReference.comment)
+            interface ISpatialReference
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ISpatialReference.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.ISpatialReference.methods} (Insert your interface methods here)
+
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                //  Identifier indicating which spatial reference to use
+                string getID();	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ISpatialReference.methods)
+            }
+        }
+    }
+}

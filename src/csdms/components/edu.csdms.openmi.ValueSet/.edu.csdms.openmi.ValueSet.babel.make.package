@@ -1,0 +1,11 @@
+.edu.csdms.openmi.ValueSet.BABEL_MAKEFILE_NAME =                              \
+  .edu.csdms.openmi.ValueSet.babel.make
+.edu.csdms.openmi.ValueSet.STUB_SRC_DIRS =                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ValueSet/glue/
+.edu.csdms.openmi.ValueSet.IOR_SRC_DIRS =                                     \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ValueSet/glue/
+.edu.csdms.openmi.ValueSet.JAVA_SRC_DIRS =                                    \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ValueSet/edu/csdms/openmi/
+.edu.csdms.openmi.ValueSet.JAVA_SRC_FILES =                                   \
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ValueSet/edu/csdms/openmi/ValueSet.java\
+  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.openmi.ValueSet/edu/csdms/openmi/ValueSet_Impl.java

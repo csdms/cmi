@@ -1,0 +1,86 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.comment)
+        
+// Insert-UserCode-Here {edu.csdms.tools.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.comment)
+        package tools version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.IRFPortQueue.comment)
+            
+// Insert-UserCode-Here {edu.csdms.tools.IRFPortQueue.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.IRFPortQueue.comment)
+            class IRFPortQueue 
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.IRFPortQueue.methods)
+                
+// Insert-UserCode-Here {edu.csdms.tools.IRFPortQueue.methods} (Insert your class methods here)
+
+                
+                void initialize(in gov.cca.Services services, in edu.csdms.ports.IRFPort client_port);	                	
+
+                
+                void set_services(in gov.cca.Services services);	                	
+
+                
+                void add_port(in string server);	                	
+
+                
+                void initialize_ports(in array<string> properties);	                	
+
+                
+                void run_ports(in double time);	                	
+
+                
+                void finalize_ports();	                	
+
+                
+                void connect_ports();	                	
+
+                
+                void disconnect_ports();	                	
+
+                
+                edu.csdms.ports.IRFPort get_port(in string name);	                	
+
+                
+                bool check_time_spans(in double start, in double end);	                	
+
+                
+                void initialize_mapper(in string name);	                	
+
+                
+                void initialize_mappers();	                	
+
+                
+                void map_value(in string server, in string dst_value, in string src_value);	                	
+
+                
+                edu.csdms.openmi.IValueSet get_mapped_value(in string name, in string value);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.IRFPortQueue.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.IRFPortQueue:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude(in edu.csdms.openmi.ScalarSet dummy0, in edu.csdms.openmi.ElementMapper dummy1, in gov.cca.Port dummy2, in edu.csdms.ports.IRFPort dummy3);
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.IRFPortQueue:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+

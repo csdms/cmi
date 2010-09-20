@@ -1,0 +1,37 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ITimeStamp.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.ITimeStamp.comment} (Insert your interface comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ITimeStamp.comment)
+            interface ITimeStamp
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ITimeStamp.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.ITimeStamp.methods} (Insert your interface methods here)
+
+                
+                double getModifiedJulianDay();	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ITimeStamp.methods)
+            }
+        }
+    }
+}

@@ -1,0 +1,110 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ElementType.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ElementType.comment)
+            enum ElementType
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ElementType.entries)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                IDBased       = 0,
+                XYPoint       = 1,
+                XYLine        = 2,
+                XYPolyLine    = 3,
+                XYPolygon     = 4,
+                XYZPoint      = 5,
+                XYZLine       = 6,
+                XYZPolyLine   = 7,
+                XYZPolygon    = 8,
+                XYZPolyhedron = 9,
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ElementType.entries)
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.openmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.comment)
+        package openmi version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.Vector.comment)
+            
+// Insert-UserCode-Here {edu.csdms.openmi.Vector.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.Vector.comment)
+            class Vector implements-all edu.csdms.openmi.IVector
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.Vector.methods)
+                
+// Insert-UserCode-Here {edu.csdms.openmi.Vector.methods} (Insert your class methods here)
+
+                
+                void set(in double x, in double y, in double z);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.Vector.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.openmi.Vector:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude();
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.openmi.Vector:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+
