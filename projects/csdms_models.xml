@@ -11,10 +11,8 @@
   <component name="models.Sedflux3D" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <uses>IRFPort@WaterDischarge</uses>
-    <!--uses>IRFPort@Erosion</uses-->
     <uses>IRFPort@SubaerialErosion</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <!--provides>IRFPort@Elevation</provides-->
     <provides>IRFPort@SubaqueousErosion</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
@@ -42,11 +40,9 @@
   </component>
   <component name="models.Child" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <!--uses>IRFPort@Elevation</uses-->
     <uses>IRFPort@SubaqueousErosion</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
     <provides>IRFPort@WaterDischarge</provides>
-    <!--provides>IRFPort@Erosion</provides-->
     <provides>IRFPort@SubaerialErosion</provides>
     <requires>ElementSet</requires>
     <requires>ElementType</requires>
@@ -63,9 +59,8 @@
   <component name="models.HydroTrend" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@River</provides>
+    <provides>IRFPort@Discharge</provides>
     <requires>ScalarSet</requires>
-    <!--requires>tools.nctsfiles</requires-->
     <requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
     <requires>tools.Verbose</requires>
@@ -82,8 +77,6 @@
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
-    <!--requires>tools.irfports</requires>
-    <requires>tools.ncgsfiles</requires-->
     <requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
     <requires>tools.IRFPortQueue</requires>
@@ -102,5 +95,36 @@
     <import-impl/>
     <extras>make.vars.user</extras>
   </component>
+  <component name="models.Avulsion" language="c">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>IRFPort@Discharge</uses>
+    <uses>IRFPort@Elevation</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>IRFPort@River</provides>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>tools.Verbose</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+  <component name="models.Roms" language="c">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>IRFPort@ROMS</provides>
+    <!--requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.IRFPortQueue</requires-->
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.Verbose</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+
 
 </project>

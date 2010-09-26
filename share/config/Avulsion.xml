@@ -1,12 +1,12 @@
 <dialog>
   <tab name="Input Files and Directories">
-    <entry name="/CEM/SitePrefix">
+    <entry name="/Avulsion/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>adriatic</default>
+      <default>small</default>
       <type>String</type>
     </entry>
-    <entry name="/CEM/CasePrefix">
+    <entry name="/Avulsion/CasePrefix">
       <label>Case prefix</label>
       <help_brief>Case prefix for input/output files.</help_brief>
       <default>init</default>
@@ -14,9 +14,9 @@
     </entry>
   </tab>
   <tab name="Run Parameters">
-    <entry name="/CEM/RunDuration">
-      <label>Run duraction (days)</label>
-      <help_brief>Simulation run time in days</help_brief>
+    <entry name="/Avulsion/RunDuration">
+      <label>Run duraction (years)</label>
+      <help_brief>Simulation run time in years</help_brief>
       <default>100</default>
       <type>Float</type>
       <range>
@@ -24,39 +24,39 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/CEM/ShorefaceSlope">
-      <label>Shoreface slope (-)</label>
-      <help_brief>Slope of the shoreface (-)</help_brief>
-      <default>.01</default>
-      <type>Float</type>
-      <range>
-        <min>.001</min>
-        <max>1</max>
-      </range>
-    </entry>
-    <entry name="/CEM/ShorefaceDepth">
-      <label>Shoreface depth (m)</label>
-      <help_brief>Water depth of the shoreface (m)</help_brief>
-      <default>10</default>
+    <entry name="/Avulsion/Input/Var/AngleVariance">
+      <label>Standard deviation of avulsion angles (deg)</label>
+      <help_brief>Standard deviation of avulsion angles (deg)</help_brief>
+      <default>5</default>
       <type>Float</type>
       <range>
         <min>0</min>
-        <max>100</max>
+        <max>180</max>
       </range>
     </entry>
-    <entry name="/CEM/ShelfSlope">
-      <label>Shelf slope (-)</label>
-      <help_brief>Slope of the shelf (-)</help_brief>
-      <default>.001</default>
+    <entry name="/Avulsion/Input/Var/AngleMin">
+      <label>Minimum angle (deg)</label>
+      <help_brief>Minimum angle (deg)</help_brief>
+      <default>0</default>
       <type>Float</type>
       <range>
-        <min>.00001</min>
-        <max>1</max>
+        <min>-180</min>
+        <max>180</max>
+      </range>
+    </entry>
+    <entry name="/Avulsion/Input/Var/AngleMax">
+      <label>Maximum angle (deg)</label>
+      <help_brief>Maximum angle (deg)</help_brief>
+      <default>90</default>
+      <type>Float</type>
+      <range>
+        <min>-180</min>
+        <max>180</max>
       </range>
     </entry>
   </tab>
   <tab name="Grid">
-    <entry name="/CEM/Grid/Rows">
+    <entry name="/Avulsion/Grid/Rows">
       <label>Number of grid rows (-)</label>
       <help_brief>Number of rows in the computational grid (-)</help_brief>
       <default>500</default>
@@ -66,7 +66,7 @@
         <max>1000</max>
       </range>
     </entry>
-    <entry name="/CEM/Grid/Columns">
+    <entry name="/Avulsion/Grid/Columns">
       <label>Number of grid columns (-)</label>
       <help_brief>Number of columns in the computational grid (-)</help_brief>
       <default>200</default>
@@ -76,7 +76,7 @@
         <max>1000</max>
       </range>
     </entry>
-    <entry name="/CEM/Grid/RowSpacing">
+    <entry name="/Avulsion/Grid/RowSpacing">
       <label>Spacing of grid rows (m)</label>
       <help_brief>Spacing of rows in the computational grid (m)</help_brief>
       <default>100</default>
@@ -86,7 +86,7 @@
         <max>1000</max>
       </range>
     </entry>
-    <entry name="/CEM/Grid/ColumnSpacing">
+    <entry name="/Avulsion/Grid/ColumnSpacing">
       <label>Spacing of grid columns (m)</label>
       <help_brief>Spacing of columns in the computational grid (m)</help_brief>
       <default>100</default>
@@ -96,15 +96,35 @@
         <max>1000</max>
       </range>
     </entry>
+    <entry name="/Avulsion/Grid/HingeRow">
+      <label>Row of hinge point (-)</label>
+      <help_brief>Row of hinge point (-)</help_brief>
+      <default>250</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>999</max>
+      </range>
+    </entry>
+    <entry name="/Avulsion/Grid/HingeColumn">
+      <label>Column of hinge point (-)</label>
+      <help_brief>Column of hinge point (-)</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>999</max>
+      </range>
+    </entry>
   </tab>
-  <tab name="Output Grids">
-    <entry name="/CEM/Output/Grid/Dir">
+  <tab name="Output Values">
+    <entry name="/Avulsion/Output/Scalar/Dir">
       <label>Output directory</label>
-      <help_brief>Path to output grid files.</help_brief>
+      <help_brief>Path to output files.</help_brief>
       <default>${cwd}</default>
       <type>String</type>
     </entry>
-    <entry name="/CEM/Output/Grid/Interval">
+    <entry name="/Avulsion/Output/Scalar/Interval">
       <label>Interval between output files</label>
       <help_brief>Interval between output files</help_brief>
       <default>10</default>
@@ -114,17 +134,19 @@
       </range>
       <type>Float</type>
     </entry>
-    <entry class="OutputFile" name="/CEM/Output/Grid/Var/DEPTH"/>
-    <entry class="OutputFile" name="/CEM/Output/Grid/Var/PERCENT_FILLED"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE_MEAN"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE_MAX"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE_MIN"/>
   </tab>
   <tab name="About">
-    <entry name="/CEM/ModelName">
+    <entry name="/Avulsion/ModelName">
       <label>Model name</label>
       <help_brief>Name of the model</help_brief>
-      <default>CEM (Coastal Evolution Model)</default>
+      <default>Avulsion</default>
       <type>String</type>
     </entry>
-    <entry name="/CEM/ModelAuthor">
+    <entry name="/Avulsion/ModelAuthor">
       <label>Author name</label>
       <help_brief>Name of the model author</help_brief>
       <default>Andrew Ashton</default>
