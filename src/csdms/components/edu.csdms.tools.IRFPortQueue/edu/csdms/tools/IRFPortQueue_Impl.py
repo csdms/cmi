@@ -186,7 +186,6 @@ class IRFPortQueue:
 
 # DO-NOT-DELETE splicer.begin(connect_ports)
     for server in self._servers:
-      print 'Connecting %s port.' % server
       self._log.log (2, 'Connecting %s port' %server)
       try:
         port = self._services.getPort (server)
@@ -290,7 +289,7 @@ class IRFPortQueue:
 
       port = self._ports[name]
       try:
-        src_element_set = port.get_element_set ('')
+        src_element_set = port.get_element_set (name)
         self._log.log (2, 'source element set size is %d' %
                        src_element_set.getElementCount ())
       except Exception as e:
@@ -299,7 +298,7 @@ class IRFPortQueue:
       mapper = edu.csdms.openmi.ElementMapper.ElementMapper ()
       self._log.log (2, 'trying to initialize mapper')
       try:
-        mapper.initialise ("Mean", src_element_set, element_set)
+        mapper.initialise ("Weighted Mean", src_element_set, element_set)
         self._log.log (2, 'Mapper is initialized')
         #mapper.initialise ("Mean",
         #  edu.csdms.openmi.ElementSet.ElementSet (src_element_set),
