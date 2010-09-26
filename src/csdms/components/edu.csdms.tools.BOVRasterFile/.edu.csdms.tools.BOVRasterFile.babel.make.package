@@ -1,8 +1,0 @@
-.edu.csdms.tools.BOVRasterFile.BABEL_MAKEFILE_NAME =                          \
-  .edu.csdms.tools.BOVRasterFile.babel.make
-.edu.csdms.tools.BOVRasterFile.IOR_SRC_DIRS =                                 \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.BOVRasterFile/glue/
-.edu.csdms.tools.BOVRasterFile.PYTHON_SETUP_NAME =                            \
-  .edu.csdms.tools.BOVRasterFile.setup.py
-.edu.csdms.tools.BOVRasterFile.PYSETUP_DIRS =                                 \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.BOVRasterFile/

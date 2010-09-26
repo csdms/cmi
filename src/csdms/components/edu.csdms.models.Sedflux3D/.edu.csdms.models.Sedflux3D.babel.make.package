@@ -1,8 +1,0 @@
-.edu.csdms.models.Sedflux3D.BABEL_MAKEFILE_NAME =                             \
-  .edu.csdms.models.Sedflux3D.babel.make
-.edu.csdms.models.Sedflux3D.STUB_SRC_DIRS =                                   \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.Sedflux3D/glue/
-.edu.csdms.models.Sedflux3D.IMPL_SRC_DIRS =                                   \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.Sedflux3D/
-.edu.csdms.models.Sedflux3D.IOR_SRC_DIRS =                                    \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.Sedflux3D/glue/

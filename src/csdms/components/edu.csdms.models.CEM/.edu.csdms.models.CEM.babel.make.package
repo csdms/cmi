@@ -1,7 +1,0 @@
-.edu.csdms.models.CEM.BABEL_MAKEFILE_NAME = .edu.csdms.models.CEM.babel.make
-.edu.csdms.models.CEM.STUB_SRC_DIRS =                                         \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.CEM/glue/
-.edu.csdms.models.CEM.IMPL_SRC_DIRS =                                         \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.CEM/
-.edu.csdms.models.CEM.IOR_SRC_DIRS =                                          \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.CEM/glue/

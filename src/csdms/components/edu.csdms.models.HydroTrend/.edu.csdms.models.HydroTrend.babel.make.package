@@ -1,8 +1,0 @@
-.edu.csdms.models.HydroTrend.BABEL_MAKEFILE_NAME =                            \
-  .edu.csdms.models.HydroTrend.babel.make
-.edu.csdms.models.HydroTrend.STUB_SRC_DIRS =                                  \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.HydroTrend/glue/
-.edu.csdms.models.HydroTrend.IMPL_SRC_DIRS =                                  \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.HydroTrend/
-.edu.csdms.models.HydroTrend.IOR_SRC_DIRS =                                   \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.models.HydroTrend/glue/

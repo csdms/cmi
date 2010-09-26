@@ -1,8 +1,0 @@
-.edu.csdms.tools.TemplateFile.BABEL_MAKEFILE_NAME =                           \
-  .edu.csdms.tools.TemplateFile.babel.make
-.edu.csdms.tools.TemplateFile.IOR_SRC_DIRS =                                  \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.TemplateFile/glue/
-.edu.csdms.tools.TemplateFile.PYTHON_SETUP_NAME =                             \
-  .edu.csdms.tools.TemplateFile.setup.py
-.edu.csdms.tools.TemplateFile.PYSETUP_DIRS =                                  \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.TemplateFile/

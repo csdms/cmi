@@ -1,8 +1,0 @@
-.edu.csdms.tools.NCRasterFile.BABEL_MAKEFILE_NAME =                           \
-  .edu.csdms.tools.NCRasterFile.babel.make
-.edu.csdms.tools.NCRasterFile.IOR_SRC_DIRS =                                  \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.NCRasterFile/glue/
-.edu.csdms.tools.NCRasterFile.PYTHON_SETUP_NAME =                             \
-  .edu.csdms.tools.NCRasterFile.setup.py
-.edu.csdms.tools.NCRasterFile.PYSETUP_DIRS =                                  \
-  /home/beach/faculty/huttone/git/csdms_cca_components/build/csdms/components/edu.csdms.tools.NCRasterFile/
