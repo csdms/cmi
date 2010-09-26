@@ -277,10 +277,10 @@ impl_edu_csdms_models_HydroTrend_boccaSetServices(
                                     typeMap,            /* extra properties */
                                     _ex); SIDL_CHECK(*_ex);
 
-   /* Provide a edu.csdms.ports.IRFPort port with port name River */
+   /* Provide a edu.csdms.ports.IRFPort port with port name Discharge */
    gov_cca_Services_addProvidesPort(pd->d_services,   
                                     port,		/* the implementing object */
-                                    "River", /* the name seen by the user */
+                                    "Discharge", /* the name seen by the user */
                                     "edu.csdms.ports.IRFPort", /* sidl name of the port type. */
                                     typeMap,            /* extra properties */
                                     _ex); SIDL_CHECK(*_ex);
@@ -373,10 +373,10 @@ impl_edu_csdms_models_HydroTrend_boccaReleaseServices(
    edu_csdms_models_HydroTrend_checkException(self, throwaway_excpt, errMsg, FALSE, 
                                    &dummy_excpt);
 
-   /* UN-Provide a edu.csdms.ports.IRFPort port with port name River */
-   gov_cca_Services_removeProvidesPort(services, "River", 
+   /* UN-Provide a edu.csdms.ports.IRFPort port with port name Discharge */
+   gov_cca_Services_removeProvidesPort(services, "Discharge", 
                                        &throwaway_excpt);
-   errMsg = "Error: Could not removeProvidesPort(\"River\")";
+   errMsg = "Error: Could not removeProvidesPort(\"Discharge\")";
    edu_csdms_models_HydroTrend_checkException(self, throwaway_excpt, errMsg, FALSE, 
                                    &dummy_excpt);
 
