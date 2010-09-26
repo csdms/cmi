@@ -1277,6 +1277,13 @@ impl_edu_csdms_models_CEM_run(
                        pd->print_queue, _ex);
       }
 
+      current = deltas_get_current_time (pd->state);
+/*
+      fprintf (stderr, "CEM: current time is %f\n", current);
+      fprintf (stderr, "CEM: horizon time is %f\n", horizon);
+      fprintf (stderr, "CEM: time is %f\n", time);
+      fflush (stderr);
+*/
       if (time>horizon)
       {
         PRINT (1, "Requested time is greater than horizon.");
@@ -1293,18 +1300,21 @@ impl_edu_csdms_models_CEM_run(
           if (t>stop_time)
             t = stop_time;
 
+          fprintf (stderr, "CEM: Run ports until %f\n", t); fflush (stderr);
           edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, t, _ex);
 
-          //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-          //  "River", "mean_bed_load_flux_from_river",
-          //  "mean_bed_load_flux_from_river", _ex);
+          fprintf (stderr, "CEM: Map flux values\n"); fflush (stderr);
           edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-            "River", "mean_suspended_load_flux_from_river",
-            "mean_suspended_load_flux_from_river", _ex);
+            "River", "SedimentFlux", "SedimentFlux", _ex);
+          //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+          //  "River", "mean_suspended_load_flux_from_river",
+          //  "mean_suspended_load_flux_from_river", _ex);
+          fprintf (stderr, "CEM: Map wave values\n"); fflush (stderr);
           edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
             "Waves", "sea_surface_wave_from_direction",
             "sea_surface_wave_from_direction", _ex);
 
+          fprintf (stderr, "CEM: Run CEM until %f\n", t); fflush (stderr);
           {
             double now;
             deltas_run_until (pd->state, t);
@@ -1312,9 +1322,11 @@ impl_edu_csdms_models_CEM_run(
           }
       
           PRINT (2, "Print everything in the queue");
+          fprintf (stderr, "CEM: Print the queue"); fflush (stderr);
           edu_csdms_tools_PrintQueue_print_all (pd->print_queue, t, _ex);
 
           current = deltas_get_current_time (pd->state);
+          //fprintf (stderr, "CEM: Time is now %f\n", current);
         }
 
 #if 0
@@ -1896,13 +1908,17 @@ impl_edu_csdms_models_CEM_get_element_set(
     /* DO-NOT-DELETE splicer.begin(edu.csdms.models.CEM.get_element_set) */
     //if (g_ascii_strcasecmp ("bed_load_flux_from_river",val_string)==0 ||
     //    g_ascii_strcasecmp ("sea_surface_wave_from_direction",val_string)==0)
+    SIDL_THROW(*_ex, sidl_NotImplementedException,
+      "This method has not been implemented");
+
+    PRINT (2, "Get element set.");
     if (g_ascii_strcasecmp ("River",val_string)==0 ||
         g_ascii_strcasecmp ("Waves",val_string)==0)
     {/* These values don't have an element set */
       SIDL_THROW(*_ex, sidl_NotImplementedException,
                  "This method has not been implemented");
     }
-    else
+    else if (g_ascii_strcasecmp ("Elevation", val_string)==0)
     {
       edu_csdms_openmi_ElementSet elementSet =
         edu_csdms_openmi_ElementSet__create (_ex);
@@ -1919,22 +1935,50 @@ impl_edu_csdms_models_CEM_get_element_set(
         if (pd && pd->state)
         {
           nx = deltas_get_nx (pd->state);
-          ny = deltas_get_ny (pd->state);
+          ny = deltas_get_ny (pd->state)/2;
           dx = deltas_get_dx (pd->state);
           dy = deltas_get_dy (pd->state);
         }
 
+/*
         fprintf (stderr, "nx: %d\n", nx);
         fprintf (stderr, "ny: %d\n", ny);
         fprintf (stderr, "dx: %f\n", dx);
         fprintf (stderr, "dy: %f\n", dy);
         fflush (stderr);
+*/
+        //edu_csdms_openmi_ElementSet_setRasterGrid (elementSet,
+        //  nx, ny, dx, dy, 0., 0., _ex);
+        //fprintf (stderr, "Done."); fflush (stderr);
 
-        edu_csdms_openmi_ElementSet_setRasterGrid (elementSet,
-          nx, ny, dx, dy, 0., 0., _ex);
-        fprintf (stderr, "Done."); fflush (stderr);
+        {
+          int i;
+          const int len = nx*ny;
+
+          // Points
+          for (i=0; i<len; i++)
+          {
+            edu_csdms_openmi_Element element = 
+              edu_csdms_openmi_Element__create (_ex);
+
+            {
+              edu_csdms_openmi_Vertex vertex =
+                edu_csdms_openmi_Vertex__create (_ex);
+              const double x = i/nx*dx;
+              const double y = i%nx*dy;
+              const double z = 0;
+
+              edu_csdms_openmi_Vertex_setX (vertex, x, _ex);
+              edu_csdms_openmi_Vertex_setY (vertex, y, _ex);
+              edu_csdms_openmi_Vertex_setZ (vertex, z, _ex);
+
+              edu_csdms_openmi_Element_addVertex (element, vertex, _ex);
+            }
+
+            edu_csdms_openmi_ElementSet_addElement (elementSet, element, _ex);
+          }
+        }
       }
-
       return edu_csdms_openmi_IElementSet__cast (elementSet, _ex);
     }
 
@@ -1967,6 +2011,7 @@ impl_edu_csdms_models_CEM_get_value_set(
     edu_csdms_openmi_ScalarSet scalarSet =
       edu_csdms_openmi_ScalarSet__create (_ex);
 
+    PRINT (2, "Get value set");
     {
       struct sidl_double__array* vals;
       struct sidl__array* data =
@@ -2029,33 +2074,79 @@ impl_edu_csdms_models_CEM_set_value_set(
     struct edu_csdms_models_CEM__data *pd =
       edu_csdms_models_CEM__get_data (self);
     edu_csdms_openmi_ScalarSet scalarSet;
-    double val;
 
     PRINT (2, "Convert IValueSet to  ScalarSet");
     scalarSet = edu_csdms_openmi_ScalarSet__cast (values, _ex);
-
-    PRINT (2, "Get the first scalar");
-    val = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, 0, _ex);
 
     PRINT (2, "Look for value name");
     if (g_ascii_strcasecmp (val_string,"mean_bed_load_flux_from_river")==0 ||
         g_ascii_strcasecmp (val_string,
                             "mean_suspended_load_flux_from_river")==0)
     {
+      double val;
       PRINT (2, "Found bed_load_flux_from_river");
+      PRINT (2, "Get the first scalar");
+      val = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, 0, _ex);
+
       //deltas_set_sed_rate (pd->state, val);
       deltas_set_sed_flux (pd->state, val);
     }
     else if (g_ascii_strcasecmp (val_string,
                                  "sea_surface_wave_from_direction")==0)
     {
+      double val;
       PRINT (2, "Found sea_surface_wave_from_direction");
+      PRINT (2, "Get the first scalar");
+      val = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, 0, _ex);
+
       deltas_set_wave_angle (pd->state, val);
+    }
+    else if (g_ascii_strcasecmp (val_string,
+                                 "SedimentFlux")==0)
+    {
+      const int nx = deltas_get_nx (pd->state);
+      const int ny = deltas_get_ny (pd->state);
+      const int len = nx*ny/2;
+      int i;
+      double max = -1e32;
+      double min = 1e32;
+      double* vals;
+      struct sidl_double__array* array;
+
+      fprintf (stderr, "Mapped values start\n");
+      fprintf (stderr, "There should be %d values\n", len);
+      fprintf (stderr, "There are %d values\n", edu_csdms_openmi_ScalarSet_getCount (scalarSet, _ex));
+
+      array = edu_csdms_openmi_ScalarSet_toArray (scalarSet, _ex);
+fprintf (stderr, "Get first value\n");
+      vals = sidl_double__array_first (array);
+fprintf (stderr, "Find max and min\n");
+fprintf (stderr, "Array dimension is %d\n", sidl_double__array_dimen (array));
+fprintf (stderr, "Array length is %d\n", sidl_double__array_length (array, 0));
+
+      for (i=0; i<len; i++)
+      {
+        //vals[i] = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, i, _ex);
+
+        if (vals[i]>max)
+          max = vals[i];
+        if (vals[i]<min)
+          min = vals[i];
+        //fprintf (stderr, "%f\n", vals[i]);
+      }
+
+      fprintf (stderr, "Max value is %f\n", max);
+      fprintf (stderr, "Min value is %f\n", min);
+      fprintf (stderr, "Mapped values end\n");
+
+      deltas_set_sediment_flux_grid (pd->state, vals);
+
     }
     else
       fprintf (stderr, "%s: Invalid value string.", val_string);
 
     PRINT (2, "Done setValueSet");
+
     return;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.CEM.set_value_set) */
   }
