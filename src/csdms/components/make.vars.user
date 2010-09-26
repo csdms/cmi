@@ -28,7 +28,7 @@ components_CXXFLAGS=
 components_F90FLAGS= 
 components_F77FLAGS= 
 components_JAVAFLAGS= 
-components_TESTS=Sedflux3D_test_0.rc
+components_TESTS=
 
 # User-defined Ccaffeine scripts which can be executed with 'make user-tests'
 # must be placed in the components/tests/ subdirectory. The advantage to defining them here 

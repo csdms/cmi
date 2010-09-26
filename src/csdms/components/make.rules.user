@@ -17,10 +17,6 @@ pre-build-user:
 # in components/Makefile to ensure proper dependency handling)
 post-build-user::
 	$(dprint) "Build hook $@ in $(MYDIR) started"
-	cat tests/instantiation.gen.rc | grep -v instantiate | grep -v display | \
-	  grep -v remove | grep -v quit > tests/load.gen.rc
-	cat tests/load.gen.rc tests/Sedflux3D_test_0.rc.in > \
-	  tests/Sedflux3D_test_0.rc
 	$(dprint) "Build hook $@ in $(MYDIR) completed"
 
 # before our install
