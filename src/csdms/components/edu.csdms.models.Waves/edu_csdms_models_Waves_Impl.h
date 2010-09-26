@@ -89,7 +89,7 @@
     if (pd && pd->log) { \
       char *msg = g_strdup_printf ("Waves: " #val " = %f", val); \
       edu_csdms_tools_Verbose_log (pd->log, (l), msg, _ex); \
-      free (msg);} }
+      g_free (msg);} }
 #endif
 /* DO-NOT-DELETE splicer.end(edu.csdms.models.Waves._hincludes) */
 
