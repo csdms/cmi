@@ -707,7 +707,7 @@ impl_edu_csdms_models_Avulsion_go(
         gchar *prefix = gov_cca_TypeMap_getString (pd->userinput,
                                "/Avulsion/Prefix", NULL, _ex);
         duration = gov_cca_TypeMap_getDouble (pd->userinput,
-                     "/Avulsion/Input/Var/RunDuration", 0., _ex);
+                     "/Avulsion/RunDuration", 0., _ex);
       }
 
       PRINT(1, "Initialize");
@@ -808,6 +808,10 @@ impl_edu_csdms_models_Avulsion_initialize(
       variance = gov_cca_TypeMap_getDouble (pd->userinput,
                    "/Avulsion/Input/Var/AngleVariance", 0, _ex);
 
+      limit[0] *= 3.14/180.;
+      limit[1] *= 3.14/180.;
+      variance *= 3.14/180.;
+
       PRINT (2, "Set grid");
       avulsion_set_grid (pd->state, shape, res);
       PRINT (2, "Set angle limits");
@@ -843,8 +847,21 @@ impl_edu_csdms_models_Avulsion_initialize(
 
     PRINT (2, "Initialize model elevations through Elevation");
     { /*   Run and map Elevation values */
-      edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-        "Elevation", "Elevation", "Elevation", _ex);
+      //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+      //  "Elevation", "Elevation", "Elevation", _ex);
+      {
+        struct sidl__array* data;
+        double* vals;
+        edu_csdms_ports_IRFPort port;
+
+        port = edu_csdms_tools_IRFPortQueue_get_port (pd->irf_ports,
+                 "Elevation", _ex);
+        data = edu_csdms_ports_IRFPort_get_raster_data (port,
+                 "Elevation", _ex);
+        vals = sidl_double__array_first (sidl_double__array_cast (data));
+        avulsion_set_elevation (pd->state, vals);
+        sidl__array_deleteRef (data);
+      }
     }
     return;
  
@@ -885,7 +902,7 @@ impl_edu_csdms_models_Avulsion_run(
       const double start = avulsion_get_start_time (pd->state);
       double print_time = edu_csdms_tools_PrintQueue_next_print_time (
                             pd->print_queue, _ex);
-
+/*
       while (print_time<time)
       {
         impl_edu_csdms_models_Avulsion_run (self, print_time, _ex);
@@ -893,7 +910,7 @@ impl_edu_csdms_models_Avulsion_run(
         print_time = edu_csdms_tools_PrintQueue_next_print_time (
                        pd->print_queue, _ex);
       }
-
+*/
       current = avulsion_get_current_time (pd->state);
 
       //fprintf (stderr, "Avulsion: current time is %f\n", current);
@@ -904,7 +921,7 @@ impl_edu_csdms_models_Avulsion_run(
       {
         PRINT (1, "Requested time is greater than horizon.");
       }
-      else if (time>current)
+      else if (time>=current)
       {
         double t;
         const double dt = 1.;
@@ -912,21 +929,35 @@ impl_edu_csdms_models_Avulsion_run(
 
         //fprintf (stderr, "DEBUG: run from %f to %f\n", current, time);
         //fflush (stderr);
-
+/*
         while (current<stop_time)
         {
           t = current + dt;
           if (t>stop_time)
             t = stop_time;
-        
+*/
           edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, current, _ex);
 
           edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-            "Discharge", "mean_bed_load_flux_from_river",
-            "mean_bed_load_flux_from_river", _ex);
+            "Discharge", "mean_suspended_load_flux_from_river",
+            "mean_suspended_load_flux_from_river", _ex);
 
-          edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-            "Elevation", "Elevation", "Elevation", _ex);
+          //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+          //  "Elevation", "Elevation", "Elevation", _ex);
+          {
+            struct sidl__array* data;
+            double* vals;
+            edu_csdms_ports_IRFPort port;
+
+            port = edu_csdms_tools_IRFPortQueue_get_port (pd->irf_ports,
+                     "Elevation", _ex);
+            data = edu_csdms_ports_IRFPort_get_raster_data (port,
+                     "Elevation", _ex);
+            vals = sidl_double__array_first (sidl_double__array_cast (data));
+            avulsion_set_elevation (pd->state, vals);
+            sidl__array_deleteRef (data);
+          }
+
 
           {
             double now;
@@ -936,14 +967,14 @@ impl_edu_csdms_models_Avulsion_run(
           }
 
           PRINT (2, "Print everything in the queue");
-          edu_csdms_tools_PrintQueue_print_all (pd->print_queue, time, _ex);
+//          edu_csdms_tools_PrintQueue_print_all (pd->print_queue, time, _ex);
 
           current = avulsion_get_current_time (pd->state);
-        }
+//        }
       }
       else
       {
-        fprintf (stderr, "DEBUG: time < current (%f<%f)\n", time, current);
+        fprintf (stderr, "Avulsion: time <= current (%f<%f)\n", time, current);
         fflush (stderr);
       }
 
@@ -1326,6 +1357,7 @@ impl_edu_csdms_models_Avulsion_get_raster_data(
       struct edu_csdms_models_Avulsion__data *pd =
                edu_csdms_models_Avulsion__get_data (self);
   
+//fprintf (stderr, "Avulsion: get raster data\n");
       if (pd && pd->state)
       {
         int lower[2];
@@ -1333,12 +1365,32 @@ impl_edu_csdms_models_Avulsion_get_raster_data(
         int stride[2];
         double* data = avulsion_get_value_data (pd->state, val_string, lower,
                                                 upper, stride);
-    
+/*
+eh_watch_ptr (data);
+eh_watch_int (lower[0]);
+eh_watch_int (lower[1]);
+eh_watch_int (upper[0]);
+eh_watch_int (upper[1]);
+        {
+          int i;
+          if ((upper[0]-lower[0]+1)*(upper[1]-lower[1]+1)!=100000)
+            exit (-1);
+          for (i=0; i<100000; i++)
+            data[i] = 0;
+
+          data[500*28+250] = 250;
+        }
+*/
         data += lower[0];
         if (data)
         {
           vals = sidl_double__array_borrow (data, 2, lower, upper, stride);
         }
+/*
+eh_watch_ptr (vals);
+eh_watch_int (sidl_double__array_dimen (vals));
+eh_watch_int (sidl_double__array_length (vals, 0));
+*/
       }
  
       generic = (struct sidl__array*)vals;
@@ -1595,6 +1647,7 @@ impl_edu_csdms_models_Avulsion_set_value_set(
       double* vals = g_new (double, len);
 
       PRINT (2, "Mapped values start\n");
+      PRINT (2, "Setting elevation values\n");
       //fprintf (stderr, "There are %d values\n", len);
       for (i=0; i<len; i++)
       {
@@ -1604,12 +1657,14 @@ impl_edu_csdms_models_Avulsion_set_value_set(
           max = vals[i];
         if (vals[i]<min)
           min = vals[i];
-      }
 
-/*
-      fprintf (stderr, "Max value is %f\n", max);
-      fprintf (stderr, "Min value is %f\n", min);
-*/
+      }
+//fprintf (stderr, "Avulsion: min/max elevation = %f/%f\n", min, max);
+
+
+      fprintf (stderr, "Avulsion: Max elevation value (from CEM) is %f\n", max);
+      fprintf (stderr, "Avulsion: Min elevation value (from CEM) is %f\n", min);
+
       PRINT (2, "Mapped values end\n");
 
       avulsion_set_elevation (pd->state, vals);

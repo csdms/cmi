@@ -1288,10 +1288,10 @@ impl_edu_csdms_models_CEM_run(
       {
         PRINT (1, "Requested time is greater than horizon.");
       }
-      else if (time>current)
+      else if (time>=current)
       {
         double t;
-        const double dt = 1.;
+        const double dt = 1;
         const double stop_time = time;
 
         while (current<stop_time)
@@ -1300,29 +1300,47 @@ impl_edu_csdms_models_CEM_run(
           if (t>stop_time)
             t = stop_time;
 
-          fprintf (stderr, "CEM: Run ports until %f\n", t); fflush (stderr);
-          edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, t, _ex);
+          fprintf (stderr, "#CMT Time: %f\n", current);
 
-          fprintf (stderr, "CEM: Map flux values\n"); fflush (stderr);
-          edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-            "River", "SedimentFlux", "SedimentFlux", _ex);
+          //fprintf (stderr, "CEM: Run ports until %f\n", t); fflush (stderr);
+          edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, current, _ex);
+
+          //fprintf (stderr, "CEM: Map flux values\n"); fflush (stderr);
+          //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+          //  "River", "SedimentFlux", "SedimentFlux", _ex);
+          {
+            struct sidl__array* data;
+            struct sidl_double__array* d_array;
+            double* vals;
+            edu_csdms_ports_IRFPort port;
+
+            port = edu_csdms_tools_IRFPortQueue_get_port (pd->irf_ports,
+                     "River", _ex);
+            data = edu_csdms_ports_IRFPort_get_raster_data (port,
+                     "SedimentFlux", _ex);
+            d_array  = sidl_double__array_cast (data);
+            vals = sidl_double__array_first (d_array);
+            deltas_set_sediment_flux_grid (pd->state, vals);
+            sidl__array_deleteRef (data);
+          }
+
           //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
           //  "River", "mean_suspended_load_flux_from_river",
           //  "mean_suspended_load_flux_from_river", _ex);
-          fprintf (stderr, "CEM: Map wave values\n"); fflush (stderr);
+          //fprintf (stderr, "CEM: Map wave values\n"); fflush (stderr);
           edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
             "Waves", "sea_surface_wave_from_direction",
             "sea_surface_wave_from_direction", _ex);
 
-          fprintf (stderr, "CEM: Run CEM until %f\n", t); fflush (stderr);
+          //fprintf (stderr, "CEM: Run CEM until %f\n", t); fflush (stderr);
           {
             double now;
             deltas_run_until (pd->state, t);
             now = deltas_get_current_time (pd->state);
+            //fprintf (stderr, "CEM: Current time is now %f\n", now); fflush (stderr);
           }
       
           PRINT (2, "Print everything in the queue");
-          fprintf (stderr, "CEM: Print the queue"); fflush (stderr);
           edu_csdms_tools_PrintQueue_print_all (pd->print_queue, t, _ex);
 
           current = deltas_get_current_time (pd->state);
@@ -1406,6 +1424,8 @@ impl_edu_csdms_models_CEM_run(
       }
       else
       {
+        //fprintf (stderr, "CEM: Time is less than current time (%f<%f)",
+        //                 time, current);
         PRINT (2, "Time is less than current time");
       }
     }
@@ -1450,17 +1470,22 @@ impl_edu_csdms_models_CEM_finalize(
     /* Clean up CEM. */
     PRINT (1, "Clean up.");
 
-    { /* Free resources. */
-      deltas_finalize(pd->state, TRUE);
-      pd->state = NULL;
-    }
+    if (pd->state)
+    {
+      { /* Free resources. */
+        deltas_finalize(pd->state, TRUE);
+        pd->state = NULL;
+      }
 
-    edu_csdms_tools_PrintQueue_close (pd->print_queue, _ex);
+      PRINT (1, "Close print queue.");
+      edu_csdms_tools_PrintQueue_close (pd->print_queue, _ex);
 
-    edu_csdms_tools_IRFPortQueue_finalize_ports (pd->irf_ports, _ex);
-    edu_csdms_tools_IRFPortQueue_disconnect_ports (pd->irf_ports, _ex);
+      PRINT (1, "Finalize ports.");
+      edu_csdms_tools_IRFPortQueue_finalize_ports (pd->irf_ports, _ex);
+      PRINT (1, "Disconnect ports.");
+      edu_csdms_tools_IRFPortQueue_disconnect_ports (pd->irf_ports, _ex);
   
-    PRINT (1, "Done finalize step");
+      PRINT (1, "Done finalize step");
 
 #if 0
     edu_csdms_tools_irfports_finalize_ports (pd->irf_ports, _ex);
@@ -1471,7 +1496,9 @@ impl_edu_csdms_models_CEM_finalize(
     edu_csdms_tools_ncgsfiles_close_all (pd->ncgs_files, _ex);
 #endif
 
-    pd->log = NULL;
+      pd->log = NULL;
+    }
+
     return;
 
 #if 0
@@ -1835,12 +1862,45 @@ impl_edu_csdms_models_CEM_get_raster_data(
         double* data = deltas_get_value_data (pd->state, val_string, lower,
                                              upper, stride);
 
+        {
+          double max = -1e32;
+          double min = 1e32;
+          int i;
+          int len = (upper[0]-lower[0]+1)*(upper[1]-lower[1]+1);
+
+//fprintf (stderr, "CEM: Array len is %d\n", len);
+          for (i=0; i<len; i++)
+          {
+            if (data[i]>max)
+              max = data[i];
+            if (data[i]<min)
+              min = data[i];
+          }
+//fprintf (stderr, "CEM: min/max %s = %f/%f\n", val_string, min, max);       
+        }
+
+/*
+      if (g_ascii_strcasecmp (val_string, "elevation")==0)
+      {
+        int i;
+
+        for (i=0; i<100000; i++)
+          if (i<500*30)
+            data[i] = 1;
+          else
+            data[i] = -1;
+      }
+*/
+//fprintf (stderr, "CEM: lower = %d, %d\n", lower[0], lower[1]);
+//fprintf (stderr, "CEM: upper = %d, %d\n", upper[0], upper[1]);
+//fprintf (stderr, "CEM: stride = %d, %d\n", stride[0], stride[1]);
         data += lower[0];
         //upper[0] += lower[0];
         if (data)
         {
           vals = sidl_double__array_borrow (data, 2, lower, upper, stride);
         }
+//fprintf (stderr, "DONE\n");
       }
 
       generic = (struct sidl__array*)vals;
@@ -2017,8 +2077,31 @@ impl_edu_csdms_models_CEM_get_value_set(
       struct sidl__array* data =
         impl_edu_csdms_models_CEM_get_raster_data (self, val_string, _ex);
       vals = sidl_double__array_cast (data);
+//fprintf (stderr, "CEM: Create a ScalarSet from the raster data\n");
+//fprintf (stderr, "CEM: dimen = %d\n", sidl_double__array_dimen (vals));
+//fprintf (stderr, "CEM: lower = %d, %d\n", sidl_double__array_lower (vals, 0),
+//                                          sidl_double__array_lower (vals, 1));
+//fprintf (stderr, "CEM: upper = %d, %d\n", sidl_double__array_upper (vals, 0),
+//                                          sidl_double__array_upper (vals, 1));
+//fprintf (stderr, "CEM: stride = %d, %d\n", sidl_double__array_stride (vals, 0),
+//                                          sidl_double__array_stride (vals, 1));
+
+/*
+{
+  int i, j, n;
+  int len_i = sidl_double__array_length (vals, 0);
+  int len_j = sidl_double__array_length (vals, 1);
+  double* first = sidl_double__array_first (vals);
+  for (j=0, n=0; j<len_j; j++)
+    for (i=0; i<len_i; i++, n++)
+      if (fabs (first[n]-sidl_double__array_get2 (vals, i, j))>1e-6)
+        fprintf (stderr, "val[%d][%d] = %f (%f)\n", i, j,
+                         sidl_double__array_get2 (vals, i, j), first[n]);
+}
+*/
 
       edu_csdms_openmi_ScalarSet_setRasterGrid (scalarSet, vals, _ex);
+//fprintf (stderr, "CEM: Cast it to a ValueSet\n");
     }
     return edu_csdms_openmi_IValueSet__cast (scalarSet, _ex);
   EXIT:;
@@ -2105,42 +2188,47 @@ impl_edu_csdms_models_CEM_set_value_set(
                                  "SedimentFlux")==0)
     {
       const int nx = deltas_get_nx (pd->state);
-      const int ny = deltas_get_ny (pd->state);
-      const int len = nx*ny/2;
+      const int ny = deltas_get_ny (pd->state)/2;
+      const int len = nx*ny;
       int i;
       double max = -1e32;
       double min = 1e32;
       double* vals;
-      struct sidl_double__array* array;
+//      struct sidl_double__array* array;
 
-      fprintf (stderr, "Mapped values start\n");
-      fprintf (stderr, "There should be %d values\n", len);
-      fprintf (stderr, "There are %d values\n", edu_csdms_openmi_ScalarSet_getCount (scalarSet, _ex));
+//      fprintf (stderr, "Mapped values start\n");
+//      fprintf (stderr, "There should be %d values\n", len);
+//      fprintf (stderr, "There are %d values\n", edu_csdms_openmi_ScalarSet_getCount (scalarSet, _ex));
 
-      array = edu_csdms_openmi_ScalarSet_toArray (scalarSet, _ex);
-fprintf (stderr, "Get first value\n");
-      vals = sidl_double__array_first (array);
-fprintf (stderr, "Find max and min\n");
-fprintf (stderr, "Array dimension is %d\n", sidl_double__array_dimen (array));
-fprintf (stderr, "Array length is %d\n", sidl_double__array_length (array, 0));
+//      array = edu_csdms_openmi_ScalarSet_toArray (scalarSet, _ex);
+//fprintf (stderr, "Get first value\n");
+//      vals = sidl_double__array_first (array);
+//fprintf (stderr, "Find max and min\n");
+//fprintf (stderr, "Array dimension is %d\n", sidl_double__array_dimen (array));
+//fprintf (stderr, "Array length is %d\n", sidl_double__array_length (array, 0));
 
+      vals = g_new (double, len);
       for (i=0; i<len; i++)
       {
-        //vals[i] = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, i, _ex);
+        vals[i] = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, i, _ex);
 
         if (vals[i]>max)
           max = vals[i];
         if (vals[i]<min)
           min = vals[i];
+
+        //vals[i] = 0;
         //fprintf (stderr, "%f\n", vals[i]);
       }
 
-      fprintf (stderr, "Max value is %f\n", max);
-      fprintf (stderr, "Min value is %f\n", min);
-      fprintf (stderr, "Mapped values end\n");
+      //vals[17250] = 250.;
+      fprintf (stderr, "CEM: Max discharge value (from Avulsion) is %f\n", max);
+      fprintf (stderr, "CEM: Min discharge value (from Avulsion) is %f\n", min);
+      //fprintf (stderr, "Mapped values end\n");
 
       deltas_set_sediment_flux_grid (pd->state, vals);
 
+      g_free (vals);
     }
     else
       fprintf (stderr, "%s: Invalid value string.", val_string);
