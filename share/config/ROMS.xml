@@ -1,0 +1,68 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/ROMS/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/roms/upwelling}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>small</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>init</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Grid">
+    <entry name="/ROMS/Input/Var/NIRhoPoints">
+      <label>Number nodes in i-direction (-)</label>
+      <help_brief>Number of i-direction interior rho-points (-)</help_brief>
+      <default>41</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NJRhoPoints">
+      <label>Number nodes in j-direction (-)</label>
+      <help_brief>Number of j-direction interior rho-points (-)</help_brief>
+      <default>80</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NVertLevels">
+      <label>Number vertical levels (-)</label>
+      <help_brief>Number of vertical levels (-)</help_brief>
+      <default>16</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/ROMS/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>ROMS</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Hernan Arango</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>
