@@ -1,0 +1,41 @@
+# This file contains user-specified component-specific variables. 
+# These will be applied when building the impl and skeleton code,
+# as appropriate.
+# Only set those which are necessary for your component.
+# The normal way to set/reset these variables is using the
+# bocca config CLASSNAME --var=VARUSER --value=VALUE
+# --------------------------------------------------------------
+# Include path directives, including paths to Fortran modules
+INCLUDES = -I/data/progs/roms/projects/upwelling/Build/ -I/data/progs/netcdf/4.1.1/include/
+#INCLUDES = -I/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build 
+#INCLUDES = -I/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build -I/data/progs/netcdf/3.6.3/include
+#INCLUDES = -I/data/progs/roms/projects/upwelling/Build
+
+# Library paths and names, binaries
+LIBS = -L/data/progs/roms/projects/upwelling/Build/ -L/data/progs/netcdf/4.1.1/lib -lnetcdf -lnetcdff -lupwelling
+#LIBS = -L/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build -lupwelling
+#LIBS = -L/data/progs/netcdf/3.6.3/lib -lnetcdf -L/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build -lupwelling -lnetcdf
+#LIBS = -L/data/progs/roms/projects/upwelling/Build -lupwelling 
+
+# java 
+CLASSPATH_USER=
+# python
+PYTHONPATH_USER=
+
+# Optional additional compiler flags (Note: many compiler flags are only weakly portable)
+# Removing $(BOCCA_IO_FLAGS) from the build options will turn off all 
+# bocca-generated print statements for c, c++, and f90 preprocessor.
+# It may reduce the precision of errs reported in exception messages for c++.
+
+# f90 preprocessor
+FPPFLAGS_USER= $(BOCCA_IO_FLAGS)
+
+# compiler flags
+CFLAGS_USER=   $(BOCCA_IO_FLAGS)
+CXXFLAGS_USER= $(BOCCA_IO_FLAGS)
+F90FLAGS_USER=
+F77FLAGS_USER=
+JAVAFLAGS_USER=
+
+# Additional phony targets defined by users (the initial targets in make.rules.user are already included)
+USER_PHONY = 
