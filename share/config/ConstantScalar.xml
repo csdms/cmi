@@ -1,0 +1,28 @@
+<dialog>
+  <tab name="Run Parameters">
+    <entry name="/ConstantScalar/Value">
+      <label>Constant value</label>
+      <help_brief>Constant value</help_brief>
+      <default>250</default>
+      <type>Float</type>
+      <range>
+        <min>-1e37</min>
+        <max>1e37</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/ConstantScalar/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>ConstantScalar</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ConstantScalar/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Eric Hutton</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>
