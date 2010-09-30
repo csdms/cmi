@@ -111,7 +111,7 @@
     <import-impl/>
     <extras>make.vars.user</extras>
   </component>
-  <component name="models.Roms" language="c">
+  <component name="models.ROMS" language="f90">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
     <provides>IRFPort@ROMS</provides>
@@ -119,12 +119,27 @@
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
     <requires>tools.PrintQueue</requires>
-    <requires>tools.IRFPortQueue</requires-->
+    <requires>tools.IRFPortQueue</requires>
+    <requires>tools.Verbose</requires-->
     <requires>tools.ConfigDialog</requires>
-    <requires>tools.Verbose</requires>
+    <requires>tools.TemplateFiles</requires>
     <import-impl/>
     <extras>make.vars.user</extras>
   </component>
-
+  <component name="utils.ConstantScalar" language="c">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <!--provides>gov.cca.ports.GoPort@Run</provides-->
+    <provides>IRFPort@ConstantScalar</provides>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <!--requires>tools.PrintQueue</requires>
+    <requires>tools.IRFPortQueue</requires-->
+    <requires>tools.Verbose</requires>
+    <requires>tools.ConfigDialog</requires>
+    <!--requires>tools.TemplateFiles</requires-->
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
 
 </project>
