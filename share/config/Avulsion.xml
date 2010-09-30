@@ -27,7 +27,7 @@
     <entry name="/Avulsion/Input/Var/AngleVariance">
       <label>Standard deviation of avulsion angles (deg)</label>
       <help_brief>Standard deviation of avulsion angles (deg)</help_brief>
-      <default>5</default>
+      <default>0</default>
       <type>Float</type>
       <range>
         <min>0</min>
@@ -37,7 +37,7 @@
     <entry name="/Avulsion/Input/Var/AngleMin">
       <label>Minimum angle (deg)</label>
       <help_brief>Minimum angle (deg)</help_brief>
-      <default>0</default>
+      <default>-45</default>
       <type>Float</type>
       <range>
         <min>-180</min>
@@ -47,7 +47,7 @@
     <entry name="/Avulsion/Input/Var/AngleMax">
       <label>Maximum angle (deg)</label>
       <help_brief>Maximum angle (deg)</help_brief>
-      <default>90</default>
+      <default>45</default>
       <type>Float</type>
       <range>
         <min>-180</min>
@@ -117,14 +117,14 @@
       </range>
     </entry>
   </tab>
-  <tab name="Output Values">
-    <entry name="/Avulsion/Output/Scalar/Dir">
+  <tab name="Output Grids">
+    <entry name="/Avulsion/Output/Grid/Dir">
       <label>Output directory</label>
-      <help_brief>Path to output files.</help_brief>
+      <help_brief>Path to output grid files.</help_brief>
       <default>${cwd}</default>
       <type>String</type>
     </entry>
-    <entry name="/Avulsion/Output/Scalar/Interval">
+    <entry name="/Avulsion/Output/Grid/Interval">
       <label>Interval between output files</label>
       <help_brief>Interval between output files</help_brief>
       <default>10</default>
@@ -134,10 +134,7 @@
       </range>
       <type>Float</type>
     </entry>
-    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE"/>
-    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE_MEAN"/>
-    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE_MAX"/>
-    <entry class="OutputFile" name="/Avulsion/Output/Scalar/Var/INCOMING_ANGLE_MIN"/>
+    <entry class="OutputFile" name="/CEM/Output/Grid/Var/Elevation"/>
   </tab>
   <tab name="About">
     <entry name="/Avulsion/ModelName">
