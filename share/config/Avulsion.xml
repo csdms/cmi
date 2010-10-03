@@ -54,6 +54,26 @@
         <max>180</max>
       </range>
     </entry>
+    <entry name="/Avulsion/Input/Var/NumberOfRivers">
+      <label>Number of rivers</label>
+      <help_brief>Number of rivers</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>5</max>
+      </range>
+    </entry>
+    <entry name="/Avulsion/Input/Var/BedLoadExponent">
+      <label>Bed load exponent</label>
+      <help_brief>Exponent used in dividing sediment among branches</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>10</max>
+      </range>
+    </entry>
   </tab>
   <tab name="Grid">
     <entry name="/Avulsion/Grid/Rows">

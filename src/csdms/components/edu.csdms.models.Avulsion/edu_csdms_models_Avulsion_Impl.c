@@ -786,6 +786,8 @@ impl_edu_csdms_models_Avulsion_initialize(
       int hinge[2];
       double limit[2];
       double variance;
+      double exponent;
+      int n_rivers;
 
       pd->state = avulsion_init (NULL);
 
@@ -807,6 +809,10 @@ impl_edu_csdms_models_Avulsion_initialize(
                    "/Avulsion/Input/Var/AngleMax", 0, _ex);
       variance = gov_cca_TypeMap_getDouble (pd->userinput,
                    "/Avulsion/Input/Var/AngleVariance", 0, _ex);
+      exponent = gov_cca_TypeMap_getDouble (pd->userinput,
+                   "/Avulsion/Input/Var/BedLoadExponent", 1., _ex);
+      n_rivers = gov_cca_TypeMap_getInt (pd->userinput,
+                   "/Avulsion/Input/Var/NumberOfRivers", 1, _ex);
 
       limit[0] *= 3.14/180.;
       limit[1] *= 3.14/180.;
@@ -820,6 +826,8 @@ impl_edu_csdms_models_Avulsion_initialize(
       avulsion_set_variance (pd->state, variance);
       PRINT (2, "Set angle hinge");
       avulsion_set_river_hinge (pd->state, hinge);
+      avulsion_set_bed_load_exponent (pd->state, exponent);
+      avulsion_set_total_river_mouths (pd->state, n_rivers);
 //      avulsion_set_hydro (pd->state, hydro);
     }
 
