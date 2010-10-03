@@ -14,10 +14,10 @@ PROJECT_DIR=$(dirname $(readlink -f $0))
 
 if [ -z "${CMT_PROJECT_DIALOG_PATH+x}" ] ; then
   echo Setting CMT_PROJECT_DIALOG_PATH
-  export CMT_PROJECT_DIALOG_PATH=$PROJECT_DIR/../share/config
+  export CMT_PROJECT_DIALOG_PATH=$PROJECT_DIR/../../share/config
 fi
 if [ -z "${CMT_PROJECT_TEMPLATE_PATH+x}" ] ; then
-  export CMT_PROJECT_TEMPLATE_PATH=$PROJECT_DIR/../share/templates
+  export CMT_PROJECT_TEMPLATE_PATH=$PROJECT_DIR/../../share/templates
 fi
 
 echo $CMT_PROJECT_DIALOG_PATH
