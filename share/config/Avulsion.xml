@@ -3,13 +3,13 @@
     <entry name="/Avulsion/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>small</default>
+      <default>avulsion</default>
       <type>String</type>
     </entry>
     <entry name="/Avulsion/CasePrefix">
       <label>Case prefix</label>
       <help_brief>Case prefix for input/output files.</help_brief>
-      <default>init</default>
+      <default>one_river</default>
       <type>String</type>
     </entry>
   </tab>
@@ -37,7 +37,7 @@
     <entry name="/Avulsion/Input/Var/AngleMin">
       <label>Minimum angle (deg)</label>
       <help_brief>Minimum angle (deg)</help_brief>
-      <default>-45</default>
+      <default>-60</default>
       <type>Float</type>
       <range>
         <min>-180</min>
@@ -47,7 +47,7 @@
     <entry name="/Avulsion/Input/Var/AngleMax">
       <label>Maximum angle (deg)</label>
       <help_brief>Maximum angle (deg)</help_brief>
-      <default>45</default>
+      <default>60</default>
       <type>Float</type>
       <range>
         <min>-180</min>
@@ -70,7 +70,7 @@
       <default>1</default>
       <type>Float</type>
       <range>
-        <min>1</min>
+        <min>.1</min>
         <max>10</max>
       </range>
     </entry>

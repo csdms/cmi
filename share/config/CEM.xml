@@ -3,13 +3,13 @@
     <entry name="/CEM/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>adriatic</default>
+      <default>cem</default>
       <type>String</type>
     </entry>
     <entry name="/CEM/CasePrefix">
       <label>Case prefix</label>
       <help_brief>Case prefix for input/output files.</help_brief>
-      <default>init</default>
+      <default>one_river</default>
       <type>String</type>
     </entry>
   </tab>
