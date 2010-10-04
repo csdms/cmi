@@ -9,13 +9,13 @@
     <entry name="/ROMS/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>small</default>
+      <default>upwelling</default>
       <type>String</type>
     </entry>
     <entry name="/ROMS/CasePrefix">
       <label>Case prefix</label>
       <help_brief>Case prefix for input/output files.</help_brief>
-      <default>init</default>
+      <default>test</default>
       <type>String</type>
     </entry>
   </tab>
