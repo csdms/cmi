@@ -32,7 +32,6 @@ USE ocean_control_mod, only : ROMS_finalize
 ! Bocca generated code. bocca.protected.begin(edu.csdms.models.ROMS.use)
   ! CCA framework services module
   use gov_cca_Services
-  use gov_cca_TypeMap
 ! Bocca generated code. bocca.protected.end(edu.csdms.models.ROMS.use)
 
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.use)

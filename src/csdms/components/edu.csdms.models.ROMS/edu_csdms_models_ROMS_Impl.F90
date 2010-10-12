@@ -734,7 +734,7 @@ recursive subroutine ROMS_setServicesya4c29b588xe_mi(self, services,           &
       call cast(generalPort, ppf, throwawayException)
       if (not_null(ppf)) then
         call initParameterData(ppf, userinput, &
-                               "userinput", throwawayException)
+                               "Configure", throwawayException)
         call setBatchTitle(ppf, userinput, &
                            "ROMS Parameters", throwawayException)
 
