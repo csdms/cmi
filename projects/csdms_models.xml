@@ -111,21 +111,9 @@
     <import-impl/>
     <extras>make.vars.user</extras>
   </component>
-  <component name="models.ROMS" language="f90">
-    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@ROMS</provides>
-    <!--requires>ScalarSet</requires>
-    <requires>IScalarSet</requires>
-    <requires>ValueSet</requires>
-    <requires>tools.PrintQueue</requires>
-    <requires>tools.IRFPortQueue</requires>
-    <requires>tools.Verbose</requires-->
-    <requires>tools.ConfigDialog</requires>
-    <requires>tools.TemplateFiles</requires>
-    <import-impl/>
-    <extras>make.vars.user</extras>
-  </component>
+  <xi:include href="roms.xml" parse="xml"/>
+  <xi:include href="ltrans.xml" parse="xml"/>
+
   <component name="utils.ConstantScalar" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <!--provides>gov.cca.ports.GoPort@Run</provides-->
