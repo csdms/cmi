@@ -38,242 +38,242 @@
 !
 ! Application title.
 
-       TITLE = Wind-Driven Upwelling/Downwelling over a Periodic Channel
+       TITLE = ${TITLE}
 
 ! C-preprocessing Flag.
 
-    MyAppCPP = UPWELLING
+    MyAppCPP = ${MyAppCPP}
 
 ! Input variable information file name.  This file needs to be processed
 ! first so all information arrays can be initialized properly.
 
-     VARNAME = varinfo.dat
+     VARNAME = ${VARNAME}
 
 ! Grid dimension parameters. See notes below in the Glossary for how to set
 ! these parameters correctly.
 
-          Lm == ${NIRhoPoints}            ! Number of I-direction INTERIOR RHO-points
-          Mm == ${NJRhoPoints}            ! Number of J-direction INTERIOR RHO-points
-           N == ${NVertLevels}            ! Number of vertical levels
+          Lm == ${Lm}            ! Number of I-direction INTERIOR RHO-points
+          Mm == ${Mm}            ! Number of J-direction INTERIOR RHO-points
+           N == ${N}             ! Number of vertical levels
 
-        Nbed =  0             ! Number of sediment bed layers
+        Nbed =  ${Nbed}           ! Number of sediment bed layers
 
-         NAT =  2             ! Number of active tracers (usually, 2)
-         NPT =  0             ! Number of inactive passive tracers
-         NCS =  0             ! Number of cohesive (mud) sediment tracers
-         NNS =  0             ! Number of non-cohesive (sand) sediment tracers
+         NAT =  ${NAT}            ! Number of active tracers (usually, 2)
+         NPT =  ${NPT}            ! Number of inactive passive tracers
+         NCS =  ${NCS}            ! Number of cohesive (mud) sediment tracers
+         NNS =  ${NNS}            ! Number of non-cohesive (sand) sediment tracers
 
 ! Domain decomposition parameters for serial, distributed-memory or
 ! shared-memory configurations used to determine tile horizontal range
 ! indices (Istr,Iend) and (Jstr,Jend), [1:Ngrids].
 
-      NtileI == 1                               ! I-direction partition
-      NtileJ == 1                               ! J-direction partition
+      NtileI == ${NtileI}                             ! I-direction partition
+      NtileJ == ${NtileJ}                             ! J-direction partition
 
 ! Time-Stepping parameters.
 
-      NTIMES == 1440
-          DT == 300.0d0
-     NDTFAST == 30
+      NTIMES == ${NTIMES}
+          DT == ${DT}
+     NDTFAST == ${NDTFAST}
 
 ! Model iteration loops parameters.
 
-       ERstr =  1
-       ERend =  1
-      Nouter =  1
-      Ninner =  1
-  Nintervals =  1
+       ERstr =  ${ERstr}
+       ERend =  ${ERend}
+      Nouter =  ${Nouter}
+      Ninner =  ${Ninner}
+  Nintervals =  ${Nintervals}
 
 ! Number of eigenvalues (NEV) and eigenvectors (NCV) to compute for the
 ! Lanczos/Arnoldi problem in the Generalized Stability Theory (GST)
 ! analysis. NCV must be greater than NEV (see documentation below).
 
-         NEV =  2                               ! Number of eigenvalues
-         NCV =  10                              ! Number of eigenvectors
+         NEV =  ${NEV}                              ! Number of eigenvalues
+         NCV =  ${NCV}                              ! Number of eigenvectors
 
 ! Input/Output parameters.
 
-       NRREC == 0
-   LcycleRST == T
-        NRST == 288
-        NSTA == 1
-        NFLT == 1
-       NINFO == 1
+       NRREC == ${NRREC}
+   LcycleRST == ${LcycleRST}
+        NRST == ${NRST}
+        NSTA == ${NSTA}
+        NFLT == ${NFLT}
+       NINFO == ${NINFO}
 
 ! Output history, average, diagnostic files parameters.
 
-     LDEFOUT == T
-        NHIS == 72
-     NDEFHIS == 0
-      NTSAVG == 1
-        NAVG == 72
-     NDEFAVG == 0
-      NTSDIA == 1
-        NDIA == 72
-     NDEFDIA == 0
+     LDEFOUT == ${LDEFOUT}
+        NHIS == ${NHIS}
+     NDEFHIS == ${NDEFHIS}
+      NTSAVG == ${NTSAVG}
+        NAVG == ${NAVG}
+     NDEFAVG == ${NDEFAVG}
+      NTSDIA == ${NTSDIA}
+        NDIA == ${NDIA}
+     NDEFDIA == ${NDEFDIA}
 
 ! Output tangent linear and adjoint models parameters.
 
-   LcycleTLM == F
-        NTLM == 72
-     NDEFTLM == 0
-   LcycleADJ == F
-        NADJ == 72
-     NDEFADJ == 0
-        NSFF == 72
-        NOBC == 72
+   LcycleTLM == ${LcycleTLM}
+        NTLM == ${NTLM}
+     NDEFTLM == ${NDEFTLM}
+   LcycleADJ == ${LcycleADJ}
+        NADJ == ${NADJ}
+     NDEFADJ == ${NDEFADJ}
+        NSFF == ${NSFF}
+        NOBC == ${NOBC}
 
 ! Output check pointing GST restart parameters.
 
-     LrstGST =  F                               ! GST restart switch
-  MaxIterGST =  500                             ! maximun number of iterations
-        NGST =  10                              ! check pointing interval
+     LrstGST =  ${LrstGST}                           ! GST restart switch
+  MaxIterGST =  ${MaxIterGST}                        ! maximun number of iterations
+        NGST =  ${NGST}                              ! check pointing interval
 
 ! Relative accuracy of the Ritz values computed in the GST analysis.
 
-    Ritz_tol =  1.0d-15
+    Ritz_tol =  ${Ritz_tol}
 
 ! Harmonic/biharmonic horizontal diffusion of tracer for nonlinear model
 ! and adjoint-based algorithms: [1:NAT+NPT,Ngrids].
 
-        TNU2 == 0.0d0  0.0d0                    ! m2/s
-        TNU4 == 2*0.0d0                         ! m4/s
+        TNU2 == ${TNU2_I}  ${TNU2_J}            ! m2/s
+        TNU4 == ${TNU4_I}  ${TNU4_J}            ! m4/s
 
-     ad_TNU2 == 0.0d0  0.0d0                    ! m2/s
-     ad_TNU4 == 0.0d0  0.0d0                    ! m4/s
+     ad_TNU2 == ${ad_TNU2_I}  ${ad_TNU2_J}      ! m2/s
+     ad_TNU4 == ${ad_TNU4_I}  ${ad_TNU4_J}      ! m4/s
 
 ! Harmononic/biharmonic, horizontal viscosity coefficient for nonlinear model
 ! and adjoint-based algorithms: [Ngrids].
 
-       VISC2 == 5.0d0                           ! m2/s
-       VISC4 == 0.0d0                           ! m4/s
+       VISC2 == ${VISC2}                        ! m2/s
+       VISC4 == ${VISC4}                        ! m4/s
 
-    ad_VISC2 == 0.0d0                           ! m2/s
-    ad_VISC4 == 0.0d0                           ! m4/s
+    ad_VISC2 == ${ad_VISC2}                     ! m2/s
+    ad_VISC4 == ${ad_VISC4}                     ! m4/s
 
 ! Vertical mixing coefficients for tracers in nonlinear model and
 ! basic state scale factor in adjoint-based algorithms: [1:NAT+NPT,Ngrids]
 
-     AKT_BAK == 1.0d-6 1.0d-6                   ! m2/s
+     AKT_BAK == ${AKT_BAK_active} ${AKT_BAK_passive}    ! m2/s
 
-  ad_AKT_fac == 1.0d0  1.0d0                    ! nondimensional
+  ad_AKT_fac == ${ad_AKT_fac_active} ${ad_AKT_fac_passive}   ! nondimensional
 
 ! Vertical mixing coefficient for momentum for nonlinear model and
 ! basic state scale factor in adjoint-based algorithms: [Ngrids].
 
-     AKV_BAK == 1.0d-5                          ! m2/s
+     AKV_BAK == ${AKV_BAK}                      ! m2/s
 
-  ad_AKV_fac == 1.0d0                           ! nondimensional
+  ad_AKV_fac == ${ad_AKV_fac}                   ! nondimensional
 
 ! Turbulent closure parameters.
 
-     AKK_BAK == 5.0d-6                          ! m2/s
-     AKP_BAK == 5.0d-6                          ! m2/s
-      TKENU2 == 0.0d0                           ! m2/s
-      TKENU4 == 0.0d0                           ! m4/s
+     AKK_BAK == ${AKK_BAK}                          ! m2/s
+     AKP_BAK == ${AKP_BAK}                          ! m2/s
+      TKENU2 == ${TKENU2}                           ! m2/s
+      TKENU4 == ${TKENU4}                           ! m4/s
 
 ! Generic length-scale turbulence closure parameters.
 
-       GLS_P == 3.0d0                           ! K-epsilon
-       GLS_M == 1.5d0
-       GLS_N == -1.0d0
-    GLS_Kmin == 7.6d-6
-    GLS_Pmin == 1.0d-12
+       GLS_P == ${GLS_P}                          ! K-epsilon
+       GLS_M == ${GLS_M}
+       GLS_N == ${GLS_N}
+    GLS_Kmin == ${GLS_Kmin}
+    GLS_Pmin == ${GLS_Pmin}
 
-    GLS_CMU0 == 0.5477d0
-      GLS_C1 == 1.44d0
-      GLS_C2 == 1.92d0
-     GLS_C3M == -0.4d0
-     GLS_C3P == 1.0d0
-    GLS_SIGK == 1.0d0
-    GLS_SIGP == 1.30d0
+    GLS_CMU0 == ${GLS_CMU0}
+      GLS_C1 == ${GLS_C1}
+      GLS_C2 == ${GLS_C2}
+     GLS_C3M == ${GLS_C3M}
+     GLS_C3P == ${GLS_C3P}
+    GLS_SIGK == ${GLS_SIGK}
+    GLS_SIGP == ${GLS_SIGP}
 
 ! Constants used in surface turbulent kinetic energy flux computation.
 
-  CHARNOK_ALPHA == 1400.0d0         ! Charnok surface roughness
- ZOS_HSIG_ALPHA == 0.5d0            ! roughness from wave amplitude
-       SZ_ALPHA == 0.25d0           ! roughness from wave dissipation
-      CRGBAN_CW == 100.0d0          ! Craig and Banner wave breaking
+  CHARNOK_ALPHA == ${CHARNOK_ALPHA}        ! Charnok surface roughness
+ ZOS_HSIG_ALPHA == ${ZOS_HSIG_ALPHA}       ! roughness from wave amplitude
+       SZ_ALPHA == ${SZ_ALPHA}             ! roughness from wave dissipation
+      CRGBAN_CW == ${CRGBAN_CW}            ! Craig and Banner wave breaking
 
 ! Constants used in momentum stress computation.
 
-        RDRG == 3.0d-04                    ! m/s
-       RDRG2 == 3.0d-03                    ! nondimensional
-         Zob == 0.02d0                     ! m
-         Zos == 0.02d0                     ! m
+        RDRG == ${RDRG}                    ! m/s
+       RDRG2 == ${RDRG2}                   ! nondimensional
+         Zob == ${Zob}                     ! m
+         Zos == ${Zos}                     ! m
 
 ! Height (m) of atmospheric measurements for Bulk fluxes parameterization.
 
-      BLK_ZQ == 10.0d0                     ! air humidity
-      BLK_ZT == 10.0d0                     ! air temperature
-      BLK_ZW == 10.0d0                     ! winds
+      BLK_ZQ == ${BLK_ZQ}                  ! air humidity
+      BLK_ZT == ${BLK_ZT}                  ! air temperature
+      BLK_ZW == ${BLK_ZW}                  ! winds
 
 ! Minimum depth for wetting and drying.
 
-       DCRIT == 0.10d0                     ! m
+       DCRIT == ${DCRIT}                   ! m
 
 ! Various parameters.
 
-       WTYPE == 1
-     LEVSFRC == 15
-     LEVBFRC == 1
+       WTYPE == ${WTYPE}
+     LEVSFRC == ${LEVSFRC}
+     LEVBFRC == ${LEVBFRC}
 
 ! Set vertical, terrain-following coordinates transformation equation and
 ! stretching function (see below for details), [1:Ngrids].
 
-  Vtransform == 1                          ! transformation equation
- Vstretching == 1                          ! stretching function
+  Vtransform == ${Vtransform}              ! transformation equation
+ Vstretching == ${Vstretching}             ! stretching function
 
 ! Vertical S-coordinates parameters (see below for details), [1:Ngrids].
 
-     THETA_S == 3.0d0                      ! surface stretching parameter
-     THETA_B == 0.0d0                      ! bottom  stretching parameter
-      TCLINE == 50.0d0                     ! critical depth (m)
+     THETA_S == ${THETA_S}                 ! surface stretching parameter
+     THETA_B == ${THETA_B}                 ! bottom  stretching parameter
+      TCLINE == ${TCLINE}                  ! critical depth (m)
 
 ! Mean Density and Brunt-Vaisala frequency.
 
-        RHO0 =  1025.0d0                   ! kg/m3
-     BVF_BAK =  1.0d-5                     ! 1/s2
+        RHO0 = ${RHO0}                    ! kg/m3
+     BVF_BAK = ${BVF_BAK}                 ! 1/s2
 
 ! Time-stamp assigned for model initialization, reference time
 ! origin for tidal forcing, and model reference time for output
 ! NetCDF units attribute.
 
-      DSTART =  0.0d0                      ! days
-  TIDE_START =  0.0d0                      ! days
-    TIME_REF =  0.0d0                      ! yyyymmdd.dd
+      DSTART = ${DSTART}                   ! days
+  TIDE_START = ${TIDE_START}               ! days
+    TIME_REF = ${TIME_REF}                 ! yyyymmdd.dd
 
 ! Nudging/relaxation time scales, inverse scales will be computed
 ! internally, [1:Ngrids].
 
-       TNUDG == 2*0.0d0                    ! days
-       ZNUDG == 0.0d0                      ! days
-      M2NUDG == 0.0d0                      ! days
-      M3NUDG == 0.0d0                      ! days
+       TNUDG == ${TNUDG1}  ${TNUDG2}       ! days
+       ZNUDG == ${ZNUDG}                   ! days
+      M2NUDG == ${M2NUDG}                  ! days
+      M3NUDG == ${M3NUDG}                  ! days
 
 ! Factor between passive (outflow) and active (inflow) open boundary
 ! conditions, [1:Ngrids]. If OBCFAC > 1, nudging on inflow is stronger
 ! than on outflow (recommended).
 
-      OBCFAC == 0.0d0                      ! nondimensional
+      OBCFAC == ${OBCFAC}                  ! nondimensional
 
 ! Linear equation of State parameters:
 
-          R0 == 1027.0d0                   ! kg/m3
-          T0 == 14.0d0                     ! Celsius
-          S0 == 35.0d0                     ! PSU
-       TCOEF == 1.7d-4                     ! 1/Celsius
-       SCOEF == 0.0d0                      ! 1/PSU
+          R0 == ${R0}                      ! kg/m3
+          T0 == ${T0}                      ! Celsius
+          S0 == ${S0}                      ! PSU
+       TCOEF == ${TCOEF}                   ! 1/Celsius
+       SCOEF == ${SCOEF}                   ! 1/PSU
 
 ! Slipperiness parameter: 1.0 (free slip) or -1.0 (no slip)
 
-      GAMMA2 == 1.0d0
+      GAMMA2 == ${GAMMA2}
 
 ! Logical switches (TRUE/FALSE) to specify which variables to consider on
 ! tracers point Sources/Sinks (like river runoff): [1:NAT+NPT,Ngrids].
 ! See glossary below for details.
 
-  LtracerSrc == T T                        ! temperature, salinity, inert
+  LtracerSrc == ${LtracerSrc_temp}  ${LtracerSrc_salin}  ${LtracerSrc_inert1}  ! temperature, salinity, inert
 
 ! Starting (DstrS) and ending (DendS) day for adjoint sensitivity forcing.
 ! DstrS must be less or equal to DendS. If both values are zero, their
