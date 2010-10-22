@@ -2041,6 +2041,32 @@ impl_edu_csdms_models_CEM_get_element_set(
       }
       return edu_csdms_openmi_IElementSet__cast (elementSet, _ex);
     }
+    else if (g_str_has_prefix (val_string, "Point"))
+    {
+      int i;
+      edu_csdms_openmi_ElementSet elementSet =
+        edu_csdms_openmi_ElementSet__create (_ex);
+
+      // Points
+      for (i=0; i<len; i+=3)
+      {
+        edu_csdms_openmi_Element element =
+          edu_csdms_openmi_Element__create (_ex);
+
+        {
+          edu_csdms_openmi_Vertex vertex =
+            edu_csdms_openmi_Vertex__create (_ex);
+
+          edu_csdms_openmi_Vertex_setX (vertex, , _ex);
+          edu_csdms_openmi_Vertex_setY (vertex, , _ex);
+          edu_csdms_openmi_Vertex_setZ (vertex, , _ex);
+
+          edu_csdms_openmi_Element_addVertex (element, vertex, _ex);
+        }
+
+        elementSet.addElement (element);
+      }
+    }
 
   EXIT:;
 
