@@ -79,11 +79,51 @@
     <entry name="/Sedflux/Input/Var/AvulsionStdDev">
       <label>Avulsion standard deviation (degrees)</label>
       <help_brief>Avulsion standard deviation (degrees)</help_brief>
-      <default>.5</default>
+      <default>0</default>
       <type>Float</type>
       <range>
         <min>0</min>
         <max>90</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/AvulsionMinAngle">
+      <label>Minimum river angle [degrees]</label>
+      <help_brief>Minimum river angle [degrees]</help_brief>
+      <default>-90</default>
+      <type>Float</type>
+      <range>
+        <min>-180</min>
+        <max>180</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/AvulsionMaxAngle">
+      <label>Maximum river angle [degrees]</label>
+      <help_brief>Maximum river angle [degrees]</help_brief>
+      <default>-90</default>
+      <type>Float</type>
+      <range>
+        <min>-180</min>
+        <max>180</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/AvulsionHingeRow">
+      <label>Row position of river hinge point</label>
+      <help_brief>Row position of river hinge point</help_brief>
+      <default>10</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/AvulsionHingeCol">
+      <label>Column position of river hinge point</label>
+      <help_brief>Column position of river hinge point</help_brief>
+      <default>30</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
       </range>
     </entry>
     <entry name="/Sedflux/Input/Var/PlumeCurrentVelocity">
@@ -99,7 +139,7 @@
     <entry name="/Sedflux/Input/Var/SuspendedLoadConc">
       <label>Suspended load concentration (-)</label>
       <help_brief>Per-grain suspended load concentration (-)</help_brief>
-      <default>.1</default>
+      <default>.01</default>
       <type>Float</type>
       <range>
         <min>0.01</min>
@@ -119,7 +159,7 @@
     <entry name="/Sedflux/Input/Var/BedLoadFlux">
       <label>Bed load flux (kg/s)</label>
       <help_brief>Bed load flux at river mouth (kg/s)</help_brief>
-      <default>100</default>
+      <default>1</default>
       <type>Float</type>
       <range>
         <min>0</min>
