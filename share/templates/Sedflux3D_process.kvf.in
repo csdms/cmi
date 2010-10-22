@@ -24,7 +24,7 @@ external sediment source file:          none
 
 [river]
 active:                                 yes
-logging:                                no
+logging:                                yes
 repeat interval:                        always
 river values:                           season
 river file:                             ${RiverFile}
@@ -36,9 +36,9 @@ logging:                                no
 repeat interval:                        always
 standard deviation (deg):               ${AvulsionStdDev}
 seed for random number generator:       1945
-minimum angle (deg):                    -179
-maximum angle (deg):                    -90 
-hinge point:                            10,30
+minimum angle (deg):                    ${AvulsionMinAngle}
+maximum angle (deg):                    ${AvulsionMaxAngle}
+hinge point:                            ${AvulsionHingeRow},${AvulsionHingeCol}
 /*
 minimum angle (deg):                    90
 maximum angle (deg):                    179
