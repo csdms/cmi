@@ -83,7 +83,7 @@ RAND_ELEV: max amplitude of random noise appied to initial topography, m
 SLOPED_SURF: Option for sloping initial surface
 0
 UPPER_BOUND_Z: elevation along upper boundary, m
-0
+30
 #
 #   Climate parameters
 #
@@ -222,10 +222,31 @@ REGINIT: initial regolith thickness
 MAXREGDEPTH: maximum depth of a single regolith layer (also "active layer")
 1.0
 #
+#   Chemical and physical weathering
+#
+CHEM_WEATHERING_LAW: possible values 0-1: 0 = None; 1 = Dissolution
+0
+MAXDISSOLUTIONRATE: maximum dissolution rate (kg/m3/yr)
+0.099
+CHEMDEPTH: depth scale for dissolution (m)
+0.18
+ROCKDENSITYINIT: initial rock bulk density (kg/m3)
+2270
+PRODUCTION_LAW: possible values 0-2: 0 = None; 1 = exponential law; 2 = exp. with density dep.
+0
+SOILPRODRATEINTERCEPT: density-dependent soil production rate intercept (m/yr)
+0.00055
+SOILPRODRATESLOPE: density-dependent soil production rate slope ( (m/yr)/(kg/m3) )
+0.00000017
+SOILPRODDEPTH: depth scale for soil production rate (m)
+0.30
+SOILBULKDENSITY: bulk density of soil (constant) (kg/m3)
+740
+#
 #   Tectonics / baselevel boundary conditions
 #
 UPTYPE: type of uplift (0=none, 1=uniform, 2=block, etc)
-0
+${UpliftType}
 UPDUR: duration of uplift (yrs)
 ${UpliftDuration}
 UPRATE: uplift rate (m/yr)
@@ -317,6 +338,10 @@ BANKFULLEVENT: precipitation rate of a bankfull event, in m/y
 #
 #   Other options
 #
+OPTFOREST: No idea what this does but CHILD wants it
+0
+OPTFIRE: No idea what this does but CHILD wants it
+0
 OPTFLOODPLAIN: option overbank deposition using modified Howard '92 model
 0
 OPTLOESSDEP: space-time uniform surface accumulation of sediment (loess)
