@@ -792,15 +792,15 @@ impl_edu_csdms_models_Avulsion_initialize(
       pd->state = avulsion_init (NULL);
 
       shape[0] = gov_cca_TypeMap_getInt (pd->userinput,
-                   "/Avulsion/Grid/Rows", 0, _ex);
+                   "/Avulsion/Grid/Rows", 500, _ex);
       shape[1] = gov_cca_TypeMap_getInt (pd->userinput,
-                   "/Avulsion/Grid/Columns", 0, _ex);
+                   "/Avulsion/Grid/Columns", 200, _ex);
       res[0] = gov_cca_TypeMap_getDouble (pd->userinput,
-                    "/Avulsion/Grid/RowSpacing", 0, _ex);
+                    "/Avulsion/Grid/RowSpacing", 100, _ex);
       res[1] = gov_cca_TypeMap_getDouble (pd->userinput,
-                    "/Avulsion/Grid/ColumnSpacing", 0, _ex);
+                    "/Avulsion/Grid/ColumnSpacing", 100, _ex);
       hinge[0] = gov_cca_TypeMap_getInt (pd->userinput,
-                   "/Avulsion/Grid/HingeRow", 0, _ex);
+                   "/Avulsion/Grid/HingeRow", 250, _ex);
       hinge[1] = gov_cca_TypeMap_getInt (pd->userinput,
                    "/Avulsion/Grid/HingeColumn", 0, _ex);
       limit[0] = gov_cca_TypeMap_getDouble (pd->userinput,
@@ -837,7 +837,7 @@ impl_edu_csdms_models_Avulsion_initialize(
       pd->print_queue = edu_csdms_tools_PrintQueue__create (_ex);
       edu_csdms_tools_PrintQueue_initialize (pd->print_queue, pd->userinput,
         "/Avulsion", port, _ex);
-      edu_csdms_tools_PrintQueue_add_files (pd->print_queue, "Output/Scalar",
+      edu_csdms_tools_PrintQueue_add_files (pd->print_queue, "Output/Grid",
                                             _ex);
     }
 
@@ -910,30 +910,35 @@ impl_edu_csdms_models_Avulsion_run(
       const double start = avulsion_get_start_time (pd->state);
       double print_time = edu_csdms_tools_PrintQueue_next_print_time (
                             pd->print_queue, _ex);
-/*
+
+fprintf (stderr, "#Avulsion: print time is %f\n", print_time);
+fprintf (stderr, "#Avulsion: time is %f\n", time);
+
       while (print_time<time)
       {
+fprintf (stderr, "#Avulsion: Running until next print time %f\n", print_time);
         impl_edu_csdms_models_Avulsion_run (self, print_time, _ex);
-    
         print_time = edu_csdms_tools_PrintQueue_next_print_time (
                        pd->print_queue, _ex);
+fprintf (stderr, "#Avulsion: Next print time %f\n", print_time);
       }
-*/
+
       current = avulsion_get_current_time (pd->state);
 
-      //fprintf (stderr, "Avulsion: current time is %f\n", current);
-      //fprintf (stderr, "Avulsion: horizon time is %f\n", horizon);
-      //fprintf (stderr, "Avulsion: time is %f\n", time);
-      //fflush (stderr);
+      fprintf (stderr, "Avulsion: current time is %f\n", current);
+      fprintf (stderr, "Avulsion: horizon time is %f\n", horizon);
+      fprintf (stderr, "Avulsion: time is %f\n", time);
+      fflush (stderr);
+
       if (time>horizon)
       {
         PRINT (1, "Requested time is greater than horizon.");
       }
-      else if (time>=current)
+      else if (time>current)
       {
-        double t;
-        const double dt = 1.;
-        const double stop_time = time;
+        //double t;
+        //const double dt = 1.;
+        //const double stop_time = time;
 
         //fprintf (stderr, "DEBUG: run from %f to %f\n", current, time);
         //fflush (stderr);
@@ -944,8 +949,10 @@ impl_edu_csdms_models_Avulsion_run(
           if (t>stop_time)
             t = stop_time;
 */
+      fprintf (stderr, "Avulsion: run ports until %f\n", current);
           edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, current, _ex);
 
+      fprintf (stderr, "Avulsion: map values\n");
           edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
             "Discharge", "mean_suspended_load_flux_from_river",
             "mean_suspended_load_flux_from_river", _ex);
@@ -971,11 +978,11 @@ impl_edu_csdms_models_Avulsion_run(
             double now;
             avulsion_run_until (pd->state, time);
             now = avulsion_get_current_time (pd->state);
-            //fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, time);
+            fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, time);
           }
 
           PRINT (2, "Print everything in the queue");
-//          edu_csdms_tools_PrintQueue_print_all (pd->print_queue, time, _ex);
+          edu_csdms_tools_PrintQueue_print_all (pd->print_queue, time, _ex);
 
           current = avulsion_get_current_time (pd->state);
 //        }
@@ -986,6 +993,8 @@ impl_edu_csdms_models_Avulsion_run(
         fflush (stderr);
       }
 
+      PRINT (2, "Print everything in the queue");
+      edu_csdms_tools_PrintQueue_print_all (pd->print_queue, time, _ex);
     }
     PRINT (2, "End of this run step");
     return;
