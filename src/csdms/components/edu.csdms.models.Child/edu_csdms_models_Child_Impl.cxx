@@ -479,9 +479,8 @@ edu::csdms::models::Child_impl::setServices_impl (
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
-    const char* xml_file = "/data1/progs/cca/project/csdms_eric/data/Child.xml";
 
-    dialog.read (xml_file);
+    dialog.read ("Child.xml");
     dialog.construct (ppf, this->userinput);
   }
 
@@ -656,9 +655,8 @@ edu::csdms::models::Child_impl::initialize_impl (
 
         tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
 
-        tmpls.add_file (
-          "/data/progs/cca/project/csdms_eric/templates/Child.in.in",
-          in_file);
+        tmpls.add_file ("Child.in.in", in_file);
+          //"/data/progs/cca/project/csdms_eric/templates/Child.in.in",
 
         tmpls.substitute (userinput, "/Child/Input/Var/", work_dir);
 
@@ -714,7 +712,7 @@ edu::csdms::models::Child_impl::initialize_impl (
     PRINT (2, "Initialize model elevations through SubaqueousErosion");
     if (this->subaqueous_erosion_port_is_on)
     { /*   Run and map SubaqueousErosion values */
-      this->irf_ports.map_value ("SubaqueousErosion", "erosion",
+      this->irf_ports.map_value ("SubaqueousErosion", "elevation",
                                  "SeaFloorElevation");
       //this->irf_ports.map_value ("SubaqueousErosion", "erosion",
       //                           "SeaFloorErosion");
@@ -761,30 +759,52 @@ edu::csdms::models::Child_impl::run_impl (
       } 
       else if (time>current)
       { 
-        fprintf (stderr, "CHILD: Run ports\n");
-        fprintf (stderr, "CHILD: current time is %f\n", current);
-        fprintf (stderr, "CHILD: time is %f\n", time);
+        double t;
+        const double dt = 1.;
+        const double stop_time = time;
+
+        fprintf (stderr, "DEBUG: run from %f to %f\n", current, time);
         fflush (stderr);
 
-        this->irf_ports.run_ports (current);
+        while (current<stop_time)
+        {
+          t = current + dt;
+          if (t>stop_time)
+            t = stop_time;
 
-        if (this->subaqueous_erosion_port_is_on)
-        { /*   Run and map SubaqueousErosion values */
-          this->irf_ports.map_value ("SubaqueousErosion", "erosion",
-                                     "SeaFloorElevation");
-          //this->irf_ports.map_value ("SubaqueousErosion", "erosion",
-          //                           "SeaFloorErosion");
+          fprintf (stderr, "CHILD: Run ports\n");
+          fprintf (stderr, "CHILD: current time is %f\n", current);
+          fprintf (stderr, "CHILD: time is %f\n", t);
+          fflush (stderr);
+
+          this->irf_ports.run_ports (current);
+
+          if (this->subaqueous_erosion_port_is_on)
+          { /*   Run and map SubaqueousErosion values */
+            //this->irf_ports.map_value ("SubaqueousErosion", "elevation",
+            //                           "SeaFloorElevation");
+            //this->irf_ports.map_value ("SubaqueousErosion", "erosion",
+            //                           "SeaFloorElevation");
+
+            this->irf_ports.map_value ("SubaqueousErosion", "erosion",
+                                       "SeaFloorErosion");
+          }
+
+          fprintf (stderr, "CHILD: Time before run is %f\n", this->state.GetCurrentTime ());
+          fflush (stderr);
+
+          // Mask out nodes below sea level
+          this->state.MaskNodesBelowElevation (0);
+          //this->state.Run (time-current);
+          this->state.Run (dt);
+          fprintf (stderr, "CHILD: Time after run is %f\n", this->state.GetCurrentTime ());
+          fflush (stderr);
+
+          PRINT (2, "Print everything in the queue");
+          this->print_queue.print_all (t);
+
+          current = this->state.GetCurrentTime ();
         }
-
-        fprintf (stderr, "CHILD: Time before run is %f\n", this->state.GetCurrentTime ());
-        fflush (stderr);
-        this->state.Run (time-current);
-        fprintf (stderr, "CHILD: Time after run is %f\n", this->state.GetCurrentTime ());
-        fflush (stderr);
-
-        PRINT (2, "Print everything in the queue");
-        this->print_queue.print_all (time);
-
       }
       else
       {
@@ -1198,6 +1218,7 @@ edu::csdms::models::Child_impl::get_value_set_impl (
     sidl::array<double> vals = sidl::array<double>::create1d(3*n_elements);
     std::vector<long> vertices = this->state.GetTriangleVertexIDs ();
 
+    fprintf (stderr, "CHILD: n_elements is %d\n", n_elements);
     // For each element
     for (int i=0; i<n_elements; i++)
     {
@@ -1216,6 +1237,8 @@ edu::csdms::models::Child_impl::get_value_set_impl (
     std::vector<double> vec = state.GetValueSet (val_string);
     sidl::array<double> vals = sidl::array<double>::create1d(len);
 
+    fprintf (stderr, "CHILD: len is %d\n", len);
+    fprintf (stderr, "CHILD: vec.size is %d\n", vec.size ());
     assert (len==vec.size ());
 /*
     if (val_string.compare (0,4,"erosion")==0)
@@ -1233,8 +1256,8 @@ edu::csdms::models::Child_impl::get_value_set_impl (
       double min = 1e32;
       for (int i=0; i<len; i++)
       {
-        if (!state.IsInteriorNode (i))
-          vec[i] = 0.;
+//        if (!state.IsInteriorNode (i))
+//          vec[i] = 0.;
         //vec[i] /= 10.;
         vals.set (i, vec[i]);
 
@@ -1305,6 +1328,25 @@ edu::csdms::models::Child_impl::get_value_set_data_impl (
       //vec[i] /= 10.;
       vals.set (i, vec[i]);
     }
+
+    {
+      double max = -1e32;
+      double min = 1e32;
+      for (int i=0; i<len; i++)
+      {
+//        if (!state.IsInteriorNode (i))
+//          vec[i] = 0.;
+        //vec[i] /= 10.;
+        vals.set (i, vec[i]);
+
+        if (vec[i]>max)
+          max = vec[i];
+        if (vec[i]<min)
+          min = vec[i];
+      }
+      fprintf (stderr, "CHILD: max is %f\n", max);
+      fprintf (stderr, "CHILD: min is %f\n", min);
+    }
   }
 
   return vals;
@@ -1322,7 +1364,7 @@ edu::csdms::models::Child_impl::set_value_set_impl (
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.set_value_set)
   {
     const int len = values.getCount ();
-    std::vector<double> dz (len);
+    std::vector<double> val (len);
     ::edu::csdms::openmi::IScalarSet scalars =
       ::babel_cast< ::edu::csdms::openmi::IScalarSet>(values);
       //(::edu::csdms::openmi::IScalarSet) values;
@@ -1331,22 +1373,26 @@ edu::csdms::models::Child_impl::set_value_set_impl (
 
     for (int i=0; i<len; i++)
     {
-      dz[i] = scalars.getScalar (i);
+      val[i] = scalars.getScalar (i);
       if (!state.IsInteriorNode (i))
-        dz[i] = 0;
-      //dz[i] *= 10.;
-      if (dz[i]>max)
-        max = dz[i];
-      if (dz[i]<min)
-        min = dz[i];
+        val[i] = 0;
+      //val[i] *= 10.;
+      if (val[i]>max)
+        max = val[i];
+      if (val[i]<min)
+        min = val[i];
     }
 
     fprintf (stderr, "Child: Max erosion is %f\n", max);
     fprintf (stderr, "Child: Min erosion is %f\n", min);
     fflush (stderr);
 
-    this->state.ExternalErodeAndDepositToElevation (dz);
-    //this->state.ExternalErosionAndDeposition (dz);
+    if (val_string.compare (0,4,"elev")==0)
+      this->state.SetValueSet ("elev", val);
+    else
+      this->state.ExternalErosionAndDeposition (val);
+      //this->state.ExternalErodeAndDepositToElevation (val);
+    //this->state.ExternalErosionAndDeposition (val);
   }
 
   return;
