@@ -774,7 +774,7 @@ impl_edu_csdms_models_Sedflux3D_initialize(
       gchar* str = NULL;
 
       str = gov_cca_TypeMap_getString (pd->userinput,
-              "/Sedflux/Port/Discharge", "ON", _ex);
+              "/Sedflux/Port/WaterDischarge", "ON", _ex);
       if (g_ascii_strcasecmp (str, "ON")==0)
         pd->discharge_port_is_on = TRUE;
       else
@@ -799,9 +799,13 @@ impl_edu_csdms_models_Sedflux3D_initialize(
         edu_csdms_ports_IRFPort__cast (self, _ex), _ex);
 
       PRINT (2, "Add port to queue");
-      edu_csdms_tools_IRFPortQueue_add_port (pd->irf_ports, "WaterDischarge",
-                                             _ex);
-      edu_csdms_tools_IRFPortQueue_add_port (pd->irf_ports, "SubaerialErosion", _ex);
+      if (pd->discharge_port_is_on)
+        edu_csdms_tools_IRFPortQueue_add_port (pd->irf_ports, "WaterDischarge",
+                                               _ex);
+      if (pd->subaerial_erosion_port_is_on)
+        edu_csdms_tools_IRFPortQueue_add_port (pd->irf_ports, "SubaerialErosion",
+                                               _ex);
+
       PRINT (2, "Connect ports in queue");
       edu_csdms_tools_IRFPortQueue_connect_ports (pd->irf_ports, _ex);
     }
@@ -1010,12 +1014,16 @@ impl_edu_csdms_models_Sedflux3D_run(
 
           if (pd->discharge_port_is_on)
           { /*  Run and map WaterDischarge values */
+            //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+            //  "WaterDischarge", "Water_Discharge", "discharge", _ex);
             edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-              "WaterDischarge", "Water_Discharge", "discharge", _ex);
+              "WaterDischarge", "BED_LOAD_FLUX", "sediment", _ex);
           }
 
           if (pd->subaerial_erosion_port_is_on)
           { /*  Run and map SubaerialErosion values */
+            //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+            //  "SubaerialErosion", "Basement", "elevation", _ex);
             edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
               "SubaerialErosion", "Erosion", "elevation", _ex);
             //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
@@ -1024,13 +1032,13 @@ impl_edu_csdms_models_Sedflux3D_run(
 
           {
             double now;
-            sedflux_run_until (pd->state, time);
+            sedflux_run_until (pd->state, t);
             now = sedflux_get_current_time (pd->state);
-            fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, time);
+            fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, t);
           }
 
           PRINT (2, "Print everything in the queue");
-          edu_csdms_tools_PrintQueue_print_all (pd->print_queue, time, _ex);
+          edu_csdms_tools_PrintQueue_print_all (pd->print_queue, t, _ex);
 
           current = sedflux_get_current_time (pd->state);
         }
@@ -1440,7 +1448,13 @@ impl_edu_csdms_models_Sedflux3D_get_raster_data(
               const int len = dimen[0]*dimen[1];
               for (i=0; i<len; i++)
                 if (eh_is_boundary_id (dimen[1], dimen[0], i))
-                  data[i] = 0;
+                {
+//                  if (i%dimen[0]>=30)
+//                    data[i] = 30.;
+//                  else
+                    data[i] = 0;
+                }
+
             }
 
             vals = sidl_double__array_borrow (data, 2, lower, upper, stride);
@@ -1666,8 +1680,8 @@ impl_edu_csdms_models_Sedflux3D_set_value_set(
         {
           vals[i] = edu_csdms_openmi_IScalarSet_getScalar (scalars, i, _ex);
 
-          if (eh_is_boundary_id (nx, ny, i))
-            vals[i] = 0;
+//          if (eh_is_boundary_id (nx, ny, i))
+//            vals[i] = 0;
           
           if (vals[i]>max)
             max = vals[i];
