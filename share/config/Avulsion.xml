@@ -154,7 +154,8 @@
       </range>
       <type>Float</type>
     </entry>
-    <entry class="OutputFile" name="/CEM/Output/Grid/Var/Elevation"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Grid/Var/Elevation"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Grid/Var/SedimentFlux"/>
   </tab>
   <tab name="About">
     <entry name="/Avulsion/ModelName">
