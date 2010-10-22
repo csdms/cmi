@@ -32,6 +32,16 @@
     </entry>
   </tab>
   <tab name="Tectonics">
+    <entry name="/Child/Input/Var/UpliftType">
+      <label>Type of uplift</label>
+      <help_brief>Type of uplift (0=none, 1=uniform, 2=block) {dl;0;1;2}</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
     <entry name="/Child/Input/Var/UpliftDuration">
       <label>Duration of uplift (years)</label>
       <help_brief>Duration of uplift (years)</help_brief>
@@ -95,7 +105,7 @@
     <entry name="/Child/Input/Var/GridYSize">
       <label>Width of grid in y-direction (m)</label>
       <help_brief>Width of grid in y-direction (m)</help_brief>
-      <default>80000</default>
+      <default>40000</default>
       <type>Float</type>
       <range>
         <min>0</min>
