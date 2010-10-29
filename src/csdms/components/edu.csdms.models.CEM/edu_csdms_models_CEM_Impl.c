@@ -2043,6 +2043,7 @@ impl_edu_csdms_models_CEM_get_element_set(
     }
     else if (g_str_has_prefix (val_string, "Point"))
     {
+/*
       int i;
       edu_csdms_openmi_ElementSet elementSet =
         edu_csdms_openmi_ElementSet__create (_ex);
@@ -2066,6 +2067,7 @@ impl_edu_csdms_models_CEM_get_element_set(
 
         elementSet.addElement (element);
       }
+*/
     }
 
   EXIT:;
