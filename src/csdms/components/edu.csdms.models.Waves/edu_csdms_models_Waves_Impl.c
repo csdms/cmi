@@ -1500,16 +1500,8 @@ impl_edu_csdms_models_Waves_get_value_set_data(
   *_ex = 0;
   {
     /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Waves.get_value_set_data) */
-    /* Insert-Code-Here {edu.csdms.models.Waves.get_value_set_data} (
-      get_value_set_data method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Waves.get_value_set_data) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Waves.get_value_set_data) */
+    return impl_edu_csdms_models_Waves_get_raster_data (
+             self, val_string, _ex);
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Waves.get_value_set_data) */
   }
 }
