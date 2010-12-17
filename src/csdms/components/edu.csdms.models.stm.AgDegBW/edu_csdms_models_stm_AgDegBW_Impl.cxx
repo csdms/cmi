@@ -357,12 +357,19 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/AgDegBW/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/AgDegBW/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_AgDegBW.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegBW.setServices)
 }
 
@@ -424,14 +431,52 @@ edu::csdms::models::stm::AgDegBW_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegBW.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegBW.initialize} (initialize method)
-  std::string input = userinput.getString("Input","");
-        check = Initialize(&Qf, &If, &B, &D, &lamdap, &kc, &S, &Gtf, &L, &dt, &iterate,
-                &prints, &M, &alphau, &alphar, &alphat, &nt, &tauc, &phis, &R, &Cf,
-                &formulation, &ksio, &dx, &qw, &Ha, &taustar, &qstar, &qt, &Gt, &qtg,
-                &tauult, &Sult, &Hult, &Frni, &Frnu, &Hc, &ksimin, &ksiinit, eta, x,
-			   ksi, &qtf, H, input.c_str());
-        if (check == 1)
-            return;	
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/AgDegBW/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/AgDegBW/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/AgDegBW/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_AgDegBW.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/1DDeltaBW/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#AgDegBW: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#AgDegBW: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
+  check = Initialize (&Qf, &If, &B, &D, &lamdap, &kc, &S, &Gtf, &L, &dt,
+                      &iterate, &prints, &M, &alphau, &alphar, &alphat, &nt,
+                      &tauc, &phis, &R, &Cf, &formulation, &ksio, &dx, &qw,
+                      &Ha, &taustar, &qstar, &qt, &Gt, &qtg, &tauult, &Sult,
+                      &Hult, &Frni, &Frnu, &Hc, &ksimin, &ksiinit, eta, x,
+			                ksi, &qtf, H, input.c_str());
+  if (check == 1)
+    return;	
 
   if ( (printmatrix = (double (*)[101]) malloc( (prints+2) * sizeof(double [101])  ) ) == NULL) {
       fprintf(stderr, "malloc error"); exit(0);
@@ -461,9 +506,9 @@ edu::csdms::models::stm::AgDegBW_impl::initialize_impl (
     fprintf(stderr, "malloc error"); exit(0);
   }
 
-        //Save Initial Bed Profile
-        SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix, ksimatrix,
-            eta, Sl, H, tau, qb, ksi, time, j, M);
+  //Save Initial Bed Profile
+  SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
+                    ksimatrix, eta, Sl, H, tau, qb, ksi, time, j, M);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegBW.initialize)
 }
 
@@ -475,16 +520,16 @@ edu::csdms::models::stm::AgDegBW_impl::run_impl (
   /* in */double time ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegBW.run)
-        //Time Loop
-        for (j=1; j <= prints; j++) {
-            for (k=1; k <= iterate; k++) {
-                Run(Sl, M, eta, dx, tau, qb, Cf, alphar, H, kc, qw, R, D, tauc, nt,
-                    phis, alphat, formulation, dt, lamdap, If, alphau, qtg, ksi, ksio);
-            }
-            time = (j)*dt/(3600*24*365.25)*iterate;
-            SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix, ksimatrix,
-                eta, Sl, H, tau, qb, ksi, time, j, M);
-        }
+  //Time Loop
+  for (j=1; j <= prints; j++) {
+    for (k=1; k <= iterate; k++) {
+      Run (Sl, M, eta, dx, tau, qb, Cf, alphar, H, kc, qw, R, D, tauc, nt,
+           phis, alphat, formulation, dt, lamdap, If, alphau, qtg, ksi, ksio);
+    }
+    time = (j)*dt/(3600*24*365.25)*iterate;
+    SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
+                      ksimatrix, eta, Sl, H, tau, qb, ksi, time, j, M);
+  }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegBW.run)
 }
 
@@ -497,20 +542,27 @@ edu::csdms::models::stm::AgDegBW_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegBW.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegBW.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
-        Finalize(printmatrix, Hmatrix, ksimatrix, x, M, prints, Ha, taustar, qstar, qt,
-            Gt, qtf, tauult, Sult, Hult, Frni, Frnu, Hc, ksimin, ksiinit, Slmatrix,
-		 taumatrix, qbmatrix, output.c_str());
+  std::string site_prefix = userinput.getString (
+                              "/STM/AgDegBW/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/AgDegBW/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
 
-    free(printmatrix);
-    free(Slmatrix);
-    free(Hmatrix);
-    free(taumatrix);
-    free(qbmatrix);
-    free(ksimatrix);
-    free(qb);
-    free(tau);
-    free(Sl);
+  fprintf (stderr, "#AgDegBW: Output file: %s\n", output.c_str ());
+
+  Finalize (printmatrix, Hmatrix, ksimatrix, x, M, prints, Ha, taustar,
+            qstar, qt, Gt, qtf, tauult, Sult, Hult, Frni, Frnu, Hc, ksimin,
+            ksiinit, Slmatrix, taumatrix, qbmatrix, output.c_str());
+
+  free (printmatrix);
+  free (Slmatrix);
+  free (Hmatrix);
+  free (taumatrix);
+  free (qbmatrix);
+  free (ksimatrix);
+  free (qb);
+  free (tau);
+  free (Sl);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegBW.finalize)
 }
 
