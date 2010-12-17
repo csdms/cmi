@@ -357,10 +357,15 @@ edu::csdms::models::stm::Acronym1R_impl::setServices_impl (
     BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
   }
 
-  ppf.initParameterData(userinput, "userinput");
-  ppf.setBatchTitle(userinput, "parameters");
-  ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/Acronym1R/test.txt");
-  ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/Acronym1R/result.txt");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_Acronym1R.xml");
+    dialog.construct (ppf, this->userinput);
+  }
   ppf.addParameterPort(userinput, services);
   services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.Acronym1R.setServices)
@@ -424,17 +429,52 @@ edu::csdms::models::stm::Acronym1R_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.Acronym1R.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.Acronym1R.initialize} (initialize method)
+  std::string input;
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/Acronym1R/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/Acronym1R/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/Acronym1R/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
 
-  std::string input = userinput.getString("Input","");
-    R=0; ustar=0; Dsg=0; sigmasg=0; tausg=0;
-    Dx30s=0; Dx50s=0; Dx70s=0; Dx90s=0; Dx30l=0; Dx50l=0; Dx70l=0; Dx90l=0;
-    Dlg=0; sigmalg=0; swap=0; H=0; Qf=0; B=0; S=0; nk=0;
-    qbtot=0;
-    npp=0; np=0; nppo=0; check=0;
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
 
-    check = Initialize(data, &R, &Qf, &npp, &Dsg, &Dlg, &sigmasg, &sigmalg, &S, &B, &nk,
-                &Dx90s, &np, &nppo, qb, &swap, pfl, &Dx70s, &Dx50s, &Dx30s, &Dx90l, &Dx70l,
-			       &Dx50l, &Dx30l, po, oo, so, const_cast<char*> (input.c_str()));
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_Acronym1R.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/Acronym1R/Input/Var/", work_dir);
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#Acronym1R: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#Acronym1R: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
+  R=0; ustar=0; Dsg=0; sigmasg=0; tausg=0;
+  Dx30s=0; Dx50s=0; Dx70s=0; Dx90s=0; Dx30l=0; Dx50l=0; Dx70l=0; Dx90l=0;
+  Dlg=0; sigmalg=0; swap=0; H=0; Qf=0; B=0; S=0; nk=0;
+  qbtot=0;
+  npp=0; np=0; nppo=0; check=0;
+
+  check = Initialize (data, &R, &Qf, &npp, &Dsg, &Dlg, &sigmasg, &sigmalg,
+                      &S, &B, &nk, &Dx90s, &np, &nppo, qb, &swap, pfl, &Dx70s,
+                      &Dx50s, &Dx30s, &Dx90l, &Dx70l, &Dx50l, &Dx30l, po, oo,
+                      so, const_cast<char*> (input.c_str()));
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.Acronym1R.initialize)
 }
 
@@ -447,10 +487,9 @@ edu::csdms::models::stm::Acronym1R_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.Acronym1R.run)
   // Insert-Code-Here {edu.csdms.models.stm.Acronym1R.run} (run method)
-        check = Run(data, &H, &ustar, nk, &Dx90s, Qf, B, S, npp, np, &tausg, R, &Dsg, po,
-                so, oo, &sigmasg, &qbtot, pfl, qb, swap, &Dx70s, &Dx50s, &Dx30s, &Dx90l,
-                &Dx70l, &Dx50l, &Dx30l, &Dlg, &sigmalg);
-
+  check = Run (data, &H, &ustar, nk, &Dx90s, Qf, B, S, npp, np, &tausg, R,
+               &Dsg, po, so, oo, &sigmasg, &qbtot, pfl, qb, swap, &Dx70s,
+               &Dx50s, &Dx30s, &Dx90l, &Dx70l, &Dx50l, &Dx30l, &Dlg, &sigmalg);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.Acronym1R.run)
 }
 
@@ -463,9 +502,17 @@ edu::csdms::models::stm::Acronym1R_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.Acronym1R.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.Acronym1R.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
-        Finalize(data, npp, pfl, tausg, qbtot, Dsg, Dlg, sigmasg, sigmalg, Dx30s,
-		 Dx50s, Dx70s, Dx90s, Dx30l, Dx50l, Dx70l, Dx90l, H, ustar, const_cast<char*>  (output.c_str()));
+  std::string site_prefix = userinput.getString (
+                              "/STM/Acronym1R/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/Acronym1R/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#Acronym1R: Output file: %s\n", output.c_str ());
+
+  Finalize (data, npp, pfl, tausg, qbtot, Dsg, Dlg, sigmasg, sigmalg, Dx30s,
+		        Dx50s, Dx70s, Dx90s, Dx30l, Dx50l, Dx70l, Dx90l, H, ustar,
+            const_cast<char*>  (output.c_str()));
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.Acronym1R.finalize)
 }
 

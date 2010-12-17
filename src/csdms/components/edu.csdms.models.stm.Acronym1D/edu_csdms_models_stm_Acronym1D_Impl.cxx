@@ -429,6 +429,8 @@ edu::csdms::models::stm::Acronym1D_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.Acronym1D.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.Acronym1D.initialize} (initialize method)
+  std::string input;
+
   {
     std::string input_dir = userinput.getString (
                               "/STM/Acronym1D/Input/Dir", "");
