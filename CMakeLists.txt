@@ -25,6 +25,15 @@ else (BOCCA_BUILD)
 endif (BOCCA_BUILD)
 
 ##
+# Look for bocca-save command
+find_program (BOCCA_SAVE bocca-save)
+if (BOCCA_SAVE)
+  message (STATUS "Looking for bocca-save... ${BOCCA_SAVE}")
+else (BOCCA_SAVE)
+  message (STATUS "Looking for bocca-save... Not found")
+endif (BOCCA_SAVE)
+
+##
 # Set project files for the targets
 set (CSDMS_SRC ${PRJDIR}/csdms.xml)
 set (CHILD_SRC ${PRJDIR}/child.xml)
@@ -38,15 +47,28 @@ set (BUILD_CMD
   ${BOCCA_BUILD} --srcdir=${SRCDIR} --destdir=${DESTDIR})
 
 ##
-# Set build targets
+# The bocca save command to execute.
+set (SAVE_CMD ${BOCCA_SAVE} --dest=${SRCDIR} -C ${DESTDIR}/csdms)
+
+##
+# Set build targets.
 add_custom_target (csdms ALL ${BUILD_CMD} ${CSDMS_SRC} VERBATIM)
 add_custom_target (child ${BUILD_CMD} ${CHILD_SRC} VERBATIM)
 add_custom_target (stm ${BUILD_CMD} ${STM_SRC} VERBATIM)
 add_custom_target (sedflux ${BUILD_CMD} ${SEDFLUX_SRC} VERBATIM)
 
+##
+# Save used-editable files to source directory for version control.
+add_custom_target (save DEPENDS save.txt)
+add_custom_command (OUTPUT save.txt 
+  COMMAND touch save.txt
+  COMMAND ${SAVE_CMD}
+  VERBATIM)
+
 message ("---")
 message ("  bocca:             ${BOCCA}")
 message ("  bocca-build:       ${BOCCA_BUILD}")
+message ("  bocca-save:        ${BOCCA_SAVE}")
 message ("  Source directory:  ${SRCDIR}")
 message ("  Build directory:   ${DESTDIR}/csdms")
 message ("---")
