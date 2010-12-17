@@ -1,0 +1,238 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/AgDegNormal/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/AgDegNormal}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/AgDegNormal/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>DeltaBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/AgDegNormal/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/1DDeltaBW/Input/Var/Q">
+      <label>Flood discharge [m^2/s]</label>
+      <help_brief>Flood discharge [m^2/s]</help_brief>
+      <default>70</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/I">
+      <label>Intermittency</label>
+      <help_brief>Intermittency</help_brief>
+      <default>.03</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/B">
+      <label>B</label>
+      <help_brief>B</help_brief>
+      <default>25</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/D">
+      <label>D</label>
+      <help_brief>D</help_brief>
+      <default>30</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/l">
+      <label>l</label>
+      <help_brief>l</help_brief>
+      <default>0.35</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/k">
+      <label>Manning-Strickler coefficient, k [-]</label>
+      <help_brief>Manning-Strickler coefficient, k (ks = n * D90) [-]</help_brief>
+      <default>75</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/S">
+      <label>Slope of foreset face [-]</label>
+      <help_brief>Slope of foreset face [-]</help_brief>
+      <default>0.008</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/G">
+      <label>G</label>
+      <help_brief>G</help_brief>
+      <default>700000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/L">
+      <label>L</label>
+      <help_brief>L</help_brief>
+      <default>10000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/t">
+      <label>Time step [days]</label>
+      <help_brief>Time step [days]</help_brief>
+      <default>0.01</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/i">
+      <label>Iterations per each printout</label>
+      <help_brief>Iterations per each printout</help_brief>
+      <default>200</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/p">
+      <label>Number of printouts</label>
+      <help_brief>Number of printouts</help_brief>
+      <default>5</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/M">
+      <label>Number of fluvial nodes</label>
+      <help_brief>Number of fluvial nodes</help_brief>
+      <default>60</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/u">
+      <label>u</label>
+      <help_brief>u</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/r">
+      <label>Manning-Strickler coefficient, r [-]</label>
+      <help_brief>Manning-Strickler coefficient, r [-]</help_brief>
+      <default>8.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/a">
+      <label>Coefficent in total bed material relation [-]</label>
+      <help_brief>Coefficent in total bed material relation [-]</help_brief>
+      <default>8</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/n">
+      <label>Exponent in load relation [-]</label>
+      <help_brief>Exponent in load relation [-]</help_brief>
+      <default>1.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/T">
+      <label>Critical Shields stress in load relation</label>
+      <help_brief>Critical Shields stress in load relation</help_brief>
+      <default>0.047</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/P">
+      <label>P</label>
+      <help_brief>P</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormal/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/AgDegNormal/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>AgDegNormal</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/AgDegNormal/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

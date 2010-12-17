@@ -357,12 +357,18 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/AgDegNormal/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/AgDegNormal/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_AgDegNormal.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormal.setServices)
 }
 
@@ -423,16 +429,52 @@ edu::csdms::models::stm::AgDegNormal_impl::initialize_impl (
   /* in array<string> */::sidl::array< ::std::string>& properties ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormal.initialize)
-  std::string input = userinput.getString("Input","");
+  std::string input;
 
-    Qf=0; If=0; B=0; D=0; lamdap=0; kc=0; S=0; Gtf=0; L=0; dt=0; time=0;
-    alphau=0; alphar=0; alphat=0; nt=0; tauc=0; phis=0; R=0; qtg=0; Cf=0;
-    H=0; taustar=0; qstar=0; qt=0; Gt=0; qtf=0; tauult=0; Sult=0; Hult=0; dx=0;
-    M=0; iterate=0; prints=0; formulation=0; j=0; k=0;
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/AgDegNormal/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/AgDegNormal/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/AgDegNormal/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
 
-        Initialize(&Qf, &If, &B, &D, &lamdap, &kc, &S, &Gtf, &L, &dt, &iterate, &prints,
-            &M, &alphau, &alphar, &alphat, &nt, &tauc, &phis, &R, &Cf, &formulation, &H,
-		   &taustar, &qstar, &qt, &Gt, &qtf, &tauult, &Sult, &Hult, &qtg, &dx, eta, x, input.c_str());
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_AgDegNormGravMixPW.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/1DDeltaBW/Input/Var/", work_dir);
+    }
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }
+
+    input = in_file;
+
+    fprintf (stderr, "#AgDegNormal: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#AgDegNormal: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
+  Qf=0; If=0; B=0; D=0; lamdap=0; kc=0; S=0; Gtf=0; L=0; dt=0; time=0;
+  alphau=0; alphar=0; alphat=0; nt=0; tauc=0; phis=0; R=0; qtg=0; Cf=0;
+  H=0; taustar=0; qstar=0; qt=0; Gt=0; qtf=0; tauult=0; Sult=0; Hult=0; dx=0;
+  M=0; iterate=0; prints=0; formulation=0; j=0; k=0;
+
+  Initialize (&Qf, &If, &B, &D, &lamdap, &kc, &S, &Gtf, &L, &dt, &iterate,
+              &prints, &M, &alphau, &alphar, &alphat, &nt, &tauc, &phis, &R,
+              &Cf, &formulation, &H, &taustar, &qstar, &qt, &Gt, &qtf,
+              &tauult, &Sult, &Hult, &qtg, &dx, eta, x, input.c_str());
 
   if ( (printmatrix = (double (*)[101]) malloc( (prints+2) * sizeof(double [101])  ) ) == NULL) {
       fprintf(stderr, "malloc error"); exit(0);
@@ -462,11 +504,10 @@ edu::csdms::models::stm::AgDegNormal_impl::initialize_impl (
     fprintf(stderr, "malloc error"); exit(0);
   }   
 
-        //Saves initial bed data
+  //Saves initial bed data
         
-        SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
-            eta, Sl, Ht, tau, qb, time, k, M);
-        
+  SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
+                    eta, Sl, Ht, tau, qb, time, k, M);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormal.initialize)
 }
 
@@ -481,15 +522,15 @@ edu::csdms::models::stm::AgDegNormal_impl::run_impl (
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormal.run} (run method)
         //TIME LOOP
 
-        for (k=1; k <= prints; k++) {
-            for (j=1; j <= iterate; j++) {
-                Run(Sl, M, eta, dx, tau, Ht, Qf, kc, alphar, B, D, R, Cf, formulation,
-                    qb, phis, tauc, nt, alphat, dt, lamdap, If, alphau, qtg);
-            }
-            time = k*dt*iterate;
-            SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
-                eta, Sl, Ht, tau, qb, time, k, M);
-        }
+  for (k=1; k <= prints; k++) {
+    for (j=1; j <= iterate; j++) {
+      Run (Sl, M, eta, dx, tau, Ht, Qf, kc, alphar, B, D, R, Cf, formulation,
+           qb, phis, tauc, nt, alphat, dt, lamdap, If, alphau, qtg);
+    }
+    time = k*dt*iterate;
+    SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
+                      eta, Sl, Ht, tau, qb, time, k, M);
+  }
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormal.run)
 }
@@ -503,21 +544,27 @@ edu::csdms::models::stm::AgDegNormal_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormal.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormal.finalize} (finalize method)  
+  std::string site_prefix = userinput.getString (
+                              "/STM/AgDegNormal/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/AgDegNormal/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
 
-std::string output = userinput.getString("Output","");
+  fprintf (stderr, "#AgDegNormal: Output file: %s\n", output.c_str ());
 
-        Finalize(printmatrix, x, M, prints, L, dx, Sult, H, taustar, qstar, qt, Gt,
-		 qtf, tauult, Hult, Slmatrix, Hmatrix, taumatrix, qbmatrix, output.c_str());
+  Finalize (printmatrix, x, M, prints, L, dx, Sult, H, taustar, qstar, qt, Gt,
+		        qtf, tauult, Hult, Slmatrix, Hmatrix, taumatrix, qbmatrix,
+            output.c_str());
 
-    free(printmatrix);
-    free(Slmatrix);
-    free(Hmatrix);
-    free(taumatrix);
-    free(qbmatrix);
-    free(Ht);
-    free(qb);
-    free(tau);
-    free(Sl);
+  free (printmatrix);
+  free (Slmatrix);
+  free (Hmatrix);
+  free (taumatrix);
+  free (qbmatrix);
+  free (Ht);
+  free (qb);
+  free (tau);
+  free (Sl);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormal.finalize)
 }
 
