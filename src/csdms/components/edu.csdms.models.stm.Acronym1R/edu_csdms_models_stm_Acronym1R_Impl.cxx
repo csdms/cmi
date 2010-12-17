@@ -358,7 +358,6 @@ edu::csdms::models::stm::Acronym1R_impl::setServices_impl (
   }
 
   ppf.initParameterData(userinput, "Configure");
-  ppf.setBatchTitle(userinput, "Parameters");
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
