@@ -29,6 +29,7 @@ endif (BOCCA_BUILD)
 set (CSDMS_SRC ${PRJDIR}/csdms.xml)
 set (CHILD_SRC ${PRJDIR}/child.xml)
 set (STM_SRC ${PRJDIR}/stm.xml)
+set (SEDFLUX_SRC ${PRJDIR}/sedflux.xml)
 
 ##
 # The bocca build command to execute.  Note that the project xml file
@@ -41,6 +42,7 @@ set (BUILD_CMD
 add_custom_target (csdms ALL ${BUILD_CMD} ${CSDMS_SRC} VERBATIM)
 add_custom_target (child ${BUILD_CMD} ${CHILD_SRC} VERBATIM)
 add_custom_target (stm ${BUILD_CMD} ${STM_SRC} VERBATIM)
+add_custom_target (sedflux ${BUILD_CMD} ${SEDFLUX_SRC} VERBATIM)
 
 message ("---")
 message ("  bocca:             ${BOCCA}")
