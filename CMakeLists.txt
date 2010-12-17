@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 
 ##
 # Set locations of input and output
-set (SRCDIR ${CMAKE_SOURCE_DIR}/src)
+set (SRCDIR ${CMAKE_SOURCE_DIR}/src/csdms)
 set (PRJDIR ${CMAKE_SOURCE_DIR}/projects)
 set (DESTDIR ${CMAKE_BINARY_DIR})
 
