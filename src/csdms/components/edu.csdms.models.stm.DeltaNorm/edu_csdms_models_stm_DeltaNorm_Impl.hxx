@@ -112,7 +112,7 @@ namespace edu {
     int check , M , prints , iterates , formulation , k , m ;
     double xfbar[102], x[102], eta[102], Sl[102], qb[102], H[102], tau[102];
     double qw , I , qtf , D , Cz , nt , tsc , etasl , etabl , Sfi , Sb ;
-    double ssfi , Sa , R , lamdap , ks , alphar , alphat , dt , time ;
+    double ssfi , Sa , R , lamdap , ks , alphar , alphat , dt , __time ;
     double dxbar , su , sss , sbb , etatop , etabot , abase , Volinit ;
     double etaup ;
 

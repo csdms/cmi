@@ -458,6 +458,7 @@ edu::csdms::models::stm::DeltaNorm_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.DeltaNorm.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.DeltaNorm.initialize} (initialize method)
+  const int ChezyOrManning = 1;
   //std::string input = userinput.getString("Input","");
 /*
   double input_q =  userinput.getDouble("q",0);
@@ -557,7 +558,7 @@ edu::csdms::models::stm::DeltaNorm_impl::initialize_impl (
 
     check=0; M=0; prints=0; iterates=0; formulation=0; k=0; m=0;
     qw=0; I=0; qtf=0; D=0; Cz=0; nt=0; tsc=0; etasl=0; etabl=0; Sfi=0; Sb=0;
-    ssfi=0; Sa=0; R=0; lamdap=0; ks=0; alphar=0; alphat=0; dt=0; time=0;
+    ssfi=0; Sa=0; R=0; lamdap=0; ks=0; alphar=0; alphat=0; dt=0; __time=0;
     dxbar=0; su=0; sss=0; sbb=0; etatop=0; etabot=0; abase=0; Volinit=0;
     etaup=0;
 
@@ -595,7 +596,7 @@ edu::csdms::models::stm::DeltaNorm_impl::initialize_impl (
   }
 
     SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, Hmatrix, taumatrix, xmatrix, eta, Sl,
-        qb, H, tau, x, suvector, sssvector, sbbvector, time, su, sss, sbb, k, M);
+        qb, H, tau, x, suvector, sssvector, sbbvector, __time, su, sss, sbb, k, M);
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.DeltaNorm.initialize)
 }
@@ -618,7 +619,7 @@ edu::csdms::models::stm::DeltaNorm_impl::run_impl (
         }
         SaveDatatoMatrix (printmatrix, Slmatrix, qbmatrix, Hmatrix, taumatrix,
                           xmatrix, eta, Sl, qb, H, tau, x, suvector, sssvector,
-                          sbbvector, time, su, sss, sbb, k, M);
+                          sbbvector, __time, su, sss, sbb, k, M);
     }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.DeltaNorm.run)
 }

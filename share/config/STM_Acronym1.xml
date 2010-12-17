@@ -1,0 +1,58 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/Acronym1/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/Acronym1}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/Acronym1/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>DeltaBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/Acronym1/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/Acronym1/Input/Var/R">
+      <label>Submerged specific gravity of sediment???</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>2.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/Acronym1/Input/Var/u">
+      <label>u</label>
+      <help_brief>u</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/Acronym1/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>Acronym1</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/Acronym1/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>
