@@ -113,7 +113,7 @@ gov::cca::TypeMap userinput;
     double ds[21], psi[21], plf[21], Fl[21], Fs[21], Ft[21], po[37], oo[37], so[37];
     double qw, qbTf, I, etad, S, L, dt, nk, na, alphar, R;
     double lps, alphau, atrans, rload, Cexp, nexp, fracsandl;
-    double Dsgsi, Dx50si, Dx90si, dx, time, Cf;
+    double Dsgsi, Dx50si, Dx90si, dx, __time, Cf;
     int M, prints, iterates, npp, np, check, k, m, bedloadrelation, formulation;
     double F[101][21], pl[101][21], eta[101], x[101], Dx90s[101], Dx50s[101], Sl[101];
     double dsgs[101], fracsand[101], qbT[101], tausg[101], taus50[101], H[101], Laold[101];

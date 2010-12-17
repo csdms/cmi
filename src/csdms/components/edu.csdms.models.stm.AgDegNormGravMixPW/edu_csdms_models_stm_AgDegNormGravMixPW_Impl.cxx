@@ -359,14 +359,24 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
+ppf.initParameterData(userinput, "Configure");
+ppf.setBatchTitle(userinput, "Parameters");
+
 ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/AgDegNormGravMixPW/test.txt");
 ppf.addRequestInt(userinput, "ChezyOrManning", "Chezy or Manning", "Chezy-1 or Manning-2", 1,1,2);
 ppf.addRequestInt(userinput, "bedloadrelation", "Parker or Wilock", "Parker-1 or Wilock-2", 1,1,2);
 ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/AgDegNormGravMixPW/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_AgDegNormGravMixPW.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixPW.setServices)
 }
 
@@ -428,21 +438,62 @@ edu::csdms::models::stm::AgDegNormGravMixPW_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixPW.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixPW.initialize} (initialize method)
+  std::string input;
 
-    qw=0; qbTf=0; I=0; etad=0; S=0; L=0; dt=0; nk=0; na=0; alphar=0; R=0;
-    lps=0; alphau=0; atrans=0; rload=0; Cexp=0; nexp=0; fracsandl=0;
-    Dsgsi=0; Dx50si=0; Dx90si=0; dx=0; time=0; Cf=0;
-    M=0; prints=0; iterates=0; npp=0; np=0; check=0; k=0; m=0; bedloadrelation=1; formulation=0;
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/AgDegNormGravMixPW/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/AgDegNormGravMixPW/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/AgDegNormGravMixPW/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
 
-  std::string input = userinput.getString("Input","");
-  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
-  bedloadrelation = userinput.getInt("bedloadrelation",1);
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
 
-        check = Initialize(GSD, &qw, &qbTf, &I, &etad, &S, &L, &dt, &M, &prints, &iterates,
-                    &nk, &na, &alphar, &R, &lps, &alphau, &atrans, &npp, &np, &rload, &Cexp,
-                    &nexp, ds, psi, plf, Fl, Fs, &fracsandl, po, oo, so, &Dsgsi, &Dx50si,
-                    &Dx90si, &bedloadrelation, F, eta, x, dsgs, Dx90s, Dx50s, fracsand, &dx,
-			   &Cf, &formulation, ChezyOrManning, input.c_str());
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_AgDegNormGravMixPW.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/1DDeltaBW/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#AgDegNormGravMixPW: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#AgDegNormGravMixPW: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
+  qw=0; qbTf=0; I=0; etad=0; S=0; L=0; dt=0; nk=0; na=0; alphar=0; R=0;
+  lps=0; alphau=0; atrans=0; rload=0; Cexp=0; nexp=0; fracsandl=0;
+  Dsgsi=0; Dx50si=0; Dx90si=0; dx=0; __time=0; Cf=0;
+  M=0; prints=0; iterates=0; npp=0; np=0; check=0; k=0; m=0;
+  bedloadrelation=1; formulation=0;
+
+  //int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
+  //bedloadrelation = userinput.getInt("bedloadrelation",1);
+  int ChezyOrManning = 1;
+  bedloadrelation = 1;
+
+  check = Initialize (GSD, &qw, &qbTf, &I, &etad, &S, &L, &dt, &M, &prints,
+                      &iterates, &nk, &na, &alphar, &R, &lps, &alphau, &atrans,
+                      &npp, &np, &rload, &Cexp, &nexp, ds, psi, plf, Fl, Fs,
+                      &fracsandl, po, oo, so, &Dsgsi, &Dx50si, &Dx90si,
+                      &bedloadrelation, F, eta, x, dsgs, Dx90s, Dx50s,
+                      fracsand, &dx, &Cf, &formulation, ChezyOrManning,
+                      input.c_str());
 
   if ( (printmatrix = (double (*)[101]) malloc( (prints+2) * sizeof(double [101])  ) ) == NULL) {
       fprintf(stderr, "malloc error"); exit(0);
@@ -466,10 +517,10 @@ edu::csdms::models::stm::AgDegNormGravMixPW_impl::initialize_impl (
     fprintf(stderr, "malloc error"); exit(0);
   }
         
-        //Saves Initial Bed Profile to print later
-        SaveDatatoMatrix(printmatrix, dsgmatrix, qbTmatrix, Hmatrix, tausgmatrix,
-            Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s, qbTf, time, M, k);        
-
+  //Saves Initial Bed Profile to print later
+  SaveDatatoMatrix (printmatrix, dsgmatrix, qbTmatrix, Hmatrix, tausgmatrix,
+                    Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s,
+                    qbTf, __time, M, k);        
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixPW.initialize)
 }
 
@@ -482,19 +533,19 @@ edu::csdms::models::stm::AgDegNormGravMixPW_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixPW.run)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixPW.run} (run method)
-        //TIME LOOP
-        for (k=1; k <= (prints); k++) {
-            for (m=1; m <= (iterates); m++) {
-                Run(M, eta, Sl, tausg, taus50, H, dx, nk, Dx90s, Dx50s, qw, alphar, R, dsgs,
-                    GSD, np, npp, F, pl, qbT, ds, po, oo, so, Ft, bedloadrelation, fracsand,
-                    qbTf, qbTmatrix, time, na, Fs, plf, alphau, atrans, dt, I, lps, Laold,
-                    Cf, formulation);
-                time += dt;
-            }
-            SaveDatatoMatrix(printmatrix, dsgmatrix, qbTmatrix, Hmatrix, tausgmatrix,
-                Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s, qbTf, time, M, k);
-        }
-
+  //TIME LOOP
+  for (k=1; k <= (prints); k++) {
+    for (m=1; m <= (iterates); m++) {
+      Run (M, eta, Sl, tausg, taus50, H, dx, nk, Dx90s, Dx50s, qw, alphar, R,
+           dsgs, GSD, np, npp, F, pl, qbT, ds, po, oo, so, Ft, bedloadrelation,
+           fracsand, qbTf, qbTmatrix, __time, na, Fs, plf, alphau, atrans, dt,
+           I, lps, Laold, Cf, formulation);
+      __time += dt;
+    }
+    SaveDatatoMatrix (printmatrix, dsgmatrix, qbTmatrix, Hmatrix, tausgmatrix,
+                      Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s,
+                      qbTf, __time, M, k);
+  }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixPW.run)
 }
 
@@ -507,17 +558,25 @@ edu::csdms::models::stm::AgDegNormGravMixPW_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixPW.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixPW.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
-    Finalize(printmatrix, x, M, prints, GSD, npp, dsgmatrix, qbTmatrix, H, F, pl, Slmatrix,
-	     Hmatrix, tausgmatrix, D90matrix, qbTf, output.c_str());
+  std::string site_prefix = userinput.getString (
+                              "/STM/AgDegNormGravMixPW/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/AgDegNormGravMixPW/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
 
-    free(printmatrix);
-    free(dsgmatrix);
-    free(qbTmatrix);
-    free(Hmatrix);
-    free(tausgmatrix);
-    free(Slmatrix);
-    free(D90matrix);
+  fprintf (stderr, "#AgDegNormGravMixPW: Output file: %s\n", output.c_str ());
+
+  Finalize (printmatrix, x, M, prints, GSD, npp, dsgmatrix, qbTmatrix, H, F,
+            pl, Slmatrix, Hmatrix, tausgmatrix, D90matrix, qbTf,
+            output.c_str());
+
+  free (printmatrix);
+  free (dsgmatrix);
+  free (qbTmatrix);
+  free (Hmatrix);
+  free (tausgmatrix);
+  free (Slmatrix);
+  free (D90matrix);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixPW.finalize)
 }
 
