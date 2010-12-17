@@ -1,18 +1,18 @@
 <dialog>
   <tab name="Input Files and Directories">
-    <entry name="/STM/1DDeltaBW/Input/Dir">
+    <entry name="/STM/Acronmyn1D/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/1DDeltaBW}</help_brief>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/Acronmyn1D}</help_brief>
       <default>GUI</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/1DDeltaBW/SitePrefix">
+    <entry name="/STM/Acronmyn1D/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
       <default>DeltaBW</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/1DDeltaBW/CasePrefix">
+    <entry name="/STM/Acronmyn1D/CasePrefix">
       <label>Case prefix</label>
       <help_brief>Case prefix for input/output files.</help_brief>
       <default>test</default>
@@ -20,7 +20,7 @@
     </entry>
   </tab>
   <tab name="Run Parameters">
-    <entry name="/STM/1DDeltaBW/Input/Var/R">
+    <entry name="/STM/Acronmyn1D/Input/Var/R">
       <label>Submerged specific gravity of sediment</label>
       <help_brief>Submerged specific gravity of sediment</help_brief>
       <default>2.65</default>
@@ -30,7 +30,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaBW/Input/Var/S">
+    <entry name="/STM/Acronmyn1D/Input/Var/S">
       <label>Slope of foreset face [-]</label>
       <help_brief>Slope of foreset face [-]</help_brief>
       <default>0.005</default>
@@ -40,7 +40,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaBW/Input/Var/B">
+    <entry name="/STM/Acronmyn1D/Input/Var/B">
       <label>B</label>
       <help_brief>B</help_brief>
       <default>12</default>
@@ -50,7 +50,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaBW/Input/Var/n">
+    <entry name="/STM/Acronmyn1D/Input/Var/n">
       <label>Exponent in load relation [-]</label>
       <help_brief>Exponent in load relation [-]</help_brief>
       <default>2</default>
@@ -62,13 +62,13 @@
     </entry>
   </tab>
   <tab name="About">
-    <entry name="/STM/1DDeltaBW/ModelName">
+    <entry name="/STM/Acronmyn1D/ModelName">
       <label>Model name</label>
       <help_brief>Name of the model</help_brief>
-      <default>1DDeltaBW</default>
+      <default>Acronmyn1D</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/1DDeltaBW/ModelAuthor">
+    <entry name="/STM/Acronmyn1D/ModelAuthor">
       <label>Author name</label>
       <help_brief>Name of the model author</help_brief>
       <default>Gary Parker</default>
