@@ -70,6 +70,16 @@
     <requires>tools.TemplateFiles</requires>
     <extras>make.vars.user</extras>
   </component>
+  <component name="models.stm.AgDegNormGravMixSubPW" language="c++">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>IRFPort@Model</provides>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <extras>make.vars.user</extras>
+  </component>
   <component name="models.stm.AgDegNormal" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>IRFPort@Model</provides>
