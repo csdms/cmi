@@ -1,0 +1,78 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/1DDeltaBW/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/1DDeltaBW}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/1DDeltaBW/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>DeltaBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/1DDeltaBW/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/1DDeltaBW/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>2.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/S">
+      <label>Slope of foreset face [-]</label>
+      <help_brief>Slope of foreset face [-]</help_brief>
+      <default>0.005</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/B">
+      <label>B</label>
+      <help_brief>B</help_brief>
+      <default>12</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/n">
+      <label>Exponent in load relation [-]</label>
+      <help_brief>Exponent in load relation [-]</help_brief>
+      <default>2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/1DDeltaBW/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>1DDeltaBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/1DDeltaBW/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>
