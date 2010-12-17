@@ -202,7 +202,7 @@
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/P">
       <label>P</label>
-      <help_bief>P</help_brief>
+      <help_brief>P</help_brief>
       <default>1</default>
       <type>Float</type>
       <range>
