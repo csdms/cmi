@@ -358,7 +358,7 @@ edu::csdms::models::stm::DeltaBW_impl::setServices_impl (
   }
 
   ppf.initParameterData(userinput, "Configure");
-  ppf.setBatchTitle(userinput, "Parameters");
+  //ppf.setBatchTitle(userinput, "Parameters");
   //ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/1DDeltaBW/test.txt");
 
   {
