@@ -59,7 +59,7 @@ add_custom_target (sedflux ${BUILD_CMD} ${SEDFLUX_SRC} VERBATIM)
 
 ##
 # Save used-editable files to source directory for version control.
-add_custom_target (save DEPENDS save.txt)
+add_custom_target (save DEPENDS dummy_file)
 add_custom_command (OUTPUT dummy_file
   COMMAND ${SAVE_CMD}
   VERBATIM)
