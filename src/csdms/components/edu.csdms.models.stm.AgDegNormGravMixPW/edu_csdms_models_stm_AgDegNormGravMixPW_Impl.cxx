@@ -360,13 +360,13 @@ if (ppf._is_nil()) {
 }
 
 ppf.initParameterData(userinput, "Configure");
+/*
 ppf.setBatchTitle(userinput, "Parameters");
-
 ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/AgDegNormGravMixPW/test.txt");
 ppf.addRequestInt(userinput, "ChezyOrManning", "Chezy or Manning", "Chezy-1 or Manning-2", 1,1,2);
 ppf.addRequestInt(userinput, "bedloadrelation", "Parker or Wilock", "Parker-1 or Wilock-2", 1,1,2);
 ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/AgDegNormGravMixPW/result.txt");
-
+*/
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
