@@ -453,7 +453,7 @@ edu::csdms::models::stm::Acronym1_impl::initialize_impl (
 
       tmpls.add_file ("STM_Acronym1.txt.in", in_file);
 
-      tmpls.substitute (userinput, "/STM/1DDeltaBW/Input/Var/", work_dir);
+      tmpls.substitute (userinput, "/STM/Acronym1/Input/Var/", work_dir);
 
     } 
     else
