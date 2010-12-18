@@ -21,8 +21,29 @@
 #ifndef included_edu_csdms_models_stm_AgDegNormGravMixSubPW_hxx
 #include "edu_csdms_models_stm_AgDegNormGravMixSubPW.hxx"
 #endif
-#ifndef included_edu_csdms_models_stm_IRFPort_hxx
-#include "edu_csdms_models_stm_IRFPort.hxx"
+#ifndef included_edu_csdms_openmi_IElementSet_hxx
+#include "edu_csdms_openmi_IElementSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_IScalarSet_hxx
+#include "edu_csdms_openmi_IScalarSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_IValueSet_hxx
+#include "edu_csdms_openmi_IValueSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_ScalarSet_hxx
+#include "edu_csdms_openmi_ScalarSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_ValueSet_hxx
+#include "edu_csdms_openmi_ValueSet.hxx"
+#endif
+#ifndef included_edu_csdms_ports_IRFPort_hxx
+#include "edu_csdms_ports_IRFPort.hxx"
+#endif
+#ifndef included_edu_csdms_tools_ConfigDialog_hxx
+#include "edu_csdms_tools_ConfigDialog.hxx"
+#endif
+#ifndef included_edu_csdms_tools_TemplateFiles_hxx
+#include "edu_csdms_tools_TemplateFiles.hxx"
 #endif
 #ifndef included_gov_cca_CCAException_hxx
 #include "gov_cca_CCAException.hxx"
@@ -92,7 +113,7 @@ gov::cca::TypeMap userinput;
     double ds[21], psi[21], plf[21], Fl[21], Fs[21], Ft[21], po[37], oo[37], so[37];
     double qw, qbTf, I, etad, S, L, dt, nk, na, alphar, R;
     double lps, alphau, atrans, rload, Cexp, nexp, fracsandl, rB;
-    double Dsgsi, Dx50si, Dx90si, dx, time, Sinu, subrate, lamda;
+    double Dsgsi, Dx50si, Dx90si, dx, __time, Sinu, subrate, lamda;
     double ExnerFactor, Cf;
     int M, prints, iterates, npp, np, check, k, m, bedloadrelation, formulation;
     double F[101][21], pl[101][21], eta[101], x[101], Dx90s[101], Dx50s[101], Sl[101];
@@ -121,8 +142,8 @@ gov::cca::TypeMap userinput;
               edu_csdms_models_stm_AgDegNormGravMixSubPW__object * ior ) : 
               StubBase(ior,true), 
             ::gov::cca::Port((ior==NULL) ? NULL : &((*ior).d_gov_cca_port)),
-            ::edu::csdms::models::stm::IRFPort((ior==NULL) ? NULL : &((
-              *ior).d_edu_csdms_models_stm_irfport)),
+            ::edu::csdms::ports::IRFPort((ior==NULL) ? NULL : &((
+              *ior).d_edu_csdms_ports_irfport)),
             ::gov::cca::Component((ior==NULL) ? NULL : &((
               *ior).d_gov_cca_component)),
           ::gov::cca::ComponentRelease((ior==NULL) ? NULL : &((
@@ -176,7 +197,12 @@ gov::cca::TypeMap userinput;
            */
           void
           boccaForceUsePortInclude_impl (
-            /* in */::gov::cca::ports::ParameterPortFactory& dummy0
+            /* in */::gov::cca::ports::ParameterPortFactory& dummy0,
+            /* in */::edu::csdms::openmi::ValueSet& dummy1,
+            /* in */::edu::csdms::tools::TemplateFiles& dummy2,
+            /* in */::edu::csdms::openmi::ScalarSet& dummy3,
+            /* in */::edu::csdms::tools::ConfigDialog& dummy4,
+            /* in */::edu::csdms::openmi::IScalarSet& dummy5
           )
           ;
 
@@ -252,17 +278,133 @@ gov::cca::TypeMap userinput;
            * user defined non-static method.
            */
           void
-          initialize_impl() ;
+          initialize_impl (
+            /* in array<string> */::sidl::array< ::std::string>& properties
+          )
+          ;
+
           /**
            * user defined non-static method.
            */
           void
-          run_impl() ;
+          run_impl (
+            /* in */double time
+          )
+          ;
+
           /**
            * user defined non-static method.
            */
           void
           finalize_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          int64_t
+          getRaster_nx_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          int64_t
+          getRaster_ny_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          double
+          getRaster_dx_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          double
+          getRaster_dy_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          double
+          getRaster_ulx_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          double
+          getRaster_uly_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          ::sidl::array<double>
+          getRaster_grid_impl (
+            /* in */const ::std::string& val_string
+          )
+          ;
+
+          /**
+           * user defined non-static method.
+           */
+          ::sidl::array<int32_t>
+          get_raster_dimen_impl (
+            /* in */const ::std::string& val_string
+          )
+          ;
+
+          /**
+           * user defined non-static method.
+           */
+          ::sidl::array<double>
+          get_raster_res_impl (
+            /* in */const ::std::string& val_string
+          )
+          ;
+
+          /**
+           * user defined non-static method.
+           */
+          ::sidl::basearray
+          get_raster_data_impl (
+            /* in */const ::std::string& val_string
+          )
+          ;
+
+          /**
+           * user defined non-static method.
+           */
+          ::sidl::array<double>
+          get_time_span_impl() ;
+          /**
+           * user defined non-static method.
+           */
+          ::edu::csdms::openmi::IElementSet
+          get_element_set_impl (
+            /* in */const ::std::string& val_string
+          )
+          ;
+
+          /**
+           * user defined non-static method.
+           */
+          ::edu::csdms::openmi::IValueSet
+          get_value_set_impl (
+            /* in */const ::std::string& val_string
+          )
+          ;
+
+          /**
+           * user defined non-static method.
+           */
+          ::sidl::basearray
+          get_value_set_data_impl (
+            /* in */const ::std::string& val_string
+          )
+          ;
+
+          /**
+           * user defined non-static method.
+           */
+          void
+          set_value_set_impl (
+            /* in */const ::std::string& val_string,
+            /* in */::edu::csdms::openmi::IValueSet& values
+          )
+          ;
+
         };  // end class AgDegNormGravMixSubPW_impl
 
       } // end namespace stm

@@ -13,6 +13,27 @@
 // 
 // Includes for all method dependencies.
 // 
+#ifndef included_edu_csdms_openmi_IElementSet_hxx
+#include "edu_csdms_openmi_IElementSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_IScalarSet_hxx
+#include "edu_csdms_openmi_IScalarSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_IValueSet_hxx
+#include "edu_csdms_openmi_IValueSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_ScalarSet_hxx
+#include "edu_csdms_openmi_ScalarSet.hxx"
+#endif
+#ifndef included_edu_csdms_openmi_ValueSet_hxx
+#include "edu_csdms_openmi_ValueSet.hxx"
+#endif
+#ifndef included_edu_csdms_tools_ConfigDialog_hxx
+#include "edu_csdms_tools_ConfigDialog.hxx"
+#endif
+#ifndef included_edu_csdms_tools_TemplateFiles_hxx
+#include "edu_csdms_tools_TemplateFiles.hxx"
+#endif
 #ifndef included_gov_cca_CCAException_hxx
 #include "gov_cca_CCAException.hxx"
 #endif
@@ -179,17 +200,17 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::boccaSetServices_impl (
   } 
 
 
-  // Provide a edu.csdms.models.stm.IRFPort port with port name model 
+  // Provide a edu.csdms.ports.IRFPort port with port name Model 
   try{
     this->d_services.addProvidesPort(
                    port,              // implementing object
-                   "model", // port instance name
-                   "edu.csdms.models.stm.IRFPort",     // full sidl type of port
+                   "Model", // port instance name
+                   "edu.csdms.ports.IRFPort",     // full sidl type of port
                    typeMap);          // properties for the port
   } catch ( ::gov::cca::CCAException ex )  {
     BOCCA_EXTEND_THROW_CXX(ex, 
         "edu.csdms.models.stm.AgDegNormGravMixSubPW: Error calling addProvidesPort(port,"
-        "\"model\", \"edu.csdms.models.stm.IRFPort\", typeMap) ", -2);
+        "\"Model\", \"edu.csdms.ports.IRFPort\", typeMap) ", -2);
     throw;
   }    
 
@@ -232,14 +253,14 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::boccaReleaseServices_impl (
   this->d_services=0;
 
 
-  // Un-provide edu.csdms.models.stm.IRFPort port with port name model 
+  // Un-provide edu.csdms.ports.IRFPort port with port name Model 
   try{
-    services.removeProvidesPort("model");
+    services.removeProvidesPort("Model");
   } catch ( ::gov::cca::CCAException ex )  {
 
 #ifdef _BOCCA_STDERR
     std::cerr << "edu.csdms.models.stm.AgDegNormGravMixSubPW: Error calling removeProvidesPort("
-              << "\"model\") at " 
+              << "\"Model\") at " 
               << __FILE__ << ": " << __LINE__ -4 << ": " << ex.getNote() 
               << std::endl;
 #endif // _BOCCA_STDERR
@@ -272,12 +293,22 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::boccaReleaseServices_impl (
 void
 edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::boccaForceUsePortInclude_impl
   (
-  /* in */::gov::cca::ports::ParameterPortFactory& dummy0 ) 
+  /* in */::gov::cca::ports::ParameterPortFactory& dummy0,
+  /* in */::edu::csdms::openmi::ValueSet& dummy1,
+  /* in */::edu::csdms::tools::TemplateFiles& dummy2,
+  /* in */::edu::csdms::openmi::ScalarSet& dummy3,
+  /* in */::edu::csdms::tools::ConfigDialog& dummy4,
+  /* in */::edu::csdms::openmi::IScalarSet& dummy5 ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.boccaForceUsePortInclude)
   // DO-NOT-EDIT-BOCCA
   // Bocca generated code. bocca.protected.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.boccaForceUsePortInclude)
     (void)dummy0;
+    (void)dummy1;
+    (void)dummy2;
+    (void)dummy3;
+    (void)dummy4;
+    (void)dummy5;
 
   // Bocca generated code. bocca.protected.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.boccaForceUsePortInclude)
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.boccaForceUsePortInclude)
@@ -328,12 +359,21 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/AgDegNormGravMixSubPW/test.txt");
+  // The configure port is called "Configure"
+  ppf.initParameterData(userinput, "Configure");
+
 ppf.addRequestInt(userinput, "ChezyOrManning", "Chezy or Manning", "Chezy-1 or Manning-2", 1,1,2);
 ppf.addRequestInt(userinput, "bedloadrelation", "Parker or Wilock", "Parker-1 or Wilock-2", 1,1,2);
 ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/AgDegNormGravMixSubPW/result.txt");
+
+  { // Read the XML description of the GUI
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_AgDegNormGravMixSubPW.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
 ppf.addParameterPort(userinput, services);
 services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.setServices)
@@ -392,20 +432,59 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::releaseServices_impl (
  * Method:  initialize[]
  */
 void
-edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::initialize_impl () 
-
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::initialize_impl (
+  /* in array<string> */::sidl::array< ::std::string>& properties ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.initialize} (initialize method)
+  std::string input;
+
+  { // Construct input file name from GUI entries
+    std::string input_dir = userinput.getString (
+                              "/STM/AgDegNormGravMixSubPW/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/AgDegNormGravMixSubPW/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/AgDegNormGravMixSubPW/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_AgDegNormGravMixSubPW.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/AgDegNormGravMixSubPW/Input/Var/",
+                        work_dir);
+
+    }
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }
+
+    input = in_file;
+
+    fprintf (stderr, "#AgDegNormGravMixSubPW: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#AgDegNormGravMixSubPW: Input file: %s\n", input.c_str ());
+
+     free (work_dir);
+  }
+
     qw=0; qbTf=0; I=0; etad=0; S=0; L=0; dt=0; nk=0; na=0; alphar=0; R=0;
     lps=0; alphau=0; atrans=0; rload=0; Cexp=0; nexp=0; fracsandl=0; rB=0;
-    Dsgsi=0; Dx50si=0; Dx90si=0; dx=0; time=0; Sinu=0; subrate=0; lamda=0;
+    Dsgsi=0; Dx50si=0; Dx90si=0; dx=0; __time=0; Sinu=0; subrate=0; lamda=0;
     ExnerFactor=0; Cf=0;
     M=0; prints=0; iterates=0; npp=0; np=0; check=0; k=0; m=0; bedloadrelation=1; formulation=0;
 
-  std::string input = userinput.getString("Input","");
-  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
-  bedloadrelation = userinput.getInt("bedloadrelation",1);
+  // For now set these to their defaults
+  int ChezyOrManning = 1;
+  bedloadrelation = 1;
 
         check = Initialize(GSD, &qw, &qbTf, &I, &etad, &S, &L, &dt, &M, &prints, &iterates,
                     &nk, &na, &alphar, &R, &lps, &alphau, &atrans, &npp, &np, &rload, &Cexp,
@@ -437,7 +516,7 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::initialize_impl ()
         
         //Saves Initial Bed Profile to print later
         SaveDatatoMatrix(printmatrix, dsgmatrix, qbTmatrix, Hmatrix, tausgmatrix,
-            Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s, qbTf, time, M, k);  
+            Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s, qbTf, __time, M, k);  
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.initialize)
 }
@@ -446,25 +525,29 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::initialize_impl ()
  * Method:  run[]
  */
 void
-edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::run_impl () 
-
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::run_impl (
+  /* in */double time ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.run)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.run} (run method)
 	std::cout << "It is running ... wait!" << std::endl;
-        //TIME LOOP
-        for (k=1; k <= (prints); k++) {
-            for (m=1; m <= (iterates); m++) {
+  // Unfortunately "time" is the name of a input parameter to run, and the
+  // name of a member of the component class.  __time refers to the class
+  // member.
+  for (k=1; k <= (prints); k++) {
+    for (m=1; m <= (iterates); m++) {
 	      //std::cout << "k= " << k << "  m= "<< m << std::endl;
-                Run(M, eta, Sl, tausg, taus50, H, dx, nk, Dx90s, Dx50s, qw, alphar, R, dsgs,
-                    GSD, np, npp, F, pl, qbT, ds, po, oo, so, Ft, bedloadrelation, fracsand,
-                    qbTf, qbTmatrix, time, na, Fs, plf, alphau, atrans, dt, I, lps, Laold,
-                    subrate, ExnerFactor, Cf, formulation);
-                time += dt;
-            }
-            SaveDatatoMatrix(printmatrix, dsgmatrix, qbTmatrix, Hmatrix, tausgmatrix,
-                Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s, qbTf, time, M, k);
-        }
+      Run (M, eta, Sl, tausg, taus50, H, dx, nk, Dx90s, Dx50s, qw, alphar,
+           R, dsgs, GSD, np, npp, F, pl, qbT, ds, po, oo, so, Ft,
+           bedloadrelation, fracsand, qbTf, qbTmatrix, __time, na, Fs, plf,
+           alphau, atrans, dt, I, lps, Laold, subrate, ExnerFactor,
+           Cf, formulation);
+      __time += dt;
+    }
+    SaveDatatoMatrix (printmatrix, dsgmatrix, qbTmatrix, Hmatrix, tausgmatrix,
+                      Slmatrix, D90matrix, eta, dsgs, qbT, H, tausg, Sl, Dx90s,
+                      qbTf, __time, M, k);
+  }
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.run)
 }
@@ -478,8 +561,15 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.finalize} (finalize method)
+  // Construct the output file name from GUI entries.
+  std::string site_prefix = userinput.getString (
+                              "/STM/AgDegNormGravMixSubPW/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/AgDegNormGravMixSubPW/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
 
-  std::string output = userinput.getString("Output","");
+  fprintf (stderr, "#AgDegNormGravMixSubPW: Output file: %s\n",
+           output.c_str ());
 
     Finalize(printmatrix, x, M, prints, GSD, npp, dsgmatrix, qbTmatrix, H, F, pl, Slmatrix,
 	     Hmatrix, tausgmatrix, D90matrix, qbTf, output.c_str());
@@ -493,6 +583,322 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::finalize_impl ()
     free(D90matrix);
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.finalize)
+}
+
+/**
+ * Method:  getRaster_nx[]
+ */
+int64_t
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::getRaster_nx_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_nx)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_nx} (getRaster_nx method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_nx)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "getRaster_nx");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_nx)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_nx)
+}
+
+/**
+ * Method:  getRaster_ny[]
+ */
+int64_t
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::getRaster_ny_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ny)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ny} (getRaster_ny method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ny)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "getRaster_ny");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ny)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ny)
+}
+
+/**
+ * Method:  getRaster_dx[]
+ */
+double
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::getRaster_dx_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dx)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dx} (getRaster_dx method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dx)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "getRaster_dx");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dx)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dx)
+}
+
+/**
+ * Method:  getRaster_dy[]
+ */
+double
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::getRaster_dy_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dy)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dy} (getRaster_dy method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dy)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "getRaster_dy");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dy)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_dy)
+}
+
+/**
+ * Method:  getRaster_ulx[]
+ */
+double
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::getRaster_ulx_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ulx)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ulx} (getRaster_ulx method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ulx)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "getRaster_ulx");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ulx)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_ulx)
+}
+
+/**
+ * Method:  getRaster_uly[]
+ */
+double
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::getRaster_uly_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_uly)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_uly} (getRaster_uly method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_uly)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "getRaster_uly");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_uly)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_uly)
+}
+
+/**
+ * Method:  getRaster_grid[]
+ */
+::sidl::array<double>
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::getRaster_grid_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_grid)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_grid} (getRaster_grid method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_grid)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "getRaster_grid");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_grid)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.getRaster_grid)
+}
+
+/**
+ * Method:  get_raster_dimen[]
+ */
+::sidl::array<int32_t>
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::get_raster_dimen_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_dimen)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_dimen} (get_raster_dimen method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_dimen)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_raster_dimen");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_dimen)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_dimen)
+}
+
+/**
+ * Method:  get_raster_res[]
+ */
+::sidl::array<double>
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::get_raster_res_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_res)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_res} (get_raster_res method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_res)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_raster_res");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_res)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_res)
+}
+
+/**
+ * Method:  get_raster_data[]
+ */
+::sidl::basearray
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::get_raster_data_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_data)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_data} (get_raster_data method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_data)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_raster_data");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_data)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_raster_data)
+}
+
+/**
+ * Method:  get_time_span[]
+ */
+::sidl::array<double>
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::get_time_span_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_time_span)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.get_time_span} (get_time_span method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_time_span)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_time_span");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_time_span)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_time_span)
+}
+
+/**
+ * Method:  get_element_set[]
+ */
+::edu::csdms::openmi::IElementSet
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::get_element_set_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_element_set)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.get_element_set} (get_element_set method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_element_set)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_element_set");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_element_set)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_element_set)
+}
+
+/**
+ * Method:  get_value_set[]
+ */
+::edu::csdms::openmi::IValueSet
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::get_value_set_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set} (get_value_set method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_value_set");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set)
+}
+
+/**
+ * Method:  get_value_set_data[]
+ */
+::sidl::basearray
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::get_value_set_data_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set_data)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set_data} (get_value_set_data method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set_data)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_value_set_data");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set_data)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.get_value_set_data)
+}
+
+/**
+ * Method:  set_value_set[]
+ */
+void
+edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::set_value_set_impl (
+  /* in */const ::std::string& val_string,
+  /* in */::edu::csdms::openmi::IValueSet& values ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.set_value_set)
+  // Insert-Code-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.set_value_set} (set_value_set method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.set_value_set)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "set_value_set");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.set_value_set)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.set_value_set)
 }
 
 
