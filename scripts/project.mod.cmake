@@ -23,11 +23,11 @@ module load csdms
 module load roms
 module load stm
 
-if {![info exists env{CMT_PROJECT_DIALOG_PATH}]} {
-  setenv CMT_PROJECT_DIALOG_PATH @CONFIG_DIR@
-}
 if {![info exists env{CMT_PROJECT_TEMPLATE_PATH}]} {
-{
-  setenv CMT_PROJECT_TEMPLATE_PATH @TEMPLATE_DIR@
+  setenv CMT_PROJECT_TEMPLATE_PATH "@TEMPLATE_DIR@"
+}
+
+if {![info exists env{CMT_PROJECT_DIALOG_PATH}]} {
+  setenv CMT_PROJECT_DIALOG_PATH "@CONFIG_DIR@"
 }
 
