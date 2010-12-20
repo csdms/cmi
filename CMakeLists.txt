@@ -1,10 +1,24 @@
 cmake_minimum_required (VERSION 2.6)
 
+set (PROJECT_NAME csdms-cca)
+
 ##
 # Set locations of input and output
 set (SRCDIR ${CMAKE_SOURCE_DIR}/src/csdms)
 set (PRJDIR ${CMAKE_SOURCE_DIR}/projects)
 set (DESTDIR ${CMAKE_BINARY_DIR})
+set (PROJECT_TOP_DIR ${CMAKE_BINARY_DIR}/csdms)
+set (CONFIG_DIR ${CMAKE_SOURCE_DIR}/share/config)
+set (TEMPLATE_DIR ${CMAKE_SOURCE_DIR}/share/templates)
+
+##
+# Look for bocca home
+find_path (BOCCA_HOME bocca)
+if (BOCCA_HOME)
+  message (STATUS "Looking for bocca root... ${BOCCA_HOME}")
+else (BOCCA_HOME)
+  message (STATUS "Looking for bocca root... Not found")
+endif (BOCCA_HOME)
 
 ##
 # Look for bocca command
@@ -14,6 +28,15 @@ if (BOCCA)
 else (BOCCA)
   message (STATUS "Looking for bocca... Not found")
 endif (BOCCA)
+
+##
+# Look for ccafe-config command
+find_program (CCAFE_CONFIG ccafe-config)
+if (CCAFE_CONFIG)
+  message (STATUS "Looking for ccafe-config... ${CCAFE_CONFIG}")
+else (CCAFE_CONFIG)
+  message (STATUS "Looking for ccafe-config... Not found")
+endif (CCAFE_CONFIG)
 
 ##
 # Look for bocca-build command
@@ -40,6 +63,19 @@ set (CHILD_SRC ${PRJDIR}/child.xml)
 set (STM_SRC ${PRJDIR}/stm.xml)
 set (SEDFLUX_SRC ${PRJDIR}/sedflux.xml)
 
+configure_file (
+  ${CMAKE_CURRENT_SOURCE_DIR}/scripts/bocca-gui-backend.sh.cmake
+  ${CMAKE_BINARY_DIR}/bocca-gui-backend.sh
+  @ONLY)
+configure_file (
+  ${CMAKE_CURRENT_SOURCE_DIR}/scripts/set-env.sh.cmake
+  ${CMAKE_BINARY_DIR}/set-env.sh
+  @ONLY)
+configure_file (
+  ${CMAKE_CURRENT_SOURCE_DIR}/scripts/project.mod.cmake
+  ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
+  @ONLY)
+
 ##
 # The bocca build command to execute.  Note that the project xml file
 # is left out as it is added for the particular targets.
@@ -65,10 +101,13 @@ add_custom_command (OUTPUT dummy_file
   VERBATIM)
 
 message ("---")
+message ("  bocca root:        ${BOCCA_HOME}")
 message ("  bocca:             ${BOCCA}")
+message ("  ccafe-config:      ${CCAFE_CONFIG}")
 message ("  bocca-build:       ${BOCCA_BUILD}")
 message ("  bocca-save:        ${BOCCA_SAVE}")
 message ("  Source directory:  ${SRCDIR}")
 message ("  Build directory:   ${DESTDIR}/csdms")
+message ("  Project path:      ${PROJECT_TOP_DIR}")
 message ("---")
 
