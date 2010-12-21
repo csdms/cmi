@@ -359,12 +359,17 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/BackwaterWrightParker/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/BackwaterWrightParker/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+    dialog.read ("STM_BackwaterWrightParker.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BackwaterWrightParker.setServices)
 }
@@ -427,8 +432,47 @@ edu::csdms::models::stm::BackwaterWrightParker_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BackwaterWrightParker.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.BackwaterWrightParker.initialize} (initialize method)
-  std::string input = userinput.getString("Input","");
-  check = Initialize(x, eta, ksi, &Sl, &R, &D50s, &D90s, &B, &Qw, &ksid, &L, &qw, &dx, &M, input.c_str());
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+      "/STM/BackwaterWrightParker/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+      "/STM/BackwaterWrightParker/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+      "/STM/BackwaterWrightParker/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_BackwaterWrightParker.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/BackwaterWrightParker/Input/Var/",
+                                   work_dir);
+    }
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }
+
+    input = in_file;
+
+    fprintf (stderr, "#BackwaterWrightParker: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#BackwaterWrightParker: Input file: %s\n",
+                     input.c_str ());
+
+    free (work_dir);
+  }
+
+  check = Initialize (x, eta, ksi, &Sl, &R, &D50s, &D90s, &B, &Qw, &ksid, &L,
+                      &qw, &dx, &M, input.c_str());
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BackwaterWrightParker.initialize)
 }
@@ -442,7 +486,8 @@ edu::csdms::models::stm::BackwaterWrightParker_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BackwaterWrightParker.run)
   // Insert-Code-Here {edu.csdms.models.stm.BackwaterWrightParker.run} (run method)
-    check = Run(eta, H, Sf, ksi, Hs, ksid, qw, dx, R, D90s, D50s, Sl, M, &Hnorm);
+    check = Run (eta, H, Sf, ksi, Hs, ksid, qw, dx, R, D90s, D50s, Sl, M,
+                 &Hnorm);
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BackwaterWrightParker.run)
 }
@@ -456,8 +501,13 @@ edu::csdms::models::stm::BackwaterWrightParker_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BackwaterWrightParker.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.BackwaterWrightParker.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
-  Finalize(x, eta, ksi, H, Hs, M, Hnorm, output.c_str());
+  std::string site_prefix = userinput.getString (
+    "/STM/BackwaterWrightParker/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+    "/STM/BackwaterWrightParker/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  Finalize (x, eta, ksi, H, Hs, M, Hnorm, output.c_str());
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BackwaterWrightParker.finalize)
 }
