@@ -366,7 +366,7 @@ if (ppf._is_nil()) {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
     services.releasePort("ppf");   
-    dialog.read ("BedrockAlluvialTransition.xml");
+    dialog.read ("STM_BedrockAlluvialTransition.xml");
     dialog.construct (ppf, this->userinput);
   }
 
