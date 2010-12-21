@@ -1,0 +1,148 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/BackwaterCalculator/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/BackwaterCalculator}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>DeltaBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/BackwaterCalculator/Input/Var/D">
+      <label>Grain size of bed material [mm]</label>
+      <help_brief>Grain size of bed material [mm]</help_brief>
+      <default>0.91</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/C">
+      <label>Chezy resistance coefficient [-]</label>
+      <help_brief>Chezy resistance coefficient [-]</help_brief>
+      <default>22</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/H">
+      <label>H</label>
+      <help_brief>H</help_brief>
+      <default>30</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/M">
+      <label>M</label>
+      <help_brief>M</help_brief>
+      <default>.27</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/a">
+      <label>Coefficent in total bed material relation [-]</label>
+      <help_brief>Coefficent in total bed material relation [-]</help_brief>
+      <default>8.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/n">
+      <label>Exponent in load relation [-]</label>
+      <help_brief>Exponent in load relation [-]</help_brief>
+      <default>2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/x">
+      <label>Water surface elevation of lake [m]</label>
+      <help_brief>Water surface elevation of lake [m]</help_brief>
+      <default>123000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/S">
+      <label>Slope of foreset face [-]</label>
+      <help_brief>Slope of foreset face [-]</help_brief>
+      <default>0.00025</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/q">
+      <label>Flood discharge [m^2/s]</label>
+      <help_brief>Flood discharge [m^2/s]</help_brief>
+      <default>5.7</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/d">
+      <label>d</label>
+      <help_brief>d</help_brief>
+      <default>1000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/BackwaterCalculator/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>BackwaterCalculator</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

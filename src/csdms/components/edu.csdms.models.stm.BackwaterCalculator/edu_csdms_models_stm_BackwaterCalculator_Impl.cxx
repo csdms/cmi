@@ -359,13 +359,17 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/BackwaterCalculator/test.txt");
-ppf.addRequestInt(userinput, "ChezyOrManning", "Chezy or Manning", "Chezy-1 or Manning-2", 1,1,2);
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/BackwaterCalculator/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+    dialog.read ("STM_BackwaterCalculator.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BackwaterCalculator.setServices)
 }
@@ -428,21 +432,59 @@ edu::csdms::models::stm::BackwaterCalculator_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BackwaterCalculator.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.BackwaterCalculator.initialize} (initialize method)
-    chezyH=0; chezyU=0; chezyFr=0; chezytaub=0;
-    MSH=0; MSU=0; MSFr=0; MStaub=0;
-    S=0; Cz=0; qw=0; R=0; Dmean=0; Ds90=0; nk=0; alphar=0;
-    Hc=0; Uc=0;
-    x0=0; step=0; initdepth=0;
-    terms=0; formulation=0;
+  std::string input;
 
-  std::string input = userinput.getString("Input","");
-  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
+  {
+    std::string input_dir = userinput.getString (
+      "/STM/BackwaterCalculator/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+      "/STM/BackwaterCalculator/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+      "/STM/BackwaterCalculator/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
 
-        Initialize(&S, &Cz, &qw, &R, &Dmean, &Ds90, &nk, &alphar, &x0, &step, &initdepth,
-            &terms, &chezyH, &chezyFr, &chezyU, &chezytaub, &MSH, &MSU, &MSFr, &MStaub,
-		   &Hc, &Uc, &formulation, ChezyOrManning, input.c_str());
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
 
-        N=(x0/step)+1;
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_BackwaterCalculator.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/BackwaterCalculator/Input/Var/",
+                                   work_dir);
+    }
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }
+
+    input = in_file;
+
+    fprintf (stderr, "#BackwaterCalculator: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#BackwaterCalculator: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
+  chezyH=0; chezyU=0; chezyFr=0; chezytaub=0;
+  MSH=0; MSU=0; MSFr=0; MStaub=0;
+  S=0; Cz=0; qw=0; R=0; Dmean=0; Ds90=0; nk=0; alphar=0;
+  Hc=0; Uc=0;
+  x0=0; step=0; initdepth=0;
+  terms=0; formulation=0;
+
+  int ChezyOrManning = 1;
+
+  Initialize (&S, &Cz, &qw, &R, &Dmean, &Ds90, &nk, &alphar, &x0, &step,
+              &initdepth, &terms, &chezyH, &chezyFr, &chezyU, &chezytaub,
+              &MSH, &MSU, &MSFr, &MStaub, &Hc, &Uc, &formulation,
+              ChezyOrManning, input.c_str());
+
+  N=(x0/step)+1;
 
   if ( (U  = (float *) malloc( N * sizeof(float) ) ) == NULL) { fprintf(stderr, "malloc error"); exit(0);}
   if ( (taub  = (float *) malloc( N * sizeof(float) ) ) == NULL) { fprintf(stderr, "malloc error"); exit(0);}
@@ -470,8 +512,8 @@ edu::csdms::models::stm::BackwaterCalculator_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BackwaterCalculator.run)
   // Insert-Code-Here {edu.csdms.models.stm.BackwaterCalculator.run} (run method)
-        Run(S, qw, Cz, initdepth, x0, step, N, nk, Ds90, alphar, x, U, taub, eta,
-            ksi, H, xMS, UMS, taubMS, etaMS, ksiMS, HMS, formulation);
+  Run (S, qw, Cz, initdepth, x0, step, N, nk, Ds90, alphar, x, U, taub, eta,
+       ksi, H, xMS, UMS, taubMS, etaMS, ksiMS, HMS, formulation);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BackwaterCalculator.run)
 }
 
@@ -485,10 +527,15 @@ edu::csdms::models::stm::BackwaterCalculator_impl::finalize_impl ()
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BackwaterCalculator.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.BackwaterCalculator.finalize} (finalize method)
 
-  std::string output = userinput.getString("Output","");
+  std::string site_prefix = userinput.getString (
+    "/STM/BackwaterCalculator/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+    "/STM/BackwaterCalculator/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
 
-        Finalize(chezyH, chezyU, chezyFr, chezytaub, MSH, MSU, MSFr, MStaub, Hc, Uc, x,
-		 U, H, taub, eta, ksi, xMS, UMS, HMS, taubMS, etaMS, ksiMS, N, formulation, output.c_str());
+  Finalize (chezyH, chezyU, chezyFr, chezytaub, MSH, MSU, MSFr, MStaub, Hc, Uc,
+            x, U, H, taub, eta, ksi, xMS, UMS, HMS, taubMS, etaMS, ksiMS, N,
+            formulation, output.c_str());
 
 	free(U);
 	free(taub);
