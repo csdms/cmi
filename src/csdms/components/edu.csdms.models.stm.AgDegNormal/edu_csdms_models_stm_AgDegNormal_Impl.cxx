@@ -466,7 +466,7 @@ edu::csdms::models::stm::AgDegNormal_impl::initialize_impl (
     free (work_dir);
   }
 
-  Qf=0; If=0; B=0; D=0; lamdap=0; kc=0; S=0; Gtf=0; L=0; dt=0; time=0;
+  Qf=0; If=0; B=0; D=0; lamdap=0; kc=0; S=0; Gtf=0; L=0; dt=0; __time=0;
   alphau=0; alphar=0; alphat=0; nt=0; tauc=0; phis=0; R=0; qtg=0; Cf=0;
   H=0; taustar=0; qstar=0; qt=0; Gt=0; qtf=0; tauult=0; Sult=0; Hult=0; dx=0;
   M=0; iterate=0; prints=0; formulation=0; j=0; k=0;
@@ -507,7 +507,7 @@ edu::csdms::models::stm::AgDegNormal_impl::initialize_impl (
   //Saves initial bed data
         
   SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
-                    eta, Sl, Ht, tau, qb, time, k, M);
+                    eta, Sl, Ht, tau, qb, __time, k, M);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormal.initialize)
 }
 
@@ -527,9 +527,9 @@ edu::csdms::models::stm::AgDegNormal_impl::run_impl (
       Run (Sl, M, eta, dx, tau, Ht, Qf, kc, alphar, B, D, R, Cf, formulation,
            qb, phis, tauc, nt, alphat, dt, lamdap, If, alphau, qtg);
     }
-    time = k*dt*iterate;
+    __time = k*dt*iterate;
     SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix,
-                      eta, Sl, Ht, tau, qb, time, k, M);
+                      eta, Sl, Ht, tau, qb, __time, k, M);
   }
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormal.run)
