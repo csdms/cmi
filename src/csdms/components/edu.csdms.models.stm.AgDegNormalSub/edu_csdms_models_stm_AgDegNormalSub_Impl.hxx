@@ -109,7 +109,7 @@ namespace edu {
 
   // Insert-UserCode-Here(edu.csdms.models.stm.AgDegNormalSub._implementation)
 gov::cca::TypeMap userinput;
-    float qw, If, D, lamdap, kc, S, qtf, L, dt, alphau, alphar, qtg, time;
+    float qw, If, D, lamdap, kc, S, qtf, L, dt, alphau, alphar, qtg, __time;
     float alphat, nt, tauc, phis, R, Cf, sigma, rB, omega, lamda, dx, Lmax;
     int iterate, prints, M, formulation, check, k, j;
     double eta[101], x[101], qb[101], Sl[101], tau[101], H[101];
