@@ -360,13 +360,18 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/BedrockAlluvialTransition/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/BedrockAlluvialTransition/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
 
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+    services.releasePort("ppf");   
+    dialog.read ("BedrockAlluvialTransition.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BedrockAlluvialTransition.setServices)
 }
 
@@ -428,14 +433,53 @@ edu::csdms::models::stm::BedrockAlluvialTransition_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BedrockAlluvialTransition.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.BedrockAlluvialTransition.initialize} (initialize method)
-    M=0; prints=0; iterates=0; check=0; k=0; m=0;
-    qw=0; I=0; qtf=0; D=0; Cz=0; Sbase=0; Sfinit=0; sd=0; dt=0; dxbar=0;
-    time=0; alphas=0; etaup=0; sba=0; R=0; lamdap=0;
+  std::string input;
 
-std::string input = userinput.getString("Input","");
+  {
+    std::string input_dir = userinput.getString (
+      "/STM/BedrockAlluvialTransition/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+      "/STM/BedrockAlluvialTransition/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+      "/STM/BedrockAlluvialTransition/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
 
-    check = Initialize(xbar, x, eta, S, &qw, &I, &qtf, &D, &Cz, &Sbase, &Sfinit, &sd, &M, &dt,
-		       &prints, &iterates, &dxbar, &alphas, &etaup, &sba, &R, &lamdap, input.c_str());
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("BedrockAlluvialTransition.txt.in", in_file);
+
+      tmpls.substitute (userinput,
+                        "/STM/BedrockAlluvialTransition/Input/Var/", work_dir);
+    }
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }
+
+    input = in_file;
+
+    fprintf (stderr, "#BedrockAlluvialTransition: Run directory: %s\n",
+                     work_dir);
+    fprintf (stderr, "#BedrockAlluvialTransition: Input file: %s\n",
+                     input.c_str ());
+
+    free (work_dir);
+  }
+
+  M=0; prints=0; iterates=0; check=0; k=0; m=0;
+  qw=0; I=0; qtf=0; D=0; Cz=0; Sbase=0; Sfinit=0; sd=0; dt=0; dxbar=0;
+  __time=0; alphas=0; etaup=0; sba=0; R=0; lamdap=0;
+
+  check = Initialize (xbar, x, eta, S, &qw, &I, &qtf, &D, &Cz, &Sbase,
+                      &Sfinit, &sd, &M, &dt, &prints, &iterates, &dxbar,
+                      &alphas, &etaup, &sba, &R, &lamdap, input.c_str());
 
   if ( (printmatrix = (double (*)[101]) malloc( (prints+2) * sizeof(double [101])  ) ) == NULL) {
       fprintf(stderr, "malloc error"); exit(0);
@@ -453,10 +497,8 @@ std::string input = userinput.getString("Input","");
     fprintf(stderr, "malloc error"); exit(0);
   }
 
-    SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, Hmatrix, xmatrix, x, eta,
-        S, qb, H, time, M, k);
-        
-
+  SaveDatatoMatrix (printmatrix, Slmatrix, qbmatrix, Hmatrix, xmatrix, x, eta,
+                    S, qb, H, __time, M, k);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BedrockAlluvialTransition.initialize)
 }
 
@@ -469,15 +511,15 @@ edu::csdms::models::stm::BedrockAlluvialTransition_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BedrockAlluvialTransition.run)
   // Insert-Code-Here {edu.csdms.models.stm.BedrockAlluvialTransition.run} (run method)
-    for (k=1; k <= prints; k++) {
-        for (m=1; m <= iterates; m++) {
-            Run(eta, S, qb, H, xbar, x, dxbar, sd, &etaup, &sba, Cz, I, lamdap,
-                Sbase, dt, alphas, qw, R, D, qtf, M);
-            time += dt;
-        }
-        SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, Hmatrix, xmatrix, x, eta,
-            S, qb, H, time, M, k);
+  for (k=1; k <= prints; k++) {
+    for (m=1; m <= iterates; m++) {
+      Run (eta, S, qb, H, xbar, x, dxbar, sd, &etaup, &sba, Cz, I, lamdap,
+           Sbase, dt, alphas, qw, R, D, qtf, M);
+      __time += dt;
     }
+    SaveDatatoMatrix (printmatrix, Slmatrix, qbmatrix, Hmatrix, xmatrix, x,
+                      eta, S, qb, H, __time, M, k);
+  }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BedrockAlluvialTransition.run)
 }
 
@@ -490,14 +532,22 @@ edu::csdms::models::stm::BedrockAlluvialTransition_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.BedrockAlluvialTransition.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.BedrockAlluvialTransition.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+  std::string site_prefix = userinput.getString (
+                              "/STM/BedrockAlluvialTransition/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/BedrockAlluvialTransition/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
 
-  Finalize(printmatrix, xmatrix, Slmatrix, qbmatrix, Hmatrix, M, prints, output.c_str());
-    free(printmatrix);
-    free(Slmatrix);
-    free(qbmatrix);
-    free(Hmatrix);
-    free(xmatrix);  
+  fprintf (stderr, "#BedrockAlluvialTransition: Output file: %s\n",
+                    output.c_str ());
+
+  Finalize (printmatrix, xmatrix, Slmatrix, qbmatrix, Hmatrix, M, prints,
+            output.c_str());
+  free (printmatrix);
+  free (Slmatrix);
+  free (qbmatrix);
+  free (Hmatrix);
+  free (xmatrix);  
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.BedrockAlluvialTransition.finalize)
 }

@@ -111,7 +111,7 @@ gov::cca::TypeMap userinput;
 
     int M, prints, iterates, check, k, m;
     double qw, I, qtf, D, Cz, Sbase, Sfinit, sd, dt, dxbar;
-    double time, alphas, etaup, sba, R, lamdap;
+    double __time, alphas, etaup, sba, R, lamdap;
     double xbar[101], x[101], eta[101], S[101], qb[101], H[101];
 
     double (*printmatrix)[101], (*Slmatrix)[101], (*qbmatrix)[101];
