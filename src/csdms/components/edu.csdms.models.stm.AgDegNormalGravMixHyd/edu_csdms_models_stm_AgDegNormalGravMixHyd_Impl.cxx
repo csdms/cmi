@@ -359,12 +359,17 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/AgDegNormalGravMixHyd/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/AgDegNormalGravMixHyd/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+    dialog.read ("STM_AgDegNormalGravMixHyd.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalGravMixHyd.setServices)
 }
@@ -427,16 +432,54 @@ edu::csdms::models::stm::AgDegNormalGravMixHyd_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormalGravMixHyd.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormalGravMixHyd.initialize} (initialize method)
-  std::string input = userinput.getString("Input","");
-    etad=0; S=0; L=0; nk=0; na=0; alphar=0; R=0; lps=0; alphau=0; dt=0;
-    dtflood=0; atrans=0; dx=0; qbToave=0; qwave=0; durhyd=0; I=0; LoadAnn=0;
-    Dsgsi=0; Ds90si=0; Dsgsub=0; time=0; qbTo=0; qw=0;
-    M=0; prints=0; iterates=0; npp=0; np=0; ndisc=0; ncyc=0; totstep=0;
-    maxflow=0; k=0; m=0; check=0; counter=0;
+  std::string input;
 
-        check = ReadIn(GSD, hydro, &ncyc, &etad, &S, &L, &M, &prints, &iterates, &nk, &na,
-                    &alphar, &R, &lps, &alphau, &atrans, &npp, &np, &ndisc, &dtflood,
-		       &dx, &totstep, input.c_str());
+  {
+    std::string input_dir = userinput.getString (
+      "/STM/AgDegNormalGravMixHyd/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+      "/STM/AgDegNormalGravMixHyd/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+      "/STM/AgDegNormalGravMixHyd/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_AgDegNormalGravMixHyd.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/AgDegNormalGravMixHyd/Input/Var/",
+                                   work_dir);
+    }
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }
+
+    input = in_file;
+
+    fprintf (stderr, "#AgDegNormalGravMixHyd: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#AgDegNormalGravMixHyd: Input file: %s\n",
+                     input.c_str ());
+
+    free (work_dir);
+  }
+
+  etad=0; S=0; L=0; nk=0; na=0; alphar=0; R=0; lps=0; alphau=0; dt=0;
+  dtflood=0; atrans=0; dx=0; qbToave=0; qwave=0; durhyd=0; I=0; LoadAnn=0;
+  Dsgsi=0; Ds90si=0; Dsgsub=0; __time=0; qbTo=0; qw=0;
+  M=0; prints=0; iterates=0; npp=0; np=0; ndisc=0; ncyc=0; totstep=0;
+  maxflow=0; k=0; m=0; check=0; counter=0;
+
+  check = ReadIn (GSD, hydro, &ncyc, &etad, &S, &L, &M, &prints, &iterates,
+                  &nk, &na, &alphar, &R, &lps, &alphau, &atrans, &npp, &np,
+                  &ndisc, &dtflood, &dx, &totstep, input.c_str());
 
   if ( (beginstep = (int *) malloc( (ndisc+2) * sizeof(int) ) ) == NULL) {fprintf(stderr, "malloc error"); exit(0);  }
   if ( (ds      = (double *) malloc( (np+8) * sizeof(double) ) ) == NULL) { fprintf(stderr, "malloc error"); exit(0);  }
@@ -495,15 +538,16 @@ edu::csdms::models::stm::AgDegNormalGravMixHyd_impl::initialize_impl (
   if ( (dayforprint      = (double *) malloc( (totstep+2) * sizeof(double) ) ) == NULL) {    fprintf(stderr, "malloc error"); exit(0);  }
 	
 
-        Initialize(GSD, hydro, &npp, &np, ds, psi, plf, Fl, Fs, ndisc, totstep, &qbToave,
-        &qwave, beginstep, &durhyd, &I, &LoadAnn, &dt, dtflood, ncyc, R, qwforprint, qbToforprint,
-        dayforprint, &Dsgsi, &Dsgsub, &Ds90si, po, oo, so, F, eta, x, dsgs, Dx90s, &dx, S, L, M,
-        etad, Sl, &maxflow);
+  Initialize (GSD, hydro, &npp, &np, ds, psi, plf, Fl, Fs, ndisc, totstep,
+              &qbToave, &qwave, beginstep, &durhyd, &I, &LoadAnn, &dt,
+              dtflood, ncyc, R, qwforprint, qbToforprint, dayforprint, &Dsgsi,
+              &Dsgsub, &Ds90si, po, oo, so, F, eta, x, dsgs, Dx90s, &dx, S, L,
+              M, etad, Sl, &maxflow);
 
-        //Saves Data to Matrix
-        SaveDatatoMatrix(printmatrix, dsgmatrix, qbTmatrix, dlgmatrix, Smatrix,
-            Hmatrix, tausgmatrix, D90matrix, eta, dsgsave, qbTave, H, tausg, Dx90s,
-            qbToave, time, M, k, Sl, dsglave);
+  //Saves Data to Matrix
+  SaveDatatoMatrix (printmatrix, dsgmatrix, qbTmatrix, dlgmatrix, Smatrix,
+                    Hmatrix, tausgmatrix, D90matrix, eta, dsgsave, qbTave, H,
+                    tausg, Dx90s, qbToave, __time, M, k, Sl, dsglave);
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalGravMixHyd.initialize)
 }
@@ -517,23 +561,24 @@ edu::csdms::models::stm::AgDegNormalGravMixHyd_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormalGravMixHyd.run)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormalGravMixHyd.run} (run method)
-        //The TIME LOOP
-        for (k=1; k <= prints; k++) {
-            for (m=1; m <= iterates; m++) {
-                Run(Fave, plave, qbTave, hydro, &qw, &qbTo, eta, tausg, H, dx, nk, Dx90s,
-                    alphar, R, dsgs, Sl, GSD, F, pl, qbT, ds, po, oo, so, na, Fs, Ft, plf,
-                    alphau, atrans, dt, I, lps, Laold, Ffinerflowmaxds, plfinerflowmaxds,
-                    Hflowmax, tausgflowmax, Fflowmax, plflowmax, dsgsflowmax, dsglflowmax,
-                    Ffinerflowendds, plfinerflowendds, Hflowend, tausgflowend, Fflowend,
-                    plflowend, dsgsflowend, dsglflowend, maxflow, etaendcyc, plt, dsgsave,
-                    dsglave, np, ndisc, beginstep, totstep, M, npp, k, m, &counter,
-                    qbTfforprint, prints, iterates);
-                time += (dt*(totstep*1.0));
-            }
-            SaveDatatoMatrix(printmatrix, dsgmatrix, qbTmatrix, dlgmatrix, Smatrix,
-                Hmatrix, tausgmatrix, D90matrix, eta, dsgsave, qbTave, H, tausg, Dx90s,
-                qbToave, time, M, k, Sl, dsglave);
-        }
+  //The TIME LOOP
+  for (k=1; k <= prints; k++) {
+    for (m=1; m <= iterates; m++) {
+      Run (Fave, plave, qbTave, hydro, &qw, &qbTo, eta, tausg, H, dx, nk,
+           Dx90s, alphar, R, dsgs, Sl, GSD, F, pl, qbT, ds, po, oo, so, na,
+           Fs, Ft, plf, alphau, atrans, dt, I, lps, Laold, Ffinerflowmaxds,
+           plfinerflowmaxds, Hflowmax, tausgflowmax, Fflowmax, plflowmax,
+           dsgsflowmax, dsglflowmax, Ffinerflowendds, plfinerflowendds,
+           Hflowend, tausgflowend, Fflowend, plflowend, dsgsflowend,
+           dsglflowend, maxflow, etaendcyc, plt, dsgsave, dsglave, np, ndisc,
+           beginstep, totstep, M, npp, k, m, &counter, qbTfforprint, prints,
+           iterates);
+      __time += (dt*(totstep*1.0));
+    }
+    SaveDatatoMatrix (printmatrix, dsgmatrix, qbTmatrix, dlgmatrix, Smatrix,
+                      Hmatrix, tausgmatrix, D90matrix, eta, dsgsave, qbTave,
+                      H, tausg, Dx90s, qbToave, __time, M, k, Sl, dsglave);
+  }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalGravMixHyd.run)
 }
 
@@ -546,68 +591,74 @@ edu::csdms::models::stm::AgDegNormalGravMixHyd_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormalGravMixHyd.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormalGravMixHyd.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
-    Finalize(GSD, printmatrix, dsgmatrix, qbTmatrix, tausgmatrix, Smatrix, dlgmatrix,
-        Hmatrix, F, pl, H, D90matrix, x, etaendcyc, Hflowmax, Hflowend, tausgflowmax,
-        tausgflowend, dsgsflowmax, dsgsflowend, dsglflowmax, dsglflowend, Ffinerflowmaxds,
-        Ffinerflowendds, plfinerflowmaxds, plfinerflowendds, totstep, qbTfforprint,
-        dayforprint, qwforprint, qbToforprint, qwave, qbToave, Dsgsi, Dsgsub, LoadAnn, M,
-	     prints, npp, output.c_str());
+  std::string site_prefix = userinput.getString (
+    "/STM/AgDegNormalGravMixHyd/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+    "/STM/AgDegNormalGravMixHyd/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  Finalize (GSD, printmatrix, dsgmatrix, qbTmatrix, tausgmatrix, Smatrix,
+            dlgmatrix, Hmatrix, F, pl, H, D90matrix, x, etaendcyc, Hflowmax,
+            Hflowend, tausgflowmax, tausgflowend, dsgsflowmax, dsgsflowend,
+            dsglflowmax, dsglflowend, Ffinerflowmaxds, Ffinerflowendds,
+            plfinerflowmaxds, plfinerflowendds, totstep, qbTfforprint,
+            dayforprint, qwforprint, qbToforprint, qwave, qbToave, Dsgsi,
+            Dsgsub, LoadAnn, M, prints, npp, output.c_str());
     
-    free(beginstep);
-    free(ds);
-    free(psi);
-    free(plf);
-    free(Fl);
-    free(Fs);
-    free(H);
-    free(tausg);
-    free(qbT);
-    free(F);
-    free(pl);
-    free(eta);
-    free(x);
-    free(dsgs);
-    free(Dx90s);
-    free(Sl);
-    free(printmatrix);
-    free(dsgmatrix);
-    free(qbTmatrix);
-    free(Hmatrix);
-    free(tausgmatrix);
-    free(D90matrix);
+  free (beginstep);
+  free (ds);
+  free (psi);
+  free (plf);
+  free (Fl);
+  free (Fs);
+  free (H);
+  free (tausg);
+  free (qbT);
+  free (F);
+  free (pl);
+  free (eta);
+  free (x);
+  free (dsgs);
+  free (Dx90s);
+  free (Sl);
+  free (printmatrix);
+  free (dsgmatrix);
+  free (qbTmatrix);
+  free (Hmatrix);
+  free (tausgmatrix);
+  free (D90matrix);
 
-    free(Ft);
-    free(plt);
-    free(Laold);
-    free(Ffinerflowmaxds);
-    free(plfinerflowmaxds);
-    free(Hflowmax);
-    free(tausgflowmax);
-    free(Fflowmax);
-    free(plflowmax);
-    free(dsgsflowmax);
-    free(dsglflowmax);
-    free(Ffinerflowendds);
-    free(plfinerflowendds);
+  free (Ft);
+  free (plt);
+  free (Laold);
+  free (Ffinerflowmaxds);
+  free (plfinerflowmaxds);
+  free (Hflowmax);
+  free (tausgflowmax);
+  free (Fflowmax);
+  free (plflowmax);
+  free (dsgsflowmax);
+  free (dsglflowmax);
+  free (Ffinerflowendds);
+  free (plfinerflowendds);
 
-    free(Hflowend);
-    free(tausgflowend);
-    free(Fflowend);
-    free(plflowend);
-    free(dsgsflowend);
-    free(dsglflowend);
-    free(Smatrix);
-    free(dlgmatrix);
-    free(Fave);
-    free(plave);
-    free(etaendcyc);
-    free(dsgsave);
-    free(dsglave);
-    free(qwforprint);
-    free(qbToforprint);
-    free(qbTfforprint);
-    free(dayforprint);
+  free (Hflowend);
+  free (tausgflowend);
+  free (Fflowend);
+  free (plflowend);
+  free (dsgsflowend);
+  free (dsglflowend);
+  free (Smatrix);
+  free (dlgmatrix);
+  free (Fave);
+  free (plave);
+  free (etaendcyc);
+  free (dsgsave);
+  free (dsglave);
+  free (qwforprint);
+  free (qbToforprint);
+  free (qbTfforprint);
+  free (dayforprint);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalGravMixHyd.finalize)
 }
 

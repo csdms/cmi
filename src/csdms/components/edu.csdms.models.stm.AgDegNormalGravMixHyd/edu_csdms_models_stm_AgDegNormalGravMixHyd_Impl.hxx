@@ -114,7 +114,7 @@ gov::cca::TypeMap userinput;
     triple hydro[17];
     double etad, S, L, nk, na, alphar, R, lps, alphau, dt;
     double dtflood, atrans, dx, qbToave, qwave, durhyd, I, LoadAnn;
-    double Dsgsi, Ds90si, Dsgsub, time, qbTo, qw;
+    double Dsgsi, Ds90si, Dsgsub, __time, qbTo, qw;
     double po[37], so[37], oo[37];
     int M, prints, iterates, npp, np, ndisc, ncyc, totstep;
     int maxflow, k, m, check, counter;
