@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 
-set (PROJECT_NAME csdms-cca)
+if (NOT DEFINED BOCCA_PROJECT_NAME)
+  set (BOCCA_PROJECT_NAME "this-project")
+endif (NOT DEFINED BOCCA_PROJECT_NAME)
 
 ##
 # Set locations of input and output
@@ -73,7 +75,7 @@ configure_file (
   @ONLY)
 configure_file (
   ${CMAKE_CURRENT_SOURCE_DIR}/scripts/project.mod.cmake
-  ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
+  ${CMAKE_BINARY_DIR}/${BOCCA_PROJECT_NAME}
   @ONLY)
 
 ##
@@ -109,5 +111,6 @@ message ("  bocca-save:        ${BOCCA_SAVE}")
 message ("  Source directory:  ${SRCDIR}")
 message ("  Build directory:   ${DESTDIR}/csdms")
 message ("  Project path:      ${PROJECT_TOP_DIR}")
+message ("  Project name:      ${BOCCA_PROJECT_NAME}")
 message ("---")
 
