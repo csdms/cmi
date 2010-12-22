@@ -112,7 +112,7 @@ gov::cca::TypeMap userinput;
     double Qf, If, B, D, lamdap, kc, S, Gtf, L, dt, alphau, dx;
     double alphar, alphat, nt, tauc, phis, R, Cf, rf, deltaeta, tf;
     double H, taustar, qstar, qt, Gt, qtf, tauult, Sult, Hult, qtg;
-    double time, ifault, Slmin;
+    double __time, ifault, Slmin;
     int iterate, prints, M, formulation, k, j, notfaultedyet, check;
     double eta[101], x[101], qb[101], Sl[101], tau[101], Ht[101];
 
