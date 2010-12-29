@@ -51,7 +51,7 @@
       <type>Float</type>
       <range>
         <min>0</min>
-        <max>1</max>
+        <max>.99</max>
       </range>
     </entry>
     <entry name="/Waves/AngleHighness">
@@ -61,7 +61,7 @@
       <type>Float</type>
       <range>
         <min>0</min>
-        <max>1</max>
+        <max>.99</max>
       </range>
     </entry>
   </tab>
@@ -98,6 +98,12 @@
       <label>Author name</label>
       <help_brief>Name of the model author</help_brief>
       <default>Andrew Ashton</default>
+      <type>String</type>
+    </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:Waves</default>
       <type>String</type>
     </entry>
   </tab>

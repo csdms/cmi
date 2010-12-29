@@ -130,5 +130,11 @@
       <default>Andrew Ashton</default>
       <type>String</type>
     </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:CEM</default>
+      <type>String</type>
+    </entry>
   </tab>
 </dialog>
