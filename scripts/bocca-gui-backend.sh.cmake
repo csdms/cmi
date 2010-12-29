@@ -1,5 +1,5 @@
 #!/bin/bash
-/usr/local/modules/init/bash
+source /usr/local/modules/init/bash
 module load openmi cem/devel sedflux/devel hydrotrend/3.0 child csdms roms stm
 
 if [ -z "${CMT_PROJECT_DIALOG_PATH+x}" ] ; then
