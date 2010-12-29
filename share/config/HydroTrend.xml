@@ -1,4 +1,10 @@
 <dialog>
+<!-- *** Warning! ***
+
+     It is fairly safe to edit this file EXCEPT if changing the name 
+     attribute of entries.  These names must match values in corresponding
+     template files and code within the component.
+ -->
   <tab name="Input Files and Directories">
     <entry name="/HydroTrend/Input/Dir">
       <label>Input directory</label>
@@ -33,17 +39,18 @@
   </tab>
   <tab name="Temperature">
     <entry name="/HydroTrend/Input/Var/TempStart">
-      <label>Starting mean annual temperature (C)</label>
+      <!--label>Starting mean annual temperature</label-->
+      <label><![CDATA[<html>Starting mean annual temperature (&deg;C)</html>]]></label>
       <help_brief>Starting mean annual temperature (C)</help_brief>
       <default>14.26</default>
       <type>Float</type>
       <range>
-        <min>-50</min>
+        <min>0</min>
         <max>50</max>
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/TempChange">
-      <label>Change in mean annual temperature (C/yr)</label>
+      <label><![CDATA[<html>Change in mean annual temperature (&deg;C/yr)</html>]]></label>
       <help_brief>Change in mean annual temperature (C/yr)</help_brief>
       <default>0</default>
       <type>Float</type>
@@ -53,7 +60,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/TempStdDev">
-      <label>Standard deviation of mean annual temperature (C)</label>
+      <label><![CDATA[<html>Standard deviation of mean annual temperature (&deg;C)</html>]]></label>
       <help_brief>Standard deviation of mean annual temperature (C)</help_brief>
       <default>.55</default>
       <type>Float</type>
@@ -98,7 +105,7 @@
   <tab name="Basin">
     <entry name="/HydroTrend/Input/Var/BQRTLithology">
       <label>Lithology factor (-)</label>
-      <help_brief>Lithology factor for BQRT (-)</help_brief>
+      <help_brief>Lithology factor for BQART (-)</help_brief>
       <default>.3</default>
       <type>Float</type>
       <range>
@@ -108,7 +115,7 @@
     </entry>
     <entry name="/HydroTrend/Input/Var/BQRTAnthro">
       <label>Anthropogenic factor (-)</label>
-      <help_brief>Anthropogenic factor for BQRT (-)</help_brief>
+      <help_brief>Anthropogenic factor for BQART (-)</help_brief>
       <default>6</default>
       <type>Float</type>
       <range>
@@ -117,7 +124,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/LapseRate">
-      <label>Lapse rate (C/km)</label>
+      <label><![CDATA[<html>Lapse rate (&deg;C/km)</html>]]></label>
       <help_brief>Lapse rate to calculate freezing line (C/km)</help_brief>
       <default>6.16</default>
       <type>Float</type>
@@ -157,8 +164,8 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/BasinLength">
-      <label>River basin length (km)</label>
-      <help_brief>River basin length (km)</help_brief>
+      <label>River length (km)</label>
+      <help_brief>River length (km)</help_brief>
       <default>100</default>
       <type>Float</type>
       <range>
@@ -167,7 +174,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/ReservoirVolume">
-      <label>Mean volume of reservoir (km^3)</label>
+      <label><![CDATA[<html>Mean volume of reservoir (km&sup3;)</html>]]></label>
       <help_brief>Mean volume of reservoir (km^3)</help_brief>
       <default>0</default>
       <type>Float</type>
@@ -177,7 +184,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/ReservoirArea">
-      <label>Drainage area of reservoir (km^2)</label>
+      <label><![CDATA[<html>Drainage area of reservoir (km&sup2;)</html>]]></label>
       <help_brief>Drainage area of reservoir (km^2)</help_brief>
       <default>1000</default>
       <type>Float</type>
@@ -189,8 +196,8 @@
   </tab>
   <tab name="River Mouth">
     <entry name="/HydroTrend/Input/Var/RiverVelCoefficient">
-      <label>River mouth velocity coefficent, k (m/s)</label>
-      <help_brief>River mouth velocity coefficent, k, in v=kQ^m (m/s)</help_brief>
+      <label>River mouth velocity coefficient, k (m/s)</label>
+      <help_brief>River mouth velocity coefficient, k, in v=kQ^m (m/s)</help_brief>
       <default>.87</default>
       <type>Float</type>
       <range>
@@ -200,7 +207,7 @@
     </entry>
     <entry name="/HydroTrend/Input/Var/RiverVelExponent">
       <label>River mouth velocity exponent, m (-)</label>
-      <help_brief>River mouth velocity coefficent, m, in v=kQ^m (-)</help_brief>
+      <help_brief>River mouth velocity exponent, m, in v=kQ^m (-)</help_brief>
       <default>.1</default>
       <type>Float</type>
       <range>
@@ -209,8 +216,8 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/RiverWidthCoefficient">
-      <label>River mouth width coefficent, a (m)</label>
-      <help_brief>River mouth width coefficent, a, in ack=1 (m)</help_brief>
+      <label>River mouth width coefficient, a (m)</label>
+      <help_brief>River mouth width coefficient, a, in ack=1 (m)</help_brief>
       <default>3.0</default>
       <type>Float</type>
       <range>
@@ -220,7 +227,7 @@
     </entry>
     <entry name="/HydroTrend/Input/Var/RiverWidthExponent">
       <label>River mouth width exponent, b (-)</label>
-      <help_brief>River mouth width coefficent, b, in b+m+f=1 (-)</help_brief>
+      <help_brief>River mouth width exponent, b, in b+m+f=1 (-)</help_brief>
       <default>.5</default>
       <type>Float</type>
       <range>
@@ -239,7 +246,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/RiverBaseFlow">
-      <label>Constant annual base flow (m^3/s)</label>
+      <label><![CDATA[<html>Constant annual base flow (m&sup3;/s)</html>]]></label>
       <help_brief>Constant annual base flow (m^3/s)</help_brief>
       <default>0</default>
       <type>Float</type>
@@ -249,7 +256,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/TrappingEfficiency">
-      <label>Trapping efficiency (fraction)</label>
+      <label>Delta trapping efficiency (-)</label>
       <help_brief>Delta trapping efficiency</help_brief>
       <default>0</default>
       <type>Float</type>
@@ -271,7 +278,7 @@
   </tab>
   <tab name="Groundwater">
     <entry name="/HydroTrend/Input/Var/GroundwaterStorageMax">
-      <label>Maximum groundwater storage (m^3)</label>
+      <label><![CDATA[<html>Maximum groundwater storage (m&sup3;)</html>]]></label>
       <help_brief>Maximum groundwater storage (m^3)</help_brief>
       <default>7.1e9</default>
       <type>Float</type>
@@ -281,7 +288,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/GroundwaterStorageMin">
-      <label>Minimum groundwater storage (m^3)</label>
+      <label><![CDATA[<html>Minimum groundwater storage (m&sup3;)</html>]]></label>
       <help_brief>Minimum groundwater storage (m^3)</help_brief>
       <default>4.2e9</default>
       <type>Float</type>
@@ -291,7 +298,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/GroundwaterStorageStart">
-      <label>Initial groundwater storage (m^3)</label>
+      <label><![CDATA[<html>Initial groundwater storage (m&sup3;)</html>]]></label>
       <help_brief>Initial groundwater storage (m^3)</help_brief>
       <default>4.2e9</default>
       <type>Float</type>
@@ -301,7 +308,7 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/GroundwaterCoefficient">
-      <label>Groundwater coefficient (m^3/s)</label>
+      <label><![CDATA[<html>Groundwater coefficient (m&sup3;/s)</html>]]></label>
       <help_brief>Groundwater (subsurface storm flow) coefficent (m^3/s)</help_brief>
       <default>20000</default>
       <type>Float</type>
