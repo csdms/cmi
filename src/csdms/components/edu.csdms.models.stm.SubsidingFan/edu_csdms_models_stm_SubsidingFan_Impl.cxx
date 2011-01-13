@@ -357,13 +357,19 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/SubsidingFan/test.txt");
-ppf.addRequestInt(userinput, "ChezyOrManning", "Chezy or Manning", "Chezy-1 or Manning-2", 1,1,2);
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/SubsidingFan/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_SubsidingFan.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SubsidingFan.setServices)
 }
@@ -426,12 +432,49 @@ edu::csdms::models::stm::SubsidingFan_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.SubsidingFan.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.SubsidingFan.initialize} (initialize method)
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/SubsidingFan/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/SubsidingFan/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/SubsidingFan/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_SubsidingFan.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/SubsidingFan/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#SubsidingFan: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#SubsidingFan: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
+
     check=0; M=0; prints=0; iterates=0; k=0; m=0;
     Qtfeed=0; Lb=0; Qbf=0; D=0; Lamda=0; theta=0; lamdap=0; I=0; Cz=0; Sinu=0;
     sigma=0; aleh=0; neh=0; tauforms=0; alp=0; np=0; tausc=0; tauformg=0; Cf=0;
-    dx=0; Su=0; R=0; dt=0; loadcoef=0; time=0;
-
-    std::string input = userinput.getString("Input","");
+    dx=0; Su=0; R=0; dt=0; loadcoef=0; __time=0;
 
     check = Initialize(x, eta, qb, Sl, &Qtfeed, &Lb, &Qbf, &D, &Lamda, &theta,
         &lamdap, &I, &Cz, &Sinu, &sigma, &aleh, &neh, &tauforms, &alp, &np, &tausc,
@@ -447,7 +490,7 @@ edu::csdms::models::stm::SubsidingFan_impl::initialize_impl (
     fprintf(stderr, "malloc error"); exit(0);
   }
 
-    SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, eta, Sl, qb, time, k, M);
+    SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, eta, Sl, qb, __time, k, M);
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SubsidingFan.initialize)
 }
@@ -465,9 +508,9 @@ edu::csdms::models::stm::SubsidingFan_impl::run_impl (
         for (m=1; m <= iterates; m++) {
             Run(Sl, qb, eta, x, dx, loadcoef, Qbf, theta, sigma, dt, I, Lamda,
                 Sinu, lamdap, Su, M);
-            time += dt;
+            __time += dt;
         }
-        SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, eta, Sl, qb, time, k, M);
+        SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, eta, Sl, qb, __time, k, M);
     }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SubsidingFan.run)
 }
@@ -481,7 +524,15 @@ edu::csdms::models::stm::SubsidingFan_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.SubsidingFan.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.SubsidingFan.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+
+  std::string site_prefix = userinput.getString (
+                              "/STM/SubsidingFan/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/SubsidingFan/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#SubsidingFan: Output file: %s\n", output.c_str ());
+
   Finalize(printmatrix, Slmatrix, qbmatrix, x, prints, M, output.c_str());
     free(printmatrix);
     free(Slmatrix);
