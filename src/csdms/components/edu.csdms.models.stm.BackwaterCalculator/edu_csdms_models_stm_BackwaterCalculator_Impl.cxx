@@ -469,6 +469,7 @@ edu::csdms::models::stm::BackwaterCalculator_impl::initialize_impl (
 
     free (work_dir);
   }
+  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
 
   chezyH=0; chezyU=0; chezyFr=0; chezytaub=0;
   MSH=0; MSU=0; MSFr=0; MStaub=0;
@@ -476,8 +477,6 @@ edu::csdms::models::stm::BackwaterCalculator_impl::initialize_impl (
   Hc=0; Uc=0;
   x0=0; step=0; initdepth=0;
   terms=0; formulation=0;
-
-  int ChezyOrManning = 1;
 
   Initialize (&S, &Cz, &qw, &R, &Dmean, &Ds90, &nk, &alphar, &x0, &step,
               &initdepth, &terms, &chezyH, &chezyFr, &chezyU, &chezytaub,
