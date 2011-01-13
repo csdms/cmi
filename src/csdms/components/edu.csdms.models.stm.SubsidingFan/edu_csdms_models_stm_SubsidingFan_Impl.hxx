@@ -114,7 +114,7 @@ gov::cca::TypeMap userinput;
     double x[101], eta[101], Sl[101], qb[101];
     double Qtfeed, Lb, Qbf, D, Lamda, theta, lamdap, I, Cz, Sinu;
     double sigma, aleh, neh, tauforms, alp, np, tausc, tauformg, Cf;
-    double dx, Su, R, dt, loadcoef, time;
+    double dx, Su, R, dt, loadcoef, __time;
 
     double (*printmatrix)[101], (*Slmatrix)[101], (*qbmatrix)[101];
 
