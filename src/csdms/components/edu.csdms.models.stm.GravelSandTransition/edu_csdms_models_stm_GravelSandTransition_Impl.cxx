@@ -359,12 +359,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/GravelSandTransition/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/GravelSandTransition/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_GravelSandTransition.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.GravelSandTransition.setServices)
 }
 
@@ -426,15 +434,51 @@ edu::csdms::models::stm::GravelSandTransition_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.GravelSandTransition.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.GravelSandTransition.initialize} (initialize method)
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/GravelSandTransition/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/GravelSandTransition/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/GravelSandTransition/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_GravelSandTransition.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/GravelSandTransition/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#GravelSandTransition: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#GravelSandTransition: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
   check=0; prints=0; iterates=0; Ms=0; Mg=0; k=0; m=0;
     sgs=0; Qbf=0; L=0; sgsl=0; ksid=0; ksidot=0; subrate=0; Yearstart=0; Yearstop=0;
     dt=0; qfeeds=0; qfeedg=0; Ifs=0; Ifg=0; Ds=0; Dg=0; Czs=0; Czg=0; Bs=0; Bg=0;
     Ssl=0; Sgl=0; Bds=0; Bdg=0; Omegas=0; Omegag=0; lamdams=0; lamdasg=0; Cfs=0;
     Cfg=0; sfsl=0; dxbars=0; dxbarg=0; qwg=0; qws=0; qfg=0; qfs=0; rBg=0; rBs=0;
-    Ifgeff=0; Ifseff=0; R=0; lamps=0; lampg=0; Sbgb=0; Ssgs=0; Sggs=0; Ssd=0; time=0;
+    Ifgeff=0; Ifseff=0; R=0; lamps=0; lampg=0; Sbgb=0; Ssgs=0; Sggs=0; Ssd=0; __time=0;
     sgsdot=0; qgravghost=0; qsandghost=0;
-
-  std::string input = userinput.getString("Input","");
 
     check = Initialize(xbarg, x, eta, xbars, &sgs, &Qbf, &L, &sgsl, &ksid, &ksidot,
                 &subrate, &Yearstart, &Yearstop, &dt, &qfeeds, &qfeedg, &Ifs, &Ifg,
@@ -469,7 +513,7 @@ edu::csdms::models::stm::GravelSandTransition_impl::initialize_impl (
   }
 
     SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, qbmatrix, taumatrix, xmatrix,
-        eta, Sl, H, qb, tau, x, sgsvector, Lvector, time, sgs, L, Ms, Mg, k);
+        eta, Sl, H, qb, tau, x, sgsvector, Lvector, __time, sgs, L, Ms, Mg, k);
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.GravelSandTransition.initialize)
 }
@@ -489,11 +533,11 @@ edu::csdms::models::stm::GravelSandTransition_impl::run_impl (
                 qb, qgrav, qsand, tau, xbarg, xbars, &Sbgb, &Sggs, &Ssgs, &Ssd, &qgravghost,
                 &qsandghost, &sgsdot, &sgs, &ksid, Cfs, Cfg, qws, qwg, R, Dg, Ds, qfs,
                 qfg, lamdasg, Ifseff, Ifgeff, L, dxbarg, dxbars, lamps, lampg, Yearstart,
-                Yearstop, subrate, dt, ksidot, time, Ms, Mg);
-            time += dt;
+                Yearstop, subrate, dt, ksidot, __time, Ms, Mg);
+            __time += dt;
         }
         SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, qbmatrix, taumatrix, xmatrix,
-            eta, Sl, H, qb, tau, x, sgsvector, Lvector, time, sgs, L, Ms, Mg, k);
+            eta, Sl, H, qb, tau, x, sgsvector, Lvector, __time, sgs, L, Ms, Mg, k);
     }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.GravelSandTransition.run)
 }
@@ -507,7 +551,14 @@ edu::csdms::models::stm::GravelSandTransition_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.GravelSandTransition.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.GravelSandTransition.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+
+  std::string site_prefix = userinput.getString (
+                              "/STM/GravelSandTransition/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/GravelSandTransition/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#GravelSandTransition: Output file: %s\n", output.c_str ());
 
     Finalize(printmatrix, xmatrix, Hmatrix, Slmatrix, qbmatrix, taumatrix, sgsvector,
 	     Lvector, H, Ms, Mg, prints, output.c_str());
