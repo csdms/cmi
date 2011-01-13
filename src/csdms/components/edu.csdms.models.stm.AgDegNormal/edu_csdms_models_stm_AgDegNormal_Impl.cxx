@@ -449,9 +449,9 @@ edu::csdms::models::stm::AgDegNormal_impl::initialize_impl (
 
       tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
 
-      tmpls.add_file ("STM_AgDegNormGravMixPW.txt.in", in_file);
+      tmpls.add_file ("STM_AgDegNormal.txt.in", in_file);
 
-      tmpls.substitute (userinput, "/STM/1DDeltaBW/Input/Var/", work_dir);
+      tmpls.substitute (userinput, "/STM/AgDegNormal/Input/Var/", work_dir);
     }
     else
     {
