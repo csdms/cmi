@@ -461,7 +461,7 @@ edu::csdms::models::stm::Acronym1D_impl::initialize_impl (
     input = in_file;
 
     fprintf (stderr, "#Acronym1D: Run directory: %s\n", work_dir);
-    fprintf (stderr, "#Acronym1: Input file: %s\n", input.c_str ());
+    fprintf (stderr, "#Acronym1D: Input file: %s\n", input.c_str ());
 
     free (work_dir);
   }
