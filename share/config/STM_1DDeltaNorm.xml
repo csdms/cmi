@@ -9,7 +9,7 @@
     <entry name="/STM/1DDeltaNorm/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>1DDeltaNorm</default>
       <type>String</type>
     </entry>
     <entry name="/STM/1DDeltaNorm/CasePrefix">
@@ -17,6 +17,18 @@
       <help_brief>Case prefix for input/output files.</help_brief>
       <default>test</default>
       <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Options">
+    <entry name="/STM/1DDeltaNorm/Input/Var/ChezyOrManning">
+      <label>Chezy Or Manning, Chezy-1 or Manning-2</label>
+      <help_brief>Chezy Or Manning, Chezy-1 or Manning-2</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
     </entry>
   </tab>
   <tab name="Run Parameters">
@@ -110,16 +122,6 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/x">
-      <label>Water surface elevation of lake [m]</label>
-      <help_brief>Water surface elevation of lake [m]</help_brief>
-      <default>8.5</default>
-      <type>Float</type>
-      <range>
-        <min>0</min>
-        <max>1e32</max>
-      </range>
-    </entry>
     <entry name="/STM/1DDeltaNorm/Input/Var/f">
       <label>Initial fluvial bed slope [-]</label>
       <help_brief>Initial fluvial bed slope [-]</help_brief>
@@ -144,16 +146,6 @@
       <label>Initial length of fluvial zone [m]</label>
       <help_brief>Initial length of fluvial zone [m]</help_brief>
       <default>10000</default>
-      <type>Float</type>
-      <range>
-        <min>0</min>
-        <max>1e32</max>
-      </range>
-    </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/m">
-      <label>Maximum lenght of fluvial zone [m]</label>
-      <help_brief>Maximum lenght of fluvial zone [m]</help_brief>
-      <default>500000</default>
       <type>Float</type>
       <range>
         <min>0</min>
@@ -241,8 +233,8 @@
       </range>
     </entry>
     <entry name="/STM/1DDeltaNorm/Input/Var/p">
-      <label>Number of printouts</label>
-      <help_brief>Number of printouts</help_brief>
+      <label>Number of printouts after initial one</label>
+      <help_brief>Number of printouts after initial one</help_brief>
       <default>6</default>
       <type>Int</type>
       <range>

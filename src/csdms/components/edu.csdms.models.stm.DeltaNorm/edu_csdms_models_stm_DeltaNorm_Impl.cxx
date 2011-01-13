@@ -458,7 +458,7 @@ edu::csdms::models::stm::DeltaNorm_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.DeltaNorm.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.DeltaNorm.initialize} (initialize method)
-  const int ChezyOrManning = 1;
+  //const int ChezyOrManning = 1;
   //std::string input = userinput.getString("Input","");
 /*
   double input_q =  userinput.getDouble("q",0);
@@ -556,6 +556,8 @@ edu::csdms::models::stm::DeltaNorm_impl::initialize_impl (
     free (work_dir);
   }
 
+  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
+
     check=0; M=0; prints=0; iterates=0; formulation=0; k=0; m=0;
     qw=0; I=0; qtf=0; D=0; Cz=0; nt=0; tsc=0; etasl=0; etabl=0; Sfi=0; Sb=0;
     ssfi=0; Sa=0; R=0; lamdap=0; ks=0; alphar=0; alphat=0; dt=0; __time=0;
@@ -635,9 +637,9 @@ edu::csdms::models::stm::DeltaNorm_impl::finalize_impl ()
   // Insert-Code-Here {edu.csdms.models.stm.DeltaNorm.finalize} (finalize method)
   //std::string output = userinput.getString("Output","");
   std::string site_prefix = userinput.getString (
-                              "/STM/1DDeltaBW/SitePrefix", "");
+                              "/STM/1DDeltaNorm/SitePrefix", "");
   std::string case_prefix = userinput.getString (
-                              "/STM/1DDeltaBW/CasePrefix", "");
+                              "/STM/1DDeltaNorm/CasePrefix", "");
   std::string output = site_prefix + "_" + case_prefix + ".out";
 
   fprintf (stderr, "#DeltaNorm: Output file: %s\n", output.c_str ());
