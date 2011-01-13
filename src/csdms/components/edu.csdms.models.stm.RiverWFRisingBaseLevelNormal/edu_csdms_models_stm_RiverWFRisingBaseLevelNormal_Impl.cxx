@@ -361,11 +361,17 @@ edu::csdms::models::stm::RiverWFRisingBaseLevelNormal_impl::setServices_impl (
     BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
   }
 
-  ppf.initParameterData(userinput, "userinput");
-  ppf.setBatchTitle(userinput, "parameters");
-  ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/1DRiverWFRisingBaseLevelNormal/test.txt");
-  ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/1DRiverWFRisingBaseLevelNormal/result.txt");
-  ppf.addRequestInt(userinput, "ChezyOrManning", "Chezy or Manning", "Chezy-1 or Manning-2", 1,1,2);
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_1DRiverWFRisingBaseLevelNormal.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
   ppf.addParameterPort(userinput, services);
   services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.RiverWFRisingBaseLevelNormal.setServices)
@@ -430,11 +436,49 @@ edu::csdms::models::stm::RiverWFRisingBaseLevelNormal_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.RiverWFRisingBaseLevelNormal.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.RiverWFRisingBaseLevelNormal.initialize} (initialize method)
-  std::string input = userinput.getString("Input","");
+
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/1DRiverWFRisingBaseLevelNormal/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/1DRiverWFRisingBaseLevelNormal/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/1DRiverWFRisingBaseLevelNormal/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_1DRiverWFRisingBaseLevelNormal.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/1DRiverWFRisingBaseLevelNormal/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#1DRiverWFRisingBaseLevelNormal: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#1DRiverWFRisingBaseLevelNormal: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
    Qf=0; Qbtffeed=0; lambig=0; I=0; D=0; R=0; L=0; Bf=0; Sinu=0; lamp=0;
    Cz=0; Sfbl=0; etaddot=0; dt=0; Yearstart=0; Yearstop=0; aleh=0; neh=0;
    tausforms=0; alp=0; np=0; tausc=0; tausformg=0; Cf=0; rform=0; tausform=0;
-   loadcoef=0; widthcoef=0; depthcoef=0; dx=0; time=0;
+   loadcoef=0; widthcoef=0; depthcoef=0; dx=0; __time=0;
    M=0; prints=0; iterates=0; check=0; k=0; m=0;
 
     check = Initialize(Qt, Sl, x, eta, &Qf, &Qbtffeed, &lambig, &I, &D, &R, &L,
@@ -460,7 +504,7 @@ edu::csdms::models::stm::RiverWFRisingBaseLevelNormal_impl::initialize_impl (
   }
         
     SaveDatatoMatrix(printmatrix, Bbfmatrix, Hbfmatrix, Slmatrix, qbmatrix, eta, Bbf,
-        Hbf, Sl, Qt, time, k, M);
+        Hbf, Sl, Qt, __time, k, M);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.RiverWFRisingBaseLevelNormal.initialize)
 }
 
@@ -476,12 +520,12 @@ edu::csdms::models::stm::RiverWFRisingBaseLevelNormal_impl::run_impl (
     for (k=1; k <= prints; k++) {
         for (m=1; m <= iterates; m++) {
             Run(Sl, eta, Qt, Bbf, Hbf, dx, loadcoef, widthcoef, depthcoef, D, Qf,
-                I, Sinu, lambig, Bf, lamp, dt, time, Qbtffeed, Yearstart, Yearstop,
+                I, Sinu, lambig, Bf, lamp, dt, __time, Qbtffeed, Yearstart, Yearstop,
                 etaddot, M);
-        time += (dt/timeyear);
+        __time += (dt/timeyear);
         }
         SaveDatatoMatrix(printmatrix, Bbfmatrix, Hbfmatrix, Slmatrix, qbmatrix, eta,
-            Bbf, Hbf, Sl, Qt, time, k, M);
+            Bbf, Hbf, Sl, Qt, __time, k, M);
     }
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.RiverWFRisingBaseLevelNormal.run)
 }
@@ -495,7 +539,14 @@ edu::csdms::models::stm::RiverWFRisingBaseLevelNormal_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.RiverWFRisingBaseLevelNormal.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.RiverWFRisingBaseLevelNormal.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+
+  std::string site_prefix = userinput.getString (
+                              "/STM/1DRiverWFRisingBaseLevelNormal/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/1DRiverWFRisingBaseLevelNormal/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#1DRiverWFRisingBaseLevelNormal: Output file: %s\n", output.c_str ());
     Finalize(printmatrix, Bbfmatrix, Hbfmatrix, Slmatrix, qbmatrix, x, prints, M,  const_cast<char*> (output.c_str()));
     free(printmatrix);
     free(Bbfmatrix);
