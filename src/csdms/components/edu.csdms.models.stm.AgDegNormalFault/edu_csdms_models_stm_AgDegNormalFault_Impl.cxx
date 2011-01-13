@@ -359,28 +359,19 @@ if (ppf._is_nil()) {
 }
 
   ppf.initParameterData(userinput, "Configure");
-<<<<<<< HEAD
-=======
   ppf.setBatchTitle(userinput, "Parameters");
->>>>>>> all models done with tab dialog
 
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
-<<<<<<< HEAD
-=======
 
->>>>>>> all models done with tab dialog
     dialog.read ("STM_AgDegNormalFault.xml");
     dialog.construct (ppf, this->userinput);
   }
 
   ppf.addParameterPort(userinput, services);
   services.releasePort("ppf");
-<<<<<<< HEAD
-=======
 
->>>>>>> all models done with tab dialog
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalFault.setServices)
 }
 
@@ -442,51 +433,7 @@ edu::csdms::models::stm::AgDegNormalFault_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormalFault.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormalFault.initialize} (initialize method)
-  std::string input;
 
-  {
-    std::string input_dir = userinput.getString (
-      "/STM/AgDegNormalFault/Input/Dir", "");
-    std::string site_prefix = userinput.getString (
-      "/STM/AgDegNormalFault/SitePrefix", "");
-    std::string case_prefix = userinput.getString (
-      "/STM/AgDegNormalFault/CasePrefix", "");
-    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
-    char* work_dir = (char*)malloc (2048*sizeof (char));
-    getcwd (work_dir, 2048);
-
-    if (input_dir.compare (0,3,"GUI")==0)
-    {
-      ::edu::csdms::tools::TemplateFiles tmpls;
-      std::string to_file;
-
-      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
-
-      tmpls.add_file ("STM_AgDegNormalFault.txt.in", in_file);
-
-      tmpls.substitute (userinput, "/STM/AgDegNormalFault/Input/Var/",
-                                   work_dir);
-    }
-    else
-    {
-      in_file = input_dir + "/" + in_file;
-    }
-
-    input = in_file;
-
-    fprintf (stderr, "#AgDegNormalFault: Run directory: %s\n", work_dir);
-    fprintf (stderr, "#AgDegNormalFault: Input file: %s\n", input.c_str ());
-
-    free (work_dir);
-  }
-
-<<<<<<< HEAD
-  Qf=0; If=0; B=0; D=0; lamdap=0; kc=0; S=0; Gtf=0; L=0; dt=0; alphau=0; dx=0;
-  alphar=0; alphat=0; nt=0; tauc=0; phis=0; R=0; Cf=0; rf=0; deltaeta=0; tf=0;
-  H=0; taustar=0; qstar=0; qt=0; Gt=0; qtf=0; tauult=0; Sult=0; Hult=0; qtg=0;
-  __time=0; ifault=1; Slmin=0;
-  iterate=0; prints=0; M=0; formulation=0; k=0; j=0; notfaultedyet=1; check=0;
-=======
   std::string input;
 
   {
@@ -530,13 +477,11 @@ edu::csdms::models::stm::AgDegNormalFault_impl::initialize_impl (
     H=0; taustar=0; qstar=0; qt=0; Gt=0; qtf=0; tauult=0; Sult=0; Hult=0; qtg=0;
     __time=0; ifault=1; Slmin=0;
     iterate=0; prints=0; M=0; formulation=0; k=0; j=0; notfaultedyet=1; check=0;
->>>>>>> all models done with tab dialog
 
-  Initialize (&Qf, &If, &B, &D, &lamdap, &kc, &S, &Gtf, &L, &dt, &iterate,
-              &prints, &M, &alphau, &alphar, &alphat, &nt, &tauc, &phis, &R,
-              &Cf, &formulation, &rf, &deltaeta, &tf, &dx, &Slmin, &H,
-              &taustar, &qstar, &qt, &Gt, &qtf, &tauult, &Sult, &Hult, eta, x,
-              &qtg, &ifault, input.c_str());
+Initialize(&Qf, &If, &B, &D, &lamdap, &kc, &S, &Gtf, &L, &dt, &iterate, &prints,
+                &M, &alphau, &alphar, &alphat, &nt, &tauc, &phis, &R, &Cf, &formulation, &rf,
+                &deltaeta, &tf, &dx, &Slmin, &H, &taustar, &qstar, &qt, &Gt, &qtf, &tauult,
+	   &Sult, &Hult, eta, x, &qtg, &ifault, input.c_str());
 
   if ( (printmatrix = (double (*)[101]) malloc( (prints+2) * sizeof(double [101])  ) ) == NULL) {
       fprintf(stderr, "malloc error"); exit(0);
@@ -553,17 +498,10 @@ edu::csdms::models::stm::AgDegNormalFault_impl::initialize_impl (
   if ( (qbmatrix =  (double (*)[101]) malloc( (prints+2) * sizeof(double [101]) ) ) == NULL) {
     fprintf(stderr, "malloc error"); exit(0);
   }
-<<<<<<< HEAD
-
-  //Save initial data
-  SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix, eta,
-                    Sl, Ht, tau, qb, __time, k, M);
-=======
         //Save initial data
         
         SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix, eta,
             Sl, Ht, tau, qb, __time, k, M);
->>>>>>> all models done with tab dialog
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalFault.initialize)
 }
@@ -577,18 +515,6 @@ edu::csdms::models::stm::AgDegNormalFault_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormalFault.run)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormalFault.run} (run method)
-<<<<<<< HEAD
-  for(k = 1; k <= prints; k++) {
-    for(j = 1; j <= iterate; j++) {
-      Run (&notfaultedyet, tf, __time, ifault, M, eta, deltaeta, dt, Sl, dx,
-           tau, Ht, Qf, kc, alphar, B, D, R, Cf, formulation, qb, phis, tauc,
-           nt, alphat, Slmin, lamdap, If, alphau, qtg);
-      __time += (dt/(3600*24*365.25));
-    }
-    SaveDatatoMatrix (printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix, eta,
-                      Sl, Ht, tau, qb, __time, k, M);
-  }
-=======
         for(k = 1; k <= prints; k++) {
             for(j = 1; j <= iterate; j++) {
                 Run(&notfaultedyet, tf, __time, ifault, M, eta, deltaeta, dt, Sl, dx, tau,
@@ -599,7 +525,6 @@ edu::csdms::models::stm::AgDegNormalFault_impl::run_impl (
             SaveDatatoMatrix(printmatrix, Slmatrix, Hmatrix, taumatrix, qbmatrix, eta,
                 Sl, Ht, tau, qb, __time, k, M);
         }
->>>>>>> all models done with tab dialog
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalFault.run)
 }
 
@@ -612,22 +537,6 @@ edu::csdms::models::stm::AgDegNormalFault_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.AgDegNormalFault.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.AgDegNormalFault.finalize} (finalize method)
-<<<<<<< HEAD
-  std::string site_prefix = userinput.getString (
-    "/STM/AgDegNormalFault/SitePrefix", "");
-  std::string case_prefix = userinput.getString (
-    "/STM/AgDegNormalFault/CasePrefix", "");
-  std::string output = site_prefix + "_" + case_prefix + ".out";
-
-  Finalize (printmatrix, x, M, prints, H, taustar, qstar, qt, Gt, qtg, dx,
-            Slmatrix, Hmatrix, taumatrix, qbmatrix, output.c_str());
-
-  free (printmatrix);
-  free (Slmatrix);
-  free (Hmatrix);
-  free (taumatrix);
-  free (qbmatrix);
-=======
 
   std::string site_prefix = userinput.getString (
                               "/STM/AgDegNormalFault/SitePrefix", "");
@@ -645,7 +554,6 @@ edu::csdms::models::stm::AgDegNormalFault_impl::finalize_impl ()
     free(Hmatrix);
     free(taumatrix);
     free(qbmatrix);
->>>>>>> all models done with tab dialog
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormalFault.finalize)
 }
 
