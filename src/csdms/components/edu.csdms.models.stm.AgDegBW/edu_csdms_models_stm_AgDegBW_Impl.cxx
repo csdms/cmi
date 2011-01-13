@@ -453,7 +453,7 @@ edu::csdms::models::stm::AgDegBW_impl::initialize_impl (
 
       tmpls.add_file ("STM_AgDegBW.txt.in", in_file);
 
-      tmpls.substitute (userinput, "/STM/1DDeltaBW/Input/Var/", work_dir);
+      tmpls.substitute (userinput, "/STM/AgDegBW/Input/Var/", work_dir);
 
     } 
     else

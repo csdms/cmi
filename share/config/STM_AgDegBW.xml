@@ -9,7 +9,7 @@
     <entry name="/STM/AgDegBW/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>AgDegBW</default>
       <type>String</type>
     </entry>
     <entry name="/STM/AgDegBW/CasePrefix">
@@ -21,8 +21,8 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/STM/AgDegBW/Input/Var/Q">
-      <label>Upstream bed material sediment feed rate during floods [m^2/s]</label>
-      <help_brief>Upstream bed material sediment feed rate during floods [m^2/s]</help_brief>
+      <label>Flood discharge [m^3/s]</label>
+      <help_brief>Flood discharge [m^3/s]</help_brief>
       <default>400</default>
       <type>Float</type>
       <range>
@@ -41,8 +41,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/B">
-      <label>B</label>
-      <help_brief>B</help_brief>
+      <label>Channel Width [m]</label>
+      <help_brief>Channel Width [m]</help_brief>
       <default>60</default>
       <type>Float</type>
       <range>
@@ -51,8 +51,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/D">
-      <label>Grain size of bed material [mm]</label>
-      <help_brief>Grain size of bed material [mm]</help_brief>
+      <label>Grain size [mm]</label>
+      <help_brief>Grain size [mm]</help_brief>
       <default>0.6</default>
       <type>Float</type>
       <range>
@@ -61,8 +61,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/l">
-      <label>l</label>
-      <help_brief>l</help_brief>
+      <label>Bed Porosity</label>
+      <help_brief>Bed Porosity</help_brief>
       <default>0.4</default>
       <type>Float</type>
       <range>
@@ -71,8 +71,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/k">
-      <label>Manning-Strickler coefficient, k [-]</label>
-      <help_brief>Manning-Strickler coefficient, k (ks = n * D90) [-]</help_brief>
+      <label>Roughness height [mm]</label>
+      <help_brief>Roughness height [mm]</help_brief>
       <default>75</default>
       <type>Float</type>
       <range>
@@ -81,8 +81,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/S">
-      <label>Slope of foreset face [-]</label>
-      <help_brief>Slope of foreset face [-]</help_brief>
+      <label>Ambient Bed Slope</label>
+      <help_brief>Ambient Bed Slope</help_brief>
       <default>0.0002</default>
       <type>Float</type>
       <range>
@@ -91,8 +91,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/G">
-      <label>G</label>
-      <help_brief>G</help_brief>
+      <label>Imposed Annual Sediment Transfer Rate from Upstream [tons/annum]</label>
+      <help_brief>Imposed Annual Sediment Transfer Rate from Upstream [tons/annum]</help_brief>
       <default>187059.99</default>
       <type>Float</type>
       <range>
@@ -101,8 +101,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/x">
-      <label>Water surface elevation of lake [m]</label>
-      <help_brief>Water surface elevation of lake [m]</help_brief>
+      <label>Imposed Water Surface Elevation [m]</label>
+      <help_brief>Imposed Water Surface Elevation [m]</help_brief>
       <default>15</default>
       <type>Float</type>
       <range>
@@ -111,8 +111,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/M">
-      <label>Number of fluvial nodes</label>
-      <help_brief>Number of fluvial nodes</help_brief>
+      <label>Intervals</label>
+      <help_brief>Intervals</help_brief>
       <default>60</default>
       <type>Int</type>
       <range>
@@ -121,8 +121,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/L">
-      <label>L</label>
-      <help_brief>L</help_brief>
+      <label>Length of Reach [m]</label>
+      <help_brief>Length of Reach [m]</help_brief>
       <default>50000</default>
       <type>Float</type>
       <range>
@@ -131,8 +131,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/i">
-      <label>Iterations per each printout</label>
-      <help_brief>Iterations per each printout</help_brief>
+      <label>Number of Time Steps per Printout</label>
+      <help_brief>Number of Time Steps per Printout</help_brief>
       <default>200</default>
       <type>Int</type>
       <range>
@@ -151,8 +151,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/u">
-      <label>u</label>
-      <help_brief>u</help_brief>
+      <label>Upwinding Coefficient [1=full upwind, 0.5=central difference]</label>
+      <help_brief>Upwinding Coefficient [1=full upwind, 0.5=central difference]</help_brief>
       <default>1</default>
       <type>Float</type>
       <range>
@@ -161,8 +161,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/r">
-      <label>Manning-Strickler coefficient, r [-]</label>
-      <help_brief>Manning-Strickler coefficient, r [-]</help_brief>
+      <label>Coefficient in Manning-Strickler Resistance Relation</label>
+      <help_brief>Coefficient in Manning-Strickler Resistance Relation</help_brief>
       <default>8.1</default>
       <type>Float</type>
       <range>
@@ -171,8 +171,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/a">
-      <label>Coefficent in total bed material relation [-]</label>
-      <help_brief>Coefficent in total bed material relation [-]</help_brief>
+      <label>Coefficient in Sediment Transport Relation</label>
+      <help_brief>Coefficient in Sediment Transport Relation</help_brief>
       <default>8</default>
       <type>Float</type>
       <range>
@@ -181,8 +181,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/n">
-      <label>Exponent in load relation [-]</label>
-      <help_brief>Exponent in load relation [-]</help_brief>
+      <label>Exponent in Sediment Transport Relation</label>
+      <help_brief>Exponent in Sediment Transport Relation</help_brief>
       <default>1.5</default>
       <type>Float</type>
       <range>
@@ -191,8 +191,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/T">
-      <label>Critical Shields stress in load relation</label>
-      <help_brief>Critical Shields stress in load relation</help_brief>
+      <label>Critical Shields stress</label>
+      <help_brief>Critical Shields stress</help_brief>
       <default>0.047</default>
       <type>Float</type>
       <range>
@@ -201,8 +201,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/P">
-      <label>P</label>
-      <help_brief>P</help_brief>
+      <label>Fraction of Bed Shear Stress that is Skin Friction</label>
+      <help_brief>Fraction of Bed Shear Stress that is Skin Friction</help_brief>
       <default>1</default>
       <type>Float</type>
       <range>
@@ -221,8 +221,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegBW/Input/Var/t">
-      <label>Time step [days]</label>
-      <help_brief>Time step [days]</help_brief>
+      <label>Time step [year]</label>
+      <help_brief>Time step [year]</help_brief>
       <default>0.1</default>
       <type>Float</type>
       <range>
