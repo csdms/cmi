@@ -360,12 +360,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/RouseVanoniEquilibrium/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/RouseVanoniEquilibrium/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_RouseVanoniEquilibrium.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.RouseVanoniEquilibrium.setServices)
 }
 
@@ -427,11 +435,49 @@ edu::csdms::models::stm::RouseVanoniEquilibrium_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.RouseVanoniEquilibrium.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.RouseVanoniEquilibrium.initialize} (initialize method)
+
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/RouseVanoniEquilibrium/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/RouseVanoniEquilibrium/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/RouseVanoniEquilibrium/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_RouseVanoniEquilibrium.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/RouseVanoniEquilibrium/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#RouseVanoniEquilibrium: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#RouseVanoniEquilibrium: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     init_ratio=0.0, vs=0.0, u=0.0;
     terms=0;
     for (int i = 0; i < 100; ++i) zH[i] = 0;
 
-    std::string input = userinput.getString("Input","");
     Initialize(&init_ratio, &vs, &u, input.c_str());
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.RouseVanoniEquilibrium.initialize)
 }
@@ -458,7 +504,15 @@ edu::csdms::models::stm::RouseVanoniEquilibrium_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.RouseVanoniEquilibrium.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.RouseVanoniEquilibrium.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+
+  std::string site_prefix = userinput.getString (
+                              "/STM/RouseVanoniEquilibrium/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/RouseVanoniEquilibrium/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#RouseVanoniEquilibrium: Output file: %s\n", output.c_str ());
+
   Finalize(terms, zH, cb, output.c_str());
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.RouseVanoniEquilibrium.finalize)
 }
