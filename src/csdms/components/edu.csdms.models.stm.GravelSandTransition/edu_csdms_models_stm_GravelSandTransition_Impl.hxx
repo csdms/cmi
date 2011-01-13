@@ -115,7 +115,7 @@ gov::cca::TypeMap userinput;
     double dt, qfeeds, qfeedg, Ifs, Ifg, Ds, Dg, Czs, Czg, Bs, Bg;
     double Ssl, Sgl, Bds, Bdg, Omegas, Omegag, lamdams, lamdasg, Cfs;
     double Cfg, sfsl, dxbars, dxbarg, qwg, qws, qfg, qfs, rBg, rBs;
-    double Ifgeff, Ifseff, R, lamps, lampg, Sbgb, Ssgs, Sggs, Ssd, time;
+    double Ifgeff, Ifseff, R, lamps, lampg, Sbgb, Ssgs, Sggs, Ssd, __time;
     double sgsdot, qgravghost, qsandghost;
     double (*printmatrix)[202], (*Slmatrix)[203], (*qbmatrix)[202];
     double (*Hmatrix)[202], (*xmatrix)[202], (*taumatrix)[202];
