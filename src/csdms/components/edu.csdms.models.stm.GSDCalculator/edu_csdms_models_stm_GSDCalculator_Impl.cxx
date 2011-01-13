@@ -357,13 +357,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/GSDCalculator/test.txt");
- ppf.addRequestFloat(userinput, "percentFiner", "percent finer", "percent finer?", 50, 0, 100);
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/GSDCalculator/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_GSDCalculator.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.GSDCalculator.setServices)
 }
 
@@ -425,9 +432,46 @@ edu::csdms::models::stm::GSDCalculator_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.GSDCalculator.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.GSDCalculator.initialize} (initialize method)
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/GSDCalculator/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/GSDCalculator/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/GSDCalculator/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_GSDCalculator.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/GSDCalculator/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#GSDCalculator: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#GSDCalculator: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
   terms=0; numinterp=0;
   Dg=0.0; sigma=0.0;
-  std::string input = userinput.getString("Input","");
   Initialize(datapoints, D, f, &terms, input.c_str());
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.GSDCalculator.initialize)
@@ -456,7 +500,15 @@ edu::csdms::models::stm::GSDCalculator_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.GSDCalculator.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.GSDCalculator.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+
+  std::string site_prefix = userinput.getString (
+                              "/STM/GSDCalculator/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/GSDCalculator/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#GSDCalculator: Output file: %s\n", output.c_str ());
+
   Finalize(datapoints, terms, Dg, sigma, interp, input, numinterp, output.c_str());
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.GSDCalculator.finalize)
 }
