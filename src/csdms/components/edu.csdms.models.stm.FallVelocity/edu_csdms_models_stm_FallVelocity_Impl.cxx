@@ -357,12 +357,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/FallVelocity/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/FallVelocity/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_FallVelocity.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.FallVelocity.setServices)
 }
 
@@ -423,9 +431,47 @@ edu::csdms::models::stm::FallVelocity_impl::initialize_impl (
   /* in array<string> */::sidl::array< ::std::string>& properties ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.FallVelocity.initialize)
+
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/FallVelocity/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/FallVelocity/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/FallVelocity/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_FallVelocity.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/FallVelocity/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#FallVelocity: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#FallVelocity: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     viscosity=0.0; spec_grav=0.0; grain_size=0.0; grav=0.0; velocity=0.0;
     Rep=0; Rf=0;
-  std::string input = userinput.getString("Input","");
 
     Initialize(data, &viscosity, &spec_grav, &grain_size, &grav, input.c_str());
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.FallVelocity.initialize)
@@ -451,7 +497,14 @@ edu::csdms::models::stm::FallVelocity_impl::finalize_impl ()
 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.FallVelocity.finalize)
-  std::string output = userinput.getString("Output","");
+  std::string site_prefix = userinput.getString (
+                              "/STM/FallVelocity/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/FallVelocity/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#FallVelocity: Output file: %s\n", output.c_str ());
+
 Finalize(Rep, Rf, velocity, output.c_str());
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.FallVelocity.finalize)
 }
