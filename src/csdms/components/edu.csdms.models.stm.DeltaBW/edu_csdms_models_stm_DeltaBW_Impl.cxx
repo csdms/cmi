@@ -464,7 +464,7 @@ edu::csdms::models::stm::DeltaBW_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.DeltaBW.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.DeltaBW.initialize} (initialize method)
-  const int ChezyOrManning = 1;
+
   //std::string input = userinput.getString("Input","");
 
 /*
@@ -570,7 +570,7 @@ edu::csdms::models::stm::DeltaBW_impl::initialize_impl (
     free (work_dir);
   }
 
-
+  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
 
     check=0; M=0; prints=0; iterates=0; formulation=0; bombed=0; k=0; m=0;
     qw=0; I=0; qtf=0; D=0; Cz=0; nt=0; tsc=0; etasl=0; etabl=0; Sfi=0; Sb=0;
