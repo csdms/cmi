@@ -359,12 +359,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/DepDistTotLoadCalc/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/DepDistTotLoadCalc/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_DepDistTotLoadCalc.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.DepDistTotLoadCalc.setServices)
 }
@@ -427,7 +435,45 @@ edu::csdms::models::stm::DepDistTotLoadCalc_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.DepDistTotLoadCalc.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.DepDistTotLoadCalc.initialize} (initialize method)
-  std::string input = userinput.getString("Input","");
+
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/DepDistTotLoadCalc/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/DepDistTotLoadCalc/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/DepDistTotLoadCalc/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_DepDistTotLoadCalc.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/DepDistTotLoadCalc/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#DepDistTotLoadCalc: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#DepDistTotLoadCalc: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     N=0; check = 0;
     Sl=0; R=0; D50s=0; D90s=0; nk=0; Hso=0; Hstep=0; astrat=1; nu=0; ks=0;
     check = Initialize(&Sl, &R, &D50s, &D90s, &nk, &Hso, &Hstep, &N, &astrat, &nu, &ks, input.c_str());
@@ -482,7 +528,15 @@ edu::csdms::models::stm::DepDistTotLoadCalc_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.DepDistTotLoadCalc.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.DepDistTotLoadCalc.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+
+  std::string site_prefix = userinput.getString (
+                              "/STM/DepDistTotLoadCalc/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/DepDistTotLoadCalc/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#DepDistTotLoadCalc: Output file: %s\n", output.c_str ());
+
     Finalize(N, Hs, tausg, U, Gamma, H, qw, tau, ratio, Fr, u, us, qb, Cz, kc, Zu, E,
 	     I, qs, qt, qbqt, vsku, output.c_str());
 
