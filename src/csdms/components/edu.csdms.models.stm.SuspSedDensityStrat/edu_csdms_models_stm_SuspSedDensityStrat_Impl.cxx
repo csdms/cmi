@@ -359,12 +359,19 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/SuspSedDensityStrat/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/SuspSedDensityStrat/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_SuspSedDensityStrat.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SuspSedDensityStrat.setServices)
 }
@@ -426,11 +433,49 @@ edu::csdms::models::stm::SuspSedDensityStrat_impl::initialize_impl (
   /* in array<string> */::sidl::array< ::std::string>& properties ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.SuspSedDensityStrat.initialize)
+
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/SuspSedDensityStrat/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/SuspSedDensityStrat/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/SuspSedDensityStrat/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_SuspSedDensityStrat.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/SuspSedDensityStrat/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#SuspSedDensityStrat: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#SuspSedDensityStrat: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     R=0, D=0, H=0, kc=0, ustar=0, nu=0, Cr=0, una=0, cna=0, qs=0, dzeta=0;
     ustarr=0, Ristar=0, Rep=0, vs=0, Hr=0, unr=0, unao=0, cnao=0, qso=0;
     n=0, bombed=0;
 
-  std::string input = userinput.getString("Input","");
 
     Initialize(&R, &D, &H, &kc, &ustar, &nu, &Cr, zeta, Ri, Fstrat, un,
         cn, intc, unold, cnold, &una, &cna, &qs, &dzeta, &ustarr, &Ristar, &Rep,
@@ -459,7 +504,13 @@ edu::csdms::models::stm::SuspSedDensityStrat_impl::finalize_impl ()
 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.SuspSedDensityStrat.finalize)
-  std::string output = userinput.getString("Output","");
+  std::string site_prefix = userinput.getString (
+                              "/STM/SuspSedDensityStrat/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/SuspSedDensityStrat/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#SuspSedDensityStrat: Output file: %s\n", output.c_str ());
   Finalize(zeta, initun, initcn, un, cn, Ri, unao, cnao, qso, una, cna, qs, bombed, output.c_str());
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SuspSedDensityStrat.finalize)
