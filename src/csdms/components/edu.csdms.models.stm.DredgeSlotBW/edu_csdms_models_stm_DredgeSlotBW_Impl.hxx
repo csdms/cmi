@@ -116,7 +116,7 @@ gov::cca::TypeMap userinput;
     double Qww, I, B, D50, D90, R, S, lamdap, L, Hslot, ru, rd;
     double au, dt, qw, dx, Rep, vs, dzeta, Hnorm, Hsnorm, Gbnorm;
     double Gsnorm, ustarr, Hr, qsint, ksid, qbf, qsf, Cnorm, MassIn;
-    double MassStored, MassOut, FracDisc, time;
+    double MassStored, MassOut, FracDisc, __time;
 
     double (*printmatrix)[2002], (*Hmatrix)[2002], (*ksimatrix)[2002];
     double (*qsmatrix)[2002], (*qbmatrix)[2002], (*Hsmatrix)[2002];
