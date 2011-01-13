@@ -361,11 +361,11 @@ if (ppf._is_nil()) {
 }
 
   ppf.initParameterData(userinput, "Configure");
-
+  ppf.setBatchTitle(userinput, "Parameters");
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
-    services.releasePort("ppf");   
+
     dialog.read ("STM_BedrockAlluvialTransition.xml");
     dialog.construct (ppf, this->userinput);
   }
@@ -453,7 +453,7 @@ edu::csdms::models::stm::BedrockAlluvialTransition_impl::initialize_impl (
 
       tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
 
-      tmpls.add_file ("BedrockAlluvialTransition.txt.in", in_file);
+      tmpls.add_file ("STM_BedrockAlluvialTransition.txt.in", in_file);
 
       tmpls.substitute (userinput,
                         "/STM/BedrockAlluvialTransition/Input/Var/", work_dir);
