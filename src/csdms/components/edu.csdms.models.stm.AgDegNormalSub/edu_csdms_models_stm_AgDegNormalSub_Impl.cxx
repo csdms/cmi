@@ -362,7 +362,7 @@ if (ppf._is_nil()) {
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
-    dialog.read ("STM_BackwaterWrightParker.xml");
+    dialog.read ("STM_AgDegNormalSub.xml");
     dialog.construct (ppf, this->userinput);
   }
 
