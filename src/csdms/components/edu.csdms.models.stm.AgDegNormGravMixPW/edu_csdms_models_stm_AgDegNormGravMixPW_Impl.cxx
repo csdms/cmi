@@ -476,16 +476,14 @@ edu::csdms::models::stm::AgDegNormGravMixPW_impl::initialize_impl (
     free (work_dir);
   }
 
+  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
+  bedloadrelation = userinput.getInt("bedloadrelation",1);
+
   qw=0; qbTf=0; I=0; etad=0; S=0; L=0; dt=0; nk=0; na=0; alphar=0; R=0;
   lps=0; alphau=0; atrans=0; rload=0; Cexp=0; nexp=0; fracsandl=0;
   Dsgsi=0; Dx50si=0; Dx90si=0; dx=0; __time=0; Cf=0;
   M=0; prints=0; iterates=0; npp=0; np=0; check=0; k=0; m=0;
   bedloadrelation=1; formulation=0;
-
-  //int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
-  //bedloadrelation = userinput.getInt("bedloadrelation",1);
-  int ChezyOrManning = 1;
-  bedloadrelation = 1;
 
   check = Initialize (GSD, &qw, &qbTf, &I, &etad, &S, &L, &dt, &M, &prints,
                       &iterates, &nk, &na, &alphar, &R, &lps, &alphau, &atrans,

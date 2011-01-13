@@ -3,13 +3,13 @@
     <entry name="/STM/AgDegNormGravMixPW/Input/Dir">
       <label>Input directory</label>
       <help_brief>Path to input files. {cb;GUI;/data/sims/stm/AgDegNormGravMixPW}</help_brief>
-      <default>GUI</default>
+      <default>/data/sims/stm/AgDegNormGravMixPW</default>
       <type>String</type>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>AgDegNormGravMixPW</default>
       <type>String</type>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/CasePrefix">
@@ -19,8 +19,30 @@
       <type>String</type>
     </entry>
   </tab>
+  <tab name="Run Options">
+    <entry name="/STM/AgDegNormGravMixPW/Input/Var/ChezyOrManning">
+      <label>Chezy Or Manning, Chezy-1 or Manning-2</label>
+      <help_brief>Chezy Or Manning, Chezy-1 or Manning-2</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormGravMixPW/Input/Var/bedloadrelation">
+      <label>BedloadRelation, Parker or Wilock, Parker-1 or Wilock-2</label>
+      <help_brief>BedloadRelation, Parker or Wilock, Parker-1 or Wilock-2</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+  </tab>
   <tab name="Run Parameters">
-    <entry name="/STM/1DDeltaBW/Input/Var/q">
+    <entry name="/STM/AgDegNormGravMixPW/Input/Var/q">
       <label>Flood discharge [m^2/s]</label>
       <help_brief>Flood discharge [m^2/s]</help_brief>
       <default>10</default>
@@ -31,8 +53,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/T">
-      <label>Critical Shields stress in load relation</label>
-      <help_brief>Critical Shields stress in load relation</help_brief>
+      <label>gravel input [m^2/s]</label>
+      <help_brief>gravel input [m^2/s]</help_brief>
       <default>0.001</default>
       <type>Float</type>
       <range>
@@ -50,9 +72,9 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaBW/Input/Var/e">
-      <label>Initiale elevation of foreset bottom [m]</label>
-      <help_brief>Initiale elevation of foreset bottom [m]</help_brief>
+    <entry name="/STM/AgDegNormGravMixPW/Input/Var/e">
+      <label>base level [m]</label>
+      <help_brief>base level [m]</help_brief>
       <default>0.5</default>
       <type>Float</type>
       <range>
@@ -61,8 +83,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/S">
-      <label>Slope of foreset face [-]</label>
-      <help_brief>Slope of foreset face [-]</help_brief>
+      <label>initial bed slope</label>
+      <help_brief>initial bed slope</help_brief>
       <default>0.002</default>
       <type>Float</type>
       <range>
@@ -71,8 +93,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/L">
-      <label>L</label>
-      <help_brief>L</help_brief>
+      <label>reach length [m]</label>
+      <help_brief>reach length [m]</help_brief>
       <default>20000</default>
       <type>Float</type>
       <range>
@@ -91,8 +113,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/M">
-      <label>Number of fluvial nodes</label>
-      <help_brief>Number of fluvial nodes</help_brief>
+      <label>no. of intervals (100 or less)</label>
+      <help_brief>no. of intervals (100 or less)</help_brief>
       <default>30</default>
       <type>Int</type>
       <range>
@@ -121,8 +143,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/k">
-      <label>Manning-Strickler coefficient, k [-]</label>
-      <help_brief>Manning-Strickler coefficient, k (ks = n * D90) [-]</help_brief>
+      <label>factor by which Ds90 is multiplied for roughness height</label>
+      <help_brief>factor by which Ds90 is multiplied for roughness height</help_brief>
       <default>2</default>
       <type>Float</type>
       <range>
@@ -131,8 +153,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/n">
-      <label>Exponent in load relation [-]</label>
-      <help_brief>Exponent in load relation [-]</help_brief>
+      <label>factor by which Ds90 is multiplied for active layer thickness</label>
+      <help_brief>factor by which Ds90 is multiplied for active layer thickness</help_brief>
       <default>2</default>
       <type>Float</type>
       <range>
@@ -161,8 +183,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/l">
-      <label>l</label>
-      <help_brief>l</help_brief>
+      <label>bed porosity, gravel</label>
+      <help_brief>bed porosity, gravel</help_brief>
       <default>0.4</default>
       <type>Float</type>
       <range>
@@ -171,8 +193,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/u">
-      <label>u</label>
-      <help_brief>u</help_brief>
+      <label>upwinding coefficient for load spatial derivatives in Exner equation (>0.5 suggested)</label>
+      <help_brief>upwinding coefficient for load spatial derivatives in Exner equation (>0.5 suggested)</help_brief>
       <default>.75</default>
       <type>Float</type>
       <range>
@@ -181,8 +203,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormGravMixPW/Input/Var/a">
-      <label>Coefficent in total bed material relation [-]</label>
-      <help_brief>Coefficent in total bed material relation [-]</help_brief>
+      <label>coefficient for material transferred to substrate as bed aggrades</label>
+      <help_brief>coefficient for material transferred to substrate as bed aggrades</help_brief>
       <default>.5</default>
       <type>Float</type>
       <range>
@@ -190,7 +212,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaBW/Input/Var/C">
+    <entry name="/STM/AgDegNormGravMixPW/Input/Var/C">
       <label>Chezy resistance coefficient [-]</label>
       <help_brief>Chezy resistance coefficient [-]</help_brief>
       <default>11.099</default>
