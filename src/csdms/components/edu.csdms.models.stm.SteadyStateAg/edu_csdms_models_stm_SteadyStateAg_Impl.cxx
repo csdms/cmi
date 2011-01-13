@@ -357,12 +357,21 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/SteadyStateAg/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/SteadyStateAg/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_SteadyStateAg.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SteadyStateAg.setServices)
 }
 
@@ -424,12 +433,50 @@ edu::csdms::models::stm::SteadyStateAg_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.SteadyStateAg.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.SteadyStateAg.initialize} (initialize method)
+
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/SteadyStateAg/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/SteadyStateAg/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/SteadyStateAg/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_SteadyStateAg.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/SteadyStateAg/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#SteadyStateAg: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#SteadyStateAg: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     check=0; prints=0; k=0;
     Gt=0; L=0; ksidot=0; Qbf=0; B=0; D=0; Lamda=0; tauform=0;
     aleh=0; lamdap=0; Cz=0; I=0; Cf=0; Omega=0; R=0; ksid=0; dt=0; Qt=0; C=0;
-    BMSS=0; Su=0; beta=0; time=0;
+    BMSS=0; Su=0; beta=0; __time=0;
 
-    std::string input = userinput.getString("Input","");
     check = Initialize(Qtbf, Sl, etahat, etadev, Bbf, Hbf, xhat, x, &Gt, &L,
                 &ksidot, &Qbf, &B, &D, &Lamda, &tauform, &aleh, &lamdap, &Cz, &I,
 		       &Cf, &Omega, &R, &ksid, &dt, &Qt, &C, &BMSS, &Su, &beta, &prints, input.c_str());
@@ -452,8 +499,8 @@ edu::csdms::models::stm::SteadyStateAg_impl::run_impl (
   // Insert-Code-Here {edu.csdms.models.stm.SteadyStateAg.run} (run method)
 
     for (k=0; k <= prints; k++) {
-        Run(printmatrix, etadev, ksid, ksidot, time, k);
-        time += dt;
+        Run(printmatrix, etadev, ksid, ksidot, __time, k);
+        __time += dt;
     }
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SteadyStateAg.run)
@@ -469,7 +516,13 @@ edu::csdms::models::stm::SteadyStateAg_impl::finalize_impl ()
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.SteadyStateAg.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.SteadyStateAg.finalize} (finalize method)
 
-    std::string output = userinput.getString("Output","");
+  std::string site_prefix = userinput.getString (
+                              "/STM/SteadyStateAg/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/SteadyStateAg/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#SteadyStateAg: Output file: %s\n", output.c_str ());
     Finalize(printmatrix, xhat, x, Qtbf, Sl, etahat, etadev, Bbf, Hbf, prints, output.c_str());
     free(printmatrix);
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.SteadyStateAg.finalize)
