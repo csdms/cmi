@@ -115,7 +115,7 @@ namespace edu {
    double Qf , Qbtffeed , lambig , I , D , R , L , Bf , Sinu , lamp ;
    double Cz , Sfbl , etaddot , dt , Yearstart , Yearstop , aleh , neh ;
    double tausforms , alp , np , tausc , tausformg , Cf , rform , tausform ;
-   double loadcoef , widthcoef , depthcoef , dx , time ;
+   double loadcoef , widthcoef , depthcoef , dx , __time ;
    int M , prints , iterates , check , k , m ;
    
     //More Declarations
