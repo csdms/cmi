@@ -112,7 +112,7 @@ gov::cca::TypeMap userinput;
     double xhat[22], x[22], Qtbf[22], Sl[22], etahat[22], etadev[22], Bbf[22], Hbf[22];
     double Gt, L, ksidot, Qbf, B, D, Lamda, tauform;
     double aleh, lamdap, Cz, I, Cf, Omega, R, ksid, dt, Qt, C;
-    double BMSS, Su, beta, time;
+    double BMSS, Su, beta, __time;
 
     double (*printmatrix)[22];
 
