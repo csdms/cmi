@@ -357,13 +357,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/RecircFeed/test.txt");
-ppf.addRequestInt(userinput, "flume", "Recirculate or Feed", "Feed-1 or Recirc-2", 1,1,2);
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/RecircFeed/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_RecircFeed.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.RecircFeed.setServices)
 }
 
@@ -426,13 +433,52 @@ edu::csdms::models::stm::RecircFeed_impl::initialize_impl (
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.RecircFeed.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.RecircFeed.initialize} (initialize method)
 
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/RecircFeed/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/RecircFeed/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/RecircFeed/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_RecircFeed.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/RecircFeed/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#RecircFeed: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#RecircFeed: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     etatila=0; SNup=0; SNdown=0; Fro=0; nt=0; Fl=0; etatilainit=0; taur=0;
     SNl=0; dt=0; dxhat=0; Nhalf=0; qw=0; Ntot=0; qtilg=0; timehat=0; Htilend=0;
     M=0; prints=0; iterates=0; Nreach=0; k=0; m=0; bombed=0; equilibriates=0;
     SNcounter=0; check=0; flume=0; SNsize=0;
 
     flume = userinput.getInt("flume", 1);
-    std::string input = userinput.getString("Input","");
+    //std::string input = userinput.getString("Input","");
     check = Initialize(xhat, etadhat, Htil, qtil, bgh1, &etatila, &SNup, &SNdown, &Fro, &nt, &Fl,
             &etatilainit, &taur, &SNl, &dt, &dxhat, &Nhalf, &qw, &Ntot, &qtilg, &Htilend, &timehat,
 		       &M, &prints, &iterates, &Nreach, &flume, &bombed, input.c_str());
@@ -474,8 +520,6 @@ edu::csdms::models::stm::RecircFeed_impl::run_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.RecircFeed.run)
   // Insert-Code-Here {edu.csdms.models.stm.RecircFeed.run} (run method)
-    SaveDatatoMatrix(printmatrix, Slmatrix, qbmatrix, Hmatrix, etadhat, Sl, qtil,
-        Htil, timehat, Fl, etatila, Nreach, k, flume);
         
     for (k=1; k <= prints; k++) {
         for (m=1; m <= iterates; m++) {
@@ -504,7 +548,14 @@ edu::csdms::models::stm::RecircFeed_impl::finalize_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.RecircFeed.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.RecircFeed.finalize} (finalize method)
-  std::string output = userinput.getString("Output","");
+
+  std::string site_prefix = userinput.getString (
+                              "/STM/RecircFeed/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/RecircFeed/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#RecircFeed: Output file: %s\n", output.c_str ());
     if (bombed != 1)
       Finalize(printmatrix, Slmatrix, qbmatrix, Hmatrix, SNupvector, SNdownvector, xhat, SNcounter, Nreach, k, M, output.c_str());
     
