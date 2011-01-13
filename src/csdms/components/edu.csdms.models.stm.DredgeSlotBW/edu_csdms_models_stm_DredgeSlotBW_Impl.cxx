@@ -357,12 +357,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/DredgeSlotBW/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/DredgeSlotBW/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_DredgeSlotBW.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.DredgeSlotBW.setServices)
 }
 
@@ -424,13 +432,49 @@ edu::csdms::models::stm::DredgeSlotBW_impl::initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.DredgeSlotBW.initialize)
   // Insert-Code-Here {edu.csdms.models.stm.DredgeSlotBW.initialize} (initialize method)
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/DredgeSlotBW/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/DredgeSlotBW/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/DredgeSlotBW/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_DredgeSlotBW.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/DredgeSlotBW/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#DredgeSlotBW: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#DredgeSlotBW: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     check=0; M=0; prints=0; iterates=0; k=0; m=0;
     Qww=0; I=0; B=0; D50=0; D90=0; R=0; S=0; lamdap=0; L=0; Hslot=0; ru=0; rd=0;
     au=0; dt=0; qw=0; dx=0; Rep=0; vs=0; dzeta=0; Hnorm=0; Hsnorm=0; Gbnorm=0;
     Gsnorm=0; ustarr=0; Hr=0; qsint=0; ksid=0; qbf=0; qsf=0; Cnorm=0; MassIn=0;
-    MassStored=0; MassOut=0; FracDisc=0; time=0;
-
-  std::string input = userinput.getString("Input","");
+    MassStored=0; MassOut=0; FracDisc=0; __time=0;
 
     check = Initialize(zeta, x, eta, ksi, H, Sf, Hs, &Qww, &I, &B, &D50, &D90, &R,
                 &S, &lamdap, &L, &Hslot, &ru, &rd, &au, &dt, &qw, &dx, &Rep, &vs, &dzeta,
@@ -459,7 +503,7 @@ edu::csdms::models::stm::DredgeSlotBW_impl::initialize_impl (
 
 
     SaveDatatoMatrix(printmatrix, Hmatrix, ksimatrix, qbmatrix, qsmatrix,
-        Hsmatrix, eta, H, ksi, qb, qs, Hs, time, k, M);
+        Hsmatrix, eta, H, ksi, qb, qs, Hs, __time, k, M);
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.DredgeSlotBW.initialize)
 }
@@ -480,10 +524,10 @@ edu::csdms::models::stm::DredgeSlotBW_impl::run_impl (
                         qw, dzeta, qbf, qsf, au, dt, I, lamdap, dx, B, ksid, D90, M);
             if (check == 1) 
                 return ;
-            time += dt;
+            __time += dt;
         }
         SaveDatatoMatrix(printmatrix, Hmatrix, ksimatrix, qbmatrix, qsmatrix,
-            Hsmatrix, eta, H, ksi, qb, qs, Hs, time, k, M);
+            Hsmatrix, eta, H, ksi, qb, qs, Hs, __time, k, M);
     }
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.DredgeSlotBW.run)
@@ -499,7 +543,14 @@ edu::csdms::models::stm::DredgeSlotBW_impl::finalize_impl ()
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.DredgeSlotBW.finalize)
   // Insert-Code-Here {edu.csdms.models.stm.DredgeSlotBW.finalize} (finalize method)
 
-  std::string output = userinput.getString("Output","");
+  std::string site_prefix = userinput.getString (
+                              "/STM/DredgeSlotBW/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/DredgeSlotBW/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#DredgeSlotBW: Output file: %s\n", output.c_str ());
+
     Finalize(printmatrix, Hmatrix, Hsmatrix, qbmatrix, qsmatrix, ksimatrix, x, Hnorm,
 	     Hsnorm, Gbnorm, Gsnorm, Cnorm, ksid, M, prints, output.c_str());
 
