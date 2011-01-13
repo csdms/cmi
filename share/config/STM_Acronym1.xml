@@ -9,7 +9,7 @@
     <entry name="/STM/Acronym1/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>Acronym1</default>
       <type>String</type>
     </entry>
     <entry name="/STM/Acronym1/CasePrefix">
@@ -21,8 +21,8 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/STM/Acronym1/Input/Var/R">
-      <label>Submerged specific gravity of sediment???</label>
-      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <label>Sediment Specific Gravity, R+1</label>
+      <help_brief>Sediment Specific Gravity, R+1</help_brief>
       <default>2.65</default>
       <type>Float</type>
       <range>
@@ -31,8 +31,8 @@
       </range>
     </entry>
     <entry name="/STM/Acronym1/Input/Var/u">
-      <label>u</label>
-      <help_brief>u</help_brief>
+      <label>Shear Velocity of Flow [m/s]</label>
+      <help_brief>Shear Velocity of Flow [m/s]</help_brief>
       <default>0.1</default>
       <type>Float</type>
       <range>
