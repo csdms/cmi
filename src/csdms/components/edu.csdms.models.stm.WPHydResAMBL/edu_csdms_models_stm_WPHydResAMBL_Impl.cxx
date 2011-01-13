@@ -357,12 +357,20 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-ppf.initParameterData(userinput, "userinput");
-ppf.setBatchTitle(userinput, "parameters");
-ppf.addRequestString(userinput, "Input", "Path to input files", "Input directory", "/data/sims/stm/WPHydResAMBL/test.txt");
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/WPHydResAMBL/result.txt");
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
+
+  {
+    ::edu::csdms::tools::ConfigDialog dialog =
+      ::edu::csdms::tools::ConfigDialog::_create ();
+
+    dialog.read ("STM_WPHydResAMBL.xml");
+    dialog.construct (ppf, this->userinput);
+  }
+
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
+
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.WPHydResAMBL.setServices)
 }
 
@@ -423,10 +431,48 @@ edu::csdms::models::stm::WPHydResAMBL_impl::initialize_impl (
   /* in array<string> */::sidl::array< ::std::string>& properties ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.WPHydResAMBL.initialize)
+
+  std::string input;
+
+  {
+    std::string input_dir = userinput.getString (
+                              "/STM/WPHydResAMBL/Input/Dir", "");
+    std::string site_prefix = userinput.getString (
+                                "/STM/WPHydResAMBL/SitePrefix", "");
+    std::string case_prefix = userinput.getString (
+                                "/STM/WPHydResAMBL/CasePrefix", "");
+    std::string in_file = site_prefix + "_" + case_prefix + ".txt";
+    char* work_dir = (char*)malloc (2048*sizeof (char));
+    getcwd (work_dir, 2048);
+
+    if (input_dir.compare (0,3,"GUI")==0)
+    {
+      ::edu::csdms::tools::TemplateFiles tmpls;
+      std::string to_file;
+
+      tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+
+      tmpls.add_file ("STM_WPHydResAMBL.txt.in", in_file);
+
+      tmpls.substitute (userinput, "/STM/WPHydResAMBL/Input/Var/", work_dir);
+
+    } 
+    else
+    {
+      in_file = input_dir + "/" + in_file;
+    }                             
+
+    input = in_file;
+
+    fprintf (stderr, "#WPHydResAMBL: Run directory: %s\n", work_dir);
+    fprintf (stderr, "#WPHydResAMBL: Input file: %s\n", input.c_str ());
+
+    free (work_dir);
+  }
+
     check=0; N=0;
     Sl=0; R=0; D50s=0; D90s=0; nk=0; Hso=0; Hstep=0; astrat=1;
 
-    std::string input = userinput.getString("Input","");
     check = Initialize(&Sl, &R, &D50s, &D90s, &nk, &Hso, &Hstep, &N, &astrat, input.c_str());
 
     if ( (Hs = (double *) malloc( (N+1) * sizeof(double) ) ) == NULL) {fprintf(stderr, "malloc error"); exit(0);}
@@ -467,7 +513,14 @@ edu::csdms::models::stm::WPHydResAMBL_impl::finalize_impl ()
 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.WPHydResAMBL.finalize)
-  std::string output = userinput.getString("Output","");
+  std::string site_prefix = userinput.getString (
+                              "/STM/WPHydResAMBL/SitePrefix", "");
+  std::string case_prefix = userinput.getString (
+                              "/STM/WPHydResAMBL/CasePrefix", "");
+  std::string output = site_prefix + "_" + case_prefix + ".out";
+
+  fprintf (stderr, "#WPHydResAMBL: Output file: %s\n", output.c_str ());
+
   Finalize(N, Hs, tausg, U, Gamma, H, qw, tau, ratio, Fr, u, us, qb, output.c_str());
 
     free(Hs);
