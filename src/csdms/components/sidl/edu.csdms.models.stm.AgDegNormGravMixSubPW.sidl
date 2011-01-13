@@ -27,7 +27,7 @@ package edu version 0.0 {
                 
 // Insert-UserCode-Here {edu.csdms.models.stm.AgDegNormGravMixSubPW.comment} (Insert your component comments here)
                 // DO-NOT-DELETE bocca.splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.comment)
-                class AgDegNormGravMixSubPW implements-all gov.cca.Component, gov.cca.ComponentRelease, edu.csdms.models.stm.IRFPort
+                class AgDegNormGravMixSubPW implements-all gov.cca.Component, gov.cca.ComponentRelease, edu.csdms.ports.IRFPort
                 {
                     // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.models.stm.AgDegNormGravMixSubPW.methods)
                     
@@ -54,7 +54,7 @@ package edu version 0.0 {
                     void boccaReleaseServices(in gov.cca.Services services) throws gov.cca.CCAException;
                     
                     /** This function should never be called, but helps babel generate better code. */
-                    void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0);
+                    void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.openmi.ValueSet dummy1, in edu.csdms.tools.TemplateFiles dummy2, in edu.csdms.openmi.ScalarSet dummy3, in edu.csdms.tools.ConfigDialog dummy4, in edu.csdms.openmi.IScalarSet dummy5);
                     // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.models.stm.AgDegNormGravMixSubPW:boccaPrivateMethods)
                     //-----------------------------------------------------------------------------
                 }

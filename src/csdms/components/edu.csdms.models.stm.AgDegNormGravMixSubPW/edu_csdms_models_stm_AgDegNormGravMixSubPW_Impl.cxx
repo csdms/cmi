@@ -359,14 +359,10 @@ if (ppf._is_nil()) {
   BOCCA_THROW_CXX(sidl::SIDLException, "Bogus ParameterPortFactory provided");
 }
 
-  // The configure port is called "Configure"
   ppf.initParameterData(userinput, "Configure");
+  ppf.setBatchTitle(userinput, "Parameters");
 
-ppf.addRequestInt(userinput, "ChezyOrManning", "Chezy or Manning", "Chezy-1 or Manning-2", 1,1,2);
-ppf.addRequestInt(userinput, "bedloadrelation", "Parker or Wilock", "Parker-1 or Wilock-2", 1,1,2);
-ppf.addRequestString(userinput, "Output", "Path to output files", "Output directory", "/data/sims/stm/AgDegNormGravMixSubPW/result.txt");
-
-  { // Read the XML description of the GUI
+  {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
 
@@ -374,8 +370,8 @@ ppf.addRequestString(userinput, "Output", "Path to output files", "Output direct
     dialog.construct (ppf, this->userinput);
   }
 
-ppf.addParameterPort(userinput, services);
-services.releasePort("ppf");
+  ppf.addParameterPort(userinput, services);
+  services.releasePort("ppf");
   // DO-NOT-DELETE splicer.end(edu.csdms.models.stm.AgDegNormGravMixSubPW.setServices)
 }
 
@@ -476,6 +472,9 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::initialize_impl (
      free (work_dir);
   }
 
+  int ChezyOrManning = userinput.getInt("ChezyOrManning",1);
+  bedloadrelation = userinput.getInt("bedloadrelation",1);
+
     qw=0; qbTf=0; I=0; etad=0; S=0; L=0; dt=0; nk=0; na=0; alphar=0; R=0;
     lps=0; alphau=0; atrans=0; rload=0; Cexp=0; nexp=0; fracsandl=0; rB=0;
     Dsgsi=0; Dx50si=0; Dx90si=0; dx=0; __time=0; Sinu=0; subrate=0; lamda=0;
@@ -483,9 +482,6 @@ edu::csdms::models::stm::AgDegNormGravMixSubPW_impl::initialize_impl (
     M=0; prints=0; iterates=0; npp=0; np=0; check=0; k=0; m=0; bedloadrelation=1; formulation=0;
 
   // For now set these to their defaults
-  int ChezyOrManning = 1;
-  bedloadrelation = 1;
-
         check = Initialize(GSD, &qw, &qbTf, &I, &etad, &S, &L, &dt, &M, &prints, &iterates,
                     &nk, &na, &alphar, &R, &lps, &alphau, &atrans, &npp, &np, &rload, &Cexp,
                     &nexp, ds, psi, plf, Fl, Fs, &fracsandl, po, oo, so, &Dsgsi, &Dx50si,
