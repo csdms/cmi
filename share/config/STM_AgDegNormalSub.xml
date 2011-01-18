@@ -1,18 +1,18 @@
 <dialog>
   <tab name="Input Files and Directories">
-    <entry name="/STM/1DDeltaNorm/Input/Dir">
+    <entry name="/STM/AgDegNormalSub/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/1DDeltaNorm}</help_brief>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/AgDegNormalSub}</help_brief>
       <default>GUI</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/1DDeltaNorm/SitePrefix">
+    <entry name="/STM/AgDegNormalSub/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>AgDegNormalSub</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/1DDeltaNorm/CasePrefix">
+    <entry name="/STM/AgDegNormalSub/CasePrefix">
       <label>Case prefix</label>
       <help_brief>Case prefix for input/output files.</help_brief>
       <default>test</default>
@@ -20,7 +20,7 @@
     </entry>
   </tab>
   <tab name="Run Parameters">
-    <entry name="/STM/1DDeltaNorm/Input/Var/q">
+    <entry name="/STM/AgDegNormalSub/Input/Var/q">
       <label>Flood discharge [m^2/s]</label>
       <help_brief>Flood discharge [m^2/s]</help_brief>
       <default>3</default>
@@ -30,7 +30,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/I">
+    <entry name="/STM/AgDegNormalSub/Input/Var/I">
       <label>Intermittency</label>
       <help_brief>Intermittency</help_brief>
       <default>.025</default>
@@ -40,7 +40,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/D">
+    <entry name="/STM/AgDegNormalSub/Input/Var/D">
       <label>Grain size of bed material [mm]</label>
       <help_brief>Grain size of bed material [mm]</help_brief>
       <default>20</default>
@@ -50,7 +50,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/l">
+    <entry name="/STM/AgDegNormalSub/Input/Var/l">
       <label>l</label>
       <help_brief>l</help_brief>
       <default>.4</default>
@@ -60,7 +60,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/k">
+    <entry name="/STM/AgDegNormalSub/Input/Var/k">
       <label>Manning-Strickler coefficient, k [-]</label>
       <help_brief>Manning-Strickler coefficient, k (ks = n * D90) [-]</help_brief>
       <default>60</default>
@@ -70,7 +70,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/S">
+    <entry name="/STM/AgDegNormalSub/Input/Var/S">
       <label>Slope of foreset face [-]</label>
       <help_brief>Slope of foreset face [-]</help_brief>
       <default>0.005</default>
@@ -80,7 +80,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/Q">
+    <entry name="/STM/AgDegNormalSub/Input/Var/Q">
       <label>Upstream bed material sediment feed rate during floods [m^2/s]</label>
       <help_brief>Upstream bed material sediment feed rate during floods [m^2/s]</help_brief>
       <default>0.004</default>
@@ -90,7 +90,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/L">
+    <entry name="/STM/AgDegNormalSub/Input/Var/L">
       <label>L</label>
       <help_brief>L</help_brief>
       <default>52000</default>
@@ -100,7 +100,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/t">
+    <entry name="/STM/AgDegNormalSub/Input/Var/t">
       <label>Time step [days]</label>
       <help_brief>Time step [days]</help_brief>
       <default>1</default>
@@ -110,7 +110,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/i">
+    <entry name="/STM/AgDegNormalSub/Input/Var/i">
       <label>Iterations per each printout</label>
       <help_brief>Iterations per each printout</help_brief>
       <default>1000</default>
@@ -120,7 +120,7 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/p">
+    <entry name="/STM/AgDegNormalSub/Input/Var/p">
       <label>Number of printouts</label>
       <help_brief>Number of printouts</help_brief>
       <default>5</default>
@@ -130,7 +130,7 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/M">
+    <entry name="/STM/AgDegNormalSub/Input/Var/M">
       <label>Number of fluvial nodes</label>
       <help_brief>Number of fluvial nodes</help_brief>
       <default>50</default>
@@ -140,7 +140,7 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/u">
+    <entry name="/STM/AgDegNormalSub/Input/Var/u">
       <label>u</label>
       <help_brief>u</help_brief>
       <default>0.5</default>
@@ -150,7 +150,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/r">
+    <entry name="/STM/AgDegNormalSub/Input/Var/r">
       <label>Manning-Strickler coefficient, r [-]</label>
       <help_brief>Manning-Strickler coefficient, r [-]</help_brief>
       <default>8.1</default>
@@ -160,7 +160,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/a">
+    <entry name="/STM/AgDegNormalSub/Input/Var/a">
       <label>Coefficent in total bed material relation [-]</label>
       <help_brief>Coefficent in total bed material relation [-]</help_brief>
       <default>4</default>
@@ -170,7 +170,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/n">
+    <entry name="/STM/AgDegNormalSub/Input/Var/n">
       <label>Exponent in load relation [-]</label>
       <help_brief>Exponent in load relation [-]</help_brief>
       <default>1.5</default>
@@ -180,7 +180,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/T">
+    <entry name="/STM/AgDegNormalSub/Input/Var/T">
       <label>Critical Shields stress in load relation</label>
       <help_brief>Critical Shields stress in load relation</help_brief>
       <default>0.0495</default>
@@ -190,7 +190,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/P">
+    <entry name="/STM/AgDegNormalSub/Input/Var/P">
       <label>P</label>
       <help_brief>P</help_brief>
       <default>1</default>
@@ -200,7 +200,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/R">
+    <entry name="/STM/AgDegNormalSub/Input/Var/R">
       <label>Submerged specific gravity of sediment</label>
       <help_brief>Submerged specific gravity of sediment</help_brief>
       <default>1.65</default>
@@ -210,7 +210,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/s">
+    <entry name="/STM/AgDegNormalSub/Input/Var/s">
       <label>Initial length of fluvial zone [m]</label>
       <help_brief>Initial length of fluvial zone [m]</help_brief>
       <default>5</default>
@@ -220,7 +220,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/B">
+    <entry name="/STM/AgDegNormalSub/Input/Var/B">
       <label>B</label>
       <help_brief>B</help_brief>
       <default>60</default>
@@ -230,7 +230,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/O">
+    <entry name="/STM/AgDegNormalSub/Input/Var/O">
       <label>O</label>
       <help_brief>O</help_brief>
       <default>1.5</default>
@@ -240,7 +240,7 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/1DDeltaNorm/Input/Var/Y">
+    <entry name="/STM/AgDegNormalSub/Input/Var/Y">
       <label>Y</label>
       <help_brief>Y</help_brief>
       <default>1</default>
@@ -252,13 +252,13 @@
     </entry>
   </tab>
   <tab name="About">
-    <entry name="/STM/1DDeltaNorm/ModelName">
+    <entry name="/STM/AgDegNormalSub/ModelName">
       <label>Model name</label>
       <help_brief>Name of the model</help_brief>
-      <default>1DDeltaNorm</default>
+      <default>AgDegNormalSub</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/1DDeltaNorm/ModelAuthor">
+    <entry name="/STM/AgDegNormalSub/ModelAuthor">
       <label>Author name</label>
       <help_brief>Name of the model author</help_brief>
       <default>Gary Parker</default>

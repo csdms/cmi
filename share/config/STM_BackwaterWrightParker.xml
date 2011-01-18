@@ -9,7 +9,7 @@
     <entry name="/STM/BackwaterWrightParker/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>BackwaterWrightParker</default>
       <type>String</type>
     </entry>
     <entry name="/STM/BackwaterWrightParker/CasePrefix">
@@ -21,8 +21,8 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/STM/BackwaterWrightParker/Input/Var/S">
-      <label>Slope of foreset face [-]</label>
-      <help_brief>Slope of foreset face [-]</help_brief>
+      <label>bed slope</label>
+      <help_brief>bed slope</help_brief>
       <default>0.0001</default>
       <type>Float</type>
       <range>
@@ -41,8 +41,8 @@
       </range>
     </entry>
     <entry name="/STM/BackwaterWrightParker/Input/Var/d">
-      <label>d</label>
-      <help_brief>d</help_brief>
+      <label>median grain size (D50) [mm]</label>
+      <help_brief>median grain size (D50) [mm]</help_brief>
       <default>0.35</default>
       <type>Float</type>
       <range>
@@ -51,8 +51,8 @@
       </range>
     </entry>
     <entry name="/STM/BackwaterWrightParker/Input/Var/D">
-      <label>Grain size of bed material [mm]</label>
-      <help_brief>Grain size of bed material [mm]</help_brief>
+      <label>grain size such that 90% passes (D90) [mm]</label>
+      <help_brief>grain size such that 90% passes (D90) [mm]</help_brief>
       <default>1</default>
       <type>Float</type>
       <range>
@@ -61,8 +61,8 @@
       </range>
     </entry>
     <entry name="/STM/BackwaterWrightParker/Input/Var/B">
-      <label>B</label>
-      <help_brief>B</help_brief>
+      <label>channel width [m]</label>
+      <help_brief>channel width [m]</help_brief>
       <default>275</default>
       <type>Float</type>
       <range>
@@ -71,8 +71,8 @@
       </range>
     </entry>
     <entry name="/STM/BackwaterWrightParker/Input/Var/Q">
-      <label>Upstream bed material sediment feed rate during floods [m^2/s]</label>
-      <help_brief>Upstream bed material sediment feed rate during floods [m^2/s]</help_brief>
+      <label>flow discharge [m^3/s]</label>
+      <help_brief>flow discharge [m^3/s]</help_brief>
       <default>1800</default>
       <type>Float</type>
       <range>
@@ -81,8 +81,8 @@
       </range>
     </entry>
     <entry name="/STM/BackwaterWrightParker/Input/Var/k">
-      <label>k</label>
-      <help_brief>k</help_brief>
+      <label>downstream water surface elevation [m]</label>
+      <help_brief>downstream water surface elevation [m]</help_brief>
       <default>20</default>
       <type>Float</type>
       <range>
@@ -91,8 +91,8 @@
       </range>
     </entry>
     <entry name="/STM/BackwaterWrightParker/Input/Var/L">
-      <label>L</label>
-      <help_brief>L</help_brief>
+      <label>reach length [m]</label>
+      <help_brief>reach length [m]</help_brief>
       <default>200000</default>
       <type>Float</type>
       <range>
@@ -101,8 +101,8 @@
       </range>
     </entry>
     <entry name="/STM/BackwaterWrightParker/Input/Var/M">
-      <label>Number of fluvial nodes</label>
-      <help_brief>Number of fluvial nodes</help_brief>
+      <label>number of spatial nodes (max of 99)</label>
+      <help_brief>number of spatial nodes (max of 99)</help_brief>
       <default>50</default>
       <type>Int</type>
       <range>

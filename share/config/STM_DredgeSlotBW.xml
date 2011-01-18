@@ -1,0 +1,208 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/DredgeSlotBW/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/DredgeSlotBW}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>DredgeSlotBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/DredgeSlotBW/Input/Var/Q">
+      <label>Flow discharge [m^3/s]</label>
+      <help_brief>Flow discharge [m^3/s]</help_brief>
+      <default>1650</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/I">
+      <label>Flood intermittency</label>
+      <help_brief>Flood intermittency</help_brief>
+      <default>0.3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/B">
+      <label>Channel width [m]</label>
+      <help_brief>Channel width [m]</help_brief>
+      <default>275</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/d">
+      <label>Median grain size (sand) [mm]</label>
+      <help_brief>Median grain size (sand) [mm]</help_brief>
+      <default>0.35</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/D">
+      <label>Grain size such that 90% is finer (sand) [mm]</label>
+      <help_brief>Grain size such that 90% is finer (sand) [mm]</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/R">
+      <label>Submerged Specific Gravity of Sediment</label>
+      <help_brief>Submerged Specific Gravity of Sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/S">
+      <label>Bed slope</label>
+      <help_brief>Bed slope</help_brief>
+      <default>0.0001</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/L">
+      <label>Reach length [m]</label>
+      <help_brief>Reach length [m]</help_brief>
+      <default>10000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/H">
+      <label>Depth of dredge slot [m]</label>
+      <help_brief>Depth of dredge slot [m]</help_brief>
+      <default>55</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/u">
+      <label>Fraction of reach length defining upstream end of dredge slot</label>
+      <help_brief>Fraction of reach length defining upstream end of dredge slot</help_brief>
+      <default>0.3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/r">
+      <label>Fraction of reach length defining downstream end of dredge slot</label>
+      <help_brief>Fraction of reach length defining downstream end of dredge slot</help_brief>
+      <default>0.45</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/l">
+      <label>Bed porosity</label>
+      <help_brief>Bed porosity</help_brief>
+      <default>0.4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/a">
+      <label>Upwinding coefficient (1 = full upwinding)</label>
+      <help_brief>Upwinding coefficient (1 = full upwinding)</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/M">
+      <label>Number of spatial steps desired (no more than 2000)</label>
+      <help_brief>Number of spatial steps desired (no more than 2000)</help_brief>
+      <default>50</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/t">
+      <label>Time step [year]</label>
+      <help_brief>Time step [year]</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/i">
+      <label>Number of iterations per print statement</label>
+      <help_brief>Number of iterations per print statement</help_brief>
+      <default>200</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/Input/Var/p">
+      <label>Number of prints desired</label>
+      <help_brief>Number of prints desired</help_brief>
+      <default>6</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/DredgeSlotBW/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>DredgeSlotBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/DredgeSlotBW/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

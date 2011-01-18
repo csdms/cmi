@@ -9,7 +9,7 @@
     <entry name="/STM/BedrockAlluvialTransition/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>BedrockAlluvialTransition</default>
       <type>String</type>
     </entry>
     <entry name="/STM/BedrockAlluvialTransition/CasePrefix">
@@ -111,8 +111,8 @@
       </range>
     </entry>
     <entry name="/STM/BedrockAlluvialTransition/Input/Var/d">
-      <label>d</label>
-      <help_brief>d</help_brief>
+      <label>Position of the downstream end of the reach [m]</label>
+      <help_brief>Position of the downstream end of the reach [m]</help_brief>
       <default>50000</default>
       <type>Float</type>
       <range>
@@ -121,8 +121,8 @@
       </range>
     </entry>
     <entry name="/STM/BedrockAlluvialTransition/Input/Var/M">
-      <label>Number of fluvial nodes</label>
-      <help_brief>Number of fluvial nodes</help_brief>
+      <label>Number of spatial steps</label>
+      <help_brief>Number of spatial steps</help_brief>
       <default>20</default>
       <type>Int</type>
       <range>
@@ -141,8 +141,8 @@
       </range>
     </entry>
     <entry name="/STM/BedrockAlluvialTransition/Input/Var/i">
-      <label>Iterations per each printout</label>
-      <help_brief>Iterations per each printout</help_brief>
+      <label>Number of iterations before printing</label>
+      <help_brief>Number of iterations before printing</help_brief>
       <default>10000</default>
       <type>Int</type>
       <range>

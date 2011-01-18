@@ -1,18 +1,18 @@
 <dialog>
   <tab name="Input Files and Directories">
-    <entry name="/STM/Acronym1D/Input/Dir">
+    <entry name="/STM/RouseVanoniEquilibrium/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/Acronym1D}</help_brief>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/RouseVanoniEquilibrium}</help_brief>
       <default>GUI</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/Acronym1D/SitePrefix">
+    <entry name="/STM/RouseVanoniEquilibrium/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>Acronym1D</default>
+      <default>RouseVanoniEquilibrium</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/Acronym1D/CasePrefix">
+    <entry name="/STM/RouseVanoniEquilibrium/CasePrefix">
       <label>Case prefix</label>
       <help_brief>Case prefix for input/output files.</help_brief>
       <default>test</default>
@@ -20,40 +20,30 @@
     </entry>
   </tab>
   <tab name="Run Parameters">
-    <entry name="/STM/Acronym1D/Input/Var/R">
-      <label>Submerged Specific Gravity, R+1</label>
-      <help_brief>Submerged Specific Gravity, R+1</help_brief>
-      <default>2.65</default>
+    <entry name="/STM/RouseVanoniEquilibrium/Input/Var/b">
+      <label>non-dimensional distance from the bed</label>
+      <help_brief>c=cb</help_brief>
+      <default>0.05</default>
       <type>Float</type>
       <range>
         <min>0</min>
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/Acronym1D/Input/Var/S">
-      <label>Bed Slope</label>
-      <help_brief>Bed Slope</help_brief>
-      <default>0.005</default>
+    <entry name="/STM/RouseVanoniEquilibrium/Input/Var/v">
+      <label>vs settling velocity [cm/s]</label>
+      <help_brief>vs settling velocity [cm/s]</help_brief>
+      <default>3</default>
       <type>Float</type>
       <range>
         <min>0</min>
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/STM/Acronym1D/Input/Var/B">
-      <label>Channel Width [m]</label>
-      <help_brief>Channel Width [m]</help_brief>
-      <default>12</default>
-      <type>Float</type>
-      <range>
-        <min>0</min>
-        <max>1e32</max>
-      </range>
-    </entry>
-    <entry name="/STM/Acronym1D/Input/Var/n">
-      <label>Roughness Factor</label>
-      <help_brief>Roughness Factor</help_brief>
-      <default>2</default>
+    <entry name="/STM/RouseVanoniEquilibrium/Input/Var/u">
+      <label>u* shear velocity [m/s]</label>
+      <help_brief>u* shear velocity [m/s]</help_brief>
+      <default>0.2</default>
       <type>Float</type>
       <range>
         <min>0</min>
@@ -62,13 +52,13 @@
     </entry>
   </tab>
   <tab name="About">
-    <entry name="/STM/Acronym1D/ModelName">
+    <entry name="/STM/RouseVanoniEquilibrium/ModelName">
       <label>Model name</label>
       <help_brief>Name of the model</help_brief>
-      <default>Acronym1D</default>
+      <default>RouseVanoniEquilibrium</default>
       <type>String</type>
     </entry>
-    <entry name="/STM/Acronym1D/ModelAuthor">
+    <entry name="/STM/RouseVanoniEquilibrium/ModelAuthor">
       <label>Author name</label>
       <help_brief>Name of the model author</help_brief>
       <default>Gary Parker</default>

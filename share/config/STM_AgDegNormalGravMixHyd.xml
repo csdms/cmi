@@ -3,13 +3,13 @@
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Dir">
       <label>Input directory</label>
       <help_brief>Path to input files. {cb;GUI;/data/sims/stm/AgDegNormalGravMixHyd}</help_brief>
-      <default>GUI</default>
+      <default>/data/sims/stm/AgDegNormalGravMixHyd</default>
       <type>String</type>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
-      <default>DeltaBW</default>
+      <default>AgDegNormalGravMixHyd</default>
       <type>String</type>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/CasePrefix">
@@ -21,8 +21,8 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/N">
-      <label>N</label>
-      <help_brief>N</help_brief>
+      <label>number of hydrograph entries [between 2 and 16 values]</label>
+      <help_brief>number of hydrograph entries [between 2 and 16 values]</help_brief>
       <default>10</default>
       <type>Float</type>
       <range>
@@ -31,8 +31,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/c">
-      <label>c</label>
-      <help_brief>c</help_brief>
+      <label>number of cycles per year</label>
+      <help_brief>number of cycles per year</help_brief>
       <default>1</default>
       <type>Float</type>
       <range>
@@ -41,8 +41,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/e">
-      <label>Initial elevation of foreset bottom [m]</label>
-      <help_brief>Initiale elevation of foreset bottom [m]</help_brief>
+      <label>bed elevation at downstream end [m]</label>
+      <help_brief>bed elevation at downstream end [m]</help_brief>
       <default>0</default>
       <type>Float</type>
       <range>
@@ -51,8 +51,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/S">
-      <label>Slope of foreset face [-]</label>
-      <help_brief>Slope of foreset face [-]</help_brief>
+      <label>initial bed slope</label>
+      <help_brief>initial bed slope</help_brief>
       <default>0.00262</default>
       <type>Float</type>
       <range>
@@ -61,8 +61,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/L">
-      <label>L</label>
-      <help_brief>L</help_brief>
+      <label>reach length [m]</label>
+      <help_brief>reach length [m]</help_brief>
       <default>10000</default>
       <type>Float</type>
       <range>
@@ -81,8 +81,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/M">
-      <label>Number of fluvial nodes</label>
-      <help_brief>Number of fluvial nodes</help_brief>
+      <label>Number of intervals</label>
+      <help_brief>Number of intervals</help_brief>
       <default>10</default>
       <type>Int</type>
       <range>
@@ -111,8 +111,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/k">
-      <label>Manning-Strickler coefficient, k [-]</label>
-      <help_brief>Manning-Strickler coefficient, k (ks = n * D90) [-]</help_brief>
+      <label>factor by which Ds90 is multiplied for roughness height</label>
+      <help_brief>factor by which Ds90 is multiplied for roughness height</help_brief>
       <default>2</default>
       <type>Float</type>
       <range>
@@ -121,8 +121,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/n">
-      <label>Exponent in load relation [-]</label>
-      <help_brief>Exponent in load relation [-]</help_brief>
+      <label>factor by which Ds90 is multiplied for active layer thickness</label>
+      <help_brief>factor by which Ds90 is multiplied for active layer thickness</help_brief>
       <default>2</default>
       <type>Float</type>
       <range>
@@ -151,8 +151,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/l">
-      <label>l</label>
-      <help_brief>l</help_brief>
+      <label>bed porosity, gravel</label>
+      <help_brief>bed porosity, gravel</help_brief>
       <default>0.4</default>
       <type>Float</type>
       <range>
@@ -161,8 +161,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/u">
-      <label>u</label>
-      <help_brief>u</help_brief>
+      <label>upwinding coefficient for load spatial derivatives in Exner equation (>0.5 suggested)</label>
+      <help_brief>upwinding coefficient for load spatial derivatives in Exner equation (>0.5 suggested)</help_brief>
       <default>0.75</default>
       <type>Float</type>
       <range>
@@ -171,8 +171,8 @@
       </range>
     </entry>
     <entry name="/STM/AgDegNormalGravMixHyd/Input/Var/a">
-      <label>Coefficent in total bed material relation [-]</label>
-      <help_brief>Coefficent in total bed material relation [-]</help_brief>
+      <label>coefficient for material transferred to substrate as bed aggrades</label>
+      <help_brief>coefficient for material transferred to substrate as bed aggrades</help_brief>
       <default>0.5</default>
       <type>Float</type>
       <range>
