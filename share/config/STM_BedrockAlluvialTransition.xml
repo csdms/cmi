@@ -43,7 +43,7 @@
     <entry name="/STM/BedrockAlluvialTransition/Input/Var/Q">
       <label>Upstream bed material sediment feed rate during floods [m^2/s]</label>
       <help_brief>Upstream bed material sediment feed rate during floods [m^2/s]</help_brief>
-      <default>0.006</default>
+      <default>0.0006</default>
       <type>Float</type>
       <range>
         <min>0</min>
