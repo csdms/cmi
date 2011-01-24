@@ -64,6 +64,7 @@ set (CSDMS_SRC ${PRJDIR}/csdms.xml)
 set (CHILD_SRC ${PRJDIR}/child.xml)
 set (STM_SRC ${PRJDIR}/stm.xml)
 set (SEDFLUX_SRC ${PRJDIR}/sedflux.xml)
+set (MARSSIM_SRC ${PRJDIR}/marssim.xml)
 
 configure_file (
   ${CMAKE_CURRENT_SOURCE_DIR}/scripts/bocca-gui-backend.sh.cmake
@@ -94,6 +95,7 @@ add_custom_target (csdms ALL ${BUILD_CMD} ${CSDMS_SRC} VERBATIM)
 add_custom_target (child ${BUILD_CMD} ${CHILD_SRC} VERBATIM)
 add_custom_target (stm ${BUILD_CMD} ${STM_SRC} VERBATIM)
 add_custom_target (sedflux ${BUILD_CMD} ${SEDFLUX_SRC} VERBATIM)
+add_custom_target (marssim ${BUILD_CMD} ${MARSSIM_SRC} VERBATIM)
 
 ##
 # Save used-editable files to source directory for version control.
