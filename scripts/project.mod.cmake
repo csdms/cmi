@@ -22,6 +22,7 @@ module load child
 module load csdms
 module load roms
 module load stm
+module load marssim
 
 if {![info exists env{CMT_PROJECT_TEMPLATE_PATH}]} {
   setenv CMT_PROJECT_TEMPLATE_PATH "@TEMPLATE_DIR@"
