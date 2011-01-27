@@ -109,7 +109,7 @@
     <entry name="/Sedflux/Input/Var/AvulsionHingeRow">
       <label>Row position of river hinge point</label>
       <help_brief>Row position of river hinge point</help_brief>
-      <default>10</default>
+      <default>50</default>
       <type>Int</type>
       <range>
         <min>0</min>
@@ -119,7 +119,7 @@
     <entry name="/Sedflux/Input/Var/AvulsionHingeCol">
       <label>Column position of river hinge point</label>
       <help_brief>Column position of river hinge point</help_brief>
-      <default>30</default>
+      <default>99</default>
       <type>Int</type>
       <range>
         <min>0</min>
