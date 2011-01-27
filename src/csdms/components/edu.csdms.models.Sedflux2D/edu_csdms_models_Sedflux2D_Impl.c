@@ -486,6 +486,7 @@ impl_edu_csdms_models_Sedflux2D_boccaForceUsePortInclude(
   /* in */ edu_csdms_tools_ConfigDialog dummy6,
   /* in */ edu_csdms_openmi_IScalarSet dummy7,
   /* in */ edu_csdms_tools_PrintQueue dummy8,
+  /* in */ edu_csdms_tools_TemplateFiles dummy9,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
@@ -503,6 +504,7 @@ impl_edu_csdms_models_Sedflux2D_boccaForceUsePortInclude(
     (void)dummy6;
     (void)dummy7;
     (void)dummy8;
+    (void)dummy9;
 
   /* Bocca generated code. bocca.protected.end(edu.csdms.models.Sedflux2D.boccaForceUsePortInclude) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.boccaForceUsePortInclude) */
@@ -571,10 +573,9 @@ impl_edu_csdms_models_Sedflux2D_setServices(
 
     {
       edu_csdms_tools_ConfigDialog dialog;
-      char* xml_file = "/data/progs/cca/project/csdms_eric/data/Sedflux2D.xml";
-
+    
       dialog = edu_csdms_tools_ConfigDialog__create (_ex);
-      edu_csdms_tools_ConfigDialog_read (dialog, xml_file, _ex);
+      edu_csdms_tools_ConfigDialog_read (dialog, "Sedflux2D.xml", _ex);
       edu_csdms_tools_ConfigDialog_construct (dialog, ppf, pd->userinput, _ex);
     }
 
@@ -694,7 +695,8 @@ impl_edu_csdms_models_Sedflux2D_go(
                                "/Sedflux/SitePrefix", NULL, _ex);
         gchar *case_prefix = gov_cca_TypeMap_getString (pd->userinput,                               "/Sedflux/CasePrefix", NULL, _ex);
 
-        duration = gov_cca_TypeMap_getDouble (pd->userinput,                               "/Sedflux/RunDuration", 0., _ex);
+        duration = gov_cca_TypeMap_getDouble (pd->userinput,
+                     "/Sedflux/Input/Var/RunDuration", 0., _ex);
 
         sidl_string__array_set1 (properties, 0, site_prefix);
         sidl_string__array_set1 (properties, 1, case_prefix);
@@ -704,7 +706,7 @@ impl_edu_csdms_models_Sedflux2D_go(
       edu_csdms_models_Sedflux2D_initialize (self, properties, _ex);
 
       PRINT (1, "Run sedflux");
-      edu_csdms_models_Sedflux2D_run (self, duration, _ex);
+      edu_csdms_models_Sedflux2D_run (self, -1, _ex);
 
       PRINT (1, "Finalize sedflux");
       edu_csdms_models_Sedflux2D_finalize (self, _ex);
@@ -785,26 +787,96 @@ impl_edu_csdms_models_Sedflux2D_initialize(
     { /*  Initialize sedflux */
       gchar* site_prefix = sidl_string__array_get1 (properties, 0);
       gchar* case_prefix = sidl_string__array_get1 (properties, 1);
-      gchar* init_file = g_strconcat (site_prefix, "_", case_prefix,
-                                      ".kvf", NULL);
-      gchar* prefix = gov_cca_TypeMap_getString (pd->userinput,
-              "/Sedflux/Input/Dir", "/", _ex);      gint argc = 7;
-      gchar* argv[7];
-      int i;
+      gchar* prefix = NULL; // Path to input files.
+      gchar* run_prefix = NULL; // File prefix for input/output files
+      gchar* init_file = NULL; //Initialization file
+      gchar* work_dir = NULL; //Path where run will be executed
 
-      argv[0] = g_strdup ("sedflux");
-      argv[1] = g_strdup ("-2");
-      argv[2] = g_strdup ("--silent");
-      argv[3] = g_strdup ("--no-signals");
-      argv[4] = g_strconcat ("--init-file=", init_file, NULL);
-      argv[5] = g_strconcat ("--input-dir=", prefix, NULL);
-      argv[6] = g_strconcat ("--working-dir=", ".", NULL);
+      prefix = gov_cca_TypeMap_getString (pd->userinput,
+                 "/Sedflux/Input/Dir", "/", _ex);
+      run_prefix = g_strconcat (site_prefix, "_", case_prefix, NULL);
+      init_file = g_strconcat (run_prefix, ".kvf", NULL);
+      work_dir = g_get_current_dir ();
 
-      pd->state = sedflux_initialize (argc, (const gchar**)argv);
-      eh_require (pd->state);
 
-      for (i=0; i<argc; i++)
-        g_free (argv[i]);
+      if (g_ascii_strcasecmp (prefix, "GUI")==0)
+      {
+        edu_csdms_tools_TemplateFiles template;
+        gchar* to_file = NULL;
+
+        template = edu_csdms_tools_TemplateFiles__create (_ex);
+
+        to_file = g_strdup (init_file);
+        edu_csdms_tools_TemplateFiles_add_file (template,
+          "Sedflux2D_init.kvf.in", to_file, _ex);
+        gov_cca_TypeMap_putString (pd->userinput,
+                                  "/Sedflux/Input/Var/InitFile",
+                                  g_strdup (to_file), _ex);
+        g_free (to_file);
+
+        to_file = g_strconcat (run_prefix, "_process.kvf", NULL); 
+        edu_csdms_tools_TemplateFiles_add_file (template,
+          "Sedflux2D_process.kvf.in", to_file, _ex);
+        gov_cca_TypeMap_putString (pd->userinput,
+                                  "/Sedflux/Input/Var/ProcessFile",
+                                  g_strdup (to_file), _ex);
+        g_free (to_file);
+
+        to_file = g_strconcat (run_prefix, "_bathy.csv", NULL);
+        edu_csdms_tools_TemplateFiles_add_file (template,
+          "Sedflux2D_bathy.csv.in", to_file, _ex);
+        gov_cca_TypeMap_putString (pd->userinput,
+                                  "/Sedflux/Input/Var/BathyFile",
+                                  g_strdup (to_file), _ex);
+        g_free (to_file);
+
+        to_file = g_strconcat (run_prefix, "_river.kvf", NULL);
+        edu_csdms_tools_TemplateFiles_add_file (template,
+          "Sedflux2D_river.kvf.in", to_file, _ex);
+        gov_cca_TypeMap_putString (pd->userinput,
+                                  "/Sedflux/Input/Var/RiverFile",
+                                  g_strdup (to_file), _ex);
+        g_free (to_file);
+
+        to_file = g_strconcat (run_prefix, "_sediment.kvf", NULL);
+        edu_csdms_tools_TemplateFiles_add_file (template,
+          "Sedflux2D_sediment.kvf.in", to_file, _ex);
+        gov_cca_TypeMap_putString (pd->userinput,
+                                  "/Sedflux/Input/Var/SedimentFile",
+                                  g_strdup (to_file), _ex);
+        g_free (to_file);
+
+        edu_csdms_tools_TemplateFiles_substitute (template,
+          pd->userinput, "/Sedflux/Input/Var/", work_dir, _ex);
+
+        g_free (prefix);
+        prefix = g_strdup (work_dir);
+      }
+
+      { /* Initialize the model */
+        const gint argc = 7;
+        gchar* argv[7];
+        int i;
+
+        argv[0] = g_strdup ("sedflux");
+        argv[1] = g_strdup ("-2");
+        argv[2] = g_strdup ("--silent");
+        argv[3] = g_strdup ("--no-signals");
+        argv[4] = g_strconcat ("--init-file=", init_file, NULL);
+        argv[5] = g_strconcat ("--input-dir=", prefix, NULL);
+        argv[6] = g_strconcat ("--working-dir=", work_dir, NULL);
+
+        pd->state = sedflux_initialize (argc, (const gchar**)argv);
+        eh_require (pd->state);
+
+        for (i=0; i<argc; i++)
+          g_free (argv[i]);
+      }
+
+      g_free (work_dir);
+      g_free (init_file);
+      g_free (run_prefix);
+      g_free (prefix);
     }
 
     PRINT (2, "Set up PrintQueue");
@@ -864,10 +936,13 @@ impl_edu_csdms_models_Sedflux2D_run(
     if (pd && pd->state)
     {
       const double horizon = sedflux_get_end_time (pd->state);
-      const double current = sedflux_get_current_time (pd->state);
+      double current = sedflux_get_current_time (pd->state);
       const double start = sedflux_get_start_time (pd->state);
       double print_time = edu_csdms_tools_PrintQueue_next_print_time (
                             pd->print_queue, _ex);
+
+      if (time<0)
+        time = horizon;
 
       fprintf (stderr, "DEBUG: initial print time is %f\n", print_time);
       while (print_time<time)
@@ -880,6 +955,8 @@ impl_edu_csdms_models_Sedflux2D_run(
         fprintf (stderr, "DEBUG: new print time is %f\n", print_time);
       }
 
+      current = sedflux_get_current_time (pd->state);
+
       fprintf (stderr, "DEBUG: current time is %f\n", current);
       fprintf (stderr, "DEBUG: horizon time is %f\n", horizon);
       fprintf (stderr, "DEBUG: time is %f\n", time);
@@ -890,27 +967,40 @@ impl_edu_csdms_models_Sedflux2D_run(
       }
       else if (time>=current)
       {
+        double t;
+        //const double dt = 1.;
+        const double stop_time = time;
+        const double dt = stop_time - current;
+
         fprintf (stderr, "DEBUG: run from %f to %f\n", current, time);
         fflush (stderr);
 
-        //edu_csdms_tools_irfports_run_ports (pd->irf_ports, current, _ex);
-        edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, current, _ex);
-
-        if (pd->discharge_port_is_on)
-        { /*  Run and map WaterDischarge values */
-          edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-            "WaterDischarge", "Water_Discharge", "discharge", _ex);
-        }
-
+        while (current<stop_time)
         {
-          double now;
-          sedflux_run_until (pd->state, time);
-          now = sedflux_get_current_time (pd->state);
-          fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, time);
-        }
+          t = current + dt;
+          if (t>stop_time)
+            t = stop_time;
 
-        PRINT (2, "Print everything in the queue");
-        edu_csdms_tools_PrintQueue_print_all (pd->print_queue, time, _ex);
+          edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, current, _ex);
+
+          if (pd->discharge_port_is_on)
+          { /*  Run and map WaterDischarge values */
+            edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+              "WaterDischarge", "Water_Discharge", "discharge", _ex);
+          }
+
+          {
+            double now;
+            sedflux_run_until (pd->state, t);
+            now = sedflux_get_current_time (pd->state);
+            fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, t);
+          }
+
+          PRINT (2, "Print everything in the queue");
+          edu_csdms_tools_PrintQueue_print_all (pd->print_queue, t, _ex);
+
+          current = sedflux_get_current_time (pd->state);
+        }
       }
       else
       {

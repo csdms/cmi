@@ -1014,8 +1014,6 @@ impl_edu_csdms_models_Sedflux3D_run(
 
           if (pd->discharge_port_is_on)
           { /*  Run and map WaterDischarge values */
-            //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-            //  "WaterDischarge", "Water_Discharge", "discharge", _ex);
             edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
               "WaterDischarge", "BED_LOAD_FLUX", "sediment", _ex);
           }

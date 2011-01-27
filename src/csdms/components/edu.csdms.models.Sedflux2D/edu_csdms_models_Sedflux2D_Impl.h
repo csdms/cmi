@@ -45,6 +45,9 @@
 #ifndef included_edu_csdms_tools_PrintQueue_h
 #include "edu_csdms_tools_PrintQueue.h"
 #endif
+#ifndef included_edu_csdms_tools_TemplateFiles_h
+#include "edu_csdms_tools_TemplateFiles.h"
+#endif
 #ifndef included_edu_csdms_tools_Verbose_h
 #include "edu_csdms_tools_Verbose.h"
 #endif
@@ -167,29 +170,14 @@ impl_edu_csdms_models_Sedflux2D__dtor(
  */
 
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_ConfigDialog(const 
+extern struct edu_csdms_tools_TemplateFiles__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_TemplateFiles(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct gov_cca_Services__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_Services(const char* url, 
-  sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_PrintQueue__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_PrintQueue(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_openmi_IScalarSet__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_IScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_Verbose__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_Verbose(const char* 
-  url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_ports_IRFPort__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_ports_IRFPort(const char* 
-  url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ScalarSet__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ValueSet__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ValueSet(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_sidl_BaseInterface(const char* url, 
@@ -202,6 +190,24 @@ extern struct gov_cca_ports_ParameterPortFactory__object*
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_openmi_IValueSet__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_IValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_ConfigDialog__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_ConfigDialog(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct gov_cca_Services__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_Services(const char* url, 
+  sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_ports_IRFPort__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_ports_IRFPort(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_Verbose__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_Verbose(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ValueSet__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ScalarSet__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ScalarSet(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 #endif /*WITH_RMI*/
 extern
@@ -240,6 +246,7 @@ impl_edu_csdms_models_Sedflux2D_boccaForceUsePortInclude(
   /* in */ edu_csdms_tools_ConfigDialog dummy6,
   /* in */ edu_csdms_openmi_IScalarSet dummy7,
   /* in */ edu_csdms_tools_PrintQueue dummy8,
+  /* in */ edu_csdms_tools_TemplateFiles dummy9,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
@@ -382,29 +389,14 @@ impl_edu_csdms_models_Sedflux2D_set_value_set(
   /* out */ sidl_BaseInterface *_ex);
 
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_ConfigDialog(const 
+extern struct edu_csdms_tools_TemplateFiles__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_TemplateFiles(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct gov_cca_Services__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_Services(const char* url, 
-  sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_PrintQueue__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_PrintQueue(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_openmi_IScalarSet__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_IScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_Verbose__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_Verbose(const char* 
-  url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_ports_IRFPort__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_ports_IRFPort(const char* 
-  url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ScalarSet__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ValueSet__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ValueSet(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_sidl_BaseInterface(const char* url, 
@@ -417,6 +409,24 @@ extern struct gov_cca_ports_ParameterPortFactory__object*
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_openmi_IValueSet__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_IValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_ConfigDialog__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_ConfigDialog(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct gov_cca_Services__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_Services(const char* url, 
+  sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_ports_IRFPort__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_ports_IRFPort(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_Verbose__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_Verbose(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ValueSet__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ScalarSet__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_openmi_ScalarSet(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 #endif /*WITH_RMI*/
 

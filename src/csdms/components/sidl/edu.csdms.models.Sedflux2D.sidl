@@ -56,11 +56,10 @@ package edu version 0.0 {
                  */
                 void checkException(in sidl.BaseInterface excpt, in string msg, in bool fatal);
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.ports.IRFPort dummy1, in edu.csdms.tools.IRFPortQueue dummy2, in edu.csdms.tools.Verbose dummy3, in edu.csdms.openmi.ValueSet dummy4, in edu.csdms.openmi.ScalarSet dummy5, in edu.csdms.tools.ConfigDialog dummy6, in edu.csdms.openmi.IScalarSet dummy7, in edu.csdms.tools.PrintQueue dummy8);
+                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.ports.IRFPort dummy1, in edu.csdms.tools.IRFPortQueue dummy2, in edu.csdms.tools.Verbose dummy3, in edu.csdms.openmi.ValueSet dummy4, in edu.csdms.openmi.ScalarSet dummy5, in edu.csdms.tools.ConfigDialog dummy6, in edu.csdms.openmi.IScalarSet dummy7, in edu.csdms.tools.PrintQueue dummy8, in edu.csdms.tools.TemplateFiles dummy9);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.models.Sedflux2D:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }
         }
     }
 }
-
