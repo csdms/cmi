@@ -24,7 +24,7 @@ external sediment source file:          none
 
 [river]
 active:                                 yes
-logging:                                yes
+logging:                                no
 repeat interval:                        always
 river values:                           season
 river file:                             ${RiverFile}
