@@ -37,6 +37,7 @@
     <requires>tools.ConfigDialog</requires>
     <requires>tools.IRFPortQueue</requires>
     <requires>tools.Verbose</requires>
+    <requires>tools.TemplateFiles</requires>
     <extras>make.vars.user</extras>
   </component>
 </project>
