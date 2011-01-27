@@ -2,8 +2,8 @@
   <tab name="Input Files and Directories">
     <entry name="/Sedflux/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {bb}</help_brief>
-      <default>/data/sims/sedflux/Adriatic</default>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/sedflux/Adriatic}</help_brief>
+      <default>GUI</default>
       <type>String</type>
     </entry>
     <entry name="/Sedflux/SitePrefix">
@@ -19,8 +19,16 @@
       <type>String</type>
     </entry>
   </tab>
+  <tab name="Ports">
+    <entry name="/Sedflux/Port/Discharge">
+      <label>Water discharge port</label>
+      <help_brief>Use the WaterDischarge provides port. {dl;ON;OFF}</help_brief>
+      <default>ON</default>
+      <type>String</type>
+    </entry>
+  </tab>
   <tab name="Run Parameters">
-    <entry name="/Sedflux/RunDuration">
+    <entry name="/Sedflux/Input/Var/RunDuration">
       <label>Run duraction (years)</label>
       <help_brief>Simulation run time in years</help_brief>
       <default>500</default>
@@ -30,13 +38,67 @@
         <max>100000</max>
       </range>
     </entry>
+    <entry name="/Sedflux/Input/Var/XResolution">
+      <label>Width of basin (m)</label>
+      <help_brief>Width of basin (m)</help_brief>
+      <default>500000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/YResolution">
+      <label>Grid resolution in y-direction (m)</label>
+      <help_brief>Grid resolution in y-direction (m)</help_brief>
+      <default>50</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/ZResolution">
+      <label>Grid resolution in z-direction (m)</label>
+      <help_brief>grid resolution in z-direction (m)</help_brief>
+      <default>.1</default>
+      <type>Float</type>
+      <range>
+        <min>0.01</min>
+        <max>10</max>
+      </range>
+    </entry>
   </tab>
-  <tab name="Ports">
-    <entry name="/Sedflux/Port/Discharge">
-      <label>Water discharge port</label>
-      <help_brief>Use the WaterDischarge provides port. {dl;ON;OFF}</help_brief>
-      <default>ON</default>
-      <type>String</type>
+  <tab name="Processes">
+    <entry name="/Sedflux/Input/Var/SuspendedLoadConc">
+      <label>Suspended load concentration (-)</label>
+      <help_brief>Per-grain suspended load concentration (-)</help_brief>
+      <default>.25</default>
+      <type>Float</type>
+      <range>
+        <min>0.01</min>
+        <max>5</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/BedLoadDumpDistance">
+      <label>Distance to dump bedload (m)</label>
+      <help_brief>Distance to dump bedload (m)</help_brief>
+      <default>5000</default>
+      <type>Float</type>
+      <range>
+        <min>100</min>
+        <max>50000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux/Input/Var/BedLoadFlux">
+      <label>Bed load flux (kg/s)</label>
+      <help_brief>Bed load flux at river mouth (kg/s)</help_brief>
+      <default>50.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>5000</max>
+      </range>
     </entry>
   </tab>
   <tab name="Output Grids">
