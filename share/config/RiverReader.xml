@@ -1,0 +1,10 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/RiverReader/Input/File">
+      <label>Input File</label>
+      <help_brief>Path to input file{bb;/data/sims/river_reader}</help_brief>
+      <default>/data/sims/river_reader/RiverData.csv</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>
