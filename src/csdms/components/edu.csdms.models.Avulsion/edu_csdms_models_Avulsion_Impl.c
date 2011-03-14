@@ -786,7 +786,8 @@ impl_edu_csdms_models_Avulsion_initialize(
       int hinge[2];
       double limit[2];
       double variance;
-      double exponent;
+      double exponent_n;
+      double exponent_m;
       int n_rivers;
 
       pd->state = avulsion_init (NULL);
@@ -809,8 +810,10 @@ impl_edu_csdms_models_Avulsion_initialize(
                    "/Avulsion/Input/Var/AngleMax", 0, _ex);
       variance = gov_cca_TypeMap_getDouble (pd->userinput,
                    "/Avulsion/Input/Var/AngleVariance", 0, _ex);
-      exponent = gov_cca_TypeMap_getDouble (pd->userinput,
-                   "/Avulsion/Input/Var/BedLoadExponent", 1., _ex);
+      exponent_n = gov_cca_TypeMap_getDouble (pd->userinput,
+                     "/Avulsion/Input/Var/BedLoadExponent", 1., _ex);
+      exponent_m = gov_cca_TypeMap_getDouble (pd->userinput,
+                     "/Avulsion/Input/Var/DischargeExponent", 1., _ex);
       n_rivers = gov_cca_TypeMap_getInt (pd->userinput,
                    "/Avulsion/Input/Var/NumberOfRivers", 1, _ex);
 
@@ -826,7 +829,8 @@ impl_edu_csdms_models_Avulsion_initialize(
       avulsion_set_variance (pd->state, variance);
       PRINT (2, "Set angle hinge");
       avulsion_set_river_hinge (pd->state, hinge);
-      avulsion_set_bed_load_exponent (pd->state, exponent);
+      avulsion_set_bed_load_exponent (pd->state, exponent_n);
+      avulsion_set_discharge_exponent (pd->state, exponent_m);
       avulsion_set_total_river_mouths (pd->state, n_rivers);
 //      avulsion_set_hydro (pd->state, hydro);
     }
@@ -911,24 +915,24 @@ impl_edu_csdms_models_Avulsion_run(
       double print_time = edu_csdms_tools_PrintQueue_next_print_time (
                             pd->print_queue, _ex);
 
-fprintf (stderr, "#Avulsion: print time is %f\n", print_time);
-fprintf (stderr, "#Avulsion: time is %f\n", time);
+//fprintf (stderr, "#Avulsion: print time is %f\n", print_time);
+//fprintf (stderr, "#Avulsion: time is %f\n", time);
 
       while (print_time<time)
       {
-fprintf (stderr, "#Avulsion: Running until next print time %f\n", print_time);
+//fprintf (stderr, "#Avulsion: Running until next print time %f\n", print_time);
         impl_edu_csdms_models_Avulsion_run (self, print_time, _ex);
         print_time = edu_csdms_tools_PrintQueue_next_print_time (
                        pd->print_queue, _ex);
-fprintf (stderr, "#Avulsion: Next print time %f\n", print_time);
+//fprintf (stderr, "#Avulsion: Next print time %f\n", print_time);
       }
 
       current = avulsion_get_current_time (pd->state);
 
-      fprintf (stderr, "Avulsion: current time is %f\n", current);
-      fprintf (stderr, "Avulsion: horizon time is %f\n", horizon);
-      fprintf (stderr, "Avulsion: time is %f\n", time);
-      fflush (stderr);
+      //fprintf (stderr, "Avulsion: current time is %f\n", current);
+      //fprintf (stderr, "Avulsion: horizon time is %f\n", horizon);
+      //fprintf (stderr, "Avulsion: time is %f\n", time);
+      //fflush (stderr);
 
       if (time>horizon)
       {
@@ -949,13 +953,17 @@ fprintf (stderr, "#Avulsion: Next print time %f\n", print_time);
           if (t>stop_time)
             t = stop_time;
 */
-      fprintf (stderr, "Avulsion: run ports until %f\n", current);
+      //fprintf (stderr, "Avulsion: run ports until %f\n", current);
           edu_csdms_tools_IRFPortQueue_run_ports (pd->irf_ports, current, _ex);
 
-      fprintf (stderr, "Avulsion: map values\n");
+      //fprintf (stderr, "Avulsion: map values\n");
           edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
-            "Discharge", "mean_suspended_load_flux_from_river",
-            "mean_suspended_load_flux_from_river", _ex);
+            "Discharge", "mean_bed_load_flux_from_river",
+            "mean_bed_load_flux_from_river", _ex);
+
+          edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+            "Discharge", "mean_water_discharge_from_river",
+            "mean_water_discharge_from_river", _ex);
 
           //edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
           //  "Elevation", "Elevation", "Elevation", _ex);
@@ -978,7 +986,7 @@ fprintf (stderr, "#Avulsion: Next print time %f\n", print_time);
             double now;
             avulsion_run_until (pd->state, time);
             now = avulsion_get_current_time (pd->state);
-            fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, time);
+            //fprintf (stderr, "DEBUG: Does %f == %f?  It should.\n", now, time);
           }
 
           PRINT (2, "Print everything in the queue");
@@ -1398,10 +1406,16 @@ eh_watch_int (upper[1]);
           data[500*28+250] = 250;
         }
 */
-        data += lower[0];
+        //data += lower[0];
         if (data)
         {
+          data += lower[0];
           vals = sidl_double__array_borrow (data, 2, lower, upper, stride);
+
+          generic = (struct sidl__array*)sidl_double__array_smartCopy (vals);
+          sidl_double__array_deleteRef (vals);
+
+          g_free (data-lower[0]);
         }
 /*
 eh_watch_ptr (vals);
@@ -1409,8 +1423,10 @@ eh_watch_int (sidl_double__array_dimen (vals));
 eh_watch_int (sidl_double__array_length (vals, 0));
 */
       }
+      else
+        fprintf (stderr, "#Avulsion: Unable to get raster data.\n");
  
-      generic = (struct sidl__array*)vals;
+      //generic = (struct sidl__array*)vals;
     }
 
     return generic;
@@ -1652,6 +1668,17 @@ impl_edu_csdms_models_Avulsion_set_value_set(
 
       //fprintf (stderr, "Avulsion: value is %f\n", val);
       avulsion_set_sed_flux (pd->state, val);
+    }
+    else if (g_ascii_strcasecmp (val_string,
+                                 "mean_water_discharge_from_river")==0)
+    {
+      double val;
+      PRINT (2, "Found water_discharge_from_river");
+      PRINT (2, "Get the first scalar");
+      val = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, 0, _ex);
+
+      //fprintf (stderr, "Avulsion: value is %f\n", val);
+      avulsion_set_discharge (pd->state, val);
     }
     else if (g_ascii_strcasecmp (val_string, "Elevation")==0)
     {
