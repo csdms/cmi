@@ -67,6 +67,7 @@ set (SEDFLUX_SRC ${PRJDIR}/sedflux.xml)
 set (MARSSIM_SRC ${PRJDIR}/marssim.xml)
 set (ROMS_SRC ${PRJDIR}/roms.xml)
 set (RIVER_READER_SRC ${PRJDIR}/river_reader.xml)
+set (CEM_SRC ${PRJDIR}/cem_avulsion.xml)
 
 configure_file (
   ${CMAKE_CURRENT_SOURCE_DIR}/scripts/bocca-gui-backend.sh.cmake
@@ -100,6 +101,7 @@ add_custom_target (sedflux ${BUILD_CMD} ${SEDFLUX_SRC} VERBATIM)
 add_custom_target (marssim ${BUILD_CMD} ${MARSSIM_SRC} VERBATIM)
 add_custom_target (roms ${BUILD_CMD} ${ROMS_SRC} VERBATIM)
 add_custom_target (river_reader ${BUILD_CMD} ${RIVER_READER_SRC} VERBATIM)
+add_custom_target (cem ${BUILD_CMD} ${CEM_SRC} VERBATIM)
 
 ##
 # Save used-editable files to source directory for version control.
