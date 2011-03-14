@@ -20,6 +20,18 @@
     <import-impl/>
     <extras>make.vars.user</extras>
   </component>
+  <component name="models.RiverReader" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>IRFPort@River</provides>
+    <requires>ScalarSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.Verbose</requires>
+    <requires>tools.TemplateFiles</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
   <component name="models.CEM" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <uses>IRFPort@River</uses>
@@ -78,5 +90,15 @@
     <import-impl/>
     <extras>make.vars.user</extras>
   </component>
-
+  <component name="models.ConstantRiver" language="c">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>IRFPort@Discharge</provides>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.Verbose</requires>
+    <requires>tools.ConfigDialog</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
 </project>
