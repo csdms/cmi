@@ -1332,6 +1332,13 @@ impl_edu_csdms_models_CEM_run(
             "Waves", "sea_surface_wave_from_direction",
             "sea_surface_wave_from_direction", _ex);
 
+          edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+            "Waves", "sea_surface_wave_height",
+            "sea_surface_wave_height", _ex);
+          edu_csdms_tools_IRFPortQueue_map_value (pd->irf_ports,
+            "Waves", "sea_surface_wave_period",
+            "sea_surface_wave_period", _ex);
+
           //fprintf (stderr, "CEM: Run CEM until %f\n", t); fflush (stderr);
           {
             double now;
@@ -1894,16 +1901,24 @@ impl_edu_csdms_models_CEM_get_raster_data(
 //fprintf (stderr, "CEM: lower = %d, %d\n", lower[0], lower[1]);
 //fprintf (stderr, "CEM: upper = %d, %d\n", upper[0], upper[1]);
 //fprintf (stderr, "CEM: stride = %d, %d\n", stride[0], stride[1]);
-        data += lower[0];
+        //data += lower[0];
         //upper[0] += lower[0];
         if (data)
         {
+          data += lower[0];
           vals = sidl_double__array_borrow (data, 2, lower, upper, stride);
+
+          generic = (struct sidl__array*)sidl_double__array_smartCopy (vals);
+          sidl_double__array_deleteRef (vals);
+
+          free (data-lower[0]);
         }
+        else
+          fprintf (stderr, "#CEM: Unable to get raster data.\n");
 //fprintf (stderr, "DONE\n");
       }
 
-      generic = (struct sidl__array*)vals;
+      //generic = (struct sidl__array*)vals;
     }
 
     return generic;
@@ -2209,8 +2224,28 @@ impl_edu_csdms_models_CEM_set_value_set(
       PRINT (2, "Found sea_surface_wave_from_direction");
       PRINT (2, "Get the first scalar");
       val = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, 0, _ex);
-
+fprintf (stderr, "direction: %f\n", val);
       deltas_set_wave_angle (pd->state, val);
+    }
+    else if (g_ascii_strcasecmp (val_string,
+                                 "sea_surface_wave_height")==0)
+    {
+      double val;
+      PRINT (2, "Found sea_surface_wave_height");
+      PRINT (2, "Get the first scalar");
+      val = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, 0, _ex);
+
+      deltas_set_wave_height (pd->state, val);
+    }
+    else if (g_ascii_strcasecmp (val_string,
+                                 "sea_surface_wave_period")==0)
+    {
+      double val;
+      PRINT (2, "Found sea_surface_wave_period");
+      PRINT (2, "Get the first scalar");
+      val = edu_csdms_openmi_ScalarSet_getScalar (scalarSet, 0, _ex);
+
+      deltas_set_wave_period (pd->state, val);
     }
     else if (g_ascii_strcasecmp (val_string,
                                  "SedimentFlux")==0)
