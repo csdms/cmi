@@ -21,7 +21,7 @@
       <type>Float</type>
       <range>
         <min>0</min>
-        <max>100000</max>
+        <max>1000000</max>
       </range>
     </entry>
     <entry name="/CEM/ShorefaceSlope">
