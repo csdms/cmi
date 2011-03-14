@@ -67,10 +67,20 @@
     <entry name="/Avulsion/Input/Var/BedLoadExponent">
       <label>Bed load exponent</label>
       <help_brief>Exponent used in dividing sediment among branches</help_brief>
+      <default>1.67</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Avulsion/Input/Var/DischargeExponent">
+      <label>Discharge exponent</label>
+      <help_brief>Exponent used in dividing water among branches</help_brief>
       <default>1</default>
       <type>Float</type>
       <range>
-        <min>.1</min>
+        <min>0</min>
         <max>10</max>
       </range>
     </entry>
@@ -136,6 +146,28 @@
         <max>999</max>
       </range>
     </entry>
+  </tab>
+  <tab name="Output Values">
+    <entry name="/Avulsion/Output/Scalar/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Avulsion/Output/Scalar/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry class="OutputFile" 
+      name="/Avulsion/Output/Scalar/Var/mean_bed_load_flux_from_river"/>
+    <entry class="OutputFile"
+      name="/Avulsion/Output/Scalar/Var/mean_water_discharge_from_river"/>
   </tab>
   <tab name="Output Grids">
     <entry name="/Avulsion/Output/Grid/Dir">
