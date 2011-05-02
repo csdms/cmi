@@ -6,10 +6,10 @@
 # bocca config CLASSNAME --var=VARUSER --value=VALUE
 # --------------------------------------------------------------
 # Include path directives, including paths to Fortran modules
-INCLUDES = -I/data/progs/cem/devel/include -I/data/progs/glib/2.25/include/glib-2.0 -I/data/progs/glib/2.25/lib/glib-2.0/include
+INCLUDES = -I$CEM_ROOT/include -I/data/progs/glib/2.25/include/glib-2.0 -I/data/progs/glib/2.25/lib/glib-2.0/include
 
 # Library paths and names, binaries
-LIBS = -L/data/progs/cem/devel/lib -lwaves -L/data/progs/glib/2.25/lib -lglib-2.0
+LIBS = -L$CEM_ROOT/lib -lwaves -L/data/progs/glib/2.25/lib -lglib-2.0
 
 # java 
 CLASSPATH_USER=
