@@ -67,7 +67,7 @@ set (SEDFLUX_SRC ${PRJDIR}/sedflux.xml)
 set (MARSSIM_SRC ${PRJDIR}/marssim.xml)
 set (ROMS_SRC ${PRJDIR}/roms.xml)
 set (RIVER_READER_SRC ${PRJDIR}/river_reader.xml)
-set (CEM_SRC ${PRJDIR}/cem_avulsion.xml)
+set (CEM_SRC ${PRJDIR}/cem.xml)
 
 configure_file (
   ${CMAKE_CURRENT_SOURCE_DIR}/scripts/bocca-gui-backend.sh.cmake
