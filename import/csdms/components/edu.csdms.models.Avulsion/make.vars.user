@@ -6,10 +6,10 @@
 # bocca config CLASSNAME --var=VARUSER --value=VALUE
 # --------------------------------------------------------------
 # Include path directives, including paths to Fortran modules
-INCLUDES = -I$SEDFLUX_ROOT/include/ew-2.0 -I/data/progs/glib/2.25/include/glib-2.0 -I/data/progs/glib/2.25/lib/glib-2.0/include
+INCLUDES = -I$(SEDFLUX_ROOT)/include/ew-2.0 -I$(GLIB2_ROOT)/include/glib-2.0 -I$(GLIB2_ROOT)/lib/glib-2.0/include
 
 # Library paths and names, binaries
-LIBS = -L/data/progs/glib/2.25/lib -L$SEDFLUX_ROOT/lib -lglib-2.0 -lutils -lsedflux -lsedflux-2.0 -lsedflux -lsedflux-2.0 -lutils -lm
+LIBS = -L$(GLIB2_ROOT)/lib -L$(SEDFLUX_ROOT)/lib -lglib-2.0 -lutils -lsedflux -lsedflux-2.0 -lsedflux -lsedflux-2.0 -lutils -lm
 
 # java 
 CLASSPATH_USER=

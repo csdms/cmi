@@ -7,11 +7,11 @@
 # --------------------------------------------------------------
 # Include path directives, including paths to Fortran modules
 #INCLUDES = -I/data/progs/hydrotrend/0.1/include
-INCLUDES = -I$HYDROTREND_ROOT/include -I/data/progs/glib/2.25/include/glib-2.0 -I/data/progs/glib/2.25/lib/glib-2.0/include
+INCLUDES = -I$(HYDROTREND_ROOT)/include -I$(GLIB2_ROOT)/include/glib-2.0 -I$(GLIB2_ROOT)/lib/glib-2.0/include
 
 # Library paths and names, binaries
 #LIBS = -L/data/progs/hydrotrend/0.1/lib -lhydrotrend
-LIBS = -L$HYDROTREND_ROOT/lib -lhydrotrend -L/data/progs/glib/2.25/lib -lglib-2.0
+LIBS = -L$(HYDROTREND_ROOT)/lib -lhydrotrend -L$(GLIB2_ROOT)/lib -lglib-2.0
 
 # java 
 CLASSPATH_USER=
