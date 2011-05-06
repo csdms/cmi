@@ -6,12 +6,12 @@ endif (NOT DEFINED MODULE_NAME)
 
 ##
 # Set locations of input and output
-set (SRCDIR ${CMAKE_SOURCE_DIR}/src/csdms)
-set (PRJDIR ${CMAKE_SOURCE_DIR}/projects)
+set (SRCDIR ${CMAKE_SOURCE_DIR}/import/csdms)
+set (PRJDIR ${CMAKE_SOURCE_DIR}/gen/xml)
 set (DESTDIR ${CMAKE_BINARY_DIR})
 set (PROJECT_TOP_DIR ${CMAKE_BINARY_DIR}/csdms)
-set (CONFIG_DIR ${CMAKE_SOURCE_DIR}/share/config)
-set (TEMPLATE_DIR ${CMAKE_SOURCE_DIR}/share/templates)
+set (CONFIG_DIR ${CMAKE_SOURCE_DIR}/share/cmt/gui)
+set (TEMPLATE_DIR ${CMAKE_SOURCE_DIR}/share/cmt/in)
 
 ##
 # Look for bocca home
@@ -68,17 +68,18 @@ set (MARSSIM_SRC ${PRJDIR}/marssim.xml)
 set (ROMS_SRC ${PRJDIR}/roms.xml)
 set (RIVER_READER_SRC ${PRJDIR}/river_reader.xml)
 set (CEM_SRC ${PRJDIR}/cem.xml)
+set (CHILD_SEDFLUX_SRC ${PRJDIR}/child_sedflux.xml)
 
 configure_file (
-  ${CMAKE_CURRENT_SOURCE_DIR}/scripts/bocca-gui-backend.sh.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/gen/cmake/bocca-gui-backend.sh.cmake
   ${CMAKE_BINARY_DIR}/bocca-gui-backend.sh
   @ONLY)
 configure_file (
-  ${CMAKE_CURRENT_SOURCE_DIR}/scripts/set-env.sh.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/gen/cmake/set-env.sh.cmake
   ${CMAKE_BINARY_DIR}/set-env.sh
   @ONLY)
 configure_file (
-  ${CMAKE_CURRENT_SOURCE_DIR}/scripts/project.mod.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/gen/cmake/project.mod.cmake
   ${CMAKE_BINARY_DIR}/${MODULE_NAME}
   @ONLY)
 
@@ -102,6 +103,7 @@ add_custom_target (marssim ${BUILD_CMD} ${MARSSIM_SRC} VERBATIM)
 add_custom_target (roms ${BUILD_CMD} ${ROMS_SRC} VERBATIM)
 add_custom_target (river_reader ${BUILD_CMD} ${RIVER_READER_SRC} VERBATIM)
 add_custom_target (cem ${BUILD_CMD} ${CEM_SRC} VERBATIM)
+add_custom_target (child_sedflux ${BUILD_CMD} ${CHILD_SEDFLUX_SRC} VERBATIM)
 
 ##
 # Save used-editable files to source directory for version control.
