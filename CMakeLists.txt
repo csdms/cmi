@@ -59,7 +59,10 @@ else (BOCCA_SAVE)
 endif (BOCCA_SAVE)
 
 ##
-# Set project files for the targets
+# Set full path names for each project XML.
+#
+# If you want to create a new project, add your XML file here.
+#
 set (CSDMS_SRC ${PRJDIR}/csdms.xml)
 set (CHILD_SRC ${PRJDIR}/child.xml)
 set (STM_SRC ${PRJDIR}/stm.xml)
@@ -96,6 +99,11 @@ set (SAVE_CMD ${BOCCA_SAVE} ${DESTDIR}/csdms ${SRCDIR})
 
 ##
 # Set build targets.
+#
+# If you are creating a new project, you should add an entry here so that
+# you have a target for you new project. That is, so you can type
+# "make <your_project_name>" to create your bocca project.
+#
 add_custom_target (csdms ALL ${BUILD_CMD} ${CSDMS_SRC} VERBATIM)
 add_custom_target (child ${BUILD_CMD} ${CHILD_SRC} VERBATIM)
 add_custom_target (stm ${BUILD_CMD} ${STM_SRC} VERBATIM)
