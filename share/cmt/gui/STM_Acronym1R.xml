@@ -1,0 +1,88 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/Acronym1R/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/Acronym1R}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/Acronym1R/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>Acronym1R</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/Acronym1R/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/Acronym1R/Input/Var/R">
+      <label>Sediment Specific Gravity, R+1</label>
+      <help_brief>Sediment Specific Gravity, R+1</help_brief>
+      <default>2.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/Acronym1R/Input/Var/Q">
+      <label>Water Discharge [m^3/s]</label>
+      <help_brief>Water Discharge [m^3/s]</help_brief>
+      <default>40</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/Acronym1R/Input/Var/S">
+      <label>Bed Slope</label>
+      <help_brief>Bed Slope</help_brief>
+      <default>0.005</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/Acronym1R/Input/Var/B">
+      <label>Channel Width [m]</label>
+      <help_brief>Channel Width [m]</help_brief>
+      <default>12</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/Acronym1R/Input/Var/n">
+      <label>Roughness Factor</label>
+      <help_brief>Roughness Factor</help_brief>
+      <default>2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/Acronym1R/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>Acronym1R</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/Acronym1R/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

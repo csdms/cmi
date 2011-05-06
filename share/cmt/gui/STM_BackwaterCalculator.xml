@@ -1,0 +1,160 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/BackwaterCalculator/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/BackwaterCalculator}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>BackwaterCalculator</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Options">
+    <entry name="/STM/1DDeltaNorm/Input/Var/ChezyOrManning">
+      <label>Chezy Or Manning, Chezy-1 or Manning-2</label>
+      <help_brief>Chezy Or Manning, Chezy-1 or Manning-2</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/BackwaterCalculator/Input/Var/D">
+      <label>D90 of the surface [mm]</label>
+      <help_brief>D90 of the surface [mm]</help_brief>
+      <default>0.91</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/R">
+      <label>hydraulic radius [m]</label>
+      <help_brief>hydraulic radius [m]</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/C">
+      <label>Chezy coefficient</label>
+      <help_brief>Chezy coefficient</help_brief>
+      <default>22</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/H">
+      <label>initial depth [m]</label>
+      <help_brief>initial depth [m]</help_brief>
+      <default>30</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/M">
+      <label>Mean diameter [mm]</label>
+      <help_brief>Mean diameter [mm]</help_brief>
+      <default>.27</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/a">
+      <label>alpha(r)</label>
+      <help_brief>alpha(r)</help_brief>
+      <default>8.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/n">
+      <label>roughness coefficient</label>
+      <help_brief>roughness coefficient</help_brief>
+      <default>2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/x">
+      <label>starting point [m]</label>
+      <help_brief>starting point [m]</help_brief>
+      <default>123000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/S">
+      <label>Slope [m/m]</label>
+      <help_brief>Slope [m/m]</help_brief>
+      <default>0.00025</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/q">
+      <label>water discharge/width [m^2/s]</label>
+      <help_brief>water discharge/width [m^2/s]</help_brief>
+      <default>5.7</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/Input/Var/d">
+      <label>step size [m]</label>
+      <help_brief>step size [m]</help_brief>
+      <default>1000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/BackwaterCalculator/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>BackwaterCalculator</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BackwaterCalculator/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

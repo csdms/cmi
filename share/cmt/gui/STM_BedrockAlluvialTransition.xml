@@ -1,0 +1,178 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/BedrockAlluvialTransition/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/BedrockAlluvialTransition}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>BedrockAlluvialTransition</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/q">
+      <label>Flood discharge [m^2/s]</label>
+      <help_brief>Flood discharge [m^2/s]</help_brief>
+      <default>6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/I">
+      <label>Intermittency</label>
+      <help_brief>Intermittency</help_brief>
+      <default>.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/Q">
+      <label>Upstream bed material sediment feed rate during floods [m^2/s]</label>
+      <help_brief>Upstream bed material sediment feed rate during floods [m^2/s]</help_brief>
+      <default>0.0006</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/D">
+      <label>Grain size of bed material [mm]</label>
+      <help_brief>Grain size of bed material [mm]</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/C">
+      <label>Chezy resistance coefficient [-]</label>
+      <help_brief>Chezy resistance coefficient [-]</help_brief>
+      <default>15</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/b">
+      <label>Subaqueous basement slope [-]</label>
+      <help_brief>Subaqueous basement slope [-]</help_brief>
+      <default>0.00035</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/S">
+      <label>Slope of foreset face [-]</label>
+      <help_brief>Slope of foreset face [-]</help_brief>
+      <default>0.00009</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/L">
+      <label>Bed porosity [-]</label>
+      <help_brief>Bed porosity [-]</help_brief>
+      <default>0.4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/d">
+      <label>Position of the downstream end of the reach [m]</label>
+      <help_brief>Position of the downstream end of the reach [m]</help_brief>
+      <default>50000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/M">
+      <label>Number of spatial steps</label>
+      <help_brief>Number of spatial steps</help_brief>
+      <default>20</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/t">
+      <label>Time step [days]</label>
+      <help_brief>Time step [days]</help_brief>
+      <default>0.005</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/i">
+      <label>Number of iterations before printing</label>
+      <help_brief>Number of iterations before printing</help_brief>
+      <default>10000</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/Input/Var/p">
+      <label>Number of printouts</label>
+      <help_brief>Number of printouts</help_brief>
+      <default>5</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/BedrockAlluvialTransition/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>BedrockAlluvialTransition</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/BedrockAlluvialTransition/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

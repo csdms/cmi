@@ -1,0 +1,208 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/SteadyStateAg/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/SteadyStateAg}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/SteadyStateAg/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>SteadyStateAg</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/SteadyStateAg/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/SteadyStateAg/Input/Var/G">
+      <label>Mean annual bed material sediment feed rate [Mt/yr]</label>
+      <help_brief>Mean annual bed material sediment feed rate [Mt/yr]</help_brief>
+      <default>12</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/L">
+      <label>Reach length (downchannel distance) [km]</label>
+      <help_brief>Reach length (downchannel distance) [km]</help_brief>
+      <default>400</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/x">
+      <label>Rate of sea level rise [mm/yr]</label>
+      <help_brief>Rate of sea level rise [mm/yr]</help_brief>
+      <default>10</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/Q">
+      <label>Bankfull water discharge [m^3/s]</label>
+      <help_brief>Bankfull water discharge [m^3/s]</help_brief>
+      <default>5000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/B">
+      <label>Floodplain width [km]</label>
+      <help_brief>Floodplain width [km]</help_brief>
+      <default>8</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/D">
+      <label>Grain size [mm]</label>
+      <help_brief>Grain size [mm]</help_brief>
+      <default>0.25</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/V">
+      <label>Fraction wash load deposited per unit bed material deposited</label>
+      <help_brief>Fraction wash load deposited per unit bed material deposited</help_brief>
+      <default>2.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/T">
+      <label>Channel-forming Shields number</label>
+      <help_brief>Channel-forming Shields number</help_brief>
+      <default>1.86</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/a">
+      <label>Coefficient in Engelund-Hansen bed material load relation</label>
+      <help_brief>Coefficient in Engelund-Hansen bed material load relation</help_brief>
+      <default>0.05</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/l">
+      <label>Bed porosity</label>
+      <help_brief>Bed porosity</help_brief>
+      <default>0.4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/I">
+      <label>Flood intermittence</label>
+      <help_brief>Flood intermittence</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/C">
+      <label>Chezy resistance coefficient</label>
+      <help_brief>Chezy resistance coefficient</help_brief>
+      <default>25</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/O">
+      <label>Channel sinuosity</label>
+      <help_brief>Channel sinuosity</help_brief>
+      <default>1.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/X">
+      <label>Initial water surface elevation</label>
+      <help_brief>Initial water surface elevation</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/t">
+      <label>Time interval for plotting [yr]</label>
+      <help_brief>Time interval for plotting [yr]</help_brief>
+      <default>1000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SteadyStateAg/Input/Var/p">
+      <label>Number of prints desired</label>
+      <help_brief>Number of prints desired</help_brief>
+      <default>12</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/SteadyStateAg/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>SteadyStateAg</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/SteadyStateAg/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

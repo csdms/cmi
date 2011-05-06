@@ -1,0 +1,128 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/DepDistTotLoadCalc/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/DepDistTotLoadCalc}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>DepDistTotLoadCalc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/S">
+      <label>bed slope</label>
+      <help_brief>bed slope</help_brief>
+      <default>0.0000514</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/d">
+      <label>median sediment size (D50) [mm]</label>
+      <help_brief>median sediment size (D50) [mm]</help_brief>
+      <default>0.211</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/D">
+      <label>90% passing sediment size (D90) [mm]</label>
+      <help_brief>90% passing sediment size (D90) [mm]</help_brief>
+      <default>0.425</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/n">
+      <label>factor such that ks = n*D90</label>
+      <help_brief>factor such that ks = n*D90</help_brief>
+      <default>3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/R">
+      <label>submerges specific gravity of sediment</label>
+      <help_brief>submerges specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/v">
+      <label>kinematic viscosity of water [m^2/s]</label>
+      <help_brief>kinematic viscosity of water [m^2/s]</help_brief>
+      <default>0.000001</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/H">
+      <label>low end value of Hs [m]</label>
+      <help_brief>low end value of Hs [m]</help_brief>
+      <default>0.6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/s">
+      <label>step size for Hs [m]</label>
+      <help_brief>step size for Hs [m]</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/Input/Var/N">
+      <label>number of steps to make for Hs</label>
+      <help_brief>number of steps to make for Hs</help_brief>
+      <default>14</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/DepDistTotLoadCalc/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>DepDistTotLoadCalc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/DepDistTotLoadCalc/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

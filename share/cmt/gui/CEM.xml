@@ -1,0 +1,140 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/CEM/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>cem</default>
+      <type>String</type>
+    </entry>
+    <entry name="/CEM/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>one_river</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/CEM/RunDuration">
+      <label>Run duraction (days)</label>
+      <help_brief>Simulation run time in days</help_brief>
+      <default>100</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/CEM/ShorefaceSlope">
+      <label>Shoreface slope (-)</label>
+      <help_brief>Slope of the shoreface (-)</help_brief>
+      <default>.01</default>
+      <type>Float</type>
+      <range>
+        <min>.001</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/CEM/ShorefaceDepth">
+      <label>Shoreface depth (m)</label>
+      <help_brief>Water depth of the shoreface (m)</help_brief>
+      <default>10</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/CEM/ShelfSlope">
+      <label>Shelf slope (-)</label>
+      <help_brief>Slope of the shelf (-)</help_brief>
+      <default>.001</default>
+      <type>Float</type>
+      <range>
+        <min>.00001</min>
+        <max>1</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Grid">
+    <entry name="/CEM/Grid/Rows">
+      <label>Number of grid rows (-)</label>
+      <help_brief>Number of rows in the computational grid (-)</help_brief>
+      <default>500</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/CEM/Grid/Columns">
+      <label>Number of grid columns (-)</label>
+      <help_brief>Number of columns in the computational grid (-)</help_brief>
+      <default>200</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/CEM/Grid/RowSpacing">
+      <label>Spacing of grid rows (m)</label>
+      <help_brief>Spacing of rows in the computational grid (m)</help_brief>
+      <default>100</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/CEM/Grid/ColumnSpacing">
+      <label>Spacing of grid columns (m)</label>
+      <help_brief>Spacing of columns in the computational grid (m)</help_brief>
+      <default>100</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Output Grids">
+    <entry name="/CEM/Output/Grid/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output grid files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/CEM/Output/Grid/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry class="OutputFile" name="/CEM/Output/Grid/Var/DEPTH"/>
+    <entry class="OutputFile" name="/CEM/Output/Grid/Var/PERCENT_FILLED"/>
+  </tab>
+  <tab name="About">
+    <entry name="/CEM/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>CEM (Coastal Evolution Model)</default>
+      <type>String</type>
+    </entry>
+    <entry name="/CEM/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Andrew Ashton</default>
+      <type>String</type>
+    </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:CEM</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

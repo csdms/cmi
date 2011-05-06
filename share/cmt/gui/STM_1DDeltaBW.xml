@@ -1,0 +1,290 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/1DDeltaBW/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/1DDeltaBW}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/1DDeltaBW/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>1DDeltaBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/1DDeltaBW/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Options">
+    <entry name="/STM/1DDeltaNorm/Input/Var/ChezyOrManning">
+      <label>Chezy Or Manning, Chezy-1 or Manning-2</label>
+      <help_brief>Chezy Or Manning, Chezy-1 or Manning-2</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/1DDeltaBW/Input/Var/q">
+      <label>Flood discharge [m^2/s]</label>
+      <help_brief>Flood discharge [m^2/s]</help_brief>
+      <default>6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/I">
+      <label>Intermittency</label>
+      <help_brief>Intermittency</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/Q">
+      <label>Upstream bed material sediment feed rate during floods [m^2/s]</label>
+      <help_brief>Upstream bed material sediment feed rate during floods [m^2/s]</help_brief>
+      <default>0.001</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/D">
+      <label>Grain size of bed material [mm]</label>
+      <help_brief>Grain size of bed material [mm]</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/C">
+      <label>Chezy resistance coefficient [-]</label>
+      <help_brief>Chezy resistance coefficient [-]</help_brief>
+      <default>15</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/n">
+      <label>Exponent in load relation [-]</label>
+      <help_brief>Exponent in load relation [-]</help_brief>
+      <default>2.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/T">
+      <label>Critical Shields stress in load relation</label>
+      <help_brief>Critical Shields stress in load relation</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/E">
+      <label>Elevation of top of foreset [m]</label>
+      <help_brief>Elevation of top of foreset [m]</help_brief>
+      <default>3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/e">
+      <label>Initiale elevation of foreset bottom [m]</label>
+      <help_brief>Initiale elevation of foreset bottom [m]</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/x">
+      <label>Water surface elevation of lake [m]</label>
+      <help_brief>Water surface elevation of lake [m]</help_brief>
+      <default>8.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/f">
+      <label>Initial fluvial bed slope [-]</label>
+      <help_brief>Initial fluvial bed slope [-]</help_brief>
+      <default>.00025</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/b">
+      <label>Subaqueous basement slope [-]</label>
+      <help_brief>Subaqueous basement slope [-]</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/s">
+      <label>Initial length of fluvial zone [m]</label>
+      <help_brief>Initial length of fluvial zone [m]</help_brief>
+      <default>10000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/m">
+      <label>Maximum lenght of fluvial zone [m]</label>
+      <help_brief>Maximum lenght of fluvial zone [m]</help_brief>
+      <default>500000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/S">
+      <label>Slope of foreset face [-]</label>
+      <help_brief>Slope of foreset face [-]</help_brief>
+      <default>0.2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/L">
+      <label>Bed porosity [-]</label>
+      <help_brief>Bed porosity [-]</help_brief>
+      <default>0.4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/k">
+      <label>Manning-Strickler coefficient, k [-]</label>
+      <help_brief>Manning-Strickler coefficient, k (ks = n * D90) [-]</help_brief>
+      <default>0.3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/r">
+      <label>Manning-Strickler coefficient, r [-]</label>
+      <help_brief>Manning-Strickler coefficient, r [-]</help_brief>
+      <default>8.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/a">
+      <label>Coefficent in total bed material relation [-]</label>
+      <help_brief>Coefficent in total bed material relation [-]</help_brief>
+      <default>7.2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/M">
+      <label>Number of fluvial nodes</label>
+      <help_brief>Number of fluvial nodes</help_brief>
+      <default>20</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/t">
+      <label>Time step [days]</label>
+      <help_brief>Time step [days]</help_brief>
+      <default>0.182625</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/p">
+      <label>Number of printouts after initial one</label>
+      <help_brief>Number of printouts after initial one</help_brief>
+      <default>6</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/1DDeltaBW/Input/Var/i">
+      <label>Iterations per each printout</label>
+      <help_brief>Iterations per each printout</help_brief>
+      <default>5000</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/1DDeltaBW/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>1DDeltaBW</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/1DDeltaBW/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

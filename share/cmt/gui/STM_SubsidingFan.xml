@@ -1,0 +1,268 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/SubsidingFan/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/SubsidingFan}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/SubsidingFan/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>SubsidingFan</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/SubsidingFan/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/SubsidingFan/Input/Var/q">
+      <label>Upstream bed material sediment feed rate during floods [m^3/s]</label>
+      <help_brief>Upstream bed material sediment feed rate during floods [m^3/s]</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/L">
+      <label>Basin Length [m]</label>
+      <help_brief>Basin Length [m]</help_brief>
+      <default>10000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/Q">
+      <label>Flood discharge [m^3/s]</label>
+      <help_brief>Flood discharge [m^3/s]</help_brief>
+      <default>50</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/D">
+      <label>Grain size of bed [mm]</label>
+      <help_brief>Grain size of bed [mm]</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/V">
+      <label>Units of wash load deposited in the fan per unit bed material load</label>
+      <help_brief>Units of wash load deposited in the fan per unit bed material load</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/T">
+      <label>Fan angle [degrees]</label>
+      <help_brief>Fan angle [degrees]</help_brief>
+      <default>120</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/l">
+      <label>Bed porosity</label>
+      <help_brief>Bed porosity</help_brief>
+      <default>0.4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/I">
+      <label>Intermittency</label>
+      <help_brief>Intermittency</help_brief>
+      <default>0.05</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/C">
+      <label>Chezy Resistance Coefficient</label>
+      <help_brief>Chezy Resistance Coefficient</help_brief>
+      <default>10</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/O">
+      <label>Channel Sinuosity</label>
+      <help_brief>Channel Sinuosity</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/s">
+      <label>Subsidence rate [mm/yr]</label>
+      <help_brief>must equal mean aggradation for perfect filling of hole; otherwise overfilled or underfilled</help_brief>
+      <default>5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/a">
+      <label>Engelund-Hansen coefficient [SAND]</label>
+      <help_brief>Engelund-Hansen coefficient [SAND]</help_brief>
+      <default>0.05</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/n">
+      <label>Engelund-Hansen exponent [SAND]</label>
+      <help_brief>Engelund-Hansen exponent [SAND]</help_brief>
+      <default>2.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/S">
+      <label>Channel-forming Shields number [SAND]</label>
+      <help_brief>Channel-forming Shields number [SAND]</help_brief>
+      <default>1.86</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/P">
+      <label>Parker coefficient [GRAVEL]</label>
+      <help_brief>Parker coefficient [GRAVEL]</help_brief>
+      <default>11.2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/N">
+      <label>Parker exponent [GRAVEL]</label>
+      <help_brief>Parker exponent [GRAVEL]</help_brief>
+      <default>4.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/c">
+      <label>Critical Shields number [GRAVEL]</label>
+      <help_brief>Critical Shields number [GRAVEL]</help_brief>
+      <default>0.03</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/G">
+      <label>Channel-forming Shields number [GRAVEL]</label>
+      <help_brief>Channel-forming Shields number [GRAVEL]</help_brief>
+      <default>0.0487</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/M">
+      <label>Number of spatial intervals</label>
+      <help_brief>Number of spatial intervals</help_brief>
+      <default>20</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/t">
+      <label>Time step [yr]</label>
+      <help_brief>Time step [yr]</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/i">
+      <label>Number of iterations desired</label>
+      <help_brief>Number of iterations desired</help_brief>
+      <default>1000</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/SubsidingFan/Input/Var/p">
+      <label>Number of printouts desired</label>
+      <help_brief>Number of printouts desired</help_brief>
+      <default>5</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/STM/SubsidingFan/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>SubsidingFan</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/SubsidingFan/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

@@ -1,0 +1,269 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/STM/AgDegNormalFault/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/data/sims/stm/AgDegNormalFault}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/SitePrefix">
+      <label>Site prefix</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>AgDegNormalFault</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/CasePrefix">
+      <label>Case prefix</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/STM/AgDegNormalFault/Input/Var/Q">
+      <label>Flood discharge [m^3/s]</label>
+      <help_brief>Flood discharge [m^3/s]</help_brief>
+      <default>300</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/I">
+      <label>Intermittency</label>
+      <help_brief>Intermittency</help_brief>
+      <default>0.03</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/B">
+      <label>Channel Width [m]</label>
+      <help_brief>Channel Width [m]</help_brief>
+      <default>25</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/D">
+      <label>Grain size [mm]</label>
+      <help_brief>Grain size [mm]</help_brief>
+      <default>2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/l">
+      <label>Bed Porosity</label>
+      <help_brief>Bed Porosity</help_brief>
+      <default>0.35</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/k">
+      <label>Roughness height [mm]</label>
+      <help_brief>Roughness height [mm]</help_brief>
+      <default>75</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/S">
+      <label>Ambient Bed Slope</label>
+      <help_brief>Ambient Bed Slope</help_brief>
+      <default>0.003</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/G">
+      <label>Imposed Annual Sediment Transfer Rate from Upstream [tons/annum]</label>
+      <help_brief>Imposed Annual Sediment Transfer Rate from Upstream [tons/annum]</help_brief>
+      <default>219348.203064445</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/L">
+      <label>Length of Reach [m]</label>
+      <help_brief>Length of Reach [m]</help_brief>
+      <default>10000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/t">
+      <label>Time step [year]</label>
+      <help_brief>Time step [year]</help_brief>
+      <default>0.01</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/i">
+      <label>Number of Time Steps per Printout</label>
+      <help_brief>Number of Time Steps per Printout</help_brief>
+      <default>50</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/p">
+      <label>Number of printouts</label>
+      <help_brief>Number of printouts</help_brief>
+      <default>5</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/M">
+      <label>Intervals</label>
+      <help_brief>Intervals</help_brief>
+      <default>60</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/u">
+      <label>upwinding coefficient [1=full upwind, 0.5=central difference]</label>
+      <help_brief>upwinding coefficient [1=full upwind, 0.5=central difference]</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/r">
+      <label>Coefficient in Manning-Strickler Resistance Relation</label>
+      <help_brief>Coefficient in Manning-Strickler Resistance Relation</help_brief>
+      <default>8.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/a">
+      <label>Coefficient in Sediment Transport Relation</label>
+      <help_brief>Coefficient in Sediment Transport Relation</help_brief>
+      <default>8</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/n">
+      <label>Exponent in Sediment Transport Relation</label>
+      <help_brief>Exponent in Sediment Transport Relation</help_brief>
+      <default>1.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/T">
+      <label>Critical Shields stress</label>
+      <help_brief>Critical Shields stress</help_brief>
+      <default>0.047</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/P">
+      <label>Fraction of Bed Shear Stress that is a Skin Friction</label>
+      <help_brief>Fraction of Bed Shear Stress that is a Skin Friction</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/R">
+      <label>Submerged specific gravity of sediment</label>
+      <help_brief>Submerged specific gravity of sediment</help_brief>
+      <default>1.65</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/d">
+      <label>Height of faulting [m]</label>
+      <help_brief>Height of faulting [m]</help_brief>
+      <default>5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/f">
+      <label>Fraction of reach length such that all points downstream undergo downward faulting</label>
+      <help_brief>Fraction of reach length such that all points downstream undergo downward faulting</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/Input/Var/F">
+      <label>Time from beginning of calculation at which faulting occurs [yrs]</label>
+      <help_brief>Time from beginning of calculation at which faulting occurs [yrs]</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+
+  </tab>
+  <tab name="About">
+    <entry name="/STM/AgDegNormalFault/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>AgDegNormalFault</default>
+      <type>String</type>
+    </entry>
+    <entry name="/STM/AgDegNormalFault/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Gary Parker</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>
