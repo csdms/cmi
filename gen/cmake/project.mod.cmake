@@ -19,7 +19,7 @@ module load cem/devel
 module load sedflux/devel
 module load hydrotrend/3.0
 module load child
-module load csdms
+module load internal
 module load roms
 module load stm
 module load marssim
