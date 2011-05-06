@@ -91,7 +91,8 @@ set (BUILD_CMD
 
 ##
 # The bocca save command to execute.
-set (SAVE_CMD ${BOCCA_SAVE} --dest=${SRCDIR} -C ${DESTDIR}/csdms)
+set (SAVE_CMD ${BOCCA_SAVE} ${DESTDIR}/csdms ${SRCDIR})
+#set (SAVE_CMD ${BOCCA_SAVE} --dest=${SRCDIR} -C ${DESTDIR}/csdms)
 
 ##
 # Set build targets.
