@@ -9,7 +9,7 @@
   <component name="models.LTRANS" language="f90">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@LTRANS</provides>
+    <provides>edu.csdms.ports.IRFPort@LTRANS</provides>
     <!--requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>

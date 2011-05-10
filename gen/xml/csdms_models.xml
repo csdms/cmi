@@ -10,10 +10,10 @@
     -->
   <component name="models.Sedflux3D" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@WaterDischarge</uses>
-    <uses>IRFPort@SubaerialErosion</uses>
+    <uses>edu.csdms.ports.IRFPort@WaterDischarge</uses>
+    <uses>edu.csdms.ports.IRFPort@SubaerialErosion</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@SubaqueousErosion</provides>
+    <provides>edu.csdms.ports.IRFPort@SubaqueousErosion</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -26,9 +26,9 @@
   </component>
   <component name="models.Sedflux2D" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@WaterDischarge</uses>
+    <uses>edu.csdms.ports.IRFPort@WaterDischarge</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@Elevation</provides>
+    <provides>edu.csdms.ports.IRFPort@Elevation</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -40,10 +40,10 @@
   </component>
   <component name="models.Child" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@SubaqueousErosion</uses>
+    <uses>edu.csdms.ports.IRFPort@SubaqueousErosion</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@WaterDischarge</provides>
-    <provides>IRFPort@SubaerialErosion</provides>
+    <provides>edu.csdms.ports.IRFPort@WaterDischarge</provides>
+    <provides>edu.csdms.ports.IRFPort@SubaerialErosion</provides>
     <requires>ElementSet</requires>
     <requires>ElementType</requires>
     <requires>ScalarSet</requires>
@@ -59,7 +59,7 @@
   <component name="models.HydroTrend" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@Discharge</provides>
+    <provides>edu.csdms.ports.IRFPort@Discharge</provides>
     <requires>ScalarSet</requires>
     <requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
@@ -70,10 +70,10 @@
   </component>
   <component name="models.CEM" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@River</uses>
-    <uses>IRFPort@Waves</uses>
+    <uses>edu.csdms.ports.IRFPort@River</uses>
+    <uses>edu.csdms.ports.IRFPort@Waves</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@Elevation</provides>
+    <provides>edu.csdms.ports.IRFPort@Elevation</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -87,7 +87,7 @@
   <component name="models.Waves" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@Waves</provides>
+    <provides>edu.csdms.ports.IRFPort@Waves</provides>
     <requires>ScalarSet</requires>
     <requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
@@ -97,10 +97,10 @@
   </component>
   <component name="models.Avulsion" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@Discharge</uses>
-    <uses>IRFPort@Elevation</uses>
+    <uses>edu.csdms.ports.IRFPort@Discharge</uses>
+    <uses>edu.csdms.ports.IRFPort@Elevation</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@River</provides>
+    <provides>edu.csdms.ports.IRFPort@River</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -117,7 +117,7 @@
   <component name="utils.ConstantScalar" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <!--provides>gov.cca.ports.GoPort@Run</provides-->
-    <provides>IRFPort@ConstantScalar</provides>
+    <provides>edu.csdms.ports.IRFPort@ConstantScalar</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>

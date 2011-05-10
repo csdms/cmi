@@ -5,7 +5,7 @@
   <xi:include href="csdms_ports.xml" parse="xml"/>
 
   <class name="tools.IRFPortQueue" language="python">
-    <requires>IRFPort</requires>
+    <requires>edu.csdms.ports.IRFPort</requires>
     <requires>gov.cca.Port</requires>
     <requires>ScalarSet</requires>
     <requires>ElementMapper</requires>

@@ -11,10 +11,10 @@
 
   <component name="models.Child" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@SubaqueousErosion</uses>
+    <uses>edu.csdms.ports.IRFPort@SubaqueousErosion</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@WaterDischarge</provides>
-    <provides>IRFPort@SubaerialErosion</provides>
+    <provides>edu.csdms.ports.IRFPort@WaterDischarge</provides>
+    <provides>edu.csdms.ports.IRFPort@SubaerialErosion</provides>
     <requires>ElementSet</requires>
     <requires>ElementType</requires>
     <requires>ScalarSet</requires>

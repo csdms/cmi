@@ -8,7 +8,7 @@
 
   <component name="models.stm.Driver" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@Model</uses>
+    <uses>edu.csdms.ports.IRFPort@Model</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
@@ -22,7 +22,7 @@
     -->
   <component name="models.stm.Acronym1" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -32,7 +32,7 @@
   </component>
   <component name="models.stm.Acronym1D" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -42,7 +42,7 @@
   </component>
   <component name="models.stm.Acronym1R" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -52,7 +52,7 @@
   </component>
   <component name="models.stm.AgDegBW" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -62,7 +62,7 @@
   </component>
   <component name="models.stm.AgDegNormGravMixPW" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -72,7 +72,7 @@
   </component>
   <component name="models.stm.AgDegNormGravMixSubPW" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -82,7 +82,7 @@
   </component>
   <component name="models.stm.AgDegNormal" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -92,7 +92,7 @@
   </component>
   <component name="models.stm.AgDegNormalFault" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -102,7 +102,7 @@
   </component>
   <component name="models.stm.AgDegNormalGravMixHyd" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -112,7 +112,7 @@
   </component>
   <component name="models.stm.AgDegNormalSub" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -122,7 +122,7 @@
   </component>
   <component name="models.stm.BackwaterCalculator" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -132,7 +132,7 @@
   </component>
   <component name="models.stm.BackwaterWrightParker" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -142,7 +142,7 @@
   </component>
   <component name="models.stm.BedrockAlluvialTransition" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -152,7 +152,7 @@
   </component>
   <component name="models.stm.DeltaBW" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -162,7 +162,7 @@
   </component>
   <component name="models.stm.DeltaNorm" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -172,7 +172,7 @@
   </component>
   <component name="models.stm.DepDistTotLoadCalc" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -182,7 +182,7 @@
   </component>
   <component name="models.stm.DredgeSlotBW" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -192,7 +192,7 @@
   </component>
   <component name="models.stm.FallVelocity" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -202,7 +202,7 @@
   </component>
   <component name="models.stm.GSDCalculator" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -212,7 +212,7 @@
   </component>
   <component name="models.stm.GravelSandTransition" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -222,7 +222,7 @@
   </component>
   <component name="models.stm.RecircFeed" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -232,7 +232,7 @@
   </component>
   <component name="models.stm.RiverWFRisingBaseLevelNormal" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -242,7 +242,7 @@
   </component>
   <component name="models.stm.RouseVanoniEquilibrium" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -252,7 +252,7 @@
   </component>
   <component name="models.stm.SteadyStateAg" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -262,7 +262,7 @@
   </component>
   <component name="models.stm.SubsidingFan" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -272,7 +272,7 @@
   </component>
   <component name="models.stm.SuspSedDensityStrat" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -282,7 +282,7 @@
   </component>
   <component name="models.stm.WPHydResAMBL" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Model</provides>
+    <provides>edu.csdms.ports.IRFPort@Model</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>

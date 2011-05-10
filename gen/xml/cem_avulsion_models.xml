@@ -11,7 +11,7 @@
   <component name="models.HydroTrend" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@Discharge</provides>
+    <provides>edu.csdms.ports.IRFPort@Discharge</provides>
     <requires>ScalarSet</requires>
     <requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
@@ -23,7 +23,7 @@
   <component name="models.RiverReader" language="python">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@River</provides>
+    <provides>edu.csdms.ports.IRFPort@River</provides>
     <requires>ScalarSet</requires>
     <requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
@@ -34,10 +34,10 @@
   </component>
   <component name="models.CEM" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@River</uses>
-    <uses>IRFPort@Waves</uses>
+    <uses>edu.csdms.ports.IRFPort@River</uses>
+    <uses>edu.csdms.ports.IRFPort@Waves</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@Elevation</provides>
+    <provides>edu.csdms.ports.IRFPort@Elevation</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -51,7 +51,7 @@
   <component name="models.Waves" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@Waves</provides>
+    <provides>edu.csdms.ports.IRFPort@Waves</provides>
     <requires>ScalarSet</requires>
     <requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
@@ -61,10 +61,10 @@
   </component>
   <component name="models.Avulsion" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>IRFPort@Discharge</uses>
-    <uses>IRFPort@Elevation</uses>
+    <uses>edu.csdms.ports.IRFPort@Discharge</uses>
+    <uses>edu.csdms.ports.IRFPort@Elevation</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@River</provides>
+    <provides>edu.csdms.ports.IRFPort@River</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -78,7 +78,7 @@
   <component name="utils.ConstantScalar" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <!--provides>gov.cca.ports.GoPort@Run</provides-->
-    <provides>IRFPort@ConstantScalar</provides>
+    <provides>edu.csdms.ports.IRFPort@ConstantScalar</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -92,7 +92,7 @@
   </component>
   <component name="models.ConstantRiver" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <provides>IRFPort@Discharge</provides>
+    <provides>edu.csdms.ports.IRFPort@Discharge</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>

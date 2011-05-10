@@ -9,7 +9,7 @@
   <component name="models.ROMS" language="f90">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>IRFPort@ROMS</provides>
+    <provides>edu.csdms.ports.IRFPort@ROMS</provides>
     <!--requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
