@@ -1,5 +1,31 @@
 cmake_minimum_required (VERSION 2.6)
 
+# If you want this cmake file to generate a make file that is able to build
+# a new project, add your project's name to the list of projects contained
+# in the PROJECTS variable.
+#
+# These are the projects that this cmake file can build. Each of these are
+# also a target for the generated make file. For instance,
+#   > make roms
+# would construct the bocca project, "roms".
+#
+# Every project name must also have a corresponding xml description file
+# that bocca-build can read. This must be located in
+#   ${CMAKE_SOURCE_DIR}/gen/xml
+# Thus, the path of the xml file for the roms project is
+#   ${CMAKE_SOURCE_DIR}/gen/xml/roms.xml
+set (PROJECTS 
+  csdms
+  child
+  stm
+  sedflux
+  roms
+  river_reader
+  cem
+  child_sedflux
+  test_proj
+)
+
 if (NOT DEFINED MODULE_NAME)
   set (MODULE_NAME "this-project")
 endif (NOT DEFINED MODULE_NAME)
@@ -58,21 +84,6 @@ else (BOCCA_SAVE)
   message (STATUS "Looking for bocca-save... Not found")
 endif (BOCCA_SAVE)
 
-##
-# Set full path names for each project XML.
-#
-# If you want to create a new project, add your XML file here.
-#
-set (CSDMS_SRC ${PRJDIR}/csdms.xml)
-set (CHILD_SRC ${PRJDIR}/child.xml)
-set (STM_SRC ${PRJDIR}/stm.xml)
-set (SEDFLUX_SRC ${PRJDIR}/sedflux.xml)
-set (MARSSIM_SRC ${PRJDIR}/marssim.xml)
-set (ROMS_SRC ${PRJDIR}/roms.xml)
-set (RIVER_READER_SRC ${PRJDIR}/river_reader.xml)
-set (CEM_SRC ${PRJDIR}/cem.xml)
-set (CHILD_SEDFLUX_SRC ${PRJDIR}/child_sedflux.xml)
-
 configure_file (
   ${CMAKE_CURRENT_SOURCE_DIR}/gen/cmake/bocca-gui-backend.sh.cmake
   ${CMAKE_BINARY_DIR}/bocca-gui-backend.sh
@@ -97,22 +108,24 @@ set (BUILD_CMD
 set (SAVE_CMD ${BOCCA_SAVE} ${DESTDIR}/csdms ${SRCDIR})
 #set (SAVE_CMD ${BOCCA_SAVE} --dest=${SRCDIR} -C ${DESTDIR}/csdms)
 
-##
-# Set build targets.
-#
-# If you are creating a new project, you should add an entry here so that
-# you have a target for you new project. That is, so you can type
-# "make <your_project_name>" to create your bocca project.
-#
-add_custom_target (csdms ALL ${BUILD_CMD} ${CSDMS_SRC} VERBATIM)
-add_custom_target (child ${BUILD_CMD} ${CHILD_SRC} VERBATIM)
-add_custom_target (stm ${BUILD_CMD} ${STM_SRC} VERBATIM)
-add_custom_target (sedflux ${BUILD_CMD} ${SEDFLUX_SRC} VERBATIM)
-add_custom_target (marssim ${BUILD_CMD} ${MARSSIM_SRC} VERBATIM)
-add_custom_target (roms ${BUILD_CMD} ${ROMS_SRC} VERBATIM)
-add_custom_target (river_reader ${BUILD_CMD} ${RIVER_READER_SRC} VERBATIM)
-add_custom_target (cem ${BUILD_CMD} ${CEM_SRC} VERBATIM)
-add_custom_target (child_sedflux ${BUILD_CMD} ${CHILD_SEDFLUX_SRC} VERBATIM)
+add_custom_target (help ALL DEPENDS help_file)
+add_custom_command (OUTPUT help_file
+  COMMAND echo "Error: Missing the name of a project"
+  COMMAND echo "Usage: make project_name"
+  VERBATIM)
+
+set (VALID_PROJECTS )
+foreach (project ${PROJECTS})
+  message (STATUS "Adding target for project: ${project}")
+  if (EXISTS ${PRJDIR}/${project}.xml)
+    set (${project}_SRC ${PRJDIR}/${project}.xml)
+    add_custom_target (${project} ${BUILD_CMD} ${${project}_SRC} VERBATIM)
+
+    set (VALID_PROJECTS ${VALID_PROJECTS} ${project})
+  else (EXISTS ${PRJDIR}/${project}.xml)
+    message (WARNING "Unable to add target: File not found: ${PRJDIR}/${project}.xml")
+  endif (EXISTS ${PRJDIR}/${project}.xml)
+endforeach (project)
 
 ##
 # Save used-editable files to source directory for version control.
@@ -132,4 +145,9 @@ message ("  Build directory:   ${DESTDIR}/csdms")
 message ("  Project path:      ${PROJECT_TOP_DIR}")
 message ("  Module name:       ${MODULE_NAME}")
 message ("---")
+
+message ("Available targets are:")
+foreach (project ${VALID_PROJECTS})
+  message ("  ${project}")
+endforeach (project)
 
