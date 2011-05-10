@@ -21,7 +21,7 @@ Please feel free to add/modify as needed.
 ---------------------------
   > mkdir _build && cd _build
   > cmake .. -DMODULE_NAME=<project_name>
-  > make
+  > make <project_name>
 
 1.5 Configure and compile your bocca project
 --------------------------------------------
