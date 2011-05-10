@@ -23,6 +23,7 @@ set (PROJECTS
   river_reader
   cem
   child_sedflux
+  topoflow
   test_proj
 )
 
