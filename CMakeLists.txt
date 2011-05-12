@@ -24,6 +24,7 @@ set (PROJECTS
   cem
   child_sedflux
   topoflow
+  marssim
   test_proj
   marssim
   roms_builder
