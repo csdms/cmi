@@ -25,6 +25,8 @@ set (PROJECTS
   child_sedflux
   topoflow
   test_proj
+  marssim
+  roms_builder
 )
 
 if (NOT DEFINED MODULE_NAME)
