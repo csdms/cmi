@@ -29,6 +29,14 @@ Please feel free to add/modify as needed.
   > ./configure --prefix=/home/csdms/cca/<project_name>/<project_version>
   > make
 
+1.6 Copy bocca-gui-backend.sh
+-----------------------------
+  cmake generates a bocca-gui-backend.sh file that loads the appropriate
+  modules and sets some environment variables that CSDMS projects use.
+  Copy this generated file into the bocca project's utils folder.
+
+  > cp ../bocca-gui-backend.sh utils/bocca-gui-backend.sh
+
 2. Importing a new project
 ==========================
 
