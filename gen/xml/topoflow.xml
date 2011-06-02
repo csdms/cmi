@@ -1,0 +1,308 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+
+  <extras>make.vars.user</extras>
+
+  <xi:include href="openmi_interface.xml" parse="xml"/>
+  <xi:include href="openmi_impl.xml" parse="xml"/>
+  <xi:include href="csdms_ports.xml" parse="xml"/>
+  <xi:include href="csdms_tools.xml" parse="xml"/>
+
+  <!--  (now in csdms_ports.xml)
+  <port name="models.IRFPort">
+  </port>
+  -->
+
+  <component name="models.TopoFlow" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@evap</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <uses>edu.csdms.models.IRFPort@ice</uses>
+    <uses>edu.csdms.models.IRFPort@diversions</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@hydro_model</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+    <!-- <extras>make.vars.user</extras> -->
+  </component>
+
+  <component name="models.ChannelsKinWave" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@evap</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <uses>edu.csdms.models.IRFPort@ice</uses>
+    <uses>edu.csdms.models.IRFPort@diversions</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@channels</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.ChannelsDiffWave" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@evap</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <uses>edu.csdms.models.IRFPort@ice</uses>
+    <uses>edu.csdms.models.IRFPort@diversions</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@channels</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.ChannelsDynamWave" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@evap</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <uses>edu.csdms.models.IRFPort@ice</uses>
+    <uses>edu.csdms.models.IRFPort@diversions</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@channels</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.SnowDegreeDay" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@snow</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.SnowEnergyBalance" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@snow</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.EvapPriestleyTaylor" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@evap</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.EvapEnergyBalance" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@evap</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.EvapReadFile" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@evap</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.InfilGreenAmpt" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@evap</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@infil</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.InfilSmithParlange" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@evap</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@infil</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.InfilRichards1D" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <uses>edu.csdms.models.IRFPort@evap</uses>
+    <uses>edu.csdms.models.IRFPort@satzone</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@infil</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.SatZoneDarcyLayers" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <uses>edu.csdms.models.IRFPort@infil</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@satzone</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.Diversions" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@channels</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@diversions</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.IceGC2D" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.models.IRFPort@meteorology</uses>
+    <uses>edu.csdms.models.IRFPort@snow</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.models.IRFPort@ice</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+  <component name="models.TestService" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <!-- <provides>gov.cca.ports.GoPort@Run</provides> -->
+    <provides>edu.csdms.models.IRFPort@service</provides>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.Verbose</requires>
+  </component>
+
+</project>
+
