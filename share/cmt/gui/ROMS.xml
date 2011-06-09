@@ -3,11 +3,18 @@
   <tab name="Project">
     <entry name="/ROMS/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/roms/upwelling}</help_brief>
+      <help_brief>Path to input files. {cb+bb;GUI;/home/csdms/sims/roms/upwelling}</help_brief>
       <default>GUI</default>
       <type>String</type>
     </entry>
-
+    
+    <entry name="/ROMS/Input/File">
+      <label>Input File name: </label>
+      <help_brief>Name of input file.</help_brief>
+      <default>ocean.in</default>
+      <type>String</type>
+    </entry>
+    
     <entry name="/ROMS/SitePrefix">
       <label>Site prefix:</label>
       <help_brief>Site prefix for input/output files.</help_brief>
@@ -42,10 +49,34 @@
       <default>varinfo.dat</default>
       <type>String</type>
     </entry>
+  
+    <entry name="/ROMS/Input/Var/RunInterval">
+      <label>RunInterval: </label>
+      <help_brief>Timestep multiplied by Timestep size [seconds]. In cases where input is read from a file rather than GUI</help_brief>
+      <default>432000</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>10000000000</max>
+      </range>
+    </entry>
+    
   </tab>
 
 <!-- =========================================================================================== -->
   <tab name="Grid">
+   
+    <entry name='/ROMS/Input/Var/Ngrids'>
+      <label>Number of nested grids:</label>
+      <help_brief>Number of nested grids</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+	<max>2000</max>
+      </range>
+    </entry> 
+    
     <entry name="/ROMS/Input/Var/Lm">
       <label>Number of nodes in I-direction:</label>
       <help_brief>Number of I-direction interior rho-points</help_brief>
