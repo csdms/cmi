@@ -49,6 +49,10 @@
 
      VARNAME = ${VARNAME}
 
+! Number of nested grids.
+
+      Ngrids =  ${Ngrids}
+
 ! Grid dimension parameters. See notes below in the Glossary for how to set
 ! these parameters correctly.
 
