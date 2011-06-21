@@ -12,7 +12,7 @@ INCLUDES =
 LIBS = 
 
 # java 
-CLASSPATH_USER=/data/progs/openmi/1.4/sdk/bin:/data/progs/openmi/1.4/sdk/bin/org.openmi.standard.jar
+CLASSPATH_USER=/home/csdms/tools/openmi/1.4/sdk/bin:/home/csdms/tools/openmi/1.4/sdk/bin/org.openmi.standard.jar
 # python
 PYTHONPATH_USER=
 
