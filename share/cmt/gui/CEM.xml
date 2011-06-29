@@ -16,6 +16,7 @@
   <tab name="Run Parameters">
     <entry name="/CEM/RunDuration">
       <label>Run duraction (days)</label>
+      <unit>days</unit>
       <help_brief>Simulation run time in days</help_brief>
       <default>100</default>
       <type>Float</type>
@@ -26,6 +27,7 @@
     </entry>
     <entry name="/CEM/ShorefaceSlope">
       <label>Shoreface slope (-)</label>
+      <unit>-</unit>
       <help_brief>Slope of the shoreface (-)</help_brief>
       <default>.01</default>
       <type>Float</type>
@@ -36,6 +38,7 @@
     </entry>
     <entry name="/CEM/ShorefaceDepth">
       <label>Shoreface depth (m)</label>
+      <unit>m</unit>
       <help_brief>Water depth of the shoreface (m)</help_brief>
       <default>10</default>
       <type>Float</type>
@@ -57,27 +60,30 @@
   </tab>
   <tab name="Grid">
     <entry name="/CEM/Grid/Rows">
-      <label>Number of grid rows (-)</label>
+      <label>Number of grid rows</label>
+      <unit>-</unit>
       <help_brief>Number of rows in the computational grid (-)</help_brief>
       <default>500</default>
       <type>Int</type>
       <range>
         <min>1</min>
-        <max>1000</max>
+        <max>20000</max>
       </range>
     </entry>
     <entry name="/CEM/Grid/Columns">
-      <label>Number of grid columns (-)</label>
+      <label>Number of grid columns</label>
+      <unit>-</unit>
       <help_brief>Number of columns in the computational grid (-)</help_brief>
       <default>200</default>
       <type>Int</type>
       <range>
         <min>1</min>
-        <max>1000</max>
+        <max>20000</max>
       </range>
     </entry>
     <entry name="/CEM/Grid/RowSpacing">
-      <label>Spacing of grid rows (m)</label>
+      <label>Spacing of grid rows</label>
+      <unit>m</unit>
       <help_brief>Spacing of rows in the computational grid (m)</help_brief>
       <default>100</default>
       <type>Float</type>
@@ -87,7 +93,8 @@
       </range>
     </entry>
     <entry name="/CEM/Grid/ColumnSpacing">
-      <label>Spacing of grid columns (m)</label>
+      <label>Spacing of grid columns</label>
+      <unit>m</unit>
       <help_brief>Spacing of columns in the computational grid (m)</help_brief>
       <default>100</default>
       <type>Float</type>

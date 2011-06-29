@@ -15,7 +15,8 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/Avulsion/RunDuration">
-      <label>Run duraction (years)</label>
+      <label>Run duraction</label>
+      <unit>years</unit>
       <help_brief>Simulation run time in years</help_brief>
       <default>100</default>
       <type>Float</type>
@@ -25,7 +26,8 @@
       </range>
     </entry>
     <entry name="/Avulsion/Input/Var/AngleVariance">
-      <label>Standard deviation of avulsion angles (deg)</label>
+      <label>Standard deviation of avulsion angles</label>
+      <unit>degrees</unit>
       <help_brief>Standard deviation of avulsion angles (deg)</help_brief>
       <default>0</default>
       <type>Float</type>
@@ -35,7 +37,8 @@
       </range>
     </entry>
     <entry name="/Avulsion/Input/Var/AngleMin">
-      <label>Minimum angle (deg)</label>
+      <label>Minimum angle</label>
+      <unit>degrees</unit>
       <help_brief>Minimum angle (deg)</help_brief>
       <default>-60</default>
       <type>Float</type>
@@ -45,7 +48,8 @@
       </range>
     </entry>
     <entry name="/Avulsion/Input/Var/AngleMax">
-      <label>Maximum angle (deg)</label>
+      <label>Maximum angle</label>
+      <unit>degrees</unit>
       <help_brief>Maximum angle (deg)</help_brief>
       <default>60</default>
       <type>Float</type>
@@ -66,6 +70,7 @@
     </entry>
     <entry name="/Avulsion/Input/Var/BedLoadExponent">
       <label>Bed load exponent</label>
+      <unit>-</unit>
       <help_brief>Exponent used in dividing sediment among branches</help_brief>
       <default>1.67</default>
       <type>Float</type>
@@ -76,6 +81,7 @@
     </entry>
     <entry name="/Avulsion/Input/Var/DischargeExponent">
       <label>Discharge exponent</label>
+      <unit>-</unit>
       <help_brief>Exponent used in dividing water among branches</help_brief>
       <default>1</default>
       <type>Float</type>
@@ -87,27 +93,30 @@
   </tab>
   <tab name="Grid">
     <entry name="/Avulsion/Grid/Rows">
-      <label>Number of grid rows (-)</label>
+      <label>Number of grid rows</label>
+      <unit>-</unit>
       <help_brief>Number of rows in the computational grid (-)</help_brief>
       <default>500</default>
       <type>Int</type>
       <range>
         <min>1</min>
-        <max>1000</max>
+        <max>20000</max>
       </range>
     </entry>
     <entry name="/Avulsion/Grid/Columns">
-      <label>Number of grid columns (-)</label>
+      <label>Number of grid columns</label>
+      <unit>-</unit>
       <help_brief>Number of columns in the computational grid (-)</help_brief>
       <default>200</default>
       <type>Int</type>
       <range>
         <min>1</min>
-        <max>1000</max>
+        <max>20000</max>
       </range>
     </entry>
     <entry name="/Avulsion/Grid/RowSpacing">
-      <label>Spacing of grid rows (m)</label>
+      <label>Spacing of grid rows</label>
+      <unit>m</unit>
       <help_brief>Spacing of rows in the computational grid (m)</help_brief>
       <default>100</default>
       <type>Float</type>
@@ -117,7 +126,8 @@
       </range>
     </entry>
     <entry name="/Avulsion/Grid/ColumnSpacing">
-      <label>Spacing of grid columns (m)</label>
+      <label>Spacing of grid columns</label>
+      <unit>m</unit>
       <help_brief>Spacing of columns in the computational grid (m)</help_brief>
       <default>100</default>
       <type>Float</type>
@@ -127,7 +137,8 @@
       </range>
     </entry>
     <entry name="/Avulsion/Grid/HingeRow">
-      <label>Row of hinge point (-)</label>
+      <label>Row of hinge point</label>
+      <unit>-</unit>
       <help_brief>Row of hinge point (-)</help_brief>
       <default>250</default>
       <type>Int</type>
@@ -137,7 +148,8 @@
       </range>
     </entry>
     <entry name="/Avulsion/Grid/HingeColumn">
-      <label>Column of hinge point (-)</label>
+      <label>Column of hinge point</label>
+      <unit>-</unit>
       <help_brief>Column of hinge point (-)</help_brief>
       <default>0</default>
       <type>Int</type>
