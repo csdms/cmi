@@ -1,7 +1,8 @@
 <dialog>
   <tab name="River Parameters">
     <entry name="/ConstantRiver/Input/BedLoadFlux">
-      <label>Bed load flux [kg/s]</label>
+      <label>Bed load flux</label>
+      <unit>kg/s</unit>
       <help_brief>Bed load flux [kg/s]</help_brief>
       <default>250</default>
       <type>Float</type>
@@ -11,7 +12,8 @@
       </range>
     </entry>
     <entry name="/ConstantRiver/Input/Concentration">
-      <label>Concentration [-]</label>
+      <label>Concentration</label>
+      <unit>-</unit>
       <help_brief>Concentration of suspended load [-]</help_brief>
       <default>.1</default>
       <type>Float</type>
@@ -21,7 +23,8 @@
       </range>
     </entry>
     <entry name="/ConstantRiver/Input/Velocity">
-      <label>Velocity [m/s]</label>
+      <label>Velocity</label>
+      <unit>m/s</unit>
       <help_brief>River velocity [m/s]</help_brief>
       <default>2</default>
       <type>Float</type>
@@ -31,7 +34,8 @@
       </range>
     </entry>
     <entry name="/ConstantRiver/Input/Width">
-      <label>Width [m]</label>
+      <label>Width</label>
+      <unit>m</unit>
       <help_brief>River width [m]</help_brief>
       <default>200</default>
       <type>Float</type>
@@ -41,7 +45,8 @@
       </range>
     </entry>
     <entry name="/ConstantRiver/Input/Depth">
-      <label>Depth [m]</label>
+      <label>Depth</label>
+      <unit>m</unit>
       <help_brief>River depth [m]</help_brief>
       <default>10</default>
       <type>Float</type>
