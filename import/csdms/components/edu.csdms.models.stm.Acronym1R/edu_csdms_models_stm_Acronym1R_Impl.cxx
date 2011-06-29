@@ -58,6 +58,7 @@
 // DO-NOT-DELETE splicer.begin(edu.csdms.models.stm.Acronym1R._includes)
 
   // Insert-UserCode-Here {edu.csdms.models.stm.Acronym1R._includes:prolog} (additional includes or code)
+#include <cstdio>
 
   // Bocca generated code. bocca.protected.begin(edu.csdms.models.stm.Acronym1R._includes)
 

@@ -59,6 +59,8 @@
 
   // Insert-UserCode-Here {edu.csdms.models.stm.Acronym1D._includes:prolog} (additional includes or code)
 
+#include <cstdio>
+
   // Bocca generated code. bocca.protected.begin(edu.csdms.models.stm.Acronym1D._includes)
 
 #define _BOCCA_CTOR_MESSAGES 0
