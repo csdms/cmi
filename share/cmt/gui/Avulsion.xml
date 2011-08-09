@@ -200,6 +200,8 @@
     </entry>
     <entry class="OutputFile" name="/Avulsion/Output/Grid/Var/Elevation"/>
     <entry class="OutputFile" name="/Avulsion/Output/Grid/Var/SedimentFlux"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Grid/Var/river_mouth_x_position"/>
+    <entry class="OutputFile" name="/Avulsion/Output/Grid/Var/river_mouth_y_position"/>
   </tab>
   <tab name="About">
     <entry name="/Avulsion/ModelName">
@@ -214,5 +216,12 @@
       <default>Andrew Ashton</default>
       <type>String</type>
     </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:Avulsion</default>
+      <type>String</type>
+    </entry>
+
   </tab>
 </dialog>
