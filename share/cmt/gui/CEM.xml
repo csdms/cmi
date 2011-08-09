@@ -123,6 +123,9 @@
     </entry>
     <entry class="OutputFile" name="/CEM/Output/Grid/Var/DEPTH"/>
     <entry class="OutputFile" name="/CEM/Output/Grid/Var/PERCENT_FILLED"/>
+    <entry class="OutputFile" name="/CEM/Output/Grid/Var/river_mouth_x_position"/>
+    <entry class="OutputFile" name="/CEM/Output/Grid/Var/river_mouth_y_position"/>
+    <entry class="OutputFile" name="/CEM/Output/Grid/Var/river_mouth_flux"/>
   </tab>
   <tab name="About">
     <entry name="/CEM/ModelName">
