@@ -8,10 +8,16 @@
   <tab name="Input Files and Directories">
     <entry name="/HydroTrend/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/hydrotrend/Waipaoa}</help_brief>
+      <help_brief>Path to input files{cb+bb;GUI;/home/csdms/sims/hydrotrend/default/;/home/csdms/sims/hydrotrend/danube/;/home/csdms/sims/hydrotrend/eel/;/home/csdms/sims/hydrotrend/ganges/;/home/csdms/sims/hydrotrend/lanyang/;/home/csdms/sims/hydrotrend/waipaoa/;/home/csdms/sims/hydrotrend/po/}</help_brief>
       <default>GUI</default>
       <type>String</type>
     </entry>
+    <!--entry name="/HydroTrend/Input/HypsDir">
+      <label>Hypsometry file</label>
+      <help_brief>Path to Hypsometry files{cb+bb;/home/csdms/sims/hydrotrend/default/;/home/csdms/sims/hydrotrend/po/;/home/csdms/sims/hydrotrend/danube/;/home/csdms/sims/hydrotrend/eel/;/home/csdms/sims/hydrotrend/ganges/;/home/csdms/sims/hydrotrend/lanyang/;/home/csdms/sims/hydrotrend/waipaoa/}</help_brief>
+      <default>/home/csdms/sims/hydrotrend/default</default>
+      <type>String</type>
+    </entry-->
     <entry name="/HydroTrend/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
@@ -27,7 +33,7 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/HydroTrend/Input/Var/RunDuration">
-      <label>Run duraction (years)</label>
+      <label>Run duration (years)</label>
       <help_brief>Simulation run time in years</help_brief>
       <default>100</default>
       <type>Int</type>
@@ -35,6 +41,12 @@
         <min>0</min>
         <max>100000</max>
       </range>
+    </entry>
+    <entry name="/HydroTrend/Input/HypsFile">
+      <label>Hypsometry file</label>
+      <help_brief>Path to Hypsometry file{cb+fb;/home/csdms/sims/hydrotrend/default/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/po/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/danube/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/eel/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/ganges/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/lanyang/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/waipaoa/HYDRO0.HYPS}</help_brief>
+      <default>/home/csdms/sims/hydrotrend/default/HYDRO0.HYPS</default>
+      <type>String</type>
     </entry>
   </tab>
   <tab name="Temperature">
@@ -69,11 +81,83 @@
         <max>10</max>
       </range>
     </entry>
+    <entry name="/HydroTrend/Input/Var/JanTemp">
+      <label><![CDATA[<html>January monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>19.14 1.05</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/FebTemp">
+      <label><![CDATA[<html>February monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>18.85 1.32</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/MarTemp">
+      <label><![CDATA[<html>March monthly temperature  {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>17.49 1.07</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/AprTemp">
+      <label><![CDATA[<html>April monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>14.76 0.88</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/MayTemp">
+      <label><![CDATA[<html>May monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>12.08 0.86</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/JunTemp">
+      <label><![CDATA[<html>June monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>9.99 1.08</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/JulTemp">
+      <label><![CDATA[<html>July monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>9.43 0.95</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/AugTemp">
+      <label><![CDATA[<html>August monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>10.13 0.74</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/SepTemp">
+      <label><![CDATA[<html>September monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>11.92 0.94</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/OctTemp">
+      <label><![CDATA[<html>October monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>13.91 1.14</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/NovTemp">
+      <label><![CDATA[<html>November monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>15.82 1.08</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/DecTemp">
+      <label><![CDATA[<html>December monthly temperature {-40, 50} (&deg;C)</html>]]></label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>17.93 1.03</default>
+      <type>String</type>
+    </entry>
   </tab>
   <tab name="Precipitation">
     <entry name="/HydroTrend/Input/Var/PrecipStart">
-      <label>Starting mean annual precipitation (m/yr)</label>
-      <help_brief>Starting mean annual precipitation (m/yr)</help_brief>
+      <label>Total annual precipitation (m/yr)</label>
+      <help_brief>Total annual precipitation (m/yr)</help_brief>
       <default>1.59</default>
       <type>Float</type>
       <range>
@@ -82,8 +166,8 @@
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/PrecipChange">
-      <label>Change in mean annual precipitation (m/yr/yr)</label>
-      <help_brief>Change in mean annual precipitation (m/yr/yr)</help_brief>
+      <label>Change in total annual precipitation (m/yr/yr)</label>
+      <help_brief>Change in total annual precipitation (m/yr/yr)</help_brief>
       <default>0.</default>
       <type>Float</type>
       <range>
@@ -100,6 +184,79 @@
         <min>0</min>
         <max>10</max>
       </range>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/JanPrecip">
+      <label>January monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 103.91 62.07 </help_brief>
+      <default>103.91 62.07</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/FebPrecip">
+      <label>February monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>101.22 69.90</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/MarPrecip">
+      <label>March monthly Precipitaition {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>121.90 71.12</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/AprPrecip">
+      <label>April monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>147.96 56.59</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/MayPrecip">
+      <label>May monthly Precipitation {0, 3000} (mm/month) </label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>125.50 71.91</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/JunPrecip">
+      <label>June monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>151.81 67.80</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/JulPrecip">
+      <label>July monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>176.36 63.04</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/AugPrecip">
+      <label>August monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>147.82 49.38</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/SepPrecip">
+      <label>September monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>132.03 64.54</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/OctPrecip">
+      <label>October monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>127.39 60.39</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/NovPrecip">
+      <label>November monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.
+14 1.05 </help_brief>
+      <default>114.85 60.34</default>
+      <type>String</type>
+    </entry>
+    <entry name="/HydroTrend/Input/Var/DecPrecip">
+      <label>December monthly Precipitation {0, 3000} (mm/month)</label>
+      <help_brief>Values should be single space separated. First value represents mean and second the standard deviation. ex. 19.14 1.05 </help_brief>
+      <default>116.84 70.08</default>
+      <type>String</type>
     </entry>
   </tab>
   <tab name="Basin">
@@ -221,8 +378,8 @@
       <default>3.0</default>
       <type>Float</type>
       <range>
-        <min>0</min>
-        <max>10</max>
+        <min>0.0</min>
+        <max>1000</max>
       </range>
     </entry>
     <entry name="/HydroTrend/Input/Var/RiverWidthExponent">
@@ -355,12 +512,12 @@
       </range>
       <type>Float</type>
     </entry>
-    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Velocity"/>
-    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Width"/>
-    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Depth"/>
-    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Water_Discharge"/>
-    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Sediment_Discharge"/>
-    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Mean_Bedload_Flux"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Velocity"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Width"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Depth"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Water_Discharge"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Sediment_Discharge"/>
+    <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Bedload_Flux"/>
   </tab>
   <tab name="About">
     <entry name="/HydroTrend/ModelName">
@@ -375,5 +532,13 @@
       <default>Albert Kettner</default>
       <type>String</type>
     </entry>
+
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:HydroTrend</default>
+      <type>String</type>
+    </entry>
+
   </tab>
 </dialog>

@@ -15,7 +15,7 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/Waves/RunDuration">
-      <label>Run duraction (years)</label>
+      <label>Run duration (years)</label>
       <unit>years</unit>
       <help_brief>Simulation run time in years</help_brief>
       <default>100</default>
@@ -62,7 +62,7 @@
       <label>Highness factor for incoming wave angles</label>
       <unit>-</unit>
       <help_brief>Highness factor for incoming wave angles</help_brief>
-      <default>.5</default>
+      <default>.2</default>
       <type>Float</type>
       <range>
         <min>0</min>

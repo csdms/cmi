@@ -15,7 +15,7 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/CEM/RunDuration">
-      <label>Run duraction (days)</label>
+      <label>Run duration (days)</label>
       <unit>days</unit>
       <help_brief>Simulation run time in days</help_brief>
       <default>100</default>

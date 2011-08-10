@@ -21,7 +21,7 @@
   </tab>
   <tab name="Run Parameters">
     <entry name="/Child/Input/Var/RunDuration">
-      <label>Run duraction (years)</label>
+      <label>Run duration (years)</label>
       <help_brief>Simulation run time in years</help_brief>
       <default>5000</default>
       <type>Float</type>
