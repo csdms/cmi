@@ -1,0 +1,96 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.ports.comment)
+        
+// Insert-UserCode-Here {edu.csdms.ports.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.ports.comment)
+        package ports {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.ports.CMIPort.comment)
+            
+// Insert-UserCode-Here {edu.csdms.ports.CMIPort.comment} (Insert your port comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.ports.CMIPort.comment)
+            interface CMIPort extends gov.cca.Port
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.ports.CMIPort.methods)
+                
+// Insert-UserCode-Here {edu.csdms.ports.CMIPort.methods} (Insert your port methods here)
+
+		bool  initialize( in string config_file );
+
+		bool  run_for( in double time_interval, in string time_units, in string stop_rule, in array<double> stop_vars );
+		
+		void  finalize();
+
+		bool  run_model( in string config_file, in string stop_rule, in double stop_var);
+
+		array<> get_values( in string long_var_name );  
+
+		void  set_values( in string long_var_name, in array<> in_values);
+
+		string  get_status();
+
+		string  get_component_name();
+
+		array<string> get_input_item_list();
+
+		array<string> get_output_item_list();
+
+		void  get_required_ports();
+
+		void  release_required_ports();
+
+		void setServices();
+
+		array<>  get_values_at_indices( in string long_var_name,  in array<int> indices);
+
+		void  set_values_at_indices( in string long_var_name,  in array<int> indices, in array<> in_values);
+
+		void print_traceback( );
+
+                long getRaster_nx();
+
+                long getRaster_ny();
+
+                double getRaster_dx();
+
+                double getRaster_dy();
+
+                double getRaster_ulx();
+
+                double getRaster_uly();
+
+                array<double, 2> getRaster_grid(in string val_string);
+
+                array<int, 1> get_raster_dimen(in string val_string);
+
+                array<double, 1> get_raster_res(in string val_string);
+
+                array<> get_raster_data(in string val_string);
+
+                array<double, 1> get_time_span();
+
+//                edu.csdms.openmi.IElementSet get_element_set(in string val_string);
+
+//                edu.csdms.openmi.IValueSet get_value_set(in string val_string);
+
+                array<> get_value_set_data(in string val_string);
+
+//                void set_value_set(in string val_string, in edu.csdms.openmi.IValueSet values);
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.ports.CMIPort.methods)
+            }
+        }
+    }
+}

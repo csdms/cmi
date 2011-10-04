@@ -6,16 +6,10 @@
 # bocca config CLASSNAME --var=VARUSER --value=VALUE
 # --------------------------------------------------------------
 # Include path directives, including paths to Fortran modules
-INCLUDES = -I/data/progs/roms/projects/upwelling/Build/ -I/data/progs/netcdf/4.1.1/include/
-#INCLUDES = -I/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build 
-#INCLUDES = -I/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build -I/data/progs/netcdf/3.6.3/include
-#INCLUDES = -I/data/progs/roms/projects/upwelling/Build
+INCLUDES = -I/home/csdms/tools/netcdf/4.1.2/include/ -I/home/csdms/models/roms/upwelling/Build/
 
 # Library paths and names, binaries
-LIBS = -L/data/progs/roms/projects/upwelling/Build/ -L/data/progs/netcdf/4.1.1/lib -lnetcdf -lnetcdff -lupwelling
-#LIBS = -L/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build -lupwelling
-#LIBS = -L/data/progs/netcdf/3.6.3/lib -lnetcdf -L/home/beach/faculty/huttone/Install/roms/src/roms-2010-09-27/build/Build -lupwelling -lnetcdf
-#LIBS = -L/data/progs/roms/projects/upwelling/Build -lupwelling 
+LIBS = -L/home/csdms/tools/netcdf/4.1.2/lib -lnetcdf -lnetcdff -L/home/csdms/models/roms/upwelling/Build/ -lupwelling
 
 # java 
 CLASSPATH_USER=
@@ -33,7 +27,7 @@ FPPFLAGS_USER= $(BOCCA_IO_FLAGS)
 # compiler flags
 CFLAGS_USER=   $(BOCCA_IO_FLAGS)
 CXXFLAGS_USER= $(BOCCA_IO_FLAGS)
-F90FLAGS_USER=
+F90FLAGS_USER= -ffree-line-length-none
 F77FLAGS_USER=
 JAVAFLAGS_USER=
 

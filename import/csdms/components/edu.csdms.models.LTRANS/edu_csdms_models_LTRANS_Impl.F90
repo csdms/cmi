@@ -20,19 +20,22 @@
 #include "gov_cca_Port_fAbbrev.h"
 #include "sidl_ClassInfo_fAbbrev.h"
 #include "sidl_BaseClass_fAbbrev.h"
+#include "edu_csdms_tools_PrintQueue_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
 #include "gov_cca_ports_ParameterPortFactory_fAbbrev.h"
 #include "sidl_BaseException_fAbbrev.h"
-#include "edu_csdms_openmi_IElementSet_fAbbrev.h"
-#include "edu_csdms_openmi_IValueSet_fAbbrev.h"
 #include "edu_csdms_models_LTRANS_fAbbrev.h"
+#include "edu_csdms_openmi_IValueSet_fAbbrev.h"
+#include "edu_csdms_openmi_IElementSet_fAbbrev.h"
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
 #include "gov_cca_CCAException_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
+#include "edu_csdms_tools_Verbose_fAbbrev.h"
 #include "edu_csdms_ports_IRFPort_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
+#include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
@@ -356,11 +359,11 @@ recursive subroutine L_boccaSetServices7getohcfou_mi(self, services,           &
        typeMap, exception)
   BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.LTRANS failed addProvidesPort Run ')
 
-! Add edu.csdms.ports.IRFPort:LTRANS provides port
+! Add edu.csdms.ports.IRFPort:xyz provides port
   call addProvidesPort(dp%d_private_data%d_services, port, &
-       'LTRANS', 'edu.csdms.ports.IRFPort', &
+       'xyz', 'edu.csdms.ports.IRFPort', &
        typeMap, exception)
-  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.LTRANS failed addProvidesPort LTRANS ')
+  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.LTRANS failed addProvidesPort xyz ')
 
   dr_port = .false.
   call deleteRef(port,exception)
@@ -371,6 +374,12 @@ recursive subroutine L_boccaSetServices7getohcfou_mi(self, services,           &
       'ppf', 'gov.cca.ports.ParameterPortFactory', &
       typeMap, exception)
   BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.LTRANS failed registerUsesPort ppf')
+
+! Register edu.csdms.ports.IRFPort:Ocean uses port
+  call registerUsesPort(dp%d_private_data%d_services, &
+      'Ocean', 'edu.csdms.ports.IRFPort', &
+      typeMap, exception)
+  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.LTRANS failed registerUsesPort Ocean')
 
   dr_typeMap = .false.
   call deleteRef(typeMap,exception)
@@ -458,10 +467,10 @@ recursive subroutine boccaReleaseServic79h8ipbnz1_mi(self, services,           &
       .false., throwaway &
   )
 
-! Un-provide edu.csdms.ports.IRFPort port with port name LTRANS 
-  call removeProvidesPort(services, 'LTRANS', excpt)
+! Un-provide edu.csdms.ports.IRFPort port with port name xyz 
+  call removeProvidesPort(services, 'xyz', excpt)
   call checkException(self, excpt, &
-      'Error: Could not removeProvidesPort LTRANS', &
+      'Error: Could not removeProvidesPort xyz', &
       .false., throwaway &
   )
 
@@ -469,6 +478,13 @@ recursive subroutine boccaReleaseServic79h8ipbnz1_mi(self, services,           &
   call unregisterUsesPort(services, 'ppf', excpt)
   call checkException(self, excpt,  &
        'Error calling unregisterUsesPort ppf', &
+       .false., throwaway &
+  )
+
+! Release edu.csdms.ports.IRFPort port with port name Ocean 
+  call unregisterUsesPort(services, 'Ocean', excpt)
+  call checkException(self, excpt,  &
+       'Error calling unregisterUsesPort Ocean', &
        .false., throwaway &
   )
 
@@ -628,15 +644,19 @@ end subroutine boccaThrowExceptiom7ubgu80_4_mi
 ! 
 
 recursive subroutine boccaForceUsePortI70q2v74knq_mi(self, dummy0, dummy1,     &
-  dummy2, exception)
+  dummy2, dummy3, dummy4, dummy5, dummy6, exception)
   use sidl
   use sidl_NotImplementedException
+  use edu_csdms_ports_IRFPort
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_LTRANS
+  use edu_csdms_openmi_ScalarSet
   use edu_csdms_tools_ConfigDialog
+  use edu_csdms_tools_PrintQueue
   use edu_csdms_tools_TemplateFiles
+  use edu_csdms_tools_Verbose
   use edu_csdms_models_LTRANS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.boccaForceUsePortInclude.use)
   ! Insert-Code-Here {edu.csdms.models.LTRANS.boccaForceUsePortInclude.use} (use statements)
@@ -646,9 +666,17 @@ recursive subroutine boccaForceUsePortI70q2v74knq_mi(self, dummy0, dummy1,     &
   ! in
   type(gov_cca_ports_ParameterPortFactory_t) :: dummy0
   ! in
-  type(edu_csdms_tools_TemplateFiles_t) :: dummy1
+  type(edu_csdms_ports_IRFPort_t) :: dummy1
   ! in
-  type(edu_csdms_tools_ConfigDialog_t) :: dummy2
+  type(edu_csdms_tools_Verbose_t) :: dummy2
+  ! in
+  type(edu_csdms_tools_TemplateFiles_t) :: dummy3
+  ! in
+  type(edu_csdms_openmi_ScalarSet_t) :: dummy4
+  ! in
+  type(edu_csdms_tools_ConfigDialog_t) :: dummy5
+  ! in
+  type(edu_csdms_tools_PrintQueue_t) :: dummy6
   ! in
   type(sidl_BaseInterface_t) :: exception
   ! out

@@ -26,6 +26,7 @@ set (PROJECTS
   topoflow
   marssim
   roms_builder
+  roms_ltrans
 )
 
 if (NOT DEFINED MODULE_NAME)

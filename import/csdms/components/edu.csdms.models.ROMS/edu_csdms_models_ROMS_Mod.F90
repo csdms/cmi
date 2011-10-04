@@ -22,7 +22,7 @@ module edu_csdms_models_ROMS_impl
 
 ! Insert use statements here...
 USE mod_param, only : Ngrids
-!USE mod_parallel
+USE mod_kinds, only : r8
 USE mod_iounits, only : stdinp
 USE mod_scalars, only : ntstart, ntend, exit_flag, NoError
 USE ocean_control_mod, only : ROMS_initialize
@@ -48,11 +48,14 @@ USE ocean_control_mod, only : ROMS_finalize
 
 ! Insert user's private data here.
   type(gov_cca_TypeMap_t) :: userinput
-
+  real (kind=sidl_double) :: RunInterval
   logical :: first
+  !real(r8) :: RunInterval            ! seconds
+  integer :: ntimes ! Number of timesteps
+  double precision :: dt
 
-  integer, dimension(Ngrids) :: Tstr
-  integer, dimension(Ngrids) :: Tend
+!  integer, dimension(Ngrids) :: Tstr
+!  integer, dimension(Ngrids) :: Tend
 
 ! Bocca generated code. bocca.protected.begin(edu.csdms.models.ROMS.private_data)
   ! Handle to framework Services object

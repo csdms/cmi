@@ -20,19 +20,22 @@
 #include "gov_cca_Port_fAbbrev.h"
 #include "sidl_ClassInfo_fAbbrev.h"
 #include "sidl_BaseClass_fAbbrev.h"
+#include "edu_csdms_tools_PrintQueue_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
-#include "gov_cca_ports_ParameterPortFactory_fAbbrev.h"
 #include "edu_csdms_models_ROMS_fAbbrev.h"
+#include "gov_cca_ports_ParameterPortFactory_fAbbrev.h"
 #include "sidl_BaseException_fAbbrev.h"
-#include "edu_csdms_openmi_IElementSet_fAbbrev.h"
 #include "edu_csdms_openmi_IValueSet_fAbbrev.h"
+#include "edu_csdms_openmi_IElementSet_fAbbrev.h"
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
 #include "gov_cca_CCAException_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
 #include "edu_csdms_ports_IRFPort_fAbbrev.h"
+#include "edu_csdms_tools_Verbose_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
+#include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
@@ -356,11 +359,11 @@ recursive subroutine R_boccaSetServicesf0qo70kdso_mi(self, services,           &
        typeMap, exception)
   BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.ROMS failed addProvidesPort Run ')
 
-! Add edu.csdms.ports.IRFPort:ROMS provides port
+! Add edu.csdms.ports.IRFPort:Ocean provides port
   call addProvidesPort(dp%d_private_data%d_services, port, &
-       'ROMS', 'edu.csdms.ports.IRFPort', &
+       'Ocean', 'edu.csdms.ports.IRFPort', &
        typeMap, exception)
-  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.ROMS failed addProvidesPort ROMS ')
+  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.ROMS failed addProvidesPort Ocean ')
 
   dr_port = .false.
   call deleteRef(port,exception)
@@ -458,10 +461,10 @@ recursive subroutine boccaReleaseServiceogptzajpg_mi(self, services,           &
       .false., throwaway &
   )
 
-! Un-provide edu.csdms.ports.IRFPort port with port name ROMS 
-  call removeProvidesPort(services, 'ROMS', excpt)
+! Un-provide edu.csdms.ports.IRFPort port with port name Ocean 
+  call removeProvidesPort(services, 'Ocean', excpt)
   call checkException(self, excpt, &
-      'Error: Could not removeProvidesPort ROMS', &
+      'Error: Could not removeProvidesPort Ocean', &
       .false., throwaway &
   )
 
@@ -628,15 +631,18 @@ end subroutine boccaThrowExceptiome8hhnyweg_mi
 ! 
 
 recursive subroutine boccaForceUsePortIl2a5zd63z__mi(self, dummy0, dummy1,     &
-  dummy2, exception)
+  dummy2, dummy3, dummy4, dummy5, exception)
   use sidl
   use sidl_NotImplementedException
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_ROMS
+  use edu_csdms_openmi_ScalarSet
   use edu_csdms_tools_ConfigDialog
+  use edu_csdms_tools_PrintQueue
   use edu_csdms_tools_TemplateFiles
+  use edu_csdms_tools_Verbose
   use edu_csdms_models_ROMS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.boccaForceUsePortInclude.use)
   ! Insert-Code-Here {edu.csdms.models.ROMS.boccaForceUsePortInclude.use} (use statements)
@@ -646,9 +652,15 @@ recursive subroutine boccaForceUsePortIl2a5zd63z__mi(self, dummy0, dummy1,     &
   ! in
   type(gov_cca_ports_ParameterPortFactory_t) :: dummy0
   ! in
-  type(edu_csdms_tools_TemplateFiles_t) :: dummy1
+  type(edu_csdms_tools_Verbose_t) :: dummy1
   ! in
-  type(edu_csdms_tools_ConfigDialog_t) :: dummy2
+  type(edu_csdms_tools_TemplateFiles_t) :: dummy2
+  ! in
+  type(edu_csdms_openmi_ScalarSet_t) :: dummy3
+  ! in
+  type(edu_csdms_tools_ConfigDialog_t) :: dummy4
+  ! in
+  type(edu_csdms_tools_PrintQueue_t) :: dummy5
   ! in
   type(sidl_BaseInterface_t) :: exception
   ! out
@@ -723,37 +735,36 @@ recursive subroutine ROMS_setServicesya4c29b588xe_mi(self, services,           &
   type(edu_csdms_tools_ConfigDialog_t) :: dialog
   type(edu_csdms_models_ROMS_wrap) :: dp
 
+  print *, 'Bocca> Setting services'
+  call boccaSetServices(self, services, exception)
+  BOCCA_SIDL_CHECK_F90(exception , 'setServices')
 
-    call boccaSetServices(self, services, exception) 
-    BOCCA_SIDL_CHECK_F90(exception , 'setServices')
-
-    ! Insert-UserCode-Here
-    call createTypeMap(services, userinput, exception)
-    call getPort(services, "ppf", generalPort, exception)
-    if (is_null(exception)) then
-      call cast(generalPort, ppf, throwawayException)
-      if (not_null(ppf)) then
-        call initParameterData(ppf, userinput, &
+  ! Insert-UserCode-Here
+  call createTypeMap(services, userinput, exception)
+  call getPort(services, "ppf", generalPort, exception)
+  if (is_null(exception)) then
+    call cast(generalPort, ppf, throwawayException)
+    if (not_null(ppf)) then
+      call initParameterData(ppf, userinput, &
                                "Configure", throwawayException)
-        call setBatchTitle(ppf, userinput, &
+      call setBatchTitle(ppf, userinput, &
                            "ROMS Parameters", throwawayException)
 
-        call new (dialog, throwawayException)
-        call edu_csdms_tools_ConfigDialog_read_m(dialog, "ROMS.xml", &
+      call new (dialog, throwawayException)
+      call edu_csdms_tools_ConfigDialog_read_m(dialog, "ROMS.xml", &
               throwawayException)
-        call edu_csdms_tools_ConfigDialog_construct_m (dialog, ppf, &
+      call edu_csdms_tools_ConfigDialog_construct_m (dialog, ppf, &
               userinput, throwawayException)
 
-        call addParameterPort(ppf, userinput, services, &
+      call addParameterPort(ppf, userinput, services, &
                               throwawayException)
-      end if
     end if
-    call releasePort(services, "ppf", throwawayException)
-
-    call edu_csdms_models_ROMS__get_data_m(self, dp)
-    dp%d_private_data%userinput = userinput
-
-    return
+  end if
+  call releasePort(services, "ppf", throwawayException)
+  call edu_csdms_models_ROMS__get_data_m(self, dp)
+  dp%d_private_data%userinput = userinput
+  print *, 'Bocca> Services set'
+  return
 
 ! Exit route when there are exceptions
 BOCCAEXIT      continue
@@ -878,61 +889,23 @@ recursive subroutine edu_csdms_models_ROMS_go_mi(self, retval, exception)
 ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.go)
   type(edu_csdms_tools_TemplateFiles_t) :: template
   type(edu_csdms_models_ROMS_wrap) :: dp
-  character (len=2048) :: input_dir
-  character (len=2048) :: site_prefix
-  character (len=2048) :: case_prefix
-  integer :: ng
-
+  type(sidl_string_1d) :: properties
+  
   call edu_csdms_models_ROMS__get_data_m(self, dp)
+  
+  print *, "Bocca> Status ***Initialize*** for Component ROMS"
+  call ROMS_initialize0x96pdqy2mj7w_mi(self, properties, exception)
+  
 
-  call getString (dp%d_private_data%userinput, "/ROMS/Input/Dir", ".", &
-                  input_dir, exception);
-  call getString (dp%d_private_data%userinput, "/ROMS/SitePrefix", "", &
-                  site_prefix, exception);
-  call getString (dp%d_private_data%userinput, "/ROMS/CasePrefix", "", &
-                  case_prefix, exception);
+  print *, 'Bocca> Status ***Run*** for component ROMS '
+  call edu_csdms_models_ROMS_run_mi(self, dp%d_private_data%RunInterval, exception)
+  
+  print *, 'Bocca> Status ***finalize*** for component ROMS'
+  call ROMS_finalized9wgaery_gustyh_mi(self, exception)
 
-  print *, input_dir
-  print *, site_prefix
-  print *, case_prefix
-  if (input_dir=="GUI") then
-    print *, "Input from GUI"
-    call new (template, exception)
-    print *, "Create new file"
-    call add_file (template, "ROMS_ser_upwelling.in.in", "ocean.in", &
-                   exception)
-    call add_file (template, "ROMS_ser_varinfo.dat.in", "varinfo.dat", &
-                   exception)
-    print *, "Substitute"
-    call substitute (template, dp%d_private_data%userinput, & 
-          "/ROMS/Input/Var/", ".", exception);
-    print *, "done."
-  else
-    print *, "Input from File"
-  endif
-
-  !stdinp = 105
-  print *, "Open ocean.in"
-  open (stdinp, FILE='ocean.in', ACTION='read')
-
-  print *, "Initialize ROMS"
-  if (exit_flag.eq.NoError) then
-    dp%d_private_data%first=.TRUE.
-    call ROMS_initialize (dp%d_private_data%first)
-  end if
-
-  do ng=1,Ngrids
-    dp%d_private_data%Tstr(ng)=ntstart(ng)
-    dp%d_private_data%Tend(ng)=ntend(ng)+1
-  end do
-
-  print *, "Run ROMS"
-  if (exit_flag.eq.NoError) then
-    call ROMS_run (dp%d_private_data%Tstr, dp%d_private_data%Tend)
-  end if
-
-  print *, "DONE!"
+  print *, "Bocca> DONE!"
   return
+
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.go)
 end subroutine edu_csdms_models_ROMS_go_mi
 
@@ -953,6 +926,7 @@ recursive subroutine ROMS_initialize0x96pdqy2mj7w_mi(self, properties,         &
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.initialize.use)
   ! Insert-Code-Here {edu.csdms.models.ROMS.initialize.use} (use statements)
   use edu_csdms_tools_TemplateFiles
+  use gov_cca_TypeMap
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.initialize.use)
   implicit none
   type(edu_csdms_models_ROMS_t) :: self
@@ -967,22 +941,70 @@ recursive subroutine ROMS_initialize0x96pdqy2mj7w_mi(self, properties,         &
 ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.initialize)
 ! Insert-Code-Here {edu.csdms.models.ROMS.initialize} (initialize method)
   type(edu_csdms_tools_TemplateFiles_t) :: template
+  type(edu_csdms_models_ROMS_wrap) :: dp
+  character (len=2048) :: input_dir
+  character (len=2048) :: input_file
+  character (len=2048) :: site_prefix
+  character (len=2048) :: case_prefix
+  integer :: ng
+  !real(r8) :: RunInterval
 
-  call new (template, exception)
-  call add_file (template, "ROMS_upwelling.in.in", "ocean.in", exception)
+  print *, 'Bocca> Fetching user input data'
+  call edu_csdms_models_ROMS__get_data_m(self, dp)
+  call getString (dp%d_private_data%userinput, "/ROMS/Input/Dir", ".", &
+                  input_dir, exception)
+  call getString (dp%d_private_data%userinput, "/ROMS/Input/File", ".", &
+                  input_file, exception)
+  call getString (dp%d_private_data%userinput, "/ROMS/SitePrefix", "", &
+                  site_prefix, exception)
+  call getString (dp%d_private_data%userinput, "/ROMS/CasePrefix", "", &
+                  case_prefix, exception)
+  call getInt (dp%d_private_data%userinput, "/ROMS/Input/Var/NTIMES", 0, &
+                  dp%d_private_data%ntimes, exception)
+  call getDouble (dp%d_private_data%userinput, "/ROMS/Input/Var/DT", 0.0D0, &
+                 dp%d_private_data%dt, exception)
+  call getDouble (dp%d_private_data%userinput, "/ROMS/Input/Var/RunInterval", 0.0D0, &
+                  dp%d_private_data%RunInterval, exception)
+  print *, 'Bocca> Input dir set to ', trim(input_dir)
+  print *, 'Bocca> Input File to be read ', trim(input_file)
+
+  !Check whether reading from a file or GUI, the tab dialogs
+  if (input_dir=="GUI") then
+    input_dir = "."
+    print *, "Bocca> Reading Input from GUI, the tab dialogs"
+    call new (template, exception)
+    print *, "Bocca> Creating new file: ocean.in"
+    call add_file (template, "ROMS_ser_upwelling.in.in", "ocean.in", &
+                   exception)
+    call add_file (template, "ROMS_ser_varinfo.dat.in", "varinfo.dat", &
+                   exception)
+    print *, "Bocca> Substituting input values with the values in the input template"
+    call substitute (template, dp%d_private_data%userinput, &
+          "/ROMS/Input/Var/", ".", exception);
+    print *, 'Bocca> Calculating ROMS runinterval where ntime is set as ', dp%d_private_data%ntimes, ' and dt set as ', dp%d_private_data%dt
+    dp%d_private_data%RunInterval = dp%d_private_data%ntimes * dp%d_private_data%dt
+    print *, 'Bocca> RunInterval calculated as ', dp%d_private_data%RunInterval
+  else
+    print *, 'Bocca> Reading input from file '
+    print *, 'Bocca> Copying ROMS varinfo.dat to working directory... '
+    call system("cp " // trim(input_dir) // "/varinfo.dat" // " .")
+    input_file = trim(input_dir) // "/" // trim(input_file)
+    print *, "Bocca> Input from File: ", trim(input_file)
+  endif
+
+  print *, 'Bocca> Reading files to ROMS standard input from module mod_iounits'
+  open (stdinp, FILE=input_file, ACTION='read')
+  
+  if (exit_flag.eq.NoError) then
+    dp%d_private_data%first=.TRUE.
+    call ROMS_initialize (dp%d_private_data%first)
+  end if
+  print *, 'Bocca> Initialization Done.'
+  return  
 ! 
 ! This method has not been implemented
 ! 
 
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.initialize)
-!  type(sidl_BaseInterface_t) :: throwaway
-!  type(sidl_NotImplementedException_t) :: notImpl
-!  call new(notImpl, exception)
-!  call setNote(notImpl, 'Not Implemented', exception)
-!  call cast(notImpl, exception,throwaway)
-!  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.initialize)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.initialize)
 end subroutine ROMS_initialize0x96pdqy2mj7w_mi
 
@@ -1016,16 +1038,12 @@ recursive subroutine edu_csdms_models_ROMS_run_mi(self, time, exception)
 ! 
 ! This method has not been implemented
 ! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.run)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
+  if (exit_flag.eq.NoError) then
+    print *, "Bocca> ROMS run started for ', time, ' time steps"
+    call ROMS_run (time)
+    print *, 'Bocca> ROMS run completed for ', time, ' time steps'
+  end if
   return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.run)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.run)
 end subroutine edu_csdms_models_ROMS_run_mi
 
@@ -1058,15 +1076,13 @@ recursive subroutine ROMS_finalized9wgaery_gustyh_mi(self, exception)
 ! This method has not been implemented
 ! 
 
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.finalize)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.finalize)
+  if (exit_flag.eq.NoError) then
+     print *, 'Bocca> ROMS finalize started'
+     call ROMS_finalize()
+     print *, 'ROMS finalize Done'
+  end if 
+ 
+! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.finalize)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.finalize)
 end subroutine ROMS_finalized9wgaery_gustyh_mi
 
