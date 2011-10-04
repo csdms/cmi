@@ -38,8 +38,8 @@ package edu version 0.0 {
                 double getYComponent();	                	
 
                 //-----------------------------------
-                //-----------------------------------
                 //  Vector component in Z-direction
+                //-----------------------------------
                 double getZComponent();	                	
 
                 // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.IVector.methods)

@@ -27,67 +27,88 @@ package edu version 0.0 {
                 
 // Insert-UserCode-Here {edu.csdms.ports.CMIPort.methods} (Insert your port methods here)
 
-		bool  initialize( in string config_file );
+                
+                bool initialize(in string config_file);	                	
 
-		bool  run_for( in double time_interval, in string time_units, in string stop_rule, in array<double> stop_vars );
-		
-		void  finalize();
+                
+                bool run_for(in double time_interval, in string time_units, in string stop_rule, in array<double> stop_vars);	                	
 
-		bool  run_model( in string config_file, in string stop_rule, in double stop_var);
+                
+                void finalize();	                	
 
-		array<> get_values( in string long_var_name );  
+                
+                bool run_model(in string config_file, in string stop_rule, in double stop_var);	                	
 
-		void  set_values( in string long_var_name, in array<> in_values);
+                
+                array<> get_values(in string long_var_name);	                	
 
-		string  get_status();
+                
+                void set_values(in string long_var_name, in array<> in_values);	                	
 
-		string  get_component_name();
+                
+                string get_status();	                	
 
-		array<string> get_input_item_list();
+                
+                string get_component_name();	                	
 
-		array<string> get_output_item_list();
+                
+                array<string> get_input_item_list();	                	
 
-		void  get_required_ports();
+                
+                array<string> get_output_item_list();	                	
 
-		void  release_required_ports();
+                
+                void get_required_ports();	                	
 
-		void setServices();
+                
+                void release_required_ports();	                	
 
-		array<>  get_values_at_indices( in string long_var_name,  in array<int> indices);
+//		void setServices();
 
-		void  set_values_at_indices( in string long_var_name,  in array<int> indices, in array<> in_values);
+                array<> get_values_at_indices(in string long_var_name, in array<int> indices);	                	
 
-		void print_traceback( );
+                
+                void set_values_at_indices(in string long_var_name, in array<int> indices, in array<> in_values);	                	
 
-                long getRaster_nx();
+                
+                void print_traceback();	                	
 
-                long getRaster_ny();
+                
+                long getRaster_nx();	                	
 
-                double getRaster_dx();
+                
+                long getRaster_ny();	                	
 
-                double getRaster_dy();
+                
+                double getRaster_dx();	                	
 
-                double getRaster_ulx();
+                
+                double getRaster_dy();	                	
 
-                double getRaster_uly();
+                
+                double getRaster_ulx();	                	
 
-                array<double, 2> getRaster_grid(in string val_string);
+                
+                double getRaster_uly();	                	
 
-                array<int, 1> get_raster_dimen(in string val_string);
+                
+                array<double, 2> getRaster_grid(in string val_string);	                	
 
-                array<double, 1> get_raster_res(in string val_string);
+                
+                array<int, 1> get_raster_dimen(in string val_string);	                	
 
-                array<> get_raster_data(in string val_string);
+                
+                array<double, 1> get_raster_res(in string val_string);	                	
 
-                array<double, 1> get_time_span();
+                
+                array<> get_raster_data(in string val_string);	                	
 
-//                edu.csdms.openmi.IElementSet get_element_set(in string val_string);
+                
+                array<double, 1> get_time_span();	                	
 
-//                edu.csdms.openmi.IValueSet get_value_set(in string val_string);
-
-                array<> get_value_set_data(in string val_string);
-
-//                void set_value_set(in string val_string, in edu.csdms.openmi.IValueSet values);
+                //                edu.csdms.openmi.IValueSet get_value_set(in string val_string);
+                //                edu.csdms.openmi.IElementSet get_element_set(in string val_string);
+                array<> get_value_set_data(in string val_string);	                	
 
                 // DO-NOT-DELETE bocca.splicer.end(edu.csdms.ports.CMIPort.methods)
             }
