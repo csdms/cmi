@@ -1,0 +1,24 @@
+*****************************************************************
+AQUATELLUS INPUT PARAMETERS
+*****************************************************************
+${RunDuration}	simulation time
+${TimeStep}	time step
+${NRows}	number of grid rows
+${NCols}	number of grid columns
+${XResolution}	grid cell dx
+${YResolution}	grid cell dy
+${UpstreamElevation}	initial height at upstream end of the river floodplain
+${FloodplainGradient}	initial river floodplain gradient
+${MarineSlopeGradient}	initial marine gradient
+${Ngrain}	number of grain size classes
+${GrainSize1} ${GrainSize2} ${GrainSize3} grain size in mm
+${GrainSizePerc1} ${GrainSizePerc2} ${GrainSizePerc3} percentage in each grain size class
+${TravelDistanceFluvial1} ${TravelDistanceFluvial2} ${TravelDistanceFluvial3} travel distance in fluvial domain
+${TravelDistanceMarine1} ${TravelDistanceMarine2} ${TravelDistanceMarine3} travel distance in marine domain
+${ErosionConstantFluvial} erosion proportionality constant in fluvial domain
+${ErosionConstantMarine} erosion proportionality constant in marine domain
+${IncomingDischarge} initial incoming river discharge
+${IncomingSedLoad} initial incoming river sediment load
+${InitialSeaLevel} sea level at beginning of simulation in m
+${SeaLevelSineAmpl} sea level sine function amplitude in m
+${SeaLevelSinePer} sea level period in timesteps

@@ -1,0 +1,341 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/Aquatellus/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb;GUI;/csdms/sims/aquatellus/default}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Run Parameters">
+    <entry name="/Aquatellus/Input/Var/RunDuration">
+      <label>Run duration (years)</label>
+      <help_brief>Simulation run time in years</help_brief>
+      <default>2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/Aquatellus/Input/Var/TimeStep">
+      <label>Time step (years)</label>
+      <help_brief>Model time step in years</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/Aquatellus/Input/Var/NRows">
+      <label>Number of grid rows (-)</label>
+      <help_brief>Number of rows in computational grid</help_brief>
+      <default>150</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Aquatellus/Input/Var/NCols">
+      <label>Number of grid columns (-)</label>
+      <help_brief>Number of columns in computational grid</help_brief>
+      <default>150</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Aquatellus/Input/Var/XResolution">
+      <label>Grid resolution in x-direction (m)</label>
+      <help_brief>Grid resolution in x-direction (m)</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Aquatellus/Input/Var/YResolution">
+      <label>Grid resolution in y-direction (m)</label>
+      <help_brief>Grid resolution in y-direction (m)</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+      <entry name="/Aquatellus/Input/Var/UpstreamElevation">
+      <label>Initial elevation at the upstream end of the grid (m)</label>
+      <help_brief>Initial Elevation (m)</help_brief>
+      <default>100</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+      </entry>
+    <entry name="/Aquatellus/Input/Var/FloodplainGradient">
+      <label>Initial Gradient in Fluvial Floodplain (m/km)</label>
+      <help_brief>Floodplain Gradient (m/km)</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0.001</min>
+        <max>10</max>
+      </range>
+       </entry>
+    <entry name="/Aquatellus/Input/Var/MarineSlopeGradient">
+      <label>Initial Gradient on Marine Slope (m/km)</label>
+      <help_brief>Marine Gradient (m/km)</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0.01</min>
+        <max>100</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Sediment">   
+     <entry name="/Aquatellus/Input/Var/Ngrain">
+      <label>Number of Grain Size Classes (-)</label>
+      <help_brief>Number of Grain Size Classes is fixed in CMT</help_brief>
+      <default>3</default>
+      <type>Float</type>
+      <range>
+        <min>3</min>
+        <max>3</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/GrainSize1">
+      <label>Grain Size of Class 1 (mm)</label>
+      <help_brief>Grain Size of Coarsest Fraction (mm)</help_brief>
+      <default>0.6</default>
+      <type>Float</type>
+      <range>
+        <min>0.0001</min>
+        <max>4</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/GrainSize2">
+      <label>Grain Size of Class 2 (mm)</label>
+      <help_brief>Grain Size of Medium Fraction (mm)</help_brief>
+      <default>0.4</default>
+      <type>Float</type>
+      <range>
+        <min>0.0001</min>
+        <max>4</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/GrainSize3">
+      <label>Grain Size of Class 3 (mm)</label>
+      <help_brief>Grain Size of Fine Fraction (mm)</help_brief>
+      <default>0.004</default>
+      <type>Float</type>
+      <range>
+        <min>0.00001</min>
+        <max>4</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/GrainSizePerc1">
+      <label>Fraction of Coarse Sediment(mm)</label>
+      <help_brief>Fraction of Coarse Sediment (0-1)</help_brief>
+      <default>0.33</default>
+      <type>Float</type>
+      <range>
+        <min>0.001</min>
+        <max>1</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/GrainSizePerc2">
+      <label>Fraction of Medium Sediment(0-1)</label>
+      <help_brief>Fraction of Medium Sediment (0-1)</help_brief>
+      <default>0.33</default>
+      <type>Float</type>
+      <range>
+        <min>0.001</min>
+        <max>1</max>
+      </range>
+      </entry>
+      <entry name="/Aquatellus/Input/Var/GrainSizePerc3">
+      <label>Fraction of Fine Sediment(0-1)</label>
+      <help_brief>Fraction of Fine Sediment (0-1)</help_brief>
+      <default>0.33</default>
+      <type>Float</type>
+      <range>
+        <min>0.001</min>
+        <max>1</max>
+      </range>
+      </entry>
+      <entry name="/Aquatellus/Input/Var/TravelDistanceFluvial1">
+      <label>Travel Distance for Coarse Grains (m)</label>
+      <help_brief>h= Travel Distance for Coarse Grains in fluvial domain (m)</help_brief>
+      <default>800</default>
+      <type>Float</type>
+      <range>
+        <min>200</min>
+        <max>50000</max>
+      </range>
+      </entry>
+     <entry name="/Aquatellus/Input/Var/TravelDistanceFluvial2">
+      <label>Travel Distance for Medium Grains in fluvial domain (m)</label>
+      <help_brief>h= Travel Distance for Medium Grains in Fluvial Domain (m)</help_brief>
+      <default>4000</default>
+      <type>Float</type>
+      <range>
+        <min>200</min>
+        <max>50000</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/TravelDistanceFluvial3">
+      <label>Travel Distance for Fine Grains in fluvial domain (m)</label>
+      <help_brief>h= Travel Distance for Fine Grains in Fluvial Domain (m)</help_brief>
+      <default>6000</default>
+      <type>Float</type>
+      <range>
+        <min>200</min>
+        <max>50000</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/TravelDistanceMarine1">
+      <label>Travel Distance for Coarse Grains in marine domain (m)</label>
+      <help_brief>h= Travel Distance for Coarse Grains in Marine Domain (m)</help_brief>
+      <default>5000</default>
+      <type>Float</type>
+      <range>
+        <min>200</min>
+        <max>50000</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/TravelDistanceMarine2">
+      <label>Travel Distance for Medium Grains in marine domain (m)</label>
+      <help_brief>h= Travel Distance for Medium Grains in Marine Domain (m)</help_brief>
+      <default>20000</default>
+      <type>Float</type>
+      <range>
+        <min>200</min>
+        <max>50000</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/TravelDistanceMarine3">
+      <label>Travel Distance for Fine Grains in marine domain (m)</label>
+      <help_brief>h= Travel Distance for Fine Grains in Marine Domain (m)</help_brief>
+      <default>40000</default>
+      <type>Float</type>
+      <range>
+        <min>200</min>
+        <max>50000</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/ErosionConstantFluvial">
+      <label>Erosion Constant in Fluvial Domain (1/m)</label>
+      <help_brief>k= Erosion Constant in Fluvial Domain (1/m)</help_brief>
+      <default>0.0005</default>
+      <type>Float</type>
+      <range>
+        <min>0.000001</min>
+        <max>0.01</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/ErosionConstantMarine">
+      <label>Erosion Constant in Marine Domain (1/m)</label>
+      <help_brief>k= Erosion Constant in Marine Domain (1/m)</help_brief>
+      <default>0.00001</default>
+      <type>Float</type>
+      <range>
+        <min>0.000001</min>
+        <max>0.01</max>
+      </range>
+    </entry>
+  </tab>
+    <tab name="River Characteristics">
+     <entry name="/Aquatellus/Input/Var/IncomingDischarge">
+      <label> River Discharge entering the Floodplain (m3/s)</label>
+      <help_brief>Q=River Discharge entering the Floodplain (m3/s)</help_brief>
+      <default>200</default>
+      <type>Float</type>
+      <range>
+        <min>10</min>
+        <max>10000</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/IncomingSedLoad">
+      <label> River Sediment Load entering the Floodplain (m3/s)</label>
+      <help_brief>Q=River Sediment Load entering the Floodplain (m3/s)</help_brief>
+      <default>0.02</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+     </entry>
+  </tab>
+  <tab name="Sea Level">
+     <entry name="/Aquatellus/Input/Var/InitialSeaLevel">
+      <label> Initial Sea Level (m)</label>
+      <help_brief>Sea level is modeled as a sine-curve (m)</help_brief>
+      <default>86</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>200</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/SeaLevelSineAmpl">
+      <label> Amplitude of the sine-shaped sealevel curve (m)</label>
+      <help_brief>Amplitude of the sine-shaped sealevel curve (m)</help_brief>
+      <default>4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>200</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/SeaLevelSineAmpl">
+      <label> Amplitude of the sine-shaped sealevel curve (m)</label>
+      <help_brief>Amplitude of the sine-shaped sealevel curve (m)</help_brief>
+      <default>4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>200</max>
+      </range>
+     </entry>
+     <entry name="/Aquatellus/Input/Var/SeaLevelSinePer">
+      <label> Period of the sine-shaped sealevel curve (timesteps)</label>
+      <help_brief>Period of the sine-shaped sealevel curve (timesteps)</help_brief>
+      <default>800</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>100000</max>
+      </range>
+     </entry>
+  </tab>
+   <tab name="About">
+    <entry name="/Aquatellus/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>AquaTellUs</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Aquatellus/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Irina Overeem</default>
+      <type>String</type>
+    </entry>
+
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:Aquatellus</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  
+</dialog>
+
