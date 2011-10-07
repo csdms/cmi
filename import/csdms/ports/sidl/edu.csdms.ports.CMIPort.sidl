@@ -28,6 +28,54 @@ package edu version 0.0 {
 // Insert-UserCode-Here {edu.csdms.ports.CMIPort.methods} (Insert your port methods here)
 
                 
+                bool CMI_initialize(in string config_file);	                	
+
+                
+                bool CMI_run_for(in double time_interval, in string time_units, in string stop_rule, in array<double> stop_vars);	                	
+
+                
+                bool CMI_run(in double time_interval);	                	
+
+                
+                bool CMI_finalize();	                	
+
+                
+                bool CMI_run_model(in string config_file, in string stop_rule, in double stop_var);	                	
+
+                
+                array<> CMI_get_values(in string long_var_name);	                	
+
+                
+                void CMI_set_values(in string long_var_name, in array<> in_values);	                	
+
+                
+                string CMI_get_status();	                	
+
+                
+                string CMI_get_component_name();	                	
+
+                
+                array<string> CMI_get_input_item_list();	                	
+
+                
+                array<string> CMI_get_output_item_list();	                	
+
+                
+                void CMI_get_required_ports();	                	
+
+                
+                void CMI_release_required_ports();	                	
+
+                
+                array<> CMI_get_values_at_indices(in string long_var_name, in array<int> indices);	                	
+
+                
+                void CMI_set_values_at_indices(in string long_var_name, in array<int> indices, in array<> in_values);	                	
+
+                
+                void CMI_print_traceback();	                	
+
+                
                 bool initialize(in string config_file);	                	
 
                 
@@ -63,8 +111,7 @@ package edu version 0.0 {
                 
                 void release_required_ports();	                	
 
-//		void setServices();
-
+                //		void setServices();
                 array<> get_values_at_indices(in string long_var_name, in array<int> indices);	                	
 
                 
