@@ -26,6 +26,7 @@ set (PROJECTS
   topoflow
   marssim
   roms_builder
+  aquatellus
   roms_ltrans
 )
 
