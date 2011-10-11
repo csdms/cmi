@@ -57,6 +57,7 @@ package edu version 0.0 {
             // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
             // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
             // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
+            // Insert-UserCode-Here {edu.csdms.openmi.ElementType.comment} (Insert your enum comments here)
 
             // DO-NOT-DELETE bocca.splicer.end(edu.csdms.openmi.ElementType.comment)
             enum ElementType
@@ -64,6 +65,7 @@ package edu version 0.0 {
                 // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.openmi.ElementType.entries)
                 
 // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
+                // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
                 // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
                 // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
                 // Insert-UserCode-Here {edu.csdms.openmi.ElementType.entries}
