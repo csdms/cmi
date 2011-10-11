@@ -1,0 +1,2418 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dialog>
+	<!-- =========================================================================================== -->
+	<tab name="Project">
+		<entry name="/MARSSIM/Input/Dir">
+			<label>Input directory</label>
+			<help_brief>Path to input file{cb+bb;GUI;/home/csdms/sims/marssim/Fluvial_no_cratering/}</help_brief>
+			<default>GUI</default>
+			<type>String</type>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/Title">
+	            	<label>MARSSIM application title:</label>
+        	    	<help_brief>MARSSIM application title</help_brief>
+            	    	<default>Landscape evolution model</default>
+            		<type>String</type>
+        	</entry>
+        	<entry name="/MARSSIM/Input/Var/VARNAME">
+            		<label>Variable information filename:</label>
+            		<help_brief>Variable information filename</help_brief>
+            		<default>varinfo.dat</default>
+            		<type>String</type>
+        	</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Boundary Conditions">
+		<entry name="/MARSSIM/Input/Var/ISEED">
+			<label>Random seed:</label>
+			<help_brief>A integer random seed</help_brief>
+			<default>4632819</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>2100000000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/INEW_SIMULATION">
+			<label>Switch for new simulation:</label>
+			<help_brief>If set to 1, start a new simulation. Otherwise, continue from a saved state.</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IDOEERODE">
+			<label>Switch for fluvial and slope modeling:</label>
+			<help_brief>If set to 1, fluvial and slope processes are modeled. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IDOCRATER">
+			<label>Switch for impact crater modeling:</label>
+			<help_brief>If set to 1, impact craters are modeled. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IDOLAVA">
+			<label>Switch for lava inundation:</label>
+			<help_brief>If set to 1, lava inundation is modeled. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+
+		<entry name="/MARSSIM/Input/Var/IDOEOLIAN">
+			<label>Switch for eolian depositon:</label>
+			<help_brief>If set to 1, eolian transport is modeled.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IDOOCEAN">
+			<label>Switch for ocean processes: </label>
+			<help_brief>If set to 1, ocean processes are modeled. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IDOACCRETION">
+			<label>Switch for accretion and ablation:</label>
+			<help_brief>If set to 1, model accretion and ablation.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IDOLAKES">
+			<label>Switch for lake evaporation:</label>
+			<help_brief>If set to 1, model runoff and evaporation with lakes.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MX">
+			<label>Number of columns for DEM:</label>
+			<help_brief>Number of columns for DEM</help_brief>
+			<default>256</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>2000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MY">
+			<label>Number of rows in DEM:</label>
+			<help_brief>Number of rows in DEM</help_brief>
+			<default>256</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>2000</max>
+			</range>
+		</entry>
+
+
+		<entry name="/MARSSIM/Input/Var/MZ">
+			<label>Number of vertical cells:</label>
+			<help_brief>Number of vertical cells</help_brief>
+			<default>256</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1000</max>
+			</range>
+		</entry>
+
+		<entry name="/MARSSIM/Input/Var/INPUT_CELL_SIZE">
+			<label>Grid cell size:</label>
+			<help_brief>Grid cell size in arbitrary units.  See conversion factor below. </help_brief>
+			<default>0.4</default>
+			<type>Float</type>
+            <range>
+                <min>0.0</min>
+                <max>1000.0</max>
+            </range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/VERTICAL_SCALING_FACTOR">
+			<label>Vertical scale units:</label>
+			<help_brief>Elevation units (vertical). Must be same as grid cell size units (horizontal).</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+            <range>
+                <min>0.0</min>
+                <max>1000.0</max>
+            </range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CONVERT_TO_METERS">
+			<label>Convert-to-meters factor:</label>
+			<help_brief>Factor to convert grid cell size and vertical scale units to meters. </help_brief>
+			<default>1000.0</default>
+			<type>Float</type>
+            <range>
+                <min>0.0</min>
+                <max>100000.0</max>
+            </range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IUSEVARRATEUSE">
+			<label>Switch for variable erosion rate:</label>
+			<help_brief>If set to 1, erosion rate will vary in time in the specified manner.  Otherwise, model parameters are constant. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BOUNDARY_LOWERING_RATE">
+			<label>Boundary lowering rate:</label>
+			<help_brief>Rate at which the boundary is lowering over time [meters / year].  To be used only with a nonperiodic vertical boundary. </help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CHANNEL_TIMESTEP_SCAILING">
+			<label>Channel timestep scale factor:</label>
+			<help_brief>Channel process timestep scale factor. </help_brief>
+			<default>250.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DEFAULT_CHANNEL_TIMESTEP">
+			<label>Default channel time step:</label>
+			<help_brief>Channel process timestep [years] </help_brief>
+			<default>20.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_TIME_INCREMENT">
+			<label>Maximum timestep:</label>
+			<help_brief>Maximum allowed timestep [years] </help_brief>
+			<default>250.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MINIMUM_TIME_INCREMENT">
+			<label>Minimum timestep:</label>
+			<help_brief>Minimum allowed timestep [years] </help_brief>
+			<default>10.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEDIMENT_TIMESTEP_SCALING">
+			<label>Sediment timestep scale factor:</label>
+			<help_brief>Sediment timestep scale factor (EXPLAIN) </help_brief>
+			<default>0.1</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MASS_WASTING_TIMESTEP_SCALING">
+			<label>Mass wasting timestep scale factor:</label>
+			<help_brief>Mass wasting timestep scale factor (EXPLAIN) </help_brief>
+			<default>100.1</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ICENT">
+			<label>I-coordinate for center of debug window:</label>
+			<help_brief>I-coordinate for center of debug window. Used for debug mode. </help_brief>
+			<default>25</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>2000</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/JCENT">
+			<label>J-coordinate for center of debug window:</label>
+			<help_brief>I-coordinate for center of debug window. Used for debug mode. </help_brief>
+			<default>50</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>2000</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IWIDTH">
+			<label>Size of debug window, I-direction:</label>
+			<help_brief>Size of debug window, I-direction.  Used for debug mode. </help_brief>
+			<default>4</default>
+			<type>Int</type>
+			<range>
+				<min>3</min>
+				<max>100</max></range>
+		</entry>
+        <entry name="/MARSSIM/Input/Var/JWIDTH">
+			<label>Size of debug window, J-direction:</label>
+			<help_brief>Size of debug window, I-direction.  Used for debug mode. </help_brief>
+			<default>15</default>
+			<type>Int</type>
+			<range>
+				<min>3</min>
+				<max>100</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IXDEBUG">
+			<label>Switch to print debug info:</label>
+			<help_brief>If set to 1, print info in specified debug window. Affects performance. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IEVENTS">
+			<label>Switch to print debug info for special events:</label>
+			<help_brief>If set to 1, print info for special, instantaneous, landscape-modifying events that are programmed in subroutine MAKE_EVENT() in BOUNDARY_CONDITIONS.F90. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/STATISTDO">
+			<label>Switch to calculate morphometric statistics:</label>
+			<help_brief>If set to 1, calculate morphometric statistics. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IHORIZONTAL_LOWER_BOUNDARY">
+			<label>Switch to use horizontal lower boundary:</label>
+			<help_brief>If set to 1, southern (lower) boundary is level. Do not use with a periodic lower boundary. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/INON_ERODING_LOWER_BOUNDARY">
+			<label>Switch for non-eroding lower boundary:</label>
+			<help_brief>If set to 1, use a non-eroding lower/southern boundary. Can be used in conjunction with a horizontal lower boundary. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/USEYPERIODIC">
+			<label>Switch for periodic Y axis:</label>
+			<help_brief>If set to 1, use periodic boundary condition along the Y-axis. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/USEXPERIODIC">
+			<label>Switch for periodic X axis:</label>
+			<help_brief>If set to 1, use periodic boundary condition along the X-axis. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/USEFLOWBOUND">
+			<label>Switch to allow flow across all boundaries:</label>
+			<help_brief>If set to 1, all boundaries are potential flow exits and are non-eroding. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max></range>
+		</entry>
+	</tab>
+	-->
+	<!-- =========================================================================================== -->
+	<tab name="Output and Recalculation">
+		<entry name="/MARSSIM/Input/Var/STARTING_ITERATION">
+			<label>Starting iteration:</label>
+			<help_brief>Generally this is zero for new simulations. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>100000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/PRESENT_TIME">
+			<label>Present time:</label>
+			<help_brief>Generally this is zero for new simulations [years] </help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_ITERATION">
+			<label>Maximum iteration:</label>
+			<help_brief>The number of timesteps or iterations to be used in the simulation. </help_brief>
+			<default>2500</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>1000000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_SIMULATION_TIME">
+			<label>Maximum simulation time:</label>
+			<help_brief>The maximum time that the simulation is allowed to run [years]. </help_brief>
+			<default>1.0e+10</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1e10</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ELEVATION_PRINT_INTERVAL">
+			<label>Iterations between prints:</label>
+			<help_brief>The number of iterations (or timesteps) between writing out a lot of info. </help_brief>
+			<default>500</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/OUTPUT_PRINT_INTERVAL">
+			<label>Simulation progress interval:</label>
+			<help_brief>HOW OFTEN TO SUMMARIZE SIMULATION PREOGRESS. GENERALLY SHOULD BE THE SAME AS ELEVINTERVAL</help_brief>
+			<default>500</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RECALCULATE_GRADIENT_INTERVAL">
+			<label>Recalculate gradient interval:</label>
+			<help_brief>Number of iterations before recalculating gradients and contributing areas. (Currently hardwired) </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WRITE_CHANGE_INTERVAL">
+			<label>Write change interval:</label>
+			<help_brief>Number of iterations before printing out information on the rate of change in gradients and flow directions. (Currently hardwired) </help_brief>
+			<default>20</default>
+			<type>Int</type>
+			<range>
+				<min>20</min>
+				<max>20</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/KWRITE">
+			<label>Morphometric channel threshold:</label>
+			<help_brief>This has to do with the definition of where channels start when printing out morphometric statistics. </help_brief>
+			<default>5</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WRITETYPE">
+			<label>Matrices to output:</label>
+			<help_brief>What matrices to output at ELEVATION_PRINT_INTERVAL times.  Each digit represents a flag for writing a particular matrix.  From left to write the flags are: (1) elevation, (2) relative elevation, (3) D8 gradient, (4) erode_slope, (5) cfne, (6) cfnw, (7) cfw, (8) cfn, (9) cfne, (10) drainage_area, (11) relative_gradient, (12) regolith and relative resistance.  Generally, only first flag is set (elevation). </help_brief>
+			<default>1000000000000</default>
+			<type>String</type>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ONEONLY">
+			<label>Switch for absolute or relative elevations:</label>
+			<help_brief>If set to 1, write out absolute vs. relative (normalized ??) elevations. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IMAGE_OUTPUT_INTERVAL">
+			<label>Interval to print out shaded relief images:</label>
+			<help_brief>Shaded relief images are typically generated and saved every 50 to 100 iterations. </help_brief>
+			<default>50</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DIVERGENCE_INTERVAL">
+			<label>Divergence Interval:</label>
+			<help_brief>Divergence interval</help_brief>
+			<default>5</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Flow Routing and Drainage">
+		<entry name="/MARSSIM/Input/Var/USEWET">
+			<label>Switch for wet or dry depressions:</label>
+			<help_brief>If set to 1, all depressions fill with water and overflow.  Otherwise, all depressions are infinite sinks for water. Most Mars simulations have used 0, but some simulations with non-periodic BCs use 1.  See documentation. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IQCONSTANT">
+			<label>Switch to rescale discharges:</label>
+			<help_brief>If set to 1, then effective discharges are rescaled as a power function of contributing area.  (e.g. Q = K * A**E, where E is typically in [0.5, 1.0].) </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RANDDIRUSE">
+			<label>Switch for random or deterministic flow routing:</label>
+			<help_brief>If set to 1, flow directions will have a random component. This is generally set to 0. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DISCHARGE_CONSTANT">
+			<label>Discharge constant:</label>
+			<help_brief>Used with option to rescale discharges. In that case, Discharge = discharge_constant * Area**discharge_exponent, [meters**3 / second] </help_brief>
+			<default>3.0e-05</default>
+			<type>Float</type>
+			<range>
+				<min>1.0e-6</min>
+				<max>1.0e-4</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DISCHARGE_EXPONENT">
+			<label>Discharge exponent:</label>
+			<help_brief>Used with option to rescale discharges. In that case, Discharge = discharge_constant * Area**discharge_exponent, [meters**3 / second] </help_brief>
+			<default>0.7</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/AREAFACTOR">
+			<label>Area factor:</label>
+			<help_brief>Area factor. Generally not used.</help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>-1.0</min>
+				<max>0.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RAINDEPTH">
+			<label>Rain depth;</label>
+			<help_brief>Rain depth. </help_brief>
+			<default>0.000025</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1e2</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RAINSD">
+			<label>Rain standard deviation:</label>
+			<help_brief>Rain standard deviation (CHECK THIS)</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/VARYIELDUSE">
+			<label>Switch for divergence-dependent runoff:</label>
+			<help_brief>If set to 1, runoff depth functionally depends on topographic divergence (VARYIELDUSE, 0 or 1). Usually not set.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MEAN_CONVERGENCE_RUNOFF">
+			<label>Mean convergence runoff:</label>
+			<help_brief>Only used if "Divergence dependent runoff" is toggled on.</help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/HIGH_CONVERGENCE_RUNOFF">
+			<label>High convergence runoff:</label>
+			<help_brief>Only used if "Divergence dependent runoff" is toggled on.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LOW_CONVERGENCE_RUNOFF">
+			<label>Low convergence runoff:</label>
+			<help_brief>Only used if "Divergence dependent runoff" is toggled on.</help_brief>
+			<default>0.2</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/NCALCEVAP">
+			<label>Iterations between recalculating evaporation rates:</label>
+			<help_brief>Only used if "Lake evaporation" is toggled on. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/NCHANGEEVAP">
+			<label>Iterations between stocahstic changes in evaporation rates:</label>
+			<help_brief>Only used if "Lake evaporation" is toggled on. </help_brief>
+			<default>20</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EVAPORATION_MEAN">
+			<label>Mean yearly evaporation depth:</label>
+			<help_brief>Mean yearly evaporation depth [meters] </help_brief>
+			<default>20.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EVAPORATION_STANDARD_DEVIATION">
+			<label>Std. deviation of mean evaporation depth:</label>
+			<help_brief>Std. deviation of mean evaporation depth [meters] </help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IMODEL_PELAGIC_DEPOSITION">
+			<label>Switch to model pelagic deposition:</label>
+			<help_brief>If set to 1, deposition of suspended sediment in enclosed basins is modeled. (IMODEL_PELAGIC_DEPOSITION, 0 or 1)</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WASHLOAD_FRACTION">
+			<label>Wash load fraction:</label>
+			<help_brief>Fraction of sediment delivered to basins that is deposited as pelagic sediment.</help_brief>
+			<default>0.5</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/PELAGICCREEP">
+			<label>Amount of post-deposition:</label>
+			<help_brief>A diffusivity that determines how much post-deposition diffusion occurs in recently-deposited pelagic sediment. </help_brief>
+			<default>0.2</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DOINRIVER">
+			<label>Switch to model influent rivers:</label>
+			<help_brief>If set to 1, incoming rivers are modeled. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Bedrock Channel">
+		<entry name="/MARSSIM/Input/Var/DETACHUSE">
+			<label>Switch to model fluvial detachment:</label>
+			<help_brief>This should only be set to 0 when slope processes are being modeled and fluvial erosion, transport and deposition are not. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BEDEXPLICIT">
+			<label>Switch for explicit or implicit channel bed:</label>
+			<help_brief>If set to 1, use EXPLICIT method to model regolith depth (including bare rock). Otherwise use IMPLICIT method. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IFLUXDEPEND">
+			<label>Model to use for bedrock channel:</label>
+			<help_brief>0 for Howard model, 1 for Sklar saltation, 2 for Whipple saltation. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>2</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ROCK_TENSILE_STRENGTH">
+			<label>Rock tensile strength:</label>
+			<help_brief>Tensile strength of bedrock if saltation model is used. </help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BEDROCK_DISCHARGE_EXPONENT">
+			<label>Bedrock discharge exponent:</label>
+			<help_brief>In the Howard detachment model (see above) the rate of bedrock erosion is computed as: bedrock_erodibility * (Discharge**bedrock_discharge_exponent) * (Gradient**bedrock_gradient_exponent). </help_brief>
+			<default>0.3</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BEDROCK_GRADIENT_EXPONENT">
+			<label>Bedrock gradient exponent:</label>
+			<help_brief>In the Howard detachment model (see above) the rate of bedrock erosion is computed as: bedrock_erodibility * (Discharge**bedrock_discharge_exponent) * (Gradient**bedrock_gradient_exponent). </help_brief>
+			<default>0.7</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BEDROCK_ERODIBILITY">
+			<label>Bedrock erodibility:</label>
+			<help_brief>In the Howard detachment model (see above) the rate of bedrock erosion is computed as: bedrock_erodibility * (Discharge**bedrock_discharge_exponent) * (Gradient**bedrock_gradient_exponent). Bedrock erodibility could vary in natural landscapes over orders of magnitude from 10*-8 to 10**-2. </help_brief>
+			<default>1e-4</default>
+			<type>Float</type>
+			<range>
+				<min>1e-9</min>
+				<max>1e-1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MANNING">
+			<label>Manning roughness parameter:</label>
+			<help_brief>Manning's channel roughness parameter, N</help_brief>
+			<default>0.03</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/GRAVITY">
+			<label>Gravitational constant:</label>
+			<help_brief>3.7 for Mars, 9.8 for Earth [meters / second**2] </help_brief>
+			<default>3.7</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DETACHMENT_CRITICAL_SHEAR">
+			<label>Detachment critical shear:</label>
+			<help_brief>A critical shear stress that must be exceeded in the Howard detachment model before transport occurs [kg / (meter * second**2)].  Usually set to 0. </help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/REGOLITH_ERODIBILITY_FACTOR">
+			<label>Regolith erodibility factor:</label>
+			<help_brief>Determines how much more erodible weathered regolith is as compared to bedrock.  Minimum value is 1. </help_brief>
+			<default>10.0</default>
+			<type>Float</type>
+			<range>
+				<min>1.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/REGOLITH_CRITICAL_SHEAR_FACTOR">
+			<label>Regolith critical shear factor:</label>
+			<help_brief>Determines how much less the critical shear stress for detachment of regolith is as compared to bedrock. Generally se to the same value as the regolith erodibility factor. </help_brief>
+			<default>10.0</default>
+			<type>Float</type>
+			<range>
+				<min>1.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CHANNEL_WIDTH_CONSTANT">
+			<label>Channel width constant:</label>
+			<help_brief>Channel width is computed as: Width = channel_width_constant * (Discharge**channel_width_exponent) [meters]. Generally, mean annual discharge is used.  </help_brief>
+			<default>5.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CHANNEL_WIDTH_EXPONENT">
+			<label>Channel width exponent:</label>
+			<help_brief>Channel width is computed as: Width = channel_width_constant * (Discharge**channel_width_exponent) [meters]. Generally, mean annual discharge is used. </help_brief>
+			<default>0.5</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ITAUAREA">
+			<label>Switch for variable vegetation resistance:</label>
+			<help_brief>Switch to determine whether variable vegetation modeling is used (ITAUAREA, 0 or 1).</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/VEGETATION_UPLAND_RESITANCE">
+			<label>Vegetation upland resistance:</label>
+			<help_brief>See documentation. Only used if "variable vegetation resistance" flag is set.</help_brief>
+			<default>200.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/VEGETATION_CHANNEL_RESISTANCE">
+			<label>Vegetation channel resistance:</label>
+			<help_brief>See documentation. Only used if "variable vegetation resistance" flag is set.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/VEGETATION_AREA_MINIMUM">
+			<label>Vegetation area minimum:</label>
+			<help_brief>See documentation. Only used if "variable vegetation resistance" flag is set.</help_brief>
+			<default>3000.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/VEGETATION_AREA_MAXIMUM">
+			<label>Vegetation area maximum:</label>
+			<help_brief>See documentation. Only used if "variable vegetation resistance" flag is set.</help_brief>
+			<default>60000.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Alluvial Channel">
+		<entry name="/MARSSIM/Input/Var/ISEDDEBUG">
+			<label>Switch to write sediment diagnostics:</label>
+			<help_brief>If set to 1, detailed sediment routing information is printed. (ISEDDEBUG, 0 or 1) </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ISEDIMENT">
+			<label>Switch for sediment transport:</label>
+			<help_brief>If set to 1, alluvial channels, deltas and fans are modeled (ISEDIMENT, 0 or 1)</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ISEDROUTE">
+			<label>Switch for sediment routing:</label>
+			<help_brief>If set to 1, sediment routing is modeled (ISEDROUTE, 0 or 1).</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ISEDDIFFUSE">
+			<label>Switch for sediment diffusion:</label>
+			<help_brief>If set to 1, sediment diffusion is modeled (ISEDDIFFUSE, 0 or 1).</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IREFLECT">
+			<label>Switch for no-flux lower boundary:</label>
+			<help_brief>If set to 1, a no-flux lower boundary is used (IREFLECT, 0 or 1).</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMOOTHSEDUSE">
+			<label>Switch for alluvial smoothing:</label>
+			<help_brief>If set to 1, alluvial depositional surfaces (fans and deltas) are smoothed during deposition (SMOOTHSEDUSE, 0 or 1)</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/NEWDIRECTIONUSE">
+			<label>Switch for alluvial rerouting:</label>
+			<help_brief>If set to 1, alluvial rerouting is used. (NEWDIRECTIONUSE, 0 or 1)</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ALLUVIUM_SMOOTHING_FACTOR">
+			<label>Alluvial smoothing factor:</label>
+			<help_brief>Only used if "alluvial rerouting" switch is set.</help_brief>
+			<default>0.02</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IREADALLUV">
+			<label>Switch to read alluvial thickness at start:</label>
+			<help_brief>If set to 1, alluvium thickness is read at beginning of simulation (IREADALLUV, 0 or 1). Generally 0.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WATERUSE">
+			<label>Switch to use an ocean:</label>
+			<help_brief>If set to 1, an ocean is used, as when modeling deltas (WATERUSE, 0 or 1).  Set to 1 if USEWET is set to 1.</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/OCEAN_ELEVATION">
+			<label>Ocean elevation:</label>
+			<help_brief>If modeling a global ocean, set this to your assumed ocean level.  Otherwise, set it to a very low value.</help_brief>
+			<default>-50000.0</default>
+			<type>Float</type>
+			<range>
+				<min>-1e6</min>
+				<max>1e6</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DELTA_FORESET_GRADIENT">
+			<label>Delta foreset gradient:</label>
+			<help_brief>This is the foreset bed gradient.</help_brief>
+			<default>0.2</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEDIMENT_1_EXPONENT">
+			<label>Sediment 1 exponent:</label>
+			<help_brief>Used in sediment transport relationship. See documentation.</help_brief>
+			<default>0.5</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEDIMENT_2_EXPONENT">
+			<label>Sediment 2 exponent:</label>
+			<help_brief>Used in sediment transport relationship. See documentation.</help_brief>
+			<default>0.3</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EFFECTIVE_DISCHARGE_RATIO">
+			<label>Effective discharge ratio:</label>
+			<help_brief>Used in sediment transport relationship. See documentation.</help_brief>
+			<default>0.6</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEDIMENT_GRADIENT_EXPONENT">
+			<label>Sediment gradient exponent:</label>
+			<help_brief>Used in sediment transport relationship. See documentation.</help_brief>
+			<default>0.7</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEDITMENT_TRANSPORT_EXPONENT">
+			<label>Sediment transport exponent:</label>
+			<help_brief>Used in sediment transport relationship. See documentation.</help_brief>
+			<default>1.5</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/TRANSPORTFACTOR">
+			<label>Transport factor:</label>
+			<help_brief>Generally, 40.0 for sand bed, 8.0 for gravel bed. See documentation. </help_brief>
+			<default>8.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>50.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/FLOW_FRACTION">
+			<label>Flow fraction:</label>
+			<help_brief>Fraction of flow used for *******. Set to 1 when modeling erosion by groundwater seepage.  See documentation.</help_brief>
+			<default>0.05</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEDIMENT_POROSITY">
+			<label>Sediment porosity:</label>
+			<help_brief>Sediment porosity [unitless] </help_brief>
+			<default>0.5</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEDIMENT_SPECIFIC_GRAVITY">
+			<label>Sediment specific gravity:</label>
+			<help_brief>See documentation. (GIVE UNITS HERE.) </help_brief>
+			<default>2.65</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/GRAIN_SIZE">
+			<label>Grain size:</label>
+			<help_brief>Typical values are 0.0002 for sand and 0.02 for gravel. [meters] </help_brief>
+			<default>0.02</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/TRANSPORT_CRITICAL_DIM_SHEAR">
+			<label>Transport critical dim shear:</label>
+			<help_brief>Generally not changed.</help_brief>
+			<default>0.05</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>0.1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/STICKYUSE">
+			<label>Switch to use sticky sediment routing:</label>
+			<help_brief>If set to 1, use "sticky" vs. normal sediment.  Used in an experiment to model birdfoot deltas. Generally not used.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/STICKY_ROUTING_CRITICAL_VALUE">
+			<label>Sticky routing critical value:</label>
+			<help_brief>Used in an experiment to model birdfoot deltas. Generally not used.</help_brief>
+			<default>5.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>50.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BEDLOAD_FRACTION">
+			<label>Bedload fraction:</label>
+			<help_brief>Fraction of eroded sediment that is transported as bedload.  Used for calculation of alluvial channel gradients.</help_brief>
+			<default>0.2</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Regolith weathering">
+		<entry name="/MARSSIM/Input/Var/ROCK_WEATHERING_RATE">
+			<label>Rock weathering rate:</label>
+			<help_brief>Rate of bare rock weathering [meters / year]</help_brief>
+			<default>0.001</default>
+			<type>Float</type>
+			<range>
+				<min>1e-6</min>
+				<max>1e-1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WEATHER_DECAY_RATE">
+			<label>Weather decay rate:</label>
+			<help_brief>Determines how raplidly weathering rate decreases with increasing regolith thickness, based on terrestrial values.</help_brief>
+			<default>0.03</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/INITIAL_REGOLITH_THICKNESS">
+			<label>Initial regolith thickness:</label>
+			<help_brief>Initial regolith thickness [meters]</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WEATHER2USE">
+			<label>Switch for two-term weathering:</label>
+			<help_brief>If set to 1, a humped weathering function is used (WEATHER2USE, 0 or 1)</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WEATHERING_TERM_2">
+			<label>Weathering term 2:</label>
+			<help_brief>Only used if "two term weathering" flag is set.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WEATHERING_DECAY_2">
+			<label>Weathering decay 2:</label>
+			<help_brief>Only used if "two term weathering" flag is set.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ISEEPAGEWEATHER">
+			<label>Switch for seepage weathering:</label>
+			<help_brief>If set to 1, seepage-dependent weathering is modeled (ISEEPAGEWEATHER, 0 or 1)</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEEPAGE_WEATHERING_SCALING">
+			<label>Seepage weathering scale factor:</label>
+			<help_brief>Only used if "seepage weathering" flag is set.</help_brief>
+			<default>0.001</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SEEPAGE_WEATHERING_EXPONENT">
+			<label>Seepage weathering exponent:</label>
+			<help_brief>Only used if "seepage weathering" flag is set.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CRITICAL_BEDROCK_GRADIENT">
+			<label>Critical bedrock gradient:</label>
+			<help_brief>Maximum steepness of bedrock slope. </help_brief>
+			<default>2.7</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WEATHER_MULT">
+			<label>Weather multiplier:</label>
+			<help_brief>This scales the rate of bedrock mass wasting.</help_brief>
+			<default>0.5</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WEATHER_DIVERGENCE">
+			<label>Weather divergence:</label>
+			<help_brief>If greater than 0, then rate of bedrock weathering will depend on topographic divergence.</help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/READREGOLITH">
+			<label>Switch to read initial regolith thickness:</label>
+			<help_brief>If set to 1, read initial regolith thickness from file (READREGOLITH, 0 or 1).</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Mass wasting">
+		<entry name="/MARSSIM/Input/Var/ISLOPEUSE">
+			<label>Switch for slope erosion modelling:</label>
+			<help_brief>If set to 1, use slope erosion modelling (ISLOPEUSE, 0 or 1).</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SLOPE_DIFFUSIVITY">
+			<label>Slope diffusity:</label>
+			<help_brief>Determines relative rate of downslope creep [meters**2 / year].  Try values between 0.0002 and 0.02. </help_brief>
+			<default>0.0005</default>
+			<type>Float</type>
+			<range>
+				<min>1e-4</min>
+				<max>1e-2</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ALVCREEPFAC">
+			<label>Proportion of slope constant in alluvial creep:</label>
+			<help_brief>Relative diffusivity of alluvium mass wasting to slope mass wasting.  Generally set to 1.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CRITICAL_GRADIENT_USE">
+			<label>Switch to use critical slope gradient:</label>
+			<help_brief>If set to 1, use a critical slope gradient (CRITICAL_GRADIENT_USE, 0 or 1)</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ROERING_USE">
+			<label>Switch to use Roering mass wasting:</label>
+			<help_brief>If set to 1, use the Roering formula for mass wasting.  Otherwise, use the Howard formula. The Roering formula allows a threshold maximum slope gradient in regolith.  The Howard formula uses linear creep. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CRITICAL_SLOPE_GRADIENT">
+			<label>Critical slope gradient:</label>
+			<help_brief>Maximum stable regolith gradient [no units]</help_brief>
+			<default>0.8</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SLOPE_GRADIENT_EXPONENT">
+			<label>Slope gradient exponent:</label>
+			<help_brief>Used for the Howard two-term relationship.</help_brief>
+			<default>3.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_DIFFUSIVITY_INCREASE">
+			<label>Maximum diffusity increase:</label>
+			<help_brief>Maximum allowed increase in mass wasting flux as gradients approach critical value.</help_brief>
+			<default>0.025</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SLOPE_FAILURE_DIFFUSIVITY">
+			<label>Slope failure diffusity:</label>
+			<help_brief>Near-failure mass wasting constant used in the Howard mass wasting model.</help_brief>
+			<default>0.05</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Bistable Erosion">
+		<entry name="/MARSSIM/Input/Var/HIGHRATEUSE">
+			<label>Switch to use bistable fluvial erosion:</label>
+			<help_brief>If set to 1, use bistable fluvial erosion (HIGHRATEUSE, 0 or 1). Used for modeling gully development.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BEDROCKHIGH">
+			<label>Switch to use bistable bedrock:</label>
+			<help_brief>If set to 1, use bistable bedrock (BEDROCKHIGH, 0 or 1). Used for modeling gully development.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LOW_EROSION_THRESHOLD">
+			<label>Low erosion threshold:</label>
+			<help_brief>Only used with bistable erosion and gully development.</help_brief>
+			<default>10.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/HIGH_EROSION_THRESHOLD">
+			<label>High erosion threshold:</label>
+			<help_brief>Only used with bistable erosion and gully development.</help_brief>
+			<default>15.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EROSION_RATE_CHANGE_LAG">
+			<label>Erosion rate change lag:</label>
+			<help_brief>Only used with bistable erosion and gully development.</help_brief>
+			<default>0.5</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BISTABLE_CRITICAL_SHEAR">
+			<label>Bistable critical shear:</label>
+			<help_brief>Only used with bistable erosion and gully development.</help_brief>
+			<default>10.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BISTABLE_RUNOFF_FACTOR">
+			<label>Bistable runoff factor:</label>
+			<help_brief>Only used with bistable erosion and gully development.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/BISTABLE_BEDROCK_ERODIBILITY">
+			<label>Bistable bedrock erodibility:</label>
+			<help_brief>Only used with bistable erosion and gully development.</help_brief>
+			<default>5.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Random variation(Sim. param)">
+	<entry name="/MARSSIM/Input/Var/RANDTHRESHUSE">
+			<label>Switch to use random critical shear stress:</label>
+			<help_brief>If set to 1, use random critical shear stress (RANDTHRESHUSE, 0 or 1).</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/RANDDISCHUSE">
+			<label>Switch to use random discharge:</label>
+			<help_brief>If set to 1, use random discharge (RANDDISCHUSE, 0 or 1).</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/CRITICAL_SHEAR_VARIABILITY">
+			<label>Critical shear variability:</label>
+			<help_brief>Scale factor for random critical shear stress.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/DISCHARGE_COEFF_VARIATION">
+			<label>Discharge coeff variation:</label>
+			<help_brief>Standard error of discharge, assuming a lognormal distribution.</help_brief>
+			<default>2.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/OMEGA_WEIGHT">
+			<label>Omega weight:</label>
+			<help_brief>Governs inheritance from past value, similar to a Hurst parameter.  Set to 1 for no inheritance.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+	</tab>
+
+	<tab name="3D Spatially varying Bedrock Res">
+		<entry name="/MARSSIM/Input/Var/SLOPEVARUSE">
+                        <label>Switch to use 3D variable resistance weathering:</label>
+                        <help_brief>If set to 1, use 3D variable resistance weathering (SLOPEVARUSE, 0 or 1)</help_brief>
+                        <default>0</default>
+                        <type>Int</type>
+                        <range>
+                                <min>0</min>
+                                <max>1</max>
+                        </range>
+                </entry>
+	<entry name="/MARSSIM/Input/Var/IRESINPUT">
+			<label>Switch to determine how resistance is computed:</label>
+			<help_brief>If set to 1, use RANDOM INPUT.  Otherwise, use ABSOLUTE. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/DIFFUSIVITY_VARIABILITY">
+			<label>Diffusivity variability:</label>
+			<help_brief>See documentation. </help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/CRUSTUSE">
+			<label>Switch to use a resistant surface layer:</label>
+			<help_brief>If set to 1, use a resistant surface layer (CRUSTUSE, 0 or 1). Experimental, for simulating the effect of development of a "duricrust". See documentation. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/SURFACE_LAYER_THICKNESS">
+			<label>Surface layer thickness:</label>
+			<help_brief>Crust thickness, using same units as cell size.</help_brief>
+			<default>0.01</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/SURFACE_LAYER_RESISTANCE">
+			<label>Surface layer resistance:</label>
+			<help_brief>Crust relative shear stress factor, greater than 1 for a resistant crust.</help_brief>
+			<default>20.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+	<entry name="/MARSSIM/Input/Var/VERTICAL_RESISTANCE_SCALING">
+			<label>Vertical resistance scale factor:</label>
+			<help_brief>Ratio of horizontal to vertical scales (1.0 if equal).  Only used for 3D varying rock resistance.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+	</tab>
+
+	<!-- =========================================================================================== -->
+	<tab name="Rock and Surface Deformation">
+		<entry name="/MARSSIM/Input/Var/DEFORMUSE">
+			<label>Switch to use rock deformation:</label>
+			<help_brief>(DEFORMUSE, 0 or 1). NOT IMPLEMENTED IN CURRENT VERSION.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>0</max>
+			</range>
+			</entry>
+		<entry name="/MARSSIM/Input/Var/DEFORMSCALE">
+			<label>Deformation scale factor:</label>
+			<help_brief>NOT IMPLEMENTED IN CURRENT VERSION.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>1.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Groundwater flow">
+		<entry name="/MARSSIM/Input/Var/SEEPUSE">
+			<label>Switch to model groundwater seepage:</label>
+			<help_brief>If set to 1, groundwater seepage is modeled (SEEPUSE, 0 or 1).</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+        <entry name="/MARSSIM/Input/Var/SEEPAGE_ITERATION_INTERVAL">
+			<label>Seepage iteration interval:</label>
+			<help_brief>Number of iterations between recalculation of groundwater flow</help_brief>
+			<default>5</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IWATERLOWER">
+			<label>Switch for permeability rescaling:</label>
+			<help_brief>If set to 1, permeability in exponential vertical decay of permeability is scaled to the present land surface elevation.  Otherwise it is scaled to the original land surface elevation (at the start of the simulation). </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ISHOWCALC">
+			<label>Switch to show groundwater calculations:</label>
+			<help_brief>If set to 1, show groundwater calculations.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IEXPFLOW">
+			<label>Switch for exponential permeability decay:</label>
+			<help_brief>If set to 1, permeability is constant through an aquifer of constant thickness.  Otherwise, it decays with depth below the surface.</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+
+		<entry name="/MARSSIM/Input/Var/YEARLY_RECHARGE">
+			<label>Yearly recharge rate:</label>
+			<help_brief>Yearly recharge rate [meters / year] </help_brief>
+			<default>10.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+
+		<entry name="/MARSSIM/Input/Var/VISCOSITIY">
+			<label>Viscosity of water:</label>
+			<help_brief>Viscosity of water (GIVE UNITS HERE)</help_brief>
+			<default>0.0012</default>
+			<type>Float</type>
+			<range>
+				<min>1e-4</min>
+				<max>1e-2</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DARCIES">
+			<label>Permeability, in darcies:</label>
+			<help_brief>Permeability [darcies]</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/GROUNDWATER_DEPTH_SCALE">
+			<label>Groundwater depth scale:</label>
+			<help_brief>For exponential permeability, this is the depth to the half value of permeability.  For constant permeability, it is the aquifer thickness. [meters]</help_brief>
+			<default>200.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/GROUNDWATER_FLOW_FRACTION">
+			<label>Groundwater flow fraction:</label>
+			<help_brief>The fraction of surface water flow that becomes groundwater flow.  (From docs "The amount of groundwater flow relative to the surface flow.  Set to 1 for all groundwater flow.")</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+
+		<entry name="/MARSSIM/Input/Var/INITIAL_GROUNDWATER_DEPTH">
+			<label>Initial groundwater depth:</label>
+			<help_brief>Initial depth beneath the land surface for calculation of steady state groundwater surface. [meters(CHECK)]</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+
+		<entry name="/MARSSIM/Input/Var/EPOWER">
+			<label>Depth decay of permeability power:</label>
+			<help_brief>Set this to 1 for normal exponential decay.</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_GROUNDWATER_ITERATIONS">
+			<label>Max. groundwater iterations:</label>
+			<help_brief>Max number of iterations permitted in calculating steady state groundwater table.</help_brief>
+			<default>4000</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>100000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_GROUNDWATER_ERROR">
+			<label>Max. groundwater error:</label>
+			<help_brief>Max residual error permitted in calculating steady state groundwater table.</help_brief>
+			<default>0.0001</default>
+			<type>Float</type>
+			<range>
+				<min>1e-6</min>
+				<max>1e-2</max>
+			</range>
+		</entry>
+	
+		<entry name="/MARSSIM/Input/Var/GROUNDWATER_RELAXATION_COEFFICIENT">
+			<label>Groundwater relaxation coeff:</label>
+			<help_brief>Coefficient used for SOR (successive over relaxation)</help_brief>
+			<default>1.95</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+
+		<entry name="/MARSSIM/Input/Var/QQUSE">
+			<label>Switch to use groundwater flux:</label>
+			<help_brief>If set to 0, the groundwater flow term used for seepage calculations of surface flows and weathering rate is the groundwater flux divergence (seepage rate to surface).  Otherwise, it is the groundwater flow rate per unit aquifer width. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IDIVAVG">
+			<label>Switch to use seepage averaging:</label>
+			<help_brief>If set to 1, the groundwater flow term used in further calculations is a 9 point average value of raw calculated values. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	</tab>
+
+	<!-- =========================================================================================== -->
+	<tab name="Eolian Erosion/Deposition">
+		<entry name="/MARSSIM/Input/Var/EOLIAN_EVENT_PROBABILITY">
+			<label>Eolian event probability:</label>
+			<help_brief>Probability of an eolian deposition/erosion event per unit time (year or iteration)</help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EOLIAN_TIME_INCREMENT">
+			<label>Eolian time increment:</label>
+			<help_brief>SCALES THE OVERALL EOLIAN EROSION/DEPOSITION RATE</help_brief>
+			<default>100.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IUSETOTALEXPOSE">
+			<label>Switch to use total exposure:</label>
+			<help_brief>If set to 1, all cells within the calculation window are used to compute the exposure index.  Otherwise, only cells visible to the local cell are used.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IUSENORMAL">
+			<label>Switch to use default eolian process:</label>
+			<help_brief>If set to 1, eolian erosion and deposition occur normal to the topographic surface.  Otherwise, erosion and deposition are modeled as vertical additions or subtractions. </help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MINIMUM_EOLIAN_DEPOSIT_RATE">
+			<label>Minimum eolian deposition rate:</label>
+			<help_brief>THIS CAN BE NEGATIVE (IF EOLIAN EROSION OF EXPOSED LOCATIONS)</help_brief>
+			<default>-0.01</default>
+			<type>Float</type>
+			<range>
+				<min>-100.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_EOLIAN_DEPOSIT_RATE">
+			<label>Maximum eolian deposition rate:</label>
+			<help_brief>GENERALLY UNITY AND SCALED BY EOLIAN_TIME_INCREMENT DETERMINES EOLIAN_CONSTANT_1 AND EOLIAN_CONSTANT_2 </help_brief>
+			<default>1.0</default>
+			<type>Float</type>
+			<range>
+				<min>-100.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+        <!-- SDP. MARSSIM will internally assign the variables based on ICHOOSE. We don't need to worry about setting vars like EXPOSURE_10_PERCENT.  -->
+		<entry name="/MARSSIM/Input/Var/ICHOSE">
+			<label>Eolian parameter code:</label>
+			<help_brief>Code that determines how next 2 parameters are used: (1) EXPOSURE_10_PERCENT, EXPOSURE_90_PERCENT, (2) EXPOSURE_50_PERCENT, EXPOSURE_90_PERCENT, (3) ZERO_PERCENT_EXPOSURE, EXPOSURE_90_PERCENT, (4) RATE0, EXPOSURE_50_PERCENT. </help_brief>
+			<default>3</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>4</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EXPOSURE_PARAM_1">
+			<label>Exposure parameter 1:</label>
+			<help_brief>Used to determine EOLIAN_CONSTANT_3 that defines the shape of the eolian erosion/deposition curve as related to the exposure index.</help_brief>
+			<default>-0.1</default>
+			<type>Float</type>
+			<range>
+				<min>-10.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EXPOSURE_PARAM_2">
+			<label>Exposure parameter 2:</label>
+			<help_brief>Used to determine EOLIAN_CONSTANT_3 that defines the shape of the eolian erosion/deposition curve as related to the exposure index.</help_brief>
+			<default>0.2</default>
+			<type>Float</type>
+			<range>
+				<min>-10.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/DISTANCE_DECAY_FACTOR">
+			<label>Distance decay factor:</label>
+			<help_brief>In calculation of exposure index, this determines how rapidly the weighting of surrounding cells decays with distance.  Also used for accretion/ablation modeling.</help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/WEIGHTING_CALCULATION_DISTANCE">
+			<label>Weighting calculation distance:</label>
+			<help_brief>The maximum distance (in number of cells) that elevations are used to calculate the exposure index.  Also used for accretion/ablation modeling.</help_brief>
+			<default>15</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>100</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Lavaflow">
+    <!-- A NUMBER OF LINES EQUAL TO THE NUMBER_OF_LAVA_SOURCES GIVING THE I AND J COORDINATES OF THE SOURCES.
+    For now this is chosen to be 1 (default is 3). Variable-length arrays are not handled yet, but will later be handled with the idea of a "list box". (SDP)
+    -->
+		<entry name="/MARSSIM/Input/Var/NUMBER_OF_LAVA_SOURCES">
+			<label>Number of lava sources:</label>
+			<help_brief>Number of sources (vents, volcanoes) that are present on the surface. (Multiple sources not yet supported.)</help_brief>
+			<default>1</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/I_LAVA">
+			<label>Lava source I coordinate:</label>
+			<help_brief>I coordinate (column) of lava source in DEM.</help_brief>
+			<default>10</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>2000</max>
+			</range>
+		</entry>
+        <entry name="/MARSSIM/Input/Var/J_LAVA">
+			<label>Lava source J coordinate:</label>
+			<help_brief>J coordinate (column) of lava source in DEM.</help_brief>
+			<default>10</default>
+			<type>Int</type>
+			<range>
+				<min>1</min>
+				<max>2000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LAVA_EVENT_PROBABILITY">
+			<label>Lava event probability:</label>
+			<help_brief>Probability of a lava flow event during a single iteration.</help_brief>
+			<default>0.12</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MINIMUM_LAVA_FLOW_SLOPE">
+			<label>Minimum lava flow slope:</label>
+			<help_brief>Minimum gradient for laval flow at the flow source.</help_brief>
+			<default>0.01</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LAVA_FLOW_THICKNESS">
+			<label>Lava flow thickness:</label>
+			<help_brief>Assumed thickness of individual lava flow deposits [meters]</help_brief>
+			<default>0.01</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MINIMUM_FLOW_THICKNESS">
+			<label>Minimum lava flow thickness:</label>
+			<help_brief>Minimum thickness of a lava flow that can flow into adjoining cells [meters]</help_brief>
+			<default>0.002</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/NEW_SEGMENT_INTERVAL">
+			<label>New segment interval:</label>
+			<help_brief>Number of iterations before starting a new lava flow source. (CHECK THIS)</help_brief>
+			<default>100</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>10000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SOURCE_CHANGE_INTERVAL">
+			<label>Source change interval:</label>
+			<help_brief>Number of iterations between changeover to a different lava flow source.</help_brief>
+			<default>12500</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>100000</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/ERUPTION_STOP_PROBABLILITY">
+			<label>Eruption stop probability:</label>
+			<help_brief>Probability, per iteration, that the existing flow will solidify and stop being active. If this happens, a new flow starts at the source.</help_brief>
+			<default>0.0001</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/NO_FLOW_PROBABILITY">
+			<label>No flow probability:</label>
+			<help_brief>The lower limit of probability for a cell to be a source for a new flow segment. If the probability drops below this value, then the cell is no longer considered to be a possible flow source.</help_brief>
+			<default>0.005</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LAVA_GRADIENT_WEIGHT">
+			<label>Lava gradient weight:</label>
+			<help_brief>Determines how much the gradient between the edge of a flow and the neighboring point determines the probability of flow in that direction.</help_brief>
+			<default>28.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LAVA_DURATION_WEIGHT">
+			<label>Lava duration weight:</label>
+			<help_brief>Determines how rapidly a new cell diminishes in probability that it can be the source of a flow into a neighboring cell.</help_brief>
+			<default>0.14</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Cratering">
+		<entry name="/MARSSIM/Input/Var/IMPACT_PROBABILITY">
+			<label>Impact probability:</label>
+			<help_brief>Probability of an impact event, per year.</help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/IFOLD">
+			<label>Switch for ejecta wraparound:</label>
+			<help_brief>If set to 1 and if the domain is periodic in both X and Y, then ejecta deposition can carry over onto the opposite side (IFOLD, 0 or 1)</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	
+	<entry name="/MARSSIM/Input/Var/ISOFTCRATER">
+			<label>Switch for regolith crater:</label>
+			<help_brief>If set to 1, then crater slopes and ejecta are soft (regolith).  Otherwise they are considered to be initially bedrock.</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LARGE_CRATER_DEPTH_SCALE">
+			<label>Large crater depth scale:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007). [meters ?????] </help_brief>
+			<default>12.20</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LARGE_CRATER_DEPTH_EXPONENT">
+			<label>Large crater depth exponent:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).</help_brief>
+			<default>0.49</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LARGE_CRATER_RIM_SCALE">
+			<label>Large crater rim scale:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).  [meters ?????] </help_brief>
+			<default>0.79</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LARGE_CRATER_RIM_EXPONENT">
+			<label>Large crater rim exponent:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).</help_brief>
+			<default>0.6</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/TRANSITION_DIAMETER">
+			<label>Transition diameter:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007). [meters ?????] </help_brief>
+			<default>7000.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100000.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALL_CRATER_DEPTH_SCALE">
+			<label>Small crater depth scale:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).  [meters ?????] </help_brief>
+			<default>2.54</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALL_CRATER_DEPTH_EXPONENT">
+			<label>Small crater depth exponent:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007). </help_brief>
+			<default>0.67</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALL_CRATER_RIM_SCALE">
+			<label>Small crater rim scale:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007). [meters ?????] </help_brief>
+			<default>1.93</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALL_CRATER_RIM_EXPONENT">
+			<label>Small crater rim exponent:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).</help_brief>
+			<default>0.52</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LARGE_CRATER_SHAPE_SCALE">
+			<label>Large crater shape scale:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007). [unitless ?????] </help_brief>
+			<default>0.64</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LARGE_CRATER_SHAPE_EXPONENT">
+			<label>Large crater shape exponent:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007). </help_brief>
+			<default>0.13</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALL_CRATER_SHAPE_SCALE">
+			<label>Small crater shape scale:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).</help_brief>
+			<default>0.73</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALL_CRATER_SHAPE_EXPONENT">
+			<label>Small crater shape exponent:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007). </help_brief>
+			<default>0.113</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/CRATER_FREQUENCY_EXPONENT">
+			<label>Crater frequency exponent:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).</help_brief>
+			<default>2.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>5.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/FREQUENCY_CUTOFF_SCALING">
+			<label>Frequency cutoff scaling:</label>
+			<help_brief>Based upon scaling of fresh impact craters in Forsberg et al (2004) and Howard (2007).</help_brief>
+			<default>0.35</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALLEST_POSSIBLE_CRATER">
+			<label>Smallest possible crater:</label>
+			<help_brief>Depends on the scale of the simulation, generally in meters. Generally keep at about (4 * cell_scale). </help_brief>
+			<default>100.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1e5</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/SMALLEST_MODELED_CRATER">
+			<label>Smallest modelled crater:</label>
+			<help_brief>Depends on the scale of the simulation, generally in meters. Generally keep at about (4 * cell_scale). </help_brief>
+			<default>1000.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1e6</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/LARGEST_MODELED_CRATER">
+			<label>Largest modeled crater:</label>
+			<help_brief>Depends on the scale of the simulation, generally in meters. Generally keep at about (cell_scale * ncols / 2). </help_brief>
+			<default>50000.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1e7</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EJECTA_THICKNESS_VARIABILITY">
+			<label>Ejecta thickness variability:</label>
+			<help_brief>Ejecta thickness variability (EXPLAIN) </help_brief>
+			<default>0.2</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1e4</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/NOISESD">
+			<label>Noisesd:</label>
+			<help_brief>Standard deviation of random noise used for ejecta thickness. (CHECK THIS)</help_brief>
+			<default>0.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1e4</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/INHERITANCE_PARAMETER">
+			<label>Inheritance parameter:</label>
+			<help_brief>See documentation. </help_brief>
+			<default>0.9</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>2.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/MAXIMUM_RIM_GRADIENT">
+			<label>Maximum rim gradient:</label>
+			<help_brief>Maximum gradient of crater rim [unitless] </help_brief>
+			<default>0.36</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+	</tab>
+
+	<!-- =========================================================================================== -->
+	<tab name="Ocean">
+		<entry name="/MARSSIM/Input/Var/IOCEANVAR">
+			<label>Switch for variable ocean elevation:</label>
+			<help_brief>If set to 1, ocean elevation varies in time and the times and corresponding sea levels are read in from the file "oceanlevels.dat".</help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+	</tab>
+	<!-- =========================================================================================== -->
+	<tab name="Accretion">
+		<entry name="/MARSSIM/Input/Var/ACCRETION_RATE">
+			<label>Accretion rate:</label>
+			<help_brief>Rate of non-fluvial and non-eolian surface accretion and degradation. </help_brief>
+			<default>-0.4</default>
+			<type>Float</type>
+			<range>
+				<min>-10.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/EXPOSECREEPUSE">
+			<label>Switch for exposure dependent creep:</label>
+			<help_brief>If set to 1, the mass wasting creep rate depends on exposure. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RADIATION_USE">
+			<label>Switch for solar radiation:</label>
+			<help_brief>If set to 1, sublimation due to reflected radiation is modeled. </help_brief>
+			<default>0</default>
+			<type>Int</type>
+			<range>
+				<min>0</min>
+				<max>1</max>
+			</range>
+		</entry>
+        <entry name="/MARSSIM/Input/Var/USE_TOP_EXPOSURE">
+            <label>Swith for top exposure:</label>
+            <help_brief>Please refer help</help_brief>
+            <default>0</default>
+            <type>Int</type>
+            <range>
+                <min>0</min>
+                <max>1</max>
+            </range>
+        </entry>
+		<entry name="/MARSSIM/Input/Var/USE_INVERSE_EXPOSURE">
+            <label>Swith for inverse exposure:</label>
+            <help_brief>Please refer help</help_brief>
+            <default>0</default>
+            <type>Int</type>
+            <range>
+                <min>0</min>
+                <max>1</max>
+            </range>
+        </entry>
+		<entry name="/MARSSIM/Input/Var/USE_EXPOSURE_SMOOTHING">
+            <label>Swith for exposure smoothing:</label>
+            <help_brief>Please refer help</help_brief>
+            <default>0</default>
+            <type>Int</type>
+            <range>
+                <min>0</min>
+                <max>1</max>
+            </range>
+        </entry>
+		<entry name="/MARSSIM/Input/Var/RAD_CONST">
+			<label>Radiation constant:</label>
+			<help_brief>This scales the rate of radiation-dependent sublimation/deposition. </help_brief>
+			<default>2.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RAD_DUST_FACTOR">
+			<label>Radiation dust factor:</label>
+			<help_brief>Determines the relative amount of re-emitted thermal radiation from dust-covered surfaces relative to bedrock surfaces. </help_brief>
+			<default>2.0</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>100.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RAD_THRESH_CONVEXITY">
+			<label>Radiation threshold convexity:</label>
+			<help_brief>Critical value of exposure index for redeposition of sublimated ice. </help_brief>
+			<default>-0.2</default>
+			<type>Float</type>
+			<range>
+				<min>-10.0</min>
+				<max>10.0</max>
+			</range>
+		</entry>
+		<entry name="/MARSSIM/Input/Var/RAD_DEPOSIT_RATE">
+			<label>Radiation deposit rate:</label>
+			<help_brief>Rate scaling for redeposition of sublimated ice on less-exposed surfaces. </help_brief>
+			<default>0.00003</default>
+			<type>Float</type>
+			<range>
+				<min>0.0</min>
+				<max>1.0</max>
+			</range>
+		</entry>
+                <entry name="HTML_HELP_FILE">
+			<label>HTML help file:</label>
+      			<help_brief>URL for HTML help file</help_brief>
+      			<default>http://csdms.colorado.edu/help/models/marssim/Marssim_help_doc.html</default>
+      			<type>String</type>
+    		</entry>
+
+	</tab>
+
+</dialog>
