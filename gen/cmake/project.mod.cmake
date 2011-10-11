@@ -15,8 +15,8 @@ set	@PROJECT_NAME@_version		0.1
 set	@PROJECT_NAME@_root		    @PROJECT_TOP_DIR@
 
 module load openmi
-module load cem/0.1
-module load sedflux/2.0
+module load cem/alpha
+module load sedflux/devel
 module load hydrotrend/3.0
 module load child
 module load internal

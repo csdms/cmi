@@ -1,6 +1,6 @@
 #!/bin/bash
 source /usr/local/modules/init/bash
-module load openmi cem/0.1 sedflux/2.0 hydrotrend/3.0 child internal roms stm
+module load openmi cem/alpha sedflux/devel hydrotrend/3.0 child internal roms stm
 module load marssim aquatellus
 
 if [ -z "${CMT_PROJECT_DIALOG_PATH+x}" ] ; then
