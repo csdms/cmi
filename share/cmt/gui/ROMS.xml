@@ -3,7 +3,7 @@
   <tab name="Project">
     <entry name="/ROMS/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb+bb;GUI;/home/csdms/sims/roms/upwelling}</help_brief>
+      <help_brief>Path to input files. {cb+bb;GUI;/home/csdms/sims/roms/upwelling;/home/csdms/sims/roms/cbofs2/input/}</help_brief>
       <default>GUI</default>
       <type>String</type>
     </entry>
@@ -59,6 +59,13 @@
         <min>1</min>
         <max>10000000000</max>
       </range>
+    </entry>
+ 
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>https://www.myroms.org/wiki/index.php/ocean.in</default>
+      <type>String</type>
     </entry>
     
   </tab>
@@ -193,7 +200,7 @@
     <entry name="/ROMS/Input/Var/NTIMES">
       <label>Number of timesteps:</label>
       <help_brief>Number of timesteps</help_brief>
-      <default>10</default>
+      <default>1440</default>
       <type>Int</type>
       <range>
         <min>1</min>
@@ -1400,7 +1407,48 @@
       </range>
     </entry>
   </tab>
-
+  <tab name="Input Files">
+    <entry name="/ROMS/Input/Var/GRDNAME">
+      <label>Input grid file name:</label>
+      <help_brief>Input grid file name</help_brief>
+      <default>ocean_grd.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/ININAME">
+      <label>Nonlinear initial conditions file:</label>
+      <help_brief>Input nonlinear initial conditions file name. It can be a re-start file.</help_brief>
+      <default>ocean_ini.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/BRYNAME">
+      <label>Open boundary data file:</label>
+      <help_brief>Input open boundary data file name.</help_brief>
+      <default>ocean_bry.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/NFFILES">
+      <label>Number of forcing files:</label>
+      <help_brief>Number of forcing files</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/FRCNAME">
+      <label>Forcing fields file:</label>
+      <help_brief>Input forcing fields file name. Each file should be separated by a back slash(\ or |) </help_brief>
+      <default>ocean_frc.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/SPOSNAM">
+      <label>Stations positions file:</label>
+      <help_brief>Input stations positions file name.</help_brief>
+      <default>ROMS/External/stations.in</default>
+      <type>String</type>
+    </entry>
+  </tab>
 <!-- =========================================================================================== -->
   <tab name="About">
     <entry name="/ROMS/ModelName">

@@ -22,4 +22,36 @@
     <extras>make.vars.user</extras>
   </component>
 
+  <component name="models.CBOFS2" language="f90">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.IRFPort@CBOFS2</provides>
+    <!--requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>tools.Verbose</requires-->
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+
+  <component name="models.chesROMS" language="f90">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.IRFPort@chesROMS</provides>
+    <!--requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>tools.Verbose</requires-->
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+
 </project>

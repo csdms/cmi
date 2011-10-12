@@ -16,24 +16,23 @@
 
 
 #include "sidl_NotImplementedException_fAbbrev.h"
-#include "edu_csdms_ports_CMIPort_fAbbrev.h"
 #include "edu_csdms_tools_TemplateFiles_fAbbrev.h"
 #include "gov_cca_Port_fAbbrev.h"
 #include "sidl_ClassInfo_fAbbrev.h"
 #include "sidl_BaseClass_fAbbrev.h"
-#include "edu_csdms_tools_PrintQueue_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
 #include "gov_cca_ports_ParameterPortFactory_fAbbrev.h"
 #include "edu_csdms_models_ROMS_fAbbrev.h"
 #include "sidl_BaseException_fAbbrev.h"
+#include "edu_csdms_openmi_IElementSet_fAbbrev.h"
+#include "edu_csdms_openmi_IValueSet_fAbbrev.h"
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
 #include "gov_cca_CCAException_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
-#include "edu_csdms_tools_Verbose_fAbbrev.h"
+#include "edu_csdms_ports_IRFPort_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
-#include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
@@ -41,7 +40,7 @@
 ! DO-NOT-DELETE splicer.begin(_miscellaneous_code_start)
 
 ! Insert-UserDecl-Here 
-
+ 
 #include "gov_cca_TypeMap_fAbbrev.h"
 #include "sidl_SIDLException_fAbbrev.h"
 
@@ -357,11 +356,11 @@ recursive subroutine R_boccaSetServicesf0qo70kdso_mi(self, services,           &
        typeMap, exception)
   BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.ROMS failed addProvidesPort Run ')
 
-! Add edu.csdms.ports.CMIPort:Ocean provides port
+! Add edu.csdms.ports.IRFPort:ROMS provides port
   call addProvidesPort(dp%d_private_data%d_services, port, &
-       'Ocean', 'edu.csdms.ports.CMIPort', &
+       'ROMS', 'edu.csdms.ports.IRFPort', &
        typeMap, exception)
-  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.ROMS failed addProvidesPort Ocean ')
+  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.ROMS failed addProvidesPort ROMS ')
 
   dr_port = .false.
   call deleteRef(port,exception)
@@ -459,10 +458,10 @@ recursive subroutine boccaReleaseServiceogptzajpg_mi(self, services,           &
       .false., throwaway &
   )
 
-! Un-provide edu.csdms.ports.CMIPort port with port name Ocean 
-  call removeProvidesPort(services, 'Ocean', excpt)
+! Un-provide edu.csdms.ports.IRFPort port with port name ROMS 
+  call removeProvidesPort(services, 'ROMS', excpt)
   call checkException(self, excpt, &
-      'Error: Could not removeProvidesPort Ocean', &
+      'Error: Could not removeProvidesPort ROMS', &
       .false., throwaway &
   )
 
@@ -629,18 +628,15 @@ end subroutine boccaThrowExceptiome8hhnyweg_mi
 ! 
 
 recursive subroutine boccaForceUsePortIl2a5zd63z__mi(self, dummy0, dummy1,     &
-  dummy2, dummy3, dummy4, dummy5, exception)
+  dummy2, exception)
   use sidl
   use sidl_NotImplementedException
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_ROMS
-  use edu_csdms_openmi_ScalarSet
   use edu_csdms_tools_ConfigDialog
-  use edu_csdms_tools_PrintQueue
   use edu_csdms_tools_TemplateFiles
-  use edu_csdms_tools_Verbose
   use edu_csdms_models_ROMS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.boccaForceUsePortInclude.use)
   ! Insert-Code-Here {edu.csdms.models.ROMS.boccaForceUsePortInclude.use} (use statements)
@@ -650,15 +646,9 @@ recursive subroutine boccaForceUsePortIl2a5zd63z__mi(self, dummy0, dummy1,     &
   ! in
   type(gov_cca_ports_ParameterPortFactory_t) :: dummy0
   ! in
-  type(edu_csdms_tools_Verbose_t) :: dummy1
+  type(edu_csdms_tools_TemplateFiles_t) :: dummy1
   ! in
-  type(edu_csdms_tools_TemplateFiles_t) :: dummy2
-  ! in
-  type(edu_csdms_openmi_ScalarSet_t) :: dummy3
-  ! in
-  type(edu_csdms_tools_ConfigDialog_t) :: dummy4
-  ! in
-  type(edu_csdms_tools_PrintQueue_t) :: dummy5
+  type(edu_csdms_tools_ConfigDialog_t) :: dummy2
   ! in
   type(sidl_BaseInterface_t) :: exception
   ! out
@@ -733,36 +723,37 @@ recursive subroutine ROMS_setServicesya4c29b588xe_mi(self, services,           &
   type(edu_csdms_tools_ConfigDialog_t) :: dialog
   type(edu_csdms_models_ROMS_wrap) :: dp
 
-  print *, 'Bocca> Setting services'
-  call boccaSetServices(self, services, exception)
-  BOCCA_SIDL_CHECK_F90(exception , 'setServices')
 
-  ! Insert-UserCode-Here
-  call createTypeMap(services, userinput, exception)
-  call getPort(services, "ppf", generalPort, exception)
-  if (is_null(exception)) then
-    call cast(generalPort, ppf, throwawayException)
-    if (not_null(ppf)) then
-      call initParameterData(ppf, userinput, &
+    call boccaSetServices(self, services, exception) 
+    BOCCA_SIDL_CHECK_F90(exception , 'setServices')
+
+    ! Insert-UserCode-Here
+    call createTypeMap(services, userinput, exception)
+    call getPort(services, "ppf", generalPort, exception)
+    if (is_null(exception)) then
+      call cast(generalPort, ppf, throwawayException)
+      if (not_null(ppf)) then
+        call initParameterData(ppf, userinput, &
                                "Configure", throwawayException)
-      call setBatchTitle(ppf, userinput, &
+        call setBatchTitle(ppf, userinput, &
                            "ROMS Parameters", throwawayException)
 
-      call new (dialog, throwawayException)
-      call edu_csdms_tools_ConfigDialog_read_m(dialog, "ROMS.xml", &
+        call new (dialog, throwawayException)
+        call edu_csdms_tools_ConfigDialog_read_m(dialog, "ROMS.xml", &
               throwawayException)
-      call edu_csdms_tools_ConfigDialog_construct_m (dialog, ppf, &
+        call edu_csdms_tools_ConfigDialog_construct_m (dialog, ppf, &
               userinput, throwawayException)
 
-      call addParameterPort(ppf, userinput, services, &
+        call addParameterPort(ppf, userinput, services, &
                               throwawayException)
+      end if
     end if
-  end if
-  call releasePort(services, "ppf", throwawayException)
-  call edu_csdms_models_ROMS__get_data_m(self, dp)
-  dp%d_private_data%userinput = userinput
-  print *, 'Bocca> Services set'
-  return
+    call releasePort(services, "ppf", throwawayException)
+
+    call edu_csdms_models_ROMS__get_data_m(self, dp)
+    dp%d_private_data%userinput = userinput
+
+    return
 
 ! Exit route when there are exceptions
 BOCCAEXIT      continue
@@ -887,68 +878,15 @@ recursive subroutine edu_csdms_models_ROMS_go_mi(self, retval, exception)
 ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.go)
   type(edu_csdms_tools_TemplateFiles_t) :: template
   type(edu_csdms_models_ROMS_wrap) :: dp
-  type(sidl_string_1d) :: properties
-  
-  call edu_csdms_models_ROMS__get_data_m(self, dp)
-  
-  print *, "Bocca> Status ***Initialize*** for Component ROMS"
-  call ROMS_initialize0x96pdqy2mj7w_mi(self, properties, exception)
-  
-
-  print *, 'Bocca> Status ***Run*** for component ROMS '
-  call edu_csdms_models_ROMS_run_mi(self, dp%d_private_data%RunInterval, exception)
-  
-  print *, 'Bocca> Status ***finalize*** for component ROMS'
-  call ROMS_finalized9wgaery_gustyh_mi(self, exception)
-
-  print *, "Bocca> DONE!"
-  return
-
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.go)
-end subroutine edu_csdms_models_ROMS_go_mi
-
-
-! 
-! Method:  initialize[]
-! 
-
-recursive subroutine ROMS_initialize0x96pdqy2mj7w_mi(self, config_file,        &
-  retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.initialize.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.initialize.use} (use statements)
-  use edu_csdms_tools_TemplateFiles
-  use gov_cca_TypeMap
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.initialize.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: config_file
-  ! in
-  logical :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.initialize)
-! Insert-Code-Here {edu.csdms.models.ROMS.initialize} (initialize method)
-  type(edu_csdms_tools_TemplateFiles_t) :: template
-  type(edu_csdms_models_ROMS_wrap) :: dp
   character (len=2048) :: input_dir
   character (len=2048) :: input_file
   character (len=2048) :: site_prefix
   character (len=2048) :: case_prefix
   integer :: ng
-  !real(r8) :: RunInterval
+  real(r8) :: RunInterval            ! seconds
+  integer :: ntimes ! Number of timesteps
+  double precision :: dt
 
-  print *, 'Bocca> Fetching user input data'
   call edu_csdms_models_ROMS__get_data_m(self, dp)
   call getString (dp%d_private_data%userinput, "/ROMS/Input/Dir", ".", &
                   input_dir, exception)
@@ -959,96 +897,141 @@ recursive subroutine ROMS_initialize0x96pdqy2mj7w_mi(self, config_file,        &
   call getString (dp%d_private_data%userinput, "/ROMS/CasePrefix", "", &
                   case_prefix, exception)
   call getInt (dp%d_private_data%userinput, "/ROMS/Input/Var/NTIMES", 0, &
-                  dp%d_private_data%ntimes, exception)
+                  ntimes, exception)
   call getDouble (dp%d_private_data%userinput, "/ROMS/Input/Var/DT", 0.0D0, &
-                 dp%d_private_data%dt, exception)
+                  dt, exception)
   call getDouble (dp%d_private_data%userinput, "/ROMS/Input/Var/RunInterval", 0.0D0, &
-                  dp%d_private_data%RunInterval, exception)
-  print *, 'Bocca> Input dir set to ', trim(input_dir)
-  print *, 'Bocca> Input File to be read ', trim(input_file)
+                  RunInterval, exception)
 
-  !Check whether reading from a file or GUI, the tab dialogs
+  print *, 'Input dir: ', input_dir
+  print *, 'Input File: ', input_file
+
   if (input_dir=="GUI") then
     input_dir = "."
-    print *, "Bocca> Reading Input from GUI, the tab dialogs"
+    print *, "Input from GUI"
     call new (template, exception)
-    print *, "Bocca> Creating new file: ocean.in"
+    print *, "Creating new file: ocean.in"
     call add_file (template, "ROMS_ser_upwelling.in.in", "ocean.in", &
                    exception)
     call add_file (template, "ROMS_ser_varinfo.dat.in", "varinfo.dat", &
                    exception)
-    print *, "Bocca> Substituting input values with the values in the input template"
-    call substitute (template, dp%d_private_data%userinput, &
+    print *, "Substitute"
+    call substitute (template, dp%d_private_data%userinput, & 
           "/ROMS/Input/Var/", ".", exception);
-    print *, 'Bocca> Calculating ROMS runinterval where ntime is set as ', dp%d_private_data%ntimes, ' and dt set as ', dp%d_private_data%dt
-    dp%d_private_data%RunInterval = dp%d_private_data%ntimes * dp%d_private_data%dt
-    print *, 'Bocca> RunInterval calculated as ', dp%d_private_data%RunInterval
+    RunInterval = ntimes * dt    
   else
-    print *, 'Bocca> Reading input from file '
-    print *, 'Bocca> Copying ROMS varinfo.dat to working directory... '
-    call system("cp " // trim(input_dir) // "/varinfo.dat" // " .")
+    print *, 'Copying varinfo.dat to working directory... '
+    call system("cp " // trim(input_dir) // "/varinfo.dat" // " .") 
     input_file = trim(input_dir) // "/" // trim(input_file)
-    print *, "Bocca> Input from File: ", trim(input_file)
+    print *, "Input from File: ", input_file
   endif
 
-  print *, 'Bocca> Reading files to ROMS standard input from module mod_iounits'
+  print *, "Reading ", input_file
   open (stdinp, FILE=input_file, ACTION='read')
-  
+
+  print *, "Initialize ROMS"
   if (exit_flag.eq.NoError) then
     dp%d_private_data%first=.TRUE.
     call ROMS_initialize (dp%d_private_data%first)
   end if
-  print *, 'Bocca> Initialization Done.'
-  return  
+
+  if (exit_flag.eq.NoError) then
+    print *, "Run ROMS for time steps:", RunInterval
+    call ROMS_run (RunInterval)
+  end if
+  
+  if (exit_flag.eq.NoError) then
+     print *, 'Finalize ROMS...'
+     call ROMS_finalize()
+  end if
+  
+  print *, "DONE!"
+  return
+! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.go)
+end subroutine edu_csdms_models_ROMS_go_mi
+
+
 ! 
-! This method has not been implemented
+! Method:  initialize[]
 ! 
 
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.initialize)
-end subroutine ROMS_initialize0x96pdqy2mj7w_mi
-
-
-! 
-! Method:  run_for[]
-! 
-
-recursive subroutine ROMS_run_for_oi8czd7r01qrnsu_mi(self, time_interval,      &
-  time_units, stop_rule, stop_vars, retval, exception)
+recursive subroutine ROMS_initialize0x96pdqy2mj7w_mi(self, properties,         &
+  exception)
   use sidl
   use sidl_NotImplementedException
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_ROMS
-  use sidl_double_array
+  use sidl_string_array
   use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.run_for.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.run_for.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.run_for.use)
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.initialize.use)
+  ! Insert-Code-Here {edu.csdms.models.ROMS.initialize.use} (use statements)
+  use edu_csdms_tools_TemplateFiles
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.initialize.use)
   implicit none
   type(edu_csdms_models_ROMS_t) :: self
   ! in
-  real (kind=sidl_double) :: time_interval
+  type(sidl_string_1d) :: properties
   ! in
-  character (len=*) :: time_units
-  ! in
-  character (len=*) :: stop_rule
-  ! in
-  type(sidl_double_1d) :: stop_vars
-  ! in
-  logical :: retval
-  ! out
   type(sidl_BaseInterface_t) :: exception
   ! out
 
 
 
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.run_for)
-! Insert-Code-Here {edu.csdms.models.ROMS.run_for} (run_for method)
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.initialize)
+! Insert-Code-Here {edu.csdms.models.ROMS.initialize} (initialize method)
+  type(edu_csdms_tools_TemplateFiles_t) :: template
+
+  call new (template, exception)
+  call add_file (template, "ROMS_upwelling.in.in", "ocean.in", exception)
 ! 
 ! This method has not been implemented
 ! 
 
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.run_for)
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.initialize)
+!  type(sidl_BaseInterface_t) :: throwaway
+!  type(sidl_NotImplementedException_t) :: notImpl
+!  call new(notImpl, exception)
+!  call setNote(notImpl, 'Not Implemented', exception)
+!  call cast(notImpl, exception,throwaway)
+!  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.initialize)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.initialize)
+end subroutine ROMS_initialize0x96pdqy2mj7w_mi
+
+
+! 
+! Method:  run[]
+! 
+
+recursive subroutine edu_csdms_models_ROMS_run_mi(self, time, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_ROMS
+  use edu_csdms_models_ROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.run.use)
+  ! Insert-Code-Here {edu.csdms.models.ROMS.run.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.run.use)
+  implicit none
+  type(edu_csdms_models_ROMS_t) :: self
+  ! in
+  real (kind=sidl_double) :: time
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.run)
+! Insert-Code-Here {edu.csdms.models.ROMS.run} (run method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.run)
   type(sidl_BaseInterface_t) :: throwaway
   type(sidl_NotImplementedException_t) :: notImpl
   call new(notImpl, exception)
@@ -1056,9 +1039,9 @@ recursive subroutine ROMS_run_for_oi8czd7r01qrnsu_mi(self, time_interval,      &
   call cast(notImpl, exception,throwaway)
   call deleteRef(notImpl,throwaway)
   return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.run_for)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.run_for)
-end subroutine ROMS_run_for_oi8czd7r01qrnsu_mi
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.run)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.run)
+end subroutine edu_csdms_models_ROMS_run_mi
 
 
 ! 
@@ -1089,556 +1072,17 @@ recursive subroutine ROMS_finalized9wgaery_gustyh_mi(self, exception)
 ! This method has not been implemented
 ! 
 
-  if (exit_flag.eq.NoError) then
-     print *, 'Bocca> ROMS finalize started'
-     call ROMS_finalize()
-     print *, 'ROMS finalize Done'
-  end if 
- 
-! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.finalize)
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.finalize)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.finalize)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.finalize)
 end subroutine ROMS_finalized9wgaery_gustyh_mi
-
-
-! 
-! Method:  run_model[]
-! 
-
-recursive subroutine ROMS_run_model7xf8iphj3sgvgr_mi(self, config_file,        &
-  stop_rule, stop_var, retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.run_model.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.run_model.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.run_model.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: config_file
-  ! in
-  character (len=*) :: stop_rule
-  ! in
-  real (kind=sidl_double) :: stop_var
-  ! in
-  logical :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.run_model)
-! Insert-Code-Here {edu.csdms.models.ROMS.run_model} (run_model method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.run_model)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.run_model)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.run_model)
-end subroutine ROMS_run_model7xf8iphj3sgvgr_mi
-
-
-! 
-! Method:  get_values[]
-! 
-
-recursive subroutine ROMS_get_valuescivy99m6vxg92_mi(self, long_var_name,      &
-  retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use sidl_array_array
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_values.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_values.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_values.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: long_var_name
-  ! in
-  type(sidl__array) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_values)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_values} (get_values method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_values)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_values)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_values)
-end subroutine ROMS_get_valuescivy99m6vxg92_mi
-
-
-! 
-! Method:  set_values[]
-! 
-
-recursive subroutine ROMS_set_valuesh2pia902mwtax_mi(self, long_var_name,      &
-  in_values, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use sidl_array_array
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.set_values.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.set_values.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.set_values.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: long_var_name
-  ! in
-  type(sidl__array) :: in_values
-  ! in
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.set_values)
-! Insert-Code-Here {edu.csdms.models.ROMS.set_values} (set_values method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.set_values)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.set_values)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.set_values)
-end subroutine ROMS_set_valuesh2pia902mwtax_mi
-
-
-! 
-! Method:  get_status[]
-! 
-
-recursive subroutine ROMS_get_statusmadrsdmh9e_1o_mi(self, retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_status.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_status.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_status.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_status)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_status} (get_status method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_status)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_status)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_status)
-end subroutine ROMS_get_statusmadrsdmh9e_1o_mi
-
-
-! 
-! Method:  get_component_name[]
-! 
-
-recursive subroutine get_component_name7tnxqb9146_mi(self, retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_component_name.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_component_name.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_component_name.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_component_name)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_component_name} (get_component_name method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_component_name)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_component_name)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_component_name)
-end subroutine get_component_name7tnxqb9146_mi
-
-
-! 
-! Method:  get_input_item_list[]
-! 
-
-recursive subroutine get_input_item_liscsnvn4efcw_mi(self, retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use sidl_string_array
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_input_item_list.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_input_item_list.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_input_item_list.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  type(sidl_string_1d) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_input_item_list)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_input_item_list} (get_input_item_list method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_input_item_list)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_input_item_list)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_input_item_list)
-end subroutine get_input_item_liscsnvn4efcw_mi
-
-
-! 
-! Method:  get_output_item_list[]
-! 
-
-recursive subroutine get_output_item_lis7lzun2mlh_mi(self, retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use sidl_string_array
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_output_item_list.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_output_item_list.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_output_item_list.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  type(sidl_string_1d) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_output_item_list)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_output_item_list} (get_output_item_list method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_output_item_list)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_output_item_list)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_output_item_list)
-end subroutine get_output_item_lis7lzun2mlh_mi
-
-
-! 
-! Method:  get_required_ports[]
-! 
-
-recursive subroutine get_required_portslnz4nrlwkf_mi(self, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_required_ports.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_required_ports.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_required_ports.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_required_ports)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_required_ports} (get_required_ports method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_required_ports)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_required_ports)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_required_ports)
-end subroutine get_required_portslnz4nrlwkf_mi
-
-
-! 
-! Method:  release_required_ports[]
-! 
-
-recursive subroutine release_required_p1qjh0j07gv_mi(self, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.release_required_ports.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.release_required_ports.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.release_required_ports.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.release_required_ports)
-! Insert-Code-Here {edu.csdms.models.ROMS.release_required_ports} (release_required_ports method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.release_required_ports)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.release_required_ports)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.release_required_ports)
-end subroutine release_required_p1qjh0j07gv_mi
-
-
-! 
-! Method:  get_values_at_indices[]
-! 
-
-recursive subroutine get_values_at_indiq2lht7rs7m_mi(self, long_var_name,      &
-  indices, retval, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use sidl_array_array
-  use sidl_int_array
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_values_at_indices.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_values_at_indices.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_values_at_indices.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: long_var_name
-  ! in
-  type(sidl_int_1d) :: indices
-  ! in
-  type(sidl__array) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_values_at_indices)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_values_at_indices} (get_values_at_indices method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_values_at_indices)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_values_at_indices)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_values_at_indices)
-end subroutine get_values_at_indiq2lht7rs7m_mi
-
-
-! 
-! Method:  set_values_at_indices[]
-! 
-
-recursive subroutine set_values_at_indih6z2fk0t9w_mi(self, long_var_name,      &
-  indices, in_values, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use sidl_array_array
-  use sidl_int_array
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.set_values_at_indices.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.set_values_at_indices.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.set_values_at_indices.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  character (len=*) :: long_var_name
-  ! in
-  type(sidl_int_1d) :: indices
-  ! in
-  type(sidl__array) :: in_values
-  ! in
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.set_values_at_indices)
-! Insert-Code-Here {edu.csdms.models.ROMS.set_values_at_indices} (set_values_at_indices method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.set_values_at_indices)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.set_values_at_indices)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.set_values_at_indices)
-end subroutine set_values_at_indih6z2fk0t9w_mi
-
-
-! 
-! Method:  print_traceback[]
-! 
-
-recursive subroutine RO_print_tracebacksmjdkoh_k3_mi(self, exception)
-  use sidl
-  use sidl_NotImplementedException
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_ROMS
-  use edu_csdms_models_ROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.print_traceback.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.print_traceback.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.print_traceback.use)
-  implicit none
-  type(edu_csdms_models_ROMS_t) :: self
-  ! in
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.print_traceback)
-! Insert-Code-Here {edu.csdms.models.ROMS.print_traceback} (print_traceback method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.print_traceback)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.print_traceback)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.print_traceback)
-end subroutine RO_print_tracebacksmjdkoh_k3_mi
 
 
 ! 
@@ -2132,6 +1576,100 @@ end subroutine ROMS_get_time_span9qulnytcgz_mi
 
 
 ! 
+! Method:  get_element_set[]
+! 
+
+recursive subroutine RO_get_element_set9zdy2f7kh7_mi(self, val_string, retval, &
+  exception)
+  use sidl
+  use sidl_NotImplementedException
+  use edu_csdms_openmi_IElementSet
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_ROMS
+  use edu_csdms_models_ROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_element_set.use)
+  ! Insert-Code-Here {edu.csdms.models.ROMS.get_element_set.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_element_set.use)
+  implicit none
+  type(edu_csdms_models_ROMS_t) :: self
+  ! in
+  character (len=*) :: val_string
+  ! in
+  type(edu_csdms_openmi_IElementSet_t) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_element_set)
+! Insert-Code-Here {edu.csdms.models.ROMS.get_element_set} (get_element_set method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_element_set)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_element_set)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_element_set)
+end subroutine RO_get_element_set9zdy2f7kh7_mi
+
+
+! 
+! Method:  get_value_set[]
+! 
+
+recursive subroutine ROMS_get_value_sete33543kmj7_mi(self, val_string, retval, &
+  exception)
+  use sidl
+  use sidl_NotImplementedException
+  use edu_csdms_openmi_IValueSet
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_ROMS
+  use edu_csdms_models_ROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_value_set.use)
+  ! Insert-Code-Here {edu.csdms.models.ROMS.get_value_set.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_value_set.use)
+  implicit none
+  type(edu_csdms_models_ROMS_t) :: self
+  ! in
+  character (len=*) :: val_string
+  ! in
+  type(edu_csdms_openmi_IValueSet_t) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_value_set)
+! Insert-Code-Here {edu.csdms.models.ROMS.get_value_set} (get_value_set method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_value_set)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_value_set)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_value_set)
+end subroutine ROMS_get_value_sete33543kmj7_mi
+
+
+! 
 ! Method:  get_value_set_data[]
 ! 
 
@@ -2176,6 +1714,53 @@ recursive subroutine get_value_set_datafoxydtbklh_mi(self, val_string, retval, &
   ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_value_set_data)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_value_set_data)
 end subroutine get_value_set_datafoxydtbklh_mi
+
+
+! 
+! Method:  set_value_set[]
+! 
+
+recursive subroutine ROMS_set_value_set75j75v47qg_mi(self, val_string, values, &
+  exception)
+  use sidl
+  use sidl_NotImplementedException
+  use edu_csdms_openmi_IValueSet
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_ROMS
+  use edu_csdms_models_ROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.set_value_set.use)
+  ! Insert-Code-Here {edu.csdms.models.ROMS.set_value_set.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.set_value_set.use)
+  implicit none
+  type(edu_csdms_models_ROMS_t) :: self
+  ! in
+  character (len=*) :: val_string
+  ! in
+  type(edu_csdms_openmi_IValueSet_t) :: values
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.set_value_set)
+! Insert-Code-Here {edu.csdms.models.ROMS.set_value_set} (set_value_set method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.set_value_set)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.set_value_set)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.set_value_set)
+end subroutine ROMS_set_value_set75j75v47qg_mi
 
 
 ! DO-NOT-DELETE splicer.begin(_miscellaneous_code_end)

@@ -584,13 +584,13 @@ Dout(iTvdif) == T T                        ! vertical diffusion
 
 ! Input NetCDF file names, [1:Ngrids].
 
-     GRDNAME == ocean_grd.nc
-     ININAME == ocean_ini.nc
+     GRDNAME == ${GRDNAME}
+     ININAME == ${ININAME}
      ITLNAME == ocean_itl.nc
      IRPNAME == ocean_irp.nc
      IADNAME == ocean_iad.nc
      CLMNAME == ocean_clm.nc
-     BRYNAME == ocean_bry.nc
+     BRYNAME == ${BRYNAME}
      FWDNAME == ocean_fwd.nc
      ADSNAME == ocean_ads.nc
 
@@ -604,9 +604,10 @@ Dout(iTvdif) == T T                        ! vertical diffusion
 ! and so on.  Use a single line per entry with a continuation (\) symbol
 ! at the each entry, except the last one.
 
-     NFFILES == 1                          ! number of forcing files
 
-     FRCNAME == ocean_frc.nc               ! forcing file 1, grid 1
+     NFFILES == ${NFFILES}                          ! number of forcing files
+
+     FRCNAME == ${FRCNAME}               ! forcing file 1, grid 1
 
 ! Output NetCDF file names, [1:Ngrids].
 
@@ -624,7 +625,7 @@ Dout(iTvdif) == T T                        ! vertical diffusion
 ! Input ASCII parameter filenames.
 
      APARNAM =  ROMS/External/s4dvar.in
-     SPOSNAM =  ROMS/External/stations.in
+     SPOSNAM =  ${SPOSNAM} !ROMS/External/stations.in
      FPOSNAM =  ROMS/External/floats.in
      BPARNAM =  ROMS/External/bio_Fennel.in
      SPARNAM =  ROMS/External/sediment.in

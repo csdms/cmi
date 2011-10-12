@@ -6,7 +6,7 @@
 # bocca config CLASSNAME --var=VARUSER --value=VALUE
 # --------------------------------------------------------------
 # Include path directives, including paths to Fortran modules
-INCLUDES = -I/home/csdms/tools/netcdf/4.1.2/include/ -I/home/csdms/models/roms/upwelling/Build/
+INCLUDES = -I/home/csdms/tools/netcdf/4.1.2/include/ -I/home/csdms/models/roms/upwelling/Build/ 
 
 # Library paths and names, binaries
 LIBS = -L/home/csdms/tools/netcdf/4.1.2/lib -lnetcdf -lnetcdff -L/home/csdms/models/roms/upwelling/Build/ -lupwelling

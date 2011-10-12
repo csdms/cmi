@@ -47,12 +47,8 @@ USE ocean_control_mod, only : ROMS_finalize
     ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.private_data)
 
 ! Insert user's private data here.
-  type(gov_cca_TypeMap_t) :: userinput
-  real (kind=sidl_double) :: RunInterval
-  logical :: first
-  !real(r8) :: RunInterval            ! seconds
-  integer :: ntimes ! Number of timesteps
-  double precision :: dt
+   type(gov_cca_TypeMap_t) :: userinput
+   logical :: first
 
 !  integer, dimension(Ngrids) :: Tstr
 !  integer, dimension(Ngrids) :: Tend
