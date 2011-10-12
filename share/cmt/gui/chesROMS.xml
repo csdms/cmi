@@ -1,0 +1,1327 @@
+<?xml version="1.0" ?>
+<dialog>
+  <tab name="Project">
+    <entry name="/ROMS/Input/Dir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {cb+bb;GUI;/home/csdms/sims/roms/chesroms;}</help_brief>
+      <default>GUI</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/File">
+      <label>Input File name: </label>
+      <help_brief>Name of input file.</help_brief>
+      <default>toms_kw.in</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/SitePrefix">
+      <label>Site prefix:</label>
+      <help_brief>Site prefix for input/output files.</help_brief>
+      <default>chesroms</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/CasePrefix">
+      <label>Case prefix:</label>
+      <help_brief>Case prefix for input/output files.</help_brief>
+      <default>test</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/TITLE">
+      <label>ROMS application title:</label>
+      <help_brief>ROMS application title</help_brief>
+      <default>Chesapeake Reginal Ocean Modeling System</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/MyAppCPP">
+      <label>C-preprocessing flag:</label>
+      <help_brief>C-preprocessing flag</help_brief>
+      <default>CHESROMS</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/VARNAME">
+      <label>Variable information filename:</label>
+      <help_brief>Variable information filename</help_brief>
+      <default>varinfo.dat</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/RunInterval">
+      <label>RunInterval: </label>
+      <help_brief>Timestep multiplied by Timestep size [seconds]. In cases where input is read from a file rather than GUI</help_brief>
+      <default>432000</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>10000000000</max>
+      </range>
+    </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>https://www.myroms.org/wiki/index.php/ocean.in</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Grid">
+    <entry name="/ROMS/Input/Var/Ngrids">
+      <label>Number of nested grids:</label>
+      <help_brief>Number of nested grids</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Lm">
+      <label>Number of nodes in I-direction:</label>
+      <help_brief>Number of I-direction interior rho-points</help_brief>
+      <default>98</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Mm">
+      <label>Number of nodes in J-direction:</label>
+      <help_brief>Number of J-direction interior rho-points</help_brief>
+      <default>148</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/N">
+      <label>Number of vertical levels:</label>
+      <help_brief>Number of vertical levels</help_brief>
+      <default>20</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>200</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Nbed">
+      <label>Number of sediment bed layers:</label>
+      <help_brief>Number of sediment bed layers</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>8</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NAT">
+      <label>Number of active tracers:</label>
+      <help_brief>Number of active tracers (usually, 2; e.g. temp and salin)</help_brief>
+      <default>2</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>8</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NPT">
+      <label>Number of inactive passive tracers:</label>
+      <help_brief>Number of inactive passive tracers</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>8</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NCS">
+      <label>Number of cohesive (mud) sediment tracers:</label>
+      <help_brief>Number of cohesive (mud) sediment tracers</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>8</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NNS">
+      <label>Number of non-cohesive (sand) sediment tracers:</label>
+      <help_brief>Number of non-cohesive (sand) sediment tracers</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>8</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NtileI">
+      <label>Number of tiles in I-direction:</label>
+      <help_brief>Number of tiles in I-direction (for parallel mode)</help_brief>
+      <default>2</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>8</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NtileJ">
+      <label>Number of tiles in J-direction:</label>
+      <help_brief>Number of tiles in J-direction (for parallel mode)</help_brief>
+      <default>2</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>8</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Time">
+    <entry name="/ROMS/Input/Var/NTIMES">
+      <label>Number of timesteps:</label>
+      <help_brief>Number of timesteps</help_brief>
+      <default>527040</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/DT">
+      <label>Timestep size:</label>
+      <help_brief>Timestep size [seconds]</help_brief>
+      <default>60.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NDTFAST">
+      <label>Number of barotropic steps:</label>
+      <help_brief>Number of barotropic steps</help_brief>
+      <default>20</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ERstr">
+      <label>Starting perturbation or iteration:</label>
+      <help_brief>Starting perturbation or iteration</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ERend">
+      <label>Ending perturbation or iteration:</label>
+      <help_brief>Ending perturbation or iteration</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Nouter">
+      <label>Max number of 4DVar outer loop iterations:</label>
+      <help_brief>Max number of 4DVar outer loop iterations</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Ninner">
+      <label>Max number of 4DVar inner loop iterations:</label>
+      <help_brief>Max number of 4DVar inner loop iterations</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Nintervals">
+      <label>Number of stochastic optimals interval divisions:</label>
+      <help_brief>Number of stochastic optimals interval divisions</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NEV">
+      <label>Number of eigenvalues for GST analysis:</label>
+      <help_brief>Number of eigenvalues for GST analysis</help_brief>
+      <default>2</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>4</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NCV">
+      <label>Number of eigenvectors for GST analysis:</label>
+      <help_brief>Number of eigenvectors for GST analysis</help_brief>
+      <default>10</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Output Freq">
+    <entry name="/ROMS/Input/Var/NRREC">
+      <label>Model restart flag:</label>
+      <help_brief>Model restart flag</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LcycleRST">
+      <label>Switch to recycle restart records:</label>
+      <help_brief>Switch to recycle restart time records [T or F]</help_brief>
+      <default>T</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/NRST">
+      <label>Number of time-steps between restart records:</label>
+      <help_brief>Number of time-steps between restart records</help_brief>
+      <default>1440</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NSTA">
+      <label>Number of time-steps between stations records:</label>
+      <help_brief>Number of time-steps between stations records</help_brief>
+      <default>60</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NFLT">
+      <label>Number of time-steps between floats records:</label>
+      <help_brief>Number of time-steps between floats (drifters) records </help_brief>
+      <default>12</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NINFO">
+      <label>Number of time-steps between info diagnostics:</label>
+      <help_brief>Number of time-steps between information diagnostics </help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LDEFOUT">
+      <label>Switch to create (T) or append (F) files:</label>
+      <help_brief>File creation/append switch [T or F] </help_brief>
+      <default>T</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/NHIS">
+      <label>Number of time-steps between history records:</label>
+      <help_brief>Number of time-steps between history records </help_brief>
+      <default>1440</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NDEFHIS">
+      <label>Number of time-steps between creation of new history file:</label>
+      <help_brief>Number of time-steps between creation of new history file</help_brief>
+      <default>43200</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NTSAVG">
+      <label>Starting averages timestep:</label>
+      <help_brief>Starting averages timestep</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>2000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NAVG">
+      <label>Number of time-steps between averages records:</label>
+      <help_brief>Number of time-steps between averages records</help_brief>
+      <default>1440</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NDEFAVG">
+      <label>Number of time-steps between creation of new averages file:</label>
+      <help_brief>Number of time-steps between creation of new averages file</help_brief>
+      <default>43200</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NTSDIA">
+      <label>Starting diagnostics timestep:</label>
+      <help_brief>Starting diagnostics timestep</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NDIA">
+      <label>Number of time-steps between diagnostics records:</label>
+      <help_brief>Number of time-steps between diagnostics records</help_brief>
+      <default>480</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NDEFDIA">
+      <label>Number of time-steps between creation of new diagnostics file:</label>
+      <help_brief>Number of time-steps between creation of new diagnostics file</help_brief>
+      <default>43200</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LcycleTLM">
+      <label>Switch to recycle TLM time records:</label>
+      <help_brief>Switch to recycle TLM time records [T or F]</help_brief>
+      <default>F</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/NTLM">
+      <label>Number of time-steps between TLM records:</label>
+      <help_brief>Number of time-steps between TLM records</help_brief>
+      <default>1440</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NDEFTLM">
+      <label>Number of time-steps between creation of new TLM file:</label>
+      <help_brief>Number of time-steps between creation of new TLM file</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LcycleADJ">
+      <label>Switch to recycle ADM time records:</label>
+      <help_brief>Switch to recycle ADM time records [T or F]</help_brief>
+      <default>F</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/NADJ">
+      <label>Number of time-steps between ADM records:</label>
+      <help_brief>Number of time-steps between ADM records</help_brief>
+      <default>1440</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NDEFADJ">
+      <label>Number of time-steps between creation of new ADM file:</label>
+      <help_brief>Number of time-steps between creation of new ADM file</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NSFF">
+      <label>Number of time-steps between 4DVAR adjustment of SFF:</label>
+      <help_brief>Number of time-steps between 4DVAR adjustment of surface forcing fluxes</help_brief>
+      <default>72</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NOBC">
+      <label>Number of time-steps between 4DVAR adjustment of OBF:</label>
+      <help_brief>Number of time-steps between 4DVAR adjustment of open boundary fields</help_brief>
+      <default>72</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LrstGST">
+      <label>Switch for GST restart:</label>
+      <help_brief>Generalized Stability Theory restart switch [T or F]</help_brief>
+      <default>F</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/MaxIterGST">
+      <label>Maximum number of iterations for GST:</label>
+      <help_brief>Maximum number of iterations for Generalized Stability Theory</help_brief>
+      <default>500</default>
+      <type>Int</type>
+      <range>
+        <min>100</min>
+        <max>5000</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/NGST">
+      <label>Checking point interval for GST:</label>
+      <help_brief>Checking point interval for Generalized Stability Theory</help_brief>
+      <default>10</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Physical 1">
+    <entry name="/ROMS/Input/Var/Ritz_tol">
+      <label>Relative accuracy of Ritz values in GST:</label>
+      <help_brief>Relative accuracy of Ritz values in Generalized Stability Analysis</help_brief>
+      <default>1.0e-15</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-9</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TNU2_I">
+      <label>Harmonic horiz. diffusion coeff. for tracers (I-dir, NLM):</label>
+      <help_brief>Harmonic horizontal diffusion coefficient for tracers in NONLINEAR model in the I-direction [m^2/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TNU2_J">
+      <label>Harmonic horiz. diffusion coeff. for tracers (J-dir, NLM):</label>
+      <help_brief>Harmonic horizontal diffusion coefficient for tracers in NONLINEAR model in the J-direction [m^2/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TNU4_I">
+      <label>Biharmonic horiz. diffusion coeff. for tracers (I-dir, NLM):</label>
+      <help_brief>Biharmonic horizontal diffusion coefficient for tracers in NONLINEAR model in the I-direction [m^4/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TNU4_J">
+      <label>Biharmonic horiz. diffusion coeff. for tracers (J-dir, NLM):</label>
+      <help_brief>Biharmonic horizontal diffusion coefficient for tracers in NONLINEAR model in the J-direction [m^4/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_TNU2_I">
+      <label>Harmonic horiz. diffusion coeff. for tracers (I-dir, ADJ):</label>
+      <help_brief>Harmonic horizontal diffusion coefficient for tracers in ADJOINT model in the I-direction [m^2/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_TNU2_J">
+      <label>Harmonic horiz. diffusion coeff. for tracers (J-dir, ADJ):</label>
+      <help_brief>Harmonic horizontal diffusion coefficient for tracers in ADJOINT model in the J-direction [m^2/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_TNU4_I">
+      <label>Biharmonic horiz. diffusion coeff. for tracers (I-dir, ADJ):</label>
+      <help_brief>Biharmonic horizontal diffusion coefficient for tracers in ADJOINT model in the I-direction [m^4/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_TNU4_J">
+      <label>Biharmonic horiz. diffusion coeff. for tracers (J-dir, ADJ):</label>
+      <help_brief>Biharmonic horizontal diffusion coefficient for tracers in ADJOINT model in the J-direction [m^4/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/VISC2">
+      <label>Harmonic horiz. viscosity coeff. (NLM):</label>
+      <help_brief>Harmonic horizontal viscosity coefficient in NONLINEAR model [m^2/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/VISC4">
+      <label>Biharmonic horiz. viscosity coeff. (NLM):</label>
+      <help_brief>Biharmonic horizontal viscosity coefficient in NONLINEAR model  [m^4/s] </help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_VISC2">
+      <label>Harmonic horiz. viscosity coeff. (ADJ):</label>
+      <help_brief>Harmonic horizontal viscosity coefficient in ADJOINT model [m^2/s] </help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_VISC4">
+      <label>Biharmonic horiz. viscosity coeff. (ADJ):</label>
+      <help_brief>Biharmonic horizontal viscosity coefficient in ADJOINT model  [m^4/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/AKT_BAK_active">
+      <label>Background vert. mixing coeff. for active tracers (NLM):</label>
+      <help_brief>Background vertical mixing coefficient for ACTIVE tracers in NONLINEAR model  [m^2/s]</help_brief>
+      <default>1.0e-6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/AKT_BAK_passive">
+      <label>Background vert. mixing coeff. for passive tracers (NLM):</label>
+      <help_brief>Background vertical mixing coefficient for PASSIVE tracers in NONLINEAR model  [m^2/s]</help_brief>
+      <default>1.0e-6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_AKT_fac_active">
+      <label>Background vert. mixing coeff. for active tracers (ADJ):</label>
+      <help_brief>Basic state scale factor for ACTIVE tracers in ADJOINT model  [unitless]</help_brief>
+      <default>1.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_AKT_fac_passive">
+      <label>Background vert. mixing coeff. for passive tracers (ADJ):</label>
+      <help_brief>Basic state scale factor for PASSIVE tracers in ADJOINT model  [unitless]</help_brief>
+      <default>1.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/AKV_BAK">
+      <label>Background vert. mixing coeff. for momentum (NLM):</label>
+      <help_brief>Background vertical mixing coefficient for momentum in NONLINEAR model  [m^2/s]</help_brief>
+      <default>5.0e-6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ad_AKV_fac">
+      <label>Background vert. mixing coeff. for momentum (ADJ):</label>
+      <help_brief>Basic state scale factor for momentum in ADJOINT model  [unitless]</help_brief>
+      <default>1.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Turbulence">
+    <entry name="/ROMS/Input/Var/AKK_BAK">
+      <label>Turbulent closure parameter 1:</label>
+      <help_brief>Turbulent closure parameter 1 [m^2/s]</help_brief>
+      <default>5.0e-7</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-3</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/AKP_BAK">
+      <label>Turbulent closure parameter 2:</label>
+      <help_brief>Turbulent closure parameter 2 [m^2/s]</help_brief>
+      <default>5.0e-7</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-3</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TKENU2">
+      <label>Turbulent closure parameter 3:</label>
+      <help_brief>Turbulent closure parameter 3 [m^2/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-3</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TKENU4">
+      <label>Turbulent closure parameter 4:</label>
+      <help_brief>Turbulent closure parameter 4 [m^4/s]</help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-3</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_P">
+      <label>K-epsilon parameter for GLS:</label>
+      <help_brief>K-epsilon parameter (Generic Length Scale closure) [???]</help_brief>
+      <default>-1.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>-10.0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_M">
+      <label>Turbulent kinetic energy exponent for GLS:</label>
+      <help_brief>Turbulent kinetic energy exponent (Generic Length Scale closure)  [???]</help_brief>
+      <default>0.5e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_N">
+      <label>Turbulent length scale exponent for GLS:</label>
+      <help_brief>Turbulent length scale exponent (Generic Length Scale closure)  [???]</help_brief>
+      <default>-1.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>-10.0</min>
+        <max>0.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_Kmin">
+      <label>Min value of specific turbulent energy for GLS:</label>
+      <help_brief>Min value of specific turbulent energy (Generic Length Scale closure)  [???]</help_brief>
+      <default>7.6e-6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-3</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_Pmin">
+      <label>Min value of dissipation for GLS:</label>
+      <help_brief>Min value of dissipation (Generic Length Scale closure)  [???]</help_brief>
+      <default>1.0e-12</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-8</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_CMU0">
+      <label>Stability coefficient (GLS, closure indep.):</label>
+      <help_brief>Stability coefficient (Generic Length Scale closure)  [???]</help_brief>
+      <default>0.5477e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_C1">
+      <label>Shear production coefficient (GLS, closure indep.):</label>
+      <help_brief>Shear production coefficient (Generic Length Scale closure)  [???]</help_brief>
+      <default>0.555e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_C2">
+      <label>Dissipation coefficient (GLS, closure indep.):</label>
+      <help_brief>Dissipation coefficient (Generic Length Scale closure)  [???]</help_brief>
+      <default>0.833e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_C3M">
+      <label>Buoyancy production coefficient, minus (GLS, closure indep):</label>
+      <help_brief>Buoyancy production coefficient, minus (Generic Length Scale closure)  [???]</help_brief>
+      <default>-0.6e0</default>
+      <type>Float</type>
+      <range>
+        <min>-10.0</min>
+        <max>0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_C3P">
+      <label>Buoyancy production coefficient, plus (GLS, closure indep.):</label>
+      <help_brief>Buoyancy production coefficient, plus (Generic Length Scale closure)  [???]</help_brief>
+      <default>1.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_SIGK">
+      <label>Constant Schmidt number for turb. KE diffusivity (GLS, closure indep.):</label>
+      <help_brief>Constant Schmidt number for turbulent kinetic energy diffusivity (Generic Length Scale closure)  [???]</help_brief>
+      <default>2.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GLS_SIGP">
+      <label>Constant Schmidt number for turb. &quot;psi&quot; field (GLS, closure indep.):</label>
+      <help_brief>Constant Schmidt number for turbulent generic statistical field, &quot;psi&quot; (Generic Length Scale closure)  [???]</help_brief>
+      <default>2.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/CHARNOK_ALPHA">
+      <label>Charnok surface roughness:</label>
+      <help_brief>Charnok surface roughness[???]</help_brief>
+      <default>1400.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000.0e0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ZOS_HSIG_ALPHA">
+      <label>Roughness from wave amplitude:</label>
+      <help_brief>Roughness from wave amplitude  [???]</help_brief>
+      <default>0.5e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/SZ_ALPHA">
+      <label>Roughness from wave dissipation:</label>
+      <help_brief>Roughness from wave dissipation  [???]</help_brief>
+      <default>0.25e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/CRGBAN_CW">
+      <label>Craig and Banner wave breaking coefficient:</label>
+      <help_brief>Craig and Banner wave breaking coefficient  [???]</help_brief>
+      <default>100.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Physical 2">
+    <entry name="/ROMS/Input/Var/RDRG">
+      <label>Momentum stress constant 1:</label>
+      <help_brief>Constant used in momentum stress computation [m/s] </help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-02</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/RDRG2">
+      <label>Momentum stress constant 2:</label>
+      <help_brief>Constant used in momentum stress computation [unitless] </help_brief>
+      <default>3.0e-3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-01</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Zob">
+      <label>Momentum stress constant 3:</label>
+      <help_brief>Constant used in momentum stress computation [m] </help_brief>
+      <default>0.0005e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Zos">
+      <label>Momentum stress constant 4:</label>
+      <help_brief>Constant used in momentum stress computation [m] </help_brief>
+      <default>0.005e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/BLK_ZQ">
+      <label>Height of measurement for air humidity (bulk flux):</label>
+      <help_brief>Height of atmospheric measurement for air humidity (bulk flux) [m] </help_brief>
+      <default>2.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/BLK_ZT">
+      <label>Height of measurement for air temperature (bulk flux):</label>
+      <help_brief>Height of atmospheric measurement for air temperature (bulk flux) [m] </help_brief>
+      <default>2.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/BLK_ZW">
+      <label>Height of measurement for winds (bulk flux):</label>
+      <help_brief>Height of atmospheric measurement for winds (bulk flux) [m] </help_brief>
+      <default>10.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/DCRIT">
+      <label>Min depth for wetting and drying:</label>
+      <help_brief>Min depth for wetting and drying [m] </help_brief>
+      <default>0.10e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/WTYPE">
+      <label>Jerlov water type for shortwave radiation depth scale:</label>
+      <help_brief>Jerlov water type used to set vertical depth scale for shortwave radiation absorption</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LEVSFRC">
+      <label>Deepest level to apply surf. momentum stress as a body force:</label>
+      <help_brief>Deepest level to apply surf. momentum stress as a body force [unitless] </help_brief>
+      <default>15</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>500</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LEVBFRC">
+      <label>Shallowest level to apply surf. momentum stress as a body force:</label>
+      <help_brief>Shallowest level to apply surf. momentum stress as a body force [unitless] </help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>500</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/RHO0">
+      <label>Mean water density:</label>
+      <help_brief>Mean water density [kg/m^3] </help_brief>
+      <default>1025.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>900.0e0</min>
+        <max>1200.0e0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/BVF_BAK">
+      <label>Brunt-Vaisala frequency:</label>
+      <help_brief>Brunt-Vaisala frequency [1/s^2] </help_brief>
+      <default>1.0e-5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-2</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/DSTART">
+      <label>Time-stamp for model initialization:</label>
+      <help_brief>Time-stamp for model initialization [days] </help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TIDE_START">
+      <label>Reference time origin for tidal forcing:</label>
+      <help_brief>Reference time origin for tidal forcing [days] </help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TIME_REF">
+      <label>Model reference time for output NetCDF units attribute:</label>
+      <help_brief>Model reference time for output NetCDF units attribute [yyyymmdd.dd] </help_brief>
+      <default>20040101.00</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000000000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TNUDG1">
+      <label>Nudging/relaxation time scale 1:</label>
+      <help_brief>Nudging/relaxation time scale 1 [days] </help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TNUDG2">
+      <label>Nudging/relaxation time scale 2:</label>
+      <help_brief>Nudging/relaxation time scale 2 [days] </help_brief>
+      <default>0.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/ZNUDG">
+      <label>Nudging/relaxation time scale 3:</label>
+      <help_brief>Nudging/relaxation time scale 3 [days] </help_brief>
+      <default>0.001e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/M2NUDG">
+      <label>Nudging/relaxation time scale 4:</label>
+      <help_brief>Nudging/relaxation time scale 4 [days] </help_brief>
+      <default>0.001e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/M3NUDG">
+      <label>Nudging/relaxation time scale 5:</label>
+      <help_brief>Nudging/relaxation time scale 5 [days] </help_brief>
+      <default>0.001e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/OBCFAC">
+      <label>Factor between passive and active open BCs:</label>
+      <help_brief>Factor between passive (outflow) and active (inflow) open boundary conditions [unitless] </help_brief>
+      <default>24.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/R0">
+      <label>Linear equation of state density parameter:</label>
+      <help_brief>Linear equation of state density parameter [kg/m^3] </help_brief>
+      <default>1027.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>900.0</min>
+        <max>1200.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/T0">
+      <label>Linear equation of state temperature parameter:</label>
+      <help_brief>Linear equation of state temperature parameter [Celsius] </help_brief>
+      <default>14.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0.0</min>
+        <max>50.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/S0">
+      <label>Linear equation of state salinity parameter:</label>
+      <help_brief>Linear equation of state salinity parameter [PSU] </help_brief>
+      <default>30.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TCOEF">
+      <label>Linear equation of state temperature coeff.:</label>
+      <help_brief>Linear equation of state temperature coefficient [1/Celsius] </help_brief>
+      <default>1.7e-4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-2</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/SCOEF">
+      <label>Linear equation of state salinity coeff.:</label>
+      <help_brief>Linear equation of state salinity coefficient [1/PSU] </help_brief>
+      <default>7.6e-4</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0e-2</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/GAMMA2">
+      <label>Slipperiness parameter: 1.0 (free slip) or -1.0 (no slip):</label>
+      <help_brief>Slipperiness parameter: 1.0 (free slip) or -1.0 (no slip) </help_brief>
+      <default>1.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>-1.0</min>
+        <max>1.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/LtracerSrc_temp">
+      <label>Switch to use point sources/sinks for temperature:</label>
+      <help_brief>Switch to use point sources/sinks for temperature [T or F] </help_brief>
+      <default>T</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/LtracerSrc_salin">
+      <label>Switch to use point sources/sinks for salinity:</label>
+      <help_brief>Switch to use point sources/sinks for salinity [T or F] </help_brief>
+      <default>T</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/LtracerSrc_inert1">
+      <label>Switch to use point sources/sinks for inert tracer 1:</label>
+      <help_brief>Switch to use point sources/sinks for inert tracer 1 [T or F] </help_brief>
+      <default>F</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Vertical">
+    <entry name="/ROMS/Input/Var/Vtransform">
+      <label>Choice of vertical transformation equation:</label>
+      <help_brief>Choice of vertical transformation equation for terrain-following coordinates [1 or 2] </help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/Vstretching">
+      <label>Choice of vertical stretching function:</label>
+      <help_brief>Choice of vertical stretching function for terrain-following coordinates [1, 2 or 3] </help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>3</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/THETA_S">
+      <label>Surface control parameter for terrain-following coords:</label>
+      <help_brief>Surface control/stretching parameter for terrain-following coords [unitless] </help_brief>
+      <default>6.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0.0</min>
+        <max>20.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/THETA_B">
+      <label>Bottom control parameter for terrain-following coords:</label>
+      <help_brief>Bottom control/stretching parameter for terrain-following coords [unitless] </help_brief>
+      <default>0.95e0</default>
+      <type>Float</type>
+      <range>
+        <min>0.0</min>
+        <max>1.0</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/TCLINE">
+      <label>Width of surface or bottom layer which requires higher-res stretch:</label>
+      <help_brief>Width of surface or bottom layer which requires higher-res stretch [meters] </help_brief>
+      <default>10.0e0</default>
+      <type>Float</type>
+      <range>
+        <min>0.0</min>
+        <max>1000.0</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Input Files">
+    <entry name="/ROMS/Input/Var/GRDNAME">
+      <label>Input grid file name:</label>
+      <help_brief>Input grid file name</help_brief>
+      <default>/home/csdms/sims/roms/chesroms/chesroms_grd_smoother_msl.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/ININAME">
+      <label>Nonlinear initial conditions file:</label>
+      <help_brief>Input nonlinear initial conditions file name. It can be a re-start file.</help_brief>
+      <default>/home/csdms/sims/roms/chesroms/chesroms_rst_2003.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/BRYNAME">
+      <label>Open boundary data file:</label>
+      <help_brief>Input open boundary data file name.</help_brief>
+      <default>/home/csdms/sims/roms/chesroms/chesroms_forcing_obc_2004_ndw.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/NFFILES">
+      <label>Number of forcing files:</label>
+      <help_brief>Number of forcing files</help_brief>
+      <default>3</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/ROMS/Input/Var/FRCNAME">
+      <label>Forcing fields file:</label>
+      <help_brief>Input forcing fields file name. Each file should be separated by a back slash(\ or |) </help_brief>
+      <default>/home/csdms/sims/roms/chesroms/chesroms_forcing_rivers_2004_nooffsetattr.nc | /home/csdms/sims/roms/chesroms/chesroms_forcing_tides9_2004.nc | /home/csdms/sims/roms/chesroms/chesroms_forcing_surface_2004.nc</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/Input/Var/SPOSNAM">
+      <label>Stations positions file:</label>
+      <help_brief>Input stations positions file name.</help_brief>
+      <default>/home/csdms/sims/roms/chesroms/stations.in</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="About">
+    <entry name="/ROMS/ModelName">
+      <label>Model name:</label>
+      <help_brief>Name of the model</help_brief>
+      <default>ROMS</default>
+      <type>String</type>
+    </entry>
+    <entry name="/ROMS/ModelAuthor">
+      <label>Author name:</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Hernan Arango</default>
+      <type>String</type>
+    </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>https://www.myroms.org/wiki/index.php/ocean.in</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>
