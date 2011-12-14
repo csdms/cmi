@@ -27,7 +27,7 @@ set (PROJECTS
   marssim
   roms_builder
   aquatellus
-  roms_ltrans
+  ltrans_roms
 )
 
 if (NOT DEFINED MODULE_NAME)
