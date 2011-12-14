@@ -24,17 +24,21 @@
 #include "edu_csdms_tools_PrintQueue_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
+#include "edu_csdms_tools_IRFPortQueue_fAbbrev.h"
 #include "gov_cca_ports_ParameterPortFactory_fAbbrev.h"
 #include "sidl_BaseException_fAbbrev.h"
 #include "edu_csdms_models_LTRANS_fAbbrev.h"
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
 #include "gov_cca_CCAException_fAbbrev.h"
+#include "edu_csdms_openmi_ElementType_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
+#include "edu_csdms_openmi_ElementMapper_fAbbrev.h"
 #include "edu_csdms_tools_Verbose_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
 #include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
+#include "edu_csdms_openmi_ElementSet_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
 #include "sidl_string_fAbbrev.h"
@@ -642,16 +646,21 @@ end subroutine boccaThrowExceptiom7ubgu80_4_mi
 ! 
 
 recursive subroutine boccaForceUsePortI70q2v74knq_mi(self, dummy0, dummy1,     &
-  dummy2, dummy3, dummy4, dummy5, dummy6, exception)
+  dummy2, dummy3, dummy4, dummy5, dummy6, dummy7, dummy8, dummy9, dummy10,     &
+  exception)
   use sidl
   use sidl_NotImplementedException
+  use edu_csdms_openmi_ElementType
   use edu_csdms_ports_CMIPort
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_LTRANS
+  use edu_csdms_openmi_ElementMapper
+  use edu_csdms_openmi_ElementSet
   use edu_csdms_openmi_ScalarSet
   use edu_csdms_tools_ConfigDialog
+  use edu_csdms_tools_IRFPortQueue
   use edu_csdms_tools_PrintQueue
   use edu_csdms_tools_TemplateFiles
   use edu_csdms_tools_Verbose
@@ -666,15 +675,23 @@ recursive subroutine boccaForceUsePortI70q2v74knq_mi(self, dummy0, dummy1,     &
   ! in
   type(edu_csdms_ports_CMIPort_t) :: dummy1
   ! in
-  type(edu_csdms_tools_Verbose_t) :: dummy2
+  integer (kind=sidl_enum) :: dummy2
   ! in
   type(edu_csdms_tools_TemplateFiles_t) :: dummy3
   ! in
-  type(edu_csdms_openmi_ScalarSet_t) :: dummy4
+  type(edu_csdms_tools_IRFPortQueue_t) :: dummy4
   ! in
-  type(edu_csdms_tools_ConfigDialog_t) :: dummy5
+  type(edu_csdms_tools_Verbose_t) :: dummy5
   ! in
-  type(edu_csdms_tools_PrintQueue_t) :: dummy6
+  type(edu_csdms_openmi_ElementMapper_t) :: dummy6
+  ! in
+  type(edu_csdms_openmi_ScalarSet_t) :: dummy7
+  ! in
+  type(edu_csdms_tools_ConfigDialog_t) :: dummy8
+  ! in
+  type(edu_csdms_openmi_ElementSet_t) :: dummy9
+  ! in
+  type(edu_csdms_tools_PrintQueue_t) :: dummy10
   ! in
   type(sidl_BaseInterface_t) :: exception
   ! out
@@ -905,33 +922,829 @@ recursive subroutine edu_csdms_models_LTRANS_go_mi(self, retval, exception)
   character (len=2048) :: input_dir
   character (len=2048) :: site_prefix
   character (len=2048) :: case_prefix
-  integer :: ng
+  integer :: ng, seconds, stepT
+  
+
+  ! As the execution is in the go method this component is the Driver
+  dp%d_private_data%isDriver = .TRUE.
 
   call edu_csdms_models_LTRANS__get_data_m(self, dp)
 
-  call getString (dp%d_private_data%userinput, "/LTRANS/Input/Dir", ".", &
-                  input_dir, exception);
-  call getString (dp%d_private_data%userinput, "/LTRANS/SitePrefix", "", &
-                  site_prefix, exception);
-  call getString (dp%d_private_data%userinput, "/LTRANS/CasePrefix", "", &
-                  case_prefix, exception);
+  call getString (dp%d_private_data%userinput, "/LTRANS/Input/Dir", ".", input_dir, exception)
+  call getString (dp%d_private_data%userinput, "/LTRANS/SitePrefix", "", site_prefix, exception)
+  call getString (dp%d_private_data%userinput, "/LTRANS/CasePrefix", "", case_prefix, exception)
+  call getInteger (dp%d_private_data%userinput, "/LTRANS/Input/Var/dt", 0.0D0, dt, exception)
+  
+  !TODO: For some reason getDouble not working, changing to getInteger (For testing)
+  !call getDouble (dp%d_private_data%userinput, "/LTRANS/Input/Var/days", 0, days, exception)
+  call getInteger (dp%d_private_data%userinput, "/LTRANS/Input/Var/days", 0.0D0, days, exception)
 
   if (input_dir=="GUI") then
-    print *, "Input from GUI"
+    print *, "CCA> Input from User Input"
     call new (template, exception)
-    print *, "Create new file"
+    print *, "CCA> Creating output file"
     call add_file (template, "LTRANS.data.in", "LTRANS.data", exception)
     call add_file (template, "LTRANS_grid.data.in", "GRID.data", exception)
-    print *, "Substitute"
     call substitute (template, dp%d_private_data%userinput, &
           "/LTRANS/Input/Var/", ".", exception);
-    print *, "done."
   else
-    print *, "Input from File"
+    print *, "CCA> Input from File"
   endif
+
+  print *, 'CCA> Getting the component ready'
+  call LTR_CMI_initializev31n7eesph_mi("Null", retval, exception)
+  
+  !days*24*60*60 = total number of seconds to run the model
+  !divide that by dt to get the number of external time steps
+  seconds = days*DBLE(24)*DBLE(60)*DBLE(60) !Total seconds to run model
+  stepT   = int(seconds/dt)                 !number of external time steps
+  print *, 'CCA> Total seconds to run model: ', seconds
+  print *, 'CCA> Number of external time step: ', stepT
+  do p=1,stepT
+    call LTRANS_CMI_run4nqryolxalh_xn_mi(p, retval, exception)
+  enddo 
+  
+  call LTRAN_CMI_finalizehz7pezx1ae_mi(retval, exception) 
+  print *, 'CCA> Done.'
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.go)
 end subroutine edu_csdms_models_LTRANS_go_mi
+
+
+! 
+! Method:  CMI_initialize[]
+! 
+
+recursive subroutine LTR_CMI_initializev31n7eesph_mi(self, config_file,        &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_initialize.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_initialize.use} (use statements)
+  use edu_csdms_tools_TemplateFiles
+  use gov_cca_TypeMap
+  use edu_csdms_tools_IRFPortQueue 
+  use edu_csdms_ports_CMIPort
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_initialize.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: config_file
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_initialize)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_initialize} (CMI_initialize method)
+ 
+! This method has not been implemented
+! 
+  type(edu_csdms_models_LTRANS_wrap) :: ltrans_data
+  type(edu_csdms_tools_IRFPortQueue_t) :: port_queue
+  !type(edu_csdms_ports_CMIPort_t) :: cmi_port
+
+  print *, "CCA> Initializing LTRANS component"
+  ltrans_data%d_private_data%cmi_status = 'Initializing'
+
+  !call get_port("Ocean", ocean_port)
+
+  call cast(self, cmi_port, exception)
+
+  ! This will initialize the IRFPortQueue
+  call initialize(ltrans_data%d_private_data%d_services, cmi_port, exception)
+
+  ! Add ports to the IRFPortQueue
+  call add_ports(ltrans_data%d_private_data%CMI_PORT_NAMES)
+  call connect_ports()
+
+  ! Initializing the uses ports
+  call initialize_ports("Null")
+
+  ! Initializing LTRANS
+  call ltrans_initialize("Null")
+  ltrans_data%d_private_data%cmi_status = 'Initialized'
+  print *, "CCA> Initialization Done."
+
+  ! Setting IRFPortQueue to the global vriable
+  ltrans_data%d_private_data%irf_port_queue = port_queue
+
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_initialize)
+end subroutine LTR_CMI_initializev31n7eesph_mi
+
+
+! 
+! Method:  CMI_run_for[]
+! 
+
+recursive subroutine LTRANS_CMI_run_forpigxxyr2z7_mi(self, time_interval,      &
+  time_units, stop_rule, stop_vars, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use sidl_double_array
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_run_for.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_run_for.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_run_for.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  real (kind=sidl_double) :: time_interval
+  ! in
+  character (len=*) :: time_units
+  ! in
+  character (len=*) :: stop_rule
+  ! in
+  type(sidl_double_1d) :: stop_vars
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_run_for)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_run_for} (CMI_run_for method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_run_for)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_run_for)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_run_for)
+end subroutine LTRANS_CMI_run_forpigxxyr2z7_mi
+
+
+! 
+! Method:  CMI_run[]
+! 
+
+recursive subroutine LTRANS_CMI_run4nqryolxalh_xn_mi(self, time_interval,      &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_run.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_run.use} (use statements)
+  use edu_csdms_tools_IRFPortQueue
+  use edu_csdms_ports_CMIPort
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_run.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  real (kind=sidl_double) :: time_interval
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_run)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_run} (CMI_run method)
+
+  type(edu_csdms_ports_CMIPort_t) :: ocean_port
+  type(edu_csdms_tools_IRFPortQueue_t) :: port_queue 
+  type(edu_csdms_models_LTRANS_wrap) :: ltrans_data
+  type(sidl__array) :: return_sidl_array  
+  integer :: long_var_names_array_size
+  integer :: i
+
+  ltrans_data%d_private_data%cmi_status = 'Updating'
+  port_queue = ltrans_data%d_private_data%irf_port_queue 
+ 
+  print *, "CCA> Run all the connected ports for current timestep"
+  call run_ports(time_interval)
+
+  call get_port(self, "Ocean", ocean_port, exception)
+  
+  ! Call get values of ROMS component
+  print *, "CCA> Get values of ROMS for each timestep"
+  long_var_names_array_size = SIZE(ltrans_data%d_private_data%long_var_names)
+  do i = 1, long_var_names_array_size
+    print *, TRIM(ltrans_data%d_private_data%long_var_names(i)) , ", value for timestep ", time_interval
+    call CMI_get_values(ocean_port, TRIM(ltrans_data%d_private_data%long_var_names(i), return_sidl_array, exception) 
+    print *, "value: ", return_sidl_array
+    CMI_set_values(self, TRIM(self, ltrans_data%d_private_data%long_var_names(i)), return_sidl_array, exception)
+  end do
+
+  call ltran_update(time_interval)
+    
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_run)
+end subroutine LTRANS_CMI_run4nqryolxalh_xn_mi
+
+
+! 
+! Method:  CMI_finalize[]
+! 
+
+recursive subroutine LTRAN_CMI_finalizehz7pezx1ae_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_finalize.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_finalize.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_finalize.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_finalize)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_finalize} (CMI_finalize method)
+! 
+! This method has not been implemented
+! 
+
+  print *, "CCA> Finalize LTRANS"
+  call ltran_finalize()
+
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_finalize)
+end subroutine LTRAN_CMI_finalizehz7pezx1ae_mi
+
+
+! 
+! Method:  CMI_run_model[]
+! 
+
+recursive subroutine LTRA_CMI_run_modeli10r_yfz6s_mi(self, config_file,        &
+  stop_rule, stop_var, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_run_model.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_run_model.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_run_model.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: config_file
+  ! in
+  character (len=*) :: stop_rule
+  ! in
+  real (kind=sidl_double) :: stop_var
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_run_model)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_run_model} (CMI_run_model method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_run_model)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_run_model)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_run_model)
+end subroutine LTRA_CMI_run_modeli10r_yfz6s_mi
+
+
+! 
+! Method:  CMI_get_values[]
+! 
+
+recursive subroutine LTR_CMI_get_valuesdq97diqspd_mi(self, long_var_name,      &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use sidl_array_array
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_values.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_values.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_values.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl__array) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_values)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_values} (CMI_get_values method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_values)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_values)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_values)
+end subroutine LTR_CMI_get_valuesdq97diqspd_mi
+
+
+! 
+! Method:  CMI_set_values[]
+! 
+
+recursive subroutine LTR_CMI_set_valuespoyw79p49f_mi(self, long_var_name,      &
+  in_values, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use sidl_array_array
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_set_values.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_set_values.use} (use statements)
+  use sidl__array_type
+  use sidl__array_dimen
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_set_values.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl__array) :: in_values
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_set_values)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_set_values} (CMI_set_values method)
+! 
+! This method has not been implemented
+! 
+  integer :: type
+  integer :: rank
+
+  call sidl__array_type(in_values, type) 
+  call sidl__array_dimen(in_values, rank)
+  
+  print *, "CCA> Setting value at the bmi level for LTRANS for ", long_var_name, " and array rank ", rank
+  select case(rank)
+        case(1)
+            set_1D_double(long_var_name, in_values)
+        case(2)            
+            set_2D_double(long_var_name, in_values) 
+        case(3)
+            set_3D_double(long_var_name, in_values)
+        case(4)
+            set_4D_double(long_var_name, in_values)
+        case default
+            print *, 'CCA> Error in fetching the value for the requested variable: ', long_var_name
+            return_value = -1
+  end select
+
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_set_values)
+end subroutine LTR_CMI_set_valuespoyw79p49f_mi
+
+
+! 
+! Method:  CMI_get_status[]
+! 
+
+recursive subroutine LTR_CMI_get_statusr81ezztbty_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_status.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_status.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_status.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_status)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_status} (CMI_get_status method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_status)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_status)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_status)
+end subroutine LTR_CMI_get_statusr81ezztbty_mi
+
+
+! 
+! Method:  CMI_get_component_name[]
+! 
+
+recursive subroutine CMI_get_component_eypvqo72au_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_component_name.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_component_name.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_component_name.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_component_name)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_component_name} (CMI_get_component_name method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_component_name)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_component_name)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_component_name)
+end subroutine CMI_get_component_eypvqo72au_mi
+
+
+! 
+! Method:  CMI_get_input_item_list[]
+! 
+
+recursive subroutine CMI_get_input_item4ynricfqrq_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use sidl_string_array
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_input_item_list.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_input_item_list.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_input_item_list.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  type(sidl_string_1d) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_input_item_list)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_input_item_list} (CMI_get_input_item_list method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_input_item_list)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_input_item_list)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_input_item_list)
+end subroutine CMI_get_input_item4ynricfqrq_mi
+
+
+! 
+! Method:  CMI_get_output_item_list[]
+! 
+
+recursive subroutine CMI_get_output_ite158k8jkhdx_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use sidl_string_array
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_output_item_list.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_output_item_list.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_output_item_list.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  type(sidl_string_1d) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_output_item_list)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_output_item_list} (CMI_get_output_item_list method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_output_item_list)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_output_item_list)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_output_item_list)
+end subroutine CMI_get_output_ite158k8jkhdx_mi
+
+
+! 
+! Method:  CMI_get_required_ports[]
+! 
+
+recursive subroutine CMI_get_required_pl1dujwqvou_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_required_ports.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_required_ports.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_required_ports.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_required_ports)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_required_ports} (CMI_get_required_ports method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_required_ports)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_required_ports)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_required_ports)
+end subroutine CMI_get_required_pl1dujwqvou_mi
+
+
+! 
+! Method:  CMI_release_required_ports[]
+! 
+
+recursive subroutine CMI_release_requir8a_lht_0dz_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_release_required_ports.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_release_required_ports.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_release_required_ports.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_release_required_ports)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_release_required_ports} (CMI_release_required_ports method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_release_required_ports)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_release_required_ports)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_release_required_ports)
+end subroutine CMI_release_requir8a_lht_0dz_mi
+
+
+! 
+! Method:  CMI_get_values_at_indices[]
+! 
+
+recursive subroutine CMI_get_values_at_lbj4loi6q8_mi(self, long_var_name,      &
+  indices, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use sidl_array_array
+  use sidl_int_array
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_values_at_indices.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_values_at_indices.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_values_at_indices.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl_int_1d) :: indices
+  ! in
+  type(sidl__array) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_values_at_indices)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_values_at_indices} (CMI_get_values_at_indices method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_values_at_indices)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_values_at_indices)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_values_at_indices)
+end subroutine CMI_get_values_at_lbj4loi6q8_mi
+
+
+! 
+! Method:  CMI_set_values_at_indices[]
+! 
+
+recursive subroutine CMI_set_values_at_a68gny3e0__mi(self, long_var_name,      &
+  indices, in_values, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use sidl_array_array
+  use sidl_int_array
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_set_values_at_indices.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_set_values_at_indices.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_set_values_at_indices.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl_int_1d) :: indices
+  ! in
+  type(sidl__array) :: in_values
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_set_values_at_indices)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_set_values_at_indices} (CMI_set_values_at_indices method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_set_values_at_indices)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_set_values_at_indices)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_set_values_at_indices)
+end subroutine CMI_set_values_at_a68gny3e0__mi
+
+
+! 
+! Method:  CMI_print_traceback[]
+! 
+
+recursive subroutine CMI_print_tracebac120kc6w194_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_LTRANS
+  use edu_csdms_models_LTRANS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_print_traceback.use)
+  ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_print_traceback.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_print_traceback.use)
+  implicit none
+  type(edu_csdms_models_LTRANS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_print_traceback)
+! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_print_traceback} (CMI_print_traceback method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_print_traceback)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_print_traceback)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_print_traceback)
+end subroutine CMI_print_tracebac120kc6w194_mi
 
 
 ! 
