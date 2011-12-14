@@ -16,24 +16,29 @@
 
 
 #include "sidl_NotImplementedException_fAbbrev.h"
+#include "edu_csdms_ports_CMIPort_fAbbrev.h"
 #include "edu_csdms_tools_TemplateFiles_fAbbrev.h"
 #include "gov_cca_Port_fAbbrev.h"
 #include "sidl_ClassInfo_fAbbrev.h"
 #include "sidl_BaseClass_fAbbrev.h"
+#include "edu_csdms_tools_PrintQueue_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
+#include "edu_csdms_tools_IRFPortQueue_fAbbrev.h"
 #include "gov_cca_ports_ParameterPortFactory_fAbbrev.h"
 #include "sidl_BaseException_fAbbrev.h"
-#include "edu_csdms_openmi_IElementSet_fAbbrev.h"
-#include "edu_csdms_openmi_IValueSet_fAbbrev.h"
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
-#include "gov_cca_CCAException_fAbbrev.h"
 #include "edu_csdms_models_chesROMS_fAbbrev.h"
+#include "gov_cca_CCAException_fAbbrev.h"
+#include "edu_csdms_openmi_ElementType_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
-#include "edu_csdms_ports_IRFPort_fAbbrev.h"
+#include "edu_csdms_openmi_ElementMapper_fAbbrev.h"
+#include "edu_csdms_tools_Verbose_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
+#include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
+#include "edu_csdms_openmi_ElementSet_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
 #include "sidl_string_fAbbrev.h"
@@ -356,11 +361,11 @@ recursive subroutine c_boccaSetServices89w9i6myht_mi(self, services,           &
        typeMap, exception)
   BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.chesROMS failed addProvidesPort Run ')
 
-! Add edu.csdms.ports.IRFPort:ROMS provides port
+! Add edu.csdms.ports.CMIPort:Ocean provides port
   call addProvidesPort(dp%d_private_data%d_services, port, &
-       'ROMS', 'edu.csdms.ports.IRFPort', &
+       'Ocean', 'edu.csdms.ports.CMIPort', &
        typeMap, exception)
-  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.chesROMS failed addProvidesPort ROMS ')
+  BOCCA_SIDL_CHECK_F90(exception,'edu.csdms.models.chesROMS failed addProvidesPort Ocean ')
 
   dr_port = .false.
   call deleteRef(port,exception)
@@ -458,10 +463,10 @@ recursive subroutine boccaReleaseServicnxnsv5lwzj_mi(self, services,           &
       .false., throwaway &
   )
 
-! Un-provide edu.csdms.ports.IRFPort port with port name ROMS 
-  call removeProvidesPort(services, 'ROMS', excpt)
+! Un-provide edu.csdms.ports.CMIPort port with port name Ocean 
+  call removeProvidesPort(services, 'Ocean', excpt)
   call checkException(self, excpt, &
-      'Error: Could not removeProvidesPort ROMS', &
+      'Error: Could not removeProvidesPort Ocean', &
       .false., throwaway &
   )
 
@@ -628,15 +633,22 @@ end subroutine boccaThrowExceptio7_nuhrkcc__mi
 ! 
 
 recursive subroutine boccaForceUsePortIoqcioir79q_mi(self, dummy0, dummy1,     &
-  dummy2, exception)
+  dummy2, dummy3, dummy4, dummy5, dummy6, dummy7, dummy8, dummy9, exception)
   use sidl
   use sidl_NotImplementedException
+  use edu_csdms_openmi_ElementType
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_chesROMS
+  use edu_csdms_openmi_ElementMapper
+  use edu_csdms_openmi_ElementSet
+  use edu_csdms_openmi_ScalarSet
   use edu_csdms_tools_ConfigDialog
+  use edu_csdms_tools_IRFPortQueue
+  use edu_csdms_tools_PrintQueue
   use edu_csdms_tools_TemplateFiles
+  use edu_csdms_tools_Verbose
   use edu_csdms_models_chesROMS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.boccaForceUsePortInclude.use)
   ! Insert-Code-Here {edu.csdms.models.chesROMS.boccaForceUsePortInclude.use} (use statements)
@@ -646,9 +658,23 @@ recursive subroutine boccaForceUsePortIoqcioir79q_mi(self, dummy0, dummy1,     &
   ! in
   type(gov_cca_ports_ParameterPortFactory_t) :: dummy0
   ! in
-  type(edu_csdms_tools_TemplateFiles_t) :: dummy1
+  integer (kind=sidl_enum) :: dummy1
   ! in
-  type(edu_csdms_tools_ConfigDialog_t) :: dummy2
+  type(edu_csdms_tools_TemplateFiles_t) :: dummy2
+  ! in
+  type(edu_csdms_tools_IRFPortQueue_t) :: dummy3
+  ! in
+  type(edu_csdms_tools_Verbose_t) :: dummy4
+  ! in
+  type(edu_csdms_openmi_ElementMapper_t) :: dummy5
+  ! in
+  type(edu_csdms_openmi_ScalarSet_t) :: dummy6
+  ! in
+  type(edu_csdms_tools_ConfigDialog_t) :: dummy7
+  ! in
+  type(edu_csdms_openmi_ElementSet_t) :: dummy8
+  ! in
+  type(edu_csdms_tools_PrintQueue_t) :: dummy9
   ! in
   type(sidl_BaseInterface_t) :: exception
   ! out
@@ -952,17 +978,745 @@ end subroutine edu_csdms_models_chesROMS_go_mi
 
 
 ! 
-! Method:  initialize[]
+! Method:  CMI_initialize[]
 ! 
 
-recursive subroutine chesROM_initializegkwqtkjwp2_mi(self, properties,         &
-  exception)
+recursive subroutine che_CMI_initializesgbqwb9ykn_mi(self, config_file,        &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_initialize.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_initialize.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_initialize.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: config_file
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_initialize)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_initialize} (CMI_initialize method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_initialize)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_initialize)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_initialize)
+end subroutine che_CMI_initializesgbqwb9ykn_mi
+
+
+! 
+! Method:  CMI_run_for[]
+! 
+
+recursive subroutine chesRO_CMI_run_forvrea631if__mi(self, time_interval,      &
+  time_units, stop_rule, stop_vars, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_double_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_run_for.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_run_for.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_run_for.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  real (kind=sidl_double) :: time_interval
+  ! in
+  character (len=*) :: time_units
+  ! in
+  character (len=*) :: stop_rule
+  ! in
+  type(sidl_double_1d) :: stop_vars
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_run_for)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_run_for} (CMI_run_for method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_run_for)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_run_for)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_run_for)
+end subroutine chesRO_CMI_run_forvrea631if__mi
+
+
+! 
+! Method:  CMI_run[]
+! 
+
+recursive subroutine chesROMS_CMI_runnki0ylg2a5c__mi(self, time_interval,      &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_run.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_run.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_run.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  real (kind=sidl_double) :: time_interval
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_run)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_run} (CMI_run method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_run)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_run)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_run)
+end subroutine chesROMS_CMI_runnki0ylg2a5c__mi
+
+
+! 
+! Method:  CMI_finalize[]
+! 
+
+recursive subroutine chesR_CMI_finalizeqcunyot9rv_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_finalize.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_finalize.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_finalize.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_finalize)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_finalize} (CMI_finalize method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_finalize)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_finalize)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_finalize)
+end subroutine chesR_CMI_finalizeqcunyot9rv_mi
+
+
+! 
+! Method:  CMI_run_model[]
+! 
+
+recursive subroutine ches_CMI_run_modeloabx5u8sm3_mi(self, config_file,        &
+  stop_rule, stop_var, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_run_model.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_run_model.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_run_model.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: config_file
+  ! in
+  character (len=*) :: stop_rule
+  ! in
+  real (kind=sidl_double) :: stop_var
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_run_model)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_run_model} (CMI_run_model method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_run_model)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_run_model)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_run_model)
+end subroutine ches_CMI_run_modeloabx5u8sm3_mi
+
+
+! 
+! Method:  CMI_get_values[]
+! 
+
+recursive subroutine che_CMI_get_values5tyk83t0gn_mi(self, long_var_name,      &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_values.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_values.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_values.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl__array) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_values)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_values} (CMI_get_values method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_get_values)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_get_values)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_values)
+end subroutine che_CMI_get_values5tyk83t0gn_mi
+
+
+! 
+! Method:  CMI_set_values[]
+! 
+
+recursive subroutine che_CMI_set_valuesawhbb5qjln_mi(self, long_var_name,      &
+  in_values, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_set_values.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_set_values.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_set_values.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl__array) :: in_values
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_set_values)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_set_values} (CMI_set_values method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_set_values)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_set_values)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_set_values)
+end subroutine che_CMI_set_valuesawhbb5qjln_mi
+
+
+! 
+! Method:  CMI_get_status[]
+! 
+
+recursive subroutine che_CMI_get_statuspr2n44z7eh_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_status.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_status.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_status.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_status)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_status} (CMI_get_status method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_get_status)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_get_status)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_status)
+end subroutine che_CMI_get_statuspr2n44z7eh_mi
+
+
+! 
+! Method:  CMI_get_component_name[]
+! 
+
+recursive subroutine CMI_get_component_93bm817l0r_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_component_name.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_component_name.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_component_name.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_component_name)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_component_name} (CMI_get_component_name method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_get_component_name)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_get_component_name)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_component_name)
+end subroutine CMI_get_component_93bm817l0r_mi
+
+
+! 
+! Method:  CMI_get_input_item_list[]
+! 
+
+recursive subroutine CMI_get_input_itemx7gpr9jwt1_mi(self, retval, exception)
   use sidl
   use sidl_NotImplementedException
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_chesROMS
   use sidl_string_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_input_item_list.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_input_item_list.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_input_item_list.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_string_1d) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_input_item_list)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_input_item_list} (CMI_get_input_item_list method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_get_input_item_list)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_get_input_item_list)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_input_item_list)
+end subroutine CMI_get_input_itemx7gpr9jwt1_mi
+
+
+! 
+! Method:  CMI_get_output_item_list[]
+! 
+
+recursive subroutine CMI_get_output_iteb5m2suble2_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_string_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_output_item_list.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_output_item_list.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_output_item_list.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_string_1d) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_output_item_list)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_output_item_list} (CMI_get_output_item_list method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_get_output_item_list)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_get_output_item_list)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_output_item_list)
+end subroutine CMI_get_output_iteb5m2suble2_mi
+
+
+! 
+! Method:  CMI_get_required_ports[]
+! 
+
+recursive subroutine CMI_get_required_p8n8jqtahlh_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_required_ports.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_required_ports.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_required_ports.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_required_ports)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_required_ports} (CMI_get_required_ports method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_get_required_ports)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_get_required_ports)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_required_ports)
+end subroutine CMI_get_required_p8n8jqtahlh_mi
+
+
+! 
+! Method:  CMI_release_required_ports[]
+! 
+
+recursive subroutine CMI_release_requir1q2ivykdmb_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_release_required_ports.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_release_required_ports.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_release_required_ports.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_release_required_ports)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_release_required_ports} (CMI_release_required_ports method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_release_required_ports)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_release_required_ports)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_release_required_ports)
+end subroutine CMI_release_requir1q2ivykdmb_mi
+
+
+! 
+! Method:  CMI_get_values_at_indices[]
+! 
+
+recursive subroutine CMI_get_values_at_xmgahnn28u_mi(self, long_var_name,      &
+  indices, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use sidl_int_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_values_at_indices.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_values_at_indices.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_values_at_indices.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl_int_1d) :: indices
+  ! in
+  type(sidl__array) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_get_values_at_indices)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_get_values_at_indices} (CMI_get_values_at_indices method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_get_values_at_indices)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_get_values_at_indices)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_get_values_at_indices)
+end subroutine CMI_get_values_at_xmgahnn28u_mi
+
+
+! 
+! Method:  CMI_set_values_at_indices[]
+! 
+
+recursive subroutine CMI_set_values_at_943evxtjh7_mi(self, long_var_name,      &
+  indices, in_values, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use sidl_int_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_set_values_at_indices.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_set_values_at_indices.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_set_values_at_indices.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl_int_1d) :: indices
+  ! in
+  type(sidl__array) :: in_values
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_set_values_at_indices)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_set_values_at_indices} (CMI_set_values_at_indices method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_set_values_at_indices)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_set_values_at_indices)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_set_values_at_indices)
+end subroutine CMI_set_values_at_943evxtjh7_mi
+
+
+! 
+! Method:  CMI_print_traceback[]
+! 
+
+recursive subroutine CMI_print_tracebach_u0wyt_g6_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_print_traceback.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_print_traceback.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_print_traceback.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.CMI_print_traceback)
+! Insert-Code-Here {edu.csdms.models.chesROMS.CMI_print_traceback} (CMI_print_traceback method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.CMI_print_traceback)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.CMI_print_traceback)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.CMI_print_traceback)
+end subroutine CMI_print_tracebach_u0wyt_g6_mi
+
+
+! 
+! Method:  initialize[]
+! 
+
+recursive subroutine chesROM_initializegkwqtkjwp2_mi(self, config_file,        &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
   use edu_csdms_models_chesROMS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.initialize.use)
   ! Insert-Code-Here {edu.csdms.models.ROMS.initialize.use} (use statements)
@@ -971,8 +1725,10 @@ recursive subroutine chesROM_initializegkwqtkjwp2_mi(self, properties,         &
   implicit none
   type(edu_csdms_models_chesROMS_t) :: self
   ! in
-  type(sidl_string_1d) :: properties
+  character (len=*) :: config_file
   ! in
+  logical :: retval
+  ! out
   type(sidl_BaseInterface_t) :: exception
   ! out
 
@@ -1002,36 +1758,46 @@ end subroutine chesROM_initializegkwqtkjwp2_mi
 
 
 ! 
-! Method:  run[]
+! Method:  run_for[]
 ! 
 
-recursive subroutine chesROMS_run9s4ewmm5nldmuutn_mi(self, time, exception)
+recursive subroutine chesROMS_run_for04uqff_ljk6__mi(self, time_interval,      &
+  time_units, stop_rule, stop_vars, retval, exception)
   use sidl
   use sidl_NotImplementedException
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_chesROMS
+  use sidl_double_array
   use edu_csdms_models_chesROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.run.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.run.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.run.use)
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.run_for.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.run_for.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.run_for.use)
   implicit none
   type(edu_csdms_models_chesROMS_t) :: self
   ! in
-  real (kind=sidl_double) :: time
+  real (kind=sidl_double) :: time_interval
   ! in
+  character (len=*) :: time_units
+  ! in
+  character (len=*) :: stop_rule
+  ! in
+  type(sidl_double_1d) :: stop_vars
+  ! in
+  logical :: retval
+  ! out
   type(sidl_BaseInterface_t) :: exception
   ! out
 
 
 
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.run)
-! Insert-Code-Here {edu.csdms.models.ROMS.run} (run method)
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.run_for)
+! Insert-Code-Here {edu.csdms.models.chesROMS.run_for} (run_for method)
 ! 
 ! This method has not been implemented
 ! 
 
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.run)
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.run_for)
   type(sidl_BaseInterface_t) :: throwaway
   type(sidl_NotImplementedException_t) :: notImpl
   call new(notImpl, exception)
@@ -1039,9 +1805,9 @@ recursive subroutine chesROMS_run9s4ewmm5nldmuutn_mi(self, time, exception)
   call cast(notImpl, exception,throwaway)
   call deleteRef(notImpl,throwaway)
   return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.run)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.run)
-end subroutine chesROMS_run9s4ewmm5nldmuutn_mi
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.run_for)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.run_for)
+end subroutine chesROMS_run_for04uqff_ljk6__mi
 
 
 ! 
@@ -1083,6 +1849,547 @@ recursive subroutine chesROMS_finalizexi7pt73hyy4_mi(self, exception)
   ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.finalize)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.finalize)
 end subroutine chesROMS_finalizexi7pt73hyy4_mi
+
+
+! 
+! Method:  run_model[]
+! 
+
+recursive subroutine chesROMS_run_modelbgccs0j988_mi(self, config_file,        &
+  stop_rule, stop_var, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.run_model.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.run_model.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.run_model.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: config_file
+  ! in
+  character (len=*) :: stop_rule
+  ! in
+  real (kind=sidl_double) :: stop_var
+  ! in
+  logical :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.run_model)
+! Insert-Code-Here {edu.csdms.models.chesROMS.run_model} (run_model method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.run_model)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.run_model)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.run_model)
+end subroutine chesROMS_run_modelbgccs0j988_mi
+
+
+! 
+! Method:  get_values[]
+! 
+
+recursive subroutine chesROM_get_valuesg801hsvyn7_mi(self, long_var_name,      &
+  retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_values.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.get_values.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_values.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl__array) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_values)
+! Insert-Code-Here {edu.csdms.models.chesROMS.get_values} (get_values method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.get_values)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.get_values)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_values)
+end subroutine chesROM_get_valuesg801hsvyn7_mi
+
+
+! 
+! Method:  set_values[]
+! 
+
+recursive subroutine chesROM_set_valuesx6l07oaj6b_mi(self, long_var_name,      &
+  in_values, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.set_values.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.set_values.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.set_values.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl__array) :: in_values
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.set_values)
+! Insert-Code-Here {edu.csdms.models.chesROMS.set_values} (set_values method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.set_values)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.set_values)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.set_values)
+end subroutine chesROM_set_valuesx6l07oaj6b_mi
+
+
+! 
+! Method:  get_status[]
+! 
+
+recursive subroutine chesROM_get_status7daoucj1n0_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_status.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.get_status.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_status.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_status)
+! Insert-Code-Here {edu.csdms.models.chesROMS.get_status} (get_status method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.get_status)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.get_status)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_status)
+end subroutine chesROM_get_status7daoucj1n0_mi
+
+
+! 
+! Method:  get_component_name[]
+! 
+
+recursive subroutine get_component_namewftvx30s56_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_component_name.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.get_component_name.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_component_name.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_component_name)
+! Insert-Code-Here {edu.csdms.models.chesROMS.get_component_name} (get_component_name method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.get_component_name)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.get_component_name)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_component_name)
+end subroutine get_component_namewftvx30s56_mi
+
+
+! 
+! Method:  get_input_item_list[]
+! 
+
+recursive subroutine get_input_item_lisevfm9vrhws_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_string_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_input_item_list.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.get_input_item_list.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_input_item_list.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_string_1d) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_input_item_list)
+! Insert-Code-Here {edu.csdms.models.chesROMS.get_input_item_list} (get_input_item_list method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.get_input_item_list)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.get_input_item_list)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_input_item_list)
+end subroutine get_input_item_lisevfm9vrhws_mi
+
+
+! 
+! Method:  get_output_item_list[]
+! 
+
+recursive subroutine get_output_item_lit8s1ptp7sn_mi(self, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_string_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_output_item_list.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.get_output_item_list.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_output_item_list.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_string_1d) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_output_item_list)
+! Insert-Code-Here {edu.csdms.models.chesROMS.get_output_item_list} (get_output_item_list method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.get_output_item_list)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.get_output_item_list)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_output_item_list)
+end subroutine get_output_item_lit8s1ptp7sn_mi
+
+
+! 
+! Method:  get_required_ports[]
+! 
+
+recursive subroutine get_required_portsvws4bp2bvy_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_required_ports.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.get_required_ports.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_required_ports.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_required_ports)
+! Insert-Code-Here {edu.csdms.models.chesROMS.get_required_ports} (get_required_ports method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.get_required_ports)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.get_required_ports)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_required_ports)
+end subroutine get_required_portsvws4bp2bvy_mi
+
+
+! 
+! Method:  release_required_ports[]
+! 
+
+recursive subroutine release_required_pmh50_5qzo5_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.release_required_ports.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.release_required_ports.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.release_required_ports.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.release_required_ports)
+! Insert-Code-Here {edu.csdms.models.chesROMS.release_required_ports} (release_required_ports method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.release_required_ports)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.release_required_ports)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.release_required_ports)
+end subroutine release_required_pmh50_5qzo5_mi
+
+
+! 
+! Method:  get_values_at_indices[]
+! 
+
+recursive subroutine get_values_at_indimly2safixo_mi(self, long_var_name,      &
+  indices, retval, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use sidl_int_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_values_at_indices.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.get_values_at_indices.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_values_at_indices.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl_int_1d) :: indices
+  ! in
+  type(sidl__array) :: retval
+  ! out
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_values_at_indices)
+! Insert-Code-Here {edu.csdms.models.chesROMS.get_values_at_indices} (get_values_at_indices method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.get_values_at_indices)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.get_values_at_indices)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_values_at_indices)
+end subroutine get_values_at_indimly2safixo_mi
+
+
+! 
+! Method:  set_values_at_indices[]
+! 
+
+recursive subroutine set_values_at_indidws380b9ff_mi(self, long_var_name,      &
+  indices, in_values, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use sidl_array_array
+  use sidl_int_array
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.set_values_at_indices.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.set_values_at_indices.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.set_values_at_indices.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  character (len=*) :: long_var_name
+  ! in
+  type(sidl_int_1d) :: indices
+  ! in
+  type(sidl__array) :: in_values
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.set_values_at_indices)
+! Insert-Code-Here {edu.csdms.models.chesROMS.set_values_at_indices} (set_values_at_indices method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.set_values_at_indices)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.set_values_at_indices)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.set_values_at_indices)
+end subroutine set_values_at_indidws380b9ff_mi
+
+
+! 
+! Method:  print_traceback[]
+! 
+
+recursive subroutine ch_print_tracebackd7_ndiwni8_mi(self, exception)
+  use sidl
+  use sidl_NotImplementedException
+  use sidl_BaseInterface
+  use sidl_RuntimeException
+  use edu_csdms_models_chesROMS
+  use edu_csdms_models_chesROMS_impl
+  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.print_traceback.use)
+  ! Insert-Code-Here {edu.csdms.models.chesROMS.print_traceback.use} (use statements)
+  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.print_traceback.use)
+  implicit none
+  type(edu_csdms_models_chesROMS_t) :: self
+  ! in
+  type(sidl_BaseInterface_t) :: exception
+  ! out
+
+
+
+! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.print_traceback)
+! Insert-Code-Here {edu.csdms.models.chesROMS.print_traceback} (print_traceback method)
+! 
+! This method has not been implemented
+! 
+
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.chesROMS.print_traceback)
+  type(sidl_BaseInterface_t) :: throwaway
+  type(sidl_NotImplementedException_t) :: notImpl
+  call new(notImpl, exception)
+  call setNote(notImpl, 'Not Implemented', exception)
+  call cast(notImpl, exception,throwaway)
+  call deleteRef(notImpl,throwaway)
+  return
+  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.chesROMS.print_traceback)
+! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.print_traceback)
+end subroutine ch_print_tracebackd7_ndiwni8_mi
 
 
 ! 
@@ -1576,100 +2883,6 @@ end subroutine ches_get_time_spankolpwbk21h_mi
 
 
 ! 
-! Method:  get_element_set[]
-! 
-
-recursive subroutine ch_get_element_set6vkvyvhsi5_mi(self, val_string, retval, &
-  exception)
-  use sidl
-  use sidl_NotImplementedException
-  use edu_csdms_openmi_IElementSet
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_chesROMS
-  use edu_csdms_models_chesROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_element_set.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_element_set.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_element_set.use)
-  implicit none
-  type(edu_csdms_models_chesROMS_t) :: self
-  ! in
-  character (len=*) :: val_string
-  ! in
-  type(edu_csdms_openmi_IElementSet_t) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_element_set)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_element_set} (get_element_set method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_element_set)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_element_set)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_element_set)
-end subroutine ch_get_element_set6vkvyvhsi5_mi
-
-
-! 
-! Method:  get_value_set[]
-! 
-
-recursive subroutine ches_get_value_setoc8yk3t3d9_mi(self, val_string, retval, &
-  exception)
-  use sidl
-  use sidl_NotImplementedException
-  use edu_csdms_openmi_IValueSet
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_chesROMS
-  use edu_csdms_models_chesROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_value_set.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.get_value_set.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_value_set.use)
-  implicit none
-  type(edu_csdms_models_chesROMS_t) :: self
-  ! in
-  character (len=*) :: val_string
-  ! in
-  type(edu_csdms_openmi_IValueSet_t) :: retval
-  ! out
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.get_value_set)
-! Insert-Code-Here {edu.csdms.models.ROMS.get_value_set} (get_value_set method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_value_set)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_value_set)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_value_set)
-end subroutine ches_get_value_setoc8yk3t3d9_mi
-
-
-! 
 ! Method:  get_value_set_data[]
 ! 
 
@@ -1714,53 +2927,6 @@ recursive subroutine get_value_set_datawdzyjdsxab_mi(self, val_string, retval, &
   ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_value_set_data)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.get_value_set_data)
 end subroutine get_value_set_datawdzyjdsxab_mi
-
-
-! 
-! Method:  set_value_set[]
-! 
-
-recursive subroutine ches_set_value_seti3lbxtozvf_mi(self, val_string, values, &
-  exception)
-  use sidl
-  use sidl_NotImplementedException
-  use edu_csdms_openmi_IValueSet
-  use sidl_BaseInterface
-  use sidl_RuntimeException
-  use edu_csdms_models_chesROMS
-  use edu_csdms_models_chesROMS_impl
-  ! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.set_value_set.use)
-  ! Insert-Code-Here {edu.csdms.models.ROMS.set_value_set.use} (use statements)
-  ! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.set_value_set.use)
-  implicit none
-  type(edu_csdms_models_chesROMS_t) :: self
-  ! in
-  character (len=*) :: val_string
-  ! in
-  type(edu_csdms_openmi_IValueSet_t) :: values
-  ! in
-  type(sidl_BaseInterface_t) :: exception
-  ! out
-
-
-
-! DO-NOT-DELETE splicer.begin(edu.csdms.models.chesROMS.set_value_set)
-! Insert-Code-Here {edu.csdms.models.ROMS.set_value_set} (set_value_set method)
-! 
-! This method has not been implemented
-! 
-
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.set_value_set)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.set_value_set)
-! DO-NOT-DELETE splicer.end(edu.csdms.models.chesROMS.set_value_set)
-end subroutine ches_set_value_seti3lbxtozvf_mi
 
 
 ! DO-NOT-DELETE splicer.begin(_miscellaneous_code_end)
