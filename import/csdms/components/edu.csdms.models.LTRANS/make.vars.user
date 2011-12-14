@@ -6,10 +6,10 @@
 # bocca config CLASSNAME --var=VARUSER --value=VALUE
 # --------------------------------------------------------------
 # Include path directives, including paths to Fortran modules
-INCLUDES = 
+INCLUDES = -I/home/csdms/tools/netcdf/4.1.3/include/ -I/home/csdms/models/ltrans/3.5/bmi/src/ 
 
 # Library paths and names, binaries
-LIBS = 
+LIBS = -L/home/csdms/tools/netcdf/4.1.3/lib/ -L/home/csdms/models/ltrans/3.5/bmi/lib/ -lltrans
 
 # java 
 CLASSPATH_USER=
@@ -27,7 +27,7 @@ FPPFLAGS_USER= $(BOCCA_IO_FLAGS)
 # compiler flags
 CFLAGS_USER=   $(BOCCA_IO_FLAGS)
 CXXFLAGS_USER= $(BOCCA_IO_FLAGS)
-F90FLAGS_USER=
+F90FLAGS_USER= -ffree-line-length-none
 F77FLAGS_USER=
 JAVAFLAGS_USER=
 
