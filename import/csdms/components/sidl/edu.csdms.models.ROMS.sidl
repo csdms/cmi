@@ -21,7 +21,7 @@ package edu version 0.0 {
             
 // Insert-UserCode-Here {edu.csdms.models.ROMS.comment} (Insert your component comments here)
             // DO-NOT-DELETE bocca.splicer.end(edu.csdms.models.ROMS.comment)
-            class ROMS implements-all gov.cca.Component, gov.cca.ComponentRelease, gov.cca.ports.GoPort, edu.csdms.ports.IRFPort
+            class ROMS implements-all gov.cca.Component, gov.cca.ComponentRelease, gov.cca.ports.GoPort, edu.csdms.ports.CMIPort
             {
                 // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.models.ROMS.methods)
                 
@@ -69,7 +69,7 @@ package edu version 0.0 {
                 void boccaThrowException(in string message);
                 
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.tools.TemplateFiles dummy1, in edu.csdms.tools.ConfigDialog dummy2);
+                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.openmi.ElementType dummy1, in edu.csdms.tools.TemplateFiles dummy2, in edu.csdms.tools.IRFPortQueue dummy3, in edu.csdms.tools.Verbose dummy4, in edu.csdms.openmi.ElementMapper dummy5, in edu.csdms.openmi.ScalarSet dummy6, in edu.csdms.tools.ConfigDialog dummy7, in edu.csdms.openmi.ElementSet dummy8, in edu.csdms.tools.PrintQueue dummy9);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.models.ROMS:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }
