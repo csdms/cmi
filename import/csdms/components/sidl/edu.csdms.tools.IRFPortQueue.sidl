@@ -31,6 +31,9 @@ package edu version 0.0 {
                 void initialize(in gov.cca.Services services, in edu.csdms.ports.IRFPort client_port);	                	
 
                 
+                void initialize_cmi(in gov.cca.Services services, in edu.csdms.ports.CMIPort client_port);	                	
+
+                
                 void set_services(in gov.cca.Services services);	                	
 
                 
@@ -55,6 +58,9 @@ package edu version 0.0 {
                 edu.csdms.ports.IRFPort get_port(in string name);	                	
 
                 
+                edu.csdms.ports.CMIPort get_cmi_port(in string name);	                	
+
+                
                 bool check_time_spans(in double start, in double end);	                	
 
                 
@@ -76,7 +82,7 @@ package edu version 0.0 {
                 // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.IRFPortQueue:boccaPrivateMethods)
                 // DO-NOT-EDIT
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in edu.csdms.openmi.ScalarSet dummy0, in edu.csdms.openmi.ElementMapper dummy1, in gov.cca.Port dummy2, in edu.csdms.ports.IRFPort dummy3);
+                void boccaForceUsePortInclude(in edu.csdms.openmi.ScalarSet dummy0, in edu.csdms.openmi.ElementMapper dummy1, in gov.cca.Port dummy2, in edu.csdms.ports.CMIPort dummy3, in edu.csdms.ports.IRFPort dummy4);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.IRFPortQueue:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }
