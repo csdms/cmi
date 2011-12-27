@@ -9,6 +9,7 @@
     <requires>gov.cca.Port</requires>
     <requires>ScalarSet</requires>
     <requires>ElementMapper</requires>
+    <requires>edu.csdms.ports.CMIPort</requires>
     <import-sidl/>
     <import-impl/>
     <extras>make.vars.user</extras>
