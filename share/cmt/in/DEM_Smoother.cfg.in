@@ -1,0 +1,37 @@
+#===============================================================================
+# TopoFlow Config File for: DEM_Smoother
+#===============================================================================
+# Input
+comp_status         | ${comp_status}      | string    | component status {Enabled; Disabled}
+in_directory        | ${in_directory}     | string    | input directory
+out_directory       | ${out_directory}    | string    | output directory
+site_prefix         | ${site_prefix}      | string    | file prefix for the study site
+case_prefix         | ${case_prefix}      | string    | file prefix for the model scenario
+n_steps             | ${n_steps}          | long      | number of time steps
+dt                  | ${dt}               | float     | process timestep [sec]
+c                   | ${c}                | float     | parameter, c, in Flint's Law
+p                   | ${p}                | float     | parameter, p, in Flint's Law
+DEM_file            | ${DEM_file}         | string    | filename of the original DEM
+profile_file        | ${profile_file}     | string    | filename of text file with long. profile info
+FIT_C_AND_P         | ${FIT_C_AND_P}      | long      | option to fit c and p from profile_file data
+#===============================================================================
+# Output
+save_grid_dt        | ${save_grid_dt}     | float     | time interval between saved grids [sec]
+SAVE_Z_GRIDS        | ${SAVE_Z_GRIDS}     | string    | option to save grids of elevation {Yes; No}
+z_gs_file           | ${z_gs_file}        | string    | filename for grid stack of elevations [m]
+SAVE_D8_GRIDS       | ${SAVE_D8_GRIDS}    | string    | option to save grids of D8 codes {Yes; No}
+D8_gs_file          | ${D8_gs_file}       | string    | filename for grid stack of D8 codes
+SAVE_S_GRIDS        | ${SAVE_S_GRIDS}     | string    | option to save grids of slope {Yes; No}
+S_gs_file           | ${S_gs_file}        | string    | filename for grid stack of slopes [m/m]
+SAVE_A_GRIDS        | ${SAVE_A_GRIDS}     | string    | option to save grids of D8 area {Yes; No}
+A_gs_file           | ${A_gs_file}        | string    | filename for grid stack of D8 area [km^2]
+save_pixels_dt      | ${save_pixels_dt}   | float     | time interval between time series values [sec]
+pixel_file          | ${pixel_file}       | string    | filename for monitored pixel info
+SAVE_Z_PIXELS       | ${SAVE_Z_PIXELS}    | string    | option to save time series of elevation {Yes; No}
+z_ts_file           | ${z_ts_file}        | string    | filename for time series of elevations [m]
+SAVE_D8_PIXELS      | ${SAVE_D8_PIXELS}   | string    | option to save time series of D8 codes {Yes; No}
+D8_ts_file          | ${D8_ts_file}       | string    | filename for time series of D8 codes [m]
+SAVE_S_PIXELS       | ${SAVE_S_PIXELS}    | string    | option to save time series of slope {Yes; No}
+S_ts_file           | ${S_ts_file}        | string    | filename for time series of slope [m/m]
+SAVE_A_PIXELS       | ${SAVE_A_PIXELS}    | string    | option to save time series of D8 area {Yes; No}
+A_ts_file           | ${A_ts_file}        | string    | filename for time series of D8 area [km^2]
