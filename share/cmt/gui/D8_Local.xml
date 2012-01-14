@@ -1,0 +1,290 @@
+<dialog>
+<!-- ====================================================================== -->
+  <tab name="Input">
+    <entry name="/D8Local/Input/Var/comp_status">
+      <label>Component status:</label>
+      <default>Enabled</default>
+      <type>string</type>
+      <help_brief>component status {Enabled; Disabled}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/in_directory">
+      <label>Input directory:</label>
+      <default>~/CMT_Output</default>
+      <type>string</type>
+      <help_brief>input directory</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/out_directory">
+      <label>Output directory:</label>
+      <default>~/CMT_Output</default>
+      <type>string</type>
+      <help_brief>output directory</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/site_prefix">
+      <label>Site prefix:</label>
+      <default>Test</default>
+      <type>string</type>
+      <help_brief>file prefix for the study site</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/case_prefix">
+      <label>Case prefix:</label>
+      <default>Test</default>
+      <type>string</type>
+      <help_brief>file prefix for the model scenario</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/n_steps">
+      <label>Number of steps:</label>
+      <default>1</default>
+      <type>long</type>
+      <range>
+        <min>1</min>
+        <max>1e7</max>
+      </range>
+      <help_brief>number of time steps</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/dt">
+      <label>Time step:</label>
+      <default>1.0</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>1e6</max>
+      </range>
+      <help_brief>process timestep [sec]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/DEM_file">
+      <label>DEM filename:</label>
+      <default>[site_prefix]_2D-z0.bin</default>
+      <type>string</type>
+      <help_brief>filename of binary file with DEM</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/A_units">
+      <label>Area grid units:</label>
+      <default>m^2</default>
+      <type>string</type>
+      <help_brief>area grid units, m^2 or km^2</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/LINK_FLATS">
+      <label>LINK_FLATS toggle:</label>
+      <default>1</default>
+      <type>long</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+      <help_brief>option to link flats, 0 or 1</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/FILL_PITS_IN_Z0">
+      <label>FILL_PITS_IN_Z0 toggle:</label>
+      <default>0</default>
+      <type>long</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+      <help_brief>option to fill pits in original DEM, 0 or 1</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/LR_PERIODIC">
+      <label>LR_PERIODIC toggle:</label>
+      <default>0</default>
+      <type>long</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+      <help_brief>B.C., periodic in left-right direction, 0 or 1</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/TB_PERIODIC">
+      <label>TB_PERIODIC toggle:</label>
+      <default>0</default>
+      <type>long</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+      <help_brief>B.C., periodic in top-bottom direction, 0 or 1</help_brief>
+    </entry>
+
+  </tab>
+
+<!-- ====================================================================== -->
+  <tab name="Output">
+    <entry name="/D8Local/Input/Var/save_grid_dt">
+      <label>Save grid timestep:</label>
+      <default>1.000</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>1e6</max>
+      </range>
+      <help_brief>time interval between saved grids [sec]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_AREA_GRIDS">
+      <label>Save A grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save grids of D8 area {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/area_gs_file">
+      <label>Save A grids file:</label>
+      <default>[case_prefix]_2D-A.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of D8 area [km^2]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_CODE_GRIDS">
+      <label>Save D8 grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save grids of D8 codes {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/code_gs_file">
+      <label>Save D8 grids file:</label>
+      <default>[case_prefix]_2D-flow.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of D8 codes</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_DS_GRIDS">
+      <label>Save ds grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save grids of ds {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/ds_gs_file">
+      <label>Save ds grids file:</label>
+      <default>[case_prefix]_2D-ds.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of ds [m]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_DW_GRIDS">
+      <label>Save dw grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save grids of dw {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/dw_gs_file">
+      <label>Save dw grids file:</label>
+      <default>[case_prefix]_2D-dw.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of dw [m]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/save_pixels_dt">
+      <label>Save pixels timestep:</label>
+      <default>1.000</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>1e6</max>
+      </range>
+      <help_brief>time interval between time series values [sec]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/pixel_file">
+      <label>Monitored pixels file:</label>
+      <default>[case_prefix]_outlets.txt</default>
+      <type>string</type>
+      <help_brief>filename for monitored pixel info</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_AREA_PIXELS">
+      <label>Save A pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of D8 area {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/area_ts_file">
+      <label>Save A pixels file:</label>
+      <default>[case_prefix]_0D-A.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of D8 area [m]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_CODE_PIXELS">
+      <label>Save D8 pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of D8 codes {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/code_ts_file">
+      <label>Save D8 pixels file:</label>
+      <default>[case_prefix]_0D-flow.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of D8 codes</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_DS_PIXELS">
+      <label>Save ds pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of ds {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/ds_ts_file">
+      <label>Save ds pixels file:</label>
+      <default>[case_prefix]_0D-ds.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of ds [m]</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/SAVE_DW_PIXELS">
+      <label>Save dw pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of dw {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/D8Local/Input/Var/dw_ts_file">
+      <label>Save dw pixels file:</label>
+      <default>[case_prefix]_0D-dw.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of dw [m]</help_brief>
+    </entry>
+
+  </tab>
+<!-- ====================================================================== -->
+  <tab name="About">
+    <entry name="/D8Local/ModelName">
+      <label>Model name:</label>
+      <help_brief>Name of the model</help_brief>
+      <default>D8Local</default>
+      <type>String</type>
+    </entry>
+
+    <entry name="/D8Local/ModelAuthor">
+      <label>Author name:</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Scott D. Peckham </default>
+      <type>String</type>
+    </entry>
+
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:D8-Local</default>
+      <type>String</type>
+    </entry>
+
+  </tab>
+</dialog>
+

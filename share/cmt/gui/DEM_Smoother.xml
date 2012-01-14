@@ -1,0 +1,279 @@
+<dialog>
+<!-- ====================================================================== -->
+  <tab name="Input">
+    <entry name="/DEMSmoother/Input/Var/comp_status">
+      <label>Component status:</label>
+      <default>Enabled</default>
+      <type>string</type>
+      <help_brief>component status {Enabled; Disabled}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/in_directory">
+      <label>Input directory:</label>
+      <default>/data/sims/erode/small_ky</default>
+      <type>string</type>
+      <help_brief>input directory</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/out_directory">
+      <label>Output directory:</label>
+      <default>~/CMT_Output/DEM_Smoother_Test</default>
+      <type>string</type>
+      <help_brief>output directory</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/site_prefix">
+      <label>Site prefix:</label>
+      <default>Small</default>
+      <type>string</type>
+      <help_brief>file prefix for the study site</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/case_prefix">
+      <label>Case prefix:</label>
+      <default>Case1</default>
+      <type>string</type>
+      <help_brief>file prefix for the model scenario</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/n_steps">
+      <label>Number of steps:</label>
+      <default>1</default>
+      <type>long</type>
+      <range>
+        <min>1</min>
+        <max>1e7</max>
+      </range>
+      <help_brief>number of time steps</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/dt">
+      <label>Time step:</label>
+      <default>1.0</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>1e6</max>
+      </range>
+      <help_brief>process timestep [sec]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/c">
+      <label>Flint's Law c:</label>
+      <default>0.05</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>10</max>
+      </range>
+      <help_brief>parameter, c, in Flint's Law</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/p">
+      <label>Flint's Law p:</label>
+      <default>-0.55</default>
+      <type>float</type>
+      <range>
+        <min>-1.0</min>
+        <max>0</max>
+      </range>
+      <help_brief>parameter, p, in Flint's Law</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/DEM_file">
+      <label>Input DEM filename:</label>
+      <default>[site_prefix]_DEM.rtg</default>
+      <type>string</type>
+      <help_brief>filename of the original DEM</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/profile_file">
+      <label>Profile filename:</label>
+      <default>[site_prefix]_prof1.txt</default>
+      <type>string</type>
+      <help_brief>filename of text file with long. profile info</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/FIT_C_AND_P">
+      <label>FIT_C_AND_P toggle:</label>
+      <default>0</default>
+      <type>long</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+      <help_brief>option to fit c and p from profile_file data</help_brief>
+    </entry>
+
+  </tab>
+
+<!-- ====================================================================== -->
+  <tab name="Output">
+    <entry name="/DEMSmoother/Input/Var/save_grid_dt">
+      <label>Save grid timestep:</label>
+      <default>1.000</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>1e6</max>
+      </range>
+      <help_brief>time interval between saved grids [sec]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_Z_GRIDS">
+      <label>Save z grids toggle:</label>
+      <default>Yes</default>
+      <type>string</type>
+      <help_brief>option to save grids of elevation {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/z_gs_file">
+      <label>Save z grids file:</label>
+      <default>[case_prefix]_2D-z.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of elevations [m]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_D8_GRIDS">
+      <label>Save D8 grids toggle:</label>
+      <default>Yes</default>
+      <type>string</type>
+      <help_brief>option to save grids of D8 codes {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/D8_gs_file">
+      <label>Save D8 grids file:</label>
+      <default>[case_prefix]_2D-D8.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of D8 codes</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_S_GRIDS">
+      <label>Save S grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save grids of slope {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/S_gs_file">
+      <label>Save S grids file:</label>
+      <default>[case_prefix]_2D-S.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of slopes [m/m]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_A_GRIDS">
+      <label>Save A grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save grids of D8 area {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/A_gs_file">
+      <label>Save A grids file:</label>
+      <default>[case_prefix]_2D-A.nc</default>
+      <type>string</type>
+      <help_brief>filename for grid stack of D8 area [km^2]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/save_pixels_dt">
+      <label>Save pixels timestep:</label>
+      <default>1.000</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>1e6</max>
+      </range>
+      <help_brief>time interval between time series values [sec]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/pixel_file">
+      <label>Monitored pixels file:</label>
+      <default>[case_prefix]_outlets.txt</default>
+      <type>string</type>
+      <help_brief>filename for monitored pixel info</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_Z_PIXELS">
+      <label>Save z pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of elevation {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/z_ts_file">
+      <label>Save z pixels file:</label>
+      <default>[case_prefix]_0D-z.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of elevations [m]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_D8_PIXELS">
+      <label>Save D8 pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of D8 codes {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/D8_ts_file">
+      <label>Save D8 pixels file:</label>
+      <default>[case_prefix]_0D-D8.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of D8 codes [m]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_S_PIXELS">
+      <label>Save S pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of slope {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/S_ts_file">
+      <label>Save S pixels file:</label>
+      <default>[case_prefix]_0D-S.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of slope [m/m]</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/SAVE_A_PIXELS">
+      <label>Save A pixels toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save time series of D8 area {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/DEMSmoother/Input/Var/A_ts_file">
+      <label>Save A pixels file:</label>
+      <default>[case_prefix]_0D-A.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of D8 area [km^2]</help_brief>
+    </entry>
+
+</tab>
+<!-- ====================================================================== -->
+  <tab name="About">
+    <entry name="/DEMSmoother/ModelName">
+      <label>Model name:</label>
+      <help_brief>Name of the model</help_brief>
+      <default>DEMSmoother</default>
+      <type>String</type>
+    </entry>
+
+    <entry name="/DEMSmoother/ModelAuthor">
+      <label>Author name:</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Scott D. Peckham </default>
+      <type>String</type>
+    </entry>
+
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:TopoFlow-DEM_Smoother</default>
+      <type>String</type>
+    </entry>
+
+  </tab>
+</dialog>
+

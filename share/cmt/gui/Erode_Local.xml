@@ -1,0 +1,549 @@
+<dialog>
+<!-- ====================================================================== -->
+  <tab name="Input 1">
+    <entry name="/ErodeLocal/Input/Var/comp_status">
+      <label>Component status:</label>
+      <default>Enabled</default>
+      <type>string</type>
+      <help_brief>component status {Enabled; Disabled}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/in_directory">
+      <label>Input directory:</label>
+      <default>~/CMT_Output</default>
+      <type>string</type>
+      <help_brief>input directory</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/out_directory">
+      <label>Output directory:</label>
+      <default>~/CMT_Output/</default>
+      <type>string</type>
+      <help_brief>output directory</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/site_prefix">
+      <label>Site prefix:</label>
+      <default>Test</default>
+      <type>string</type>
+      <help_brief>prefix for the study site</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/case_prefix">
+      <label>Case prefix:</label>
+      <default>Test</default>
+      <type>string</type>
+      <help_brief>prefix for a given scenario</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/n_steps">
+      <label>Number of steps:</label>
+      <default>1000</default>
+      <type>long</type>
+      <range>
+        <min>1</min>
+        <max>1e9</max>
+      </range>
+      <help_brief>number of time steps</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/nx">
+      <label>Grid nx:</label>
+      <default>100</default>
+      <type>long</type>
+      <range>
+        <min>10</min>
+        <max>2000</max>
+      </range>
+      <help_brief>number of cols in DEM</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/ny">
+      <label>Grid ny:</label>
+      <default>100</default>
+      <type>long</type>
+      <range>
+        <min>10</min>
+        <max>2000</max>
+      </range>
+      <help_brief>number of rows in DEM</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dx">
+      <label>Grid cell dx:</label>
+      <default>50.0</default>
+      <type>float</type>
+      <range>
+        <min>1.0</min>
+        <max>1000.0</max>
+      </range>
+      <help_brief>grid cell xsize [meters]</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dy">
+      <label>Grid cell dy:</label>
+      <default>50.0</default>
+      <type>float</type>
+      <range>
+        <min>1.0</min>
+        <max>1000.0</max>
+      </range>
+      <help_brief>grid cell ysize [meters]</help_brief>
+    </entry>
+
+  </tab>
+
+<!-- ====================================================================== -->
+  <tab name="Input 2">
+    <entry name="/ErodeLocal/Input/Var/CFL_factor">
+      <label>CFL factor:</label>
+      <default>0.2</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>1.0</max>
+      </range>
+      <help_brief>prefactor for CFL stability condition</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/m">
+      <label>Area exponent, m:</label>
+      <default>1.5</default>
+      <type>float</type>
+      <range>
+        <min>1.0</min>
+        <max>2.0</max>
+      </range>
+      <help_brief>area exponent</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/n">
+      <label>Slope exponent, n:</label>
+      <default>1.0</default>
+      <type>float</type>
+      <range>
+        <min>1.0</min>
+        <max>2.0</max>
+      </range>
+      <help_brief>slope exponent</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/K">
+      <label>Erodibility, K:</label>
+      <default>1e-2</default>
+      <type>float</type>
+      <range>
+        <min>1e-5</min>
+        <max>1e-1</max>
+      </range>
+      <help_brief>erodibility</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/p">
+      <label>Q-A exponent, p:</label>
+      <default>1.0</default>
+      <type>float</type>
+      <range>
+        <min>0.1</min>
+        <max>1.0</max>
+      </range>
+      <help_brief>Q-A exponent</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/R">
+      <label>Mean rainrate, R:</label>
+      <default>1.0</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>5.0</max>
+      </range>
+      <help_brief>geomorphically effective rainrate [m/yr]</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/U">
+      <label>Mean uplift rate, U:</label>
+      <default>0.0</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>2.0</max>
+      </range>
+      <help_brief>uplift rate [mm/yr]</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/BLR">
+      <label>Base lowering rate:</label>
+      <default>0.1</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>2.0</max>
+      </range>
+      <help_brief>base-level lowering rate [mm/yr]</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/BC_method">
+      <label>BC method:</label>
+      <default>FOUR_SIDES</default>
+      <type>string</type>
+      <help_brief>boundary-condition method {BOTTOM; RIGHT; FOUR_SIDES}</help_brief>
+    </entry>
+
+  </tab>
+
+<!-- ====================================================================== -->
+  <tab name="Z0 Options">
+    <entry name="/ErodeLocal/Input/Var/make_z0_method">
+      <label>Make z0 method:</label>
+      <default>FLAT</default>
+      <type>string</type>
+      <help_brief>method to make initial DEM {FLAT; PLANE; CORNER_PLANE; READ_FILE}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/z0_plane_dz_dx">
+      <label>z0 plane dz/dx:</label>
+      <default>0.1</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>10.0</max>
+      </range>
+      <help_brief>dz/dx for make_z0_method=PLANE</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/z0_plane_dz_dy">
+      <label>z0 plane dz/dy:</label>
+      <default>0.0</default>
+      <type>float</type>
+      <range>
+        <min>0.0</min>
+        <max>10.0</max>
+      </range>
+      <help_brief>dz/dy for make_z0_method=PLANE</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/z0_file">
+      <label>z0 filename:</label>
+      <default>[site_prefix]_2D-z0.rtg</default>
+      <type>string</type>
+      <help_brief>filename for make_z0_method=READ_FILE</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/noise_method">
+      <label>Noise method:</label>
+      <default>MIDPOINTS</default>
+      <type>string</type>
+      <help_brief>noise method {MIDPOINTS; GAUSSIAN; O_NOISE}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/noise_scale">
+      <label>Noise scale:</label>
+      <default>1.0</default>
+      <type>float</type>
+      <range>
+        <min>0.1</min>
+        <max>1000.0</max>
+      </range>
+      <help_brief>scale factor for random noise</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/seed">
+      <label>Random seed:</label>
+      <default>36421</default>
+      <type>long</type>
+      <range>
+        <min>10000</min>
+        <max>99999</max>
+      </range>
+      <help_brief>random number seed (long int)</help_brief>
+    </entry>
+
+  </tab>
+
+<!-- ====================================================================== -->
+  <tab name="Output 1">
+    <entry name="/ErodeLocal/Input/Var/save_grid_dt">
+      <label>Save grid dt:</label>
+      <default>100.0</default>
+      <type>float</type>
+      <range>
+        <min>1.0</min>
+        <max>1e5</max>
+      </range>
+      <help_brief>time interval between saved grids [years]</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_Z_GRIDS">
+      <label>Save z grids toggle:</label>
+      <default>Yes</default>
+      <type>string</type>
+      <help_brief>option to save computed z grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/z_gs_file">
+      <label>Save z grids file:</label>
+      <default>[case_prefix]_2D-z.nc</default>
+      <type>string</type>
+      <help_brief>filename for z grid stack</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_S_GRIDS">
+      <label>Save S grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed S grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/S_gs_file">
+      <label>Save S grids file:</label>
+      <default>[case_prefix]_2D-S.nc</default>
+      <type>string</type>
+      <help_brief>filename for S grid stack</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_A_GRIDS">
+      <label>Save A grids toggle:</label>
+      <default>Yes</default>
+      <type>string</type>
+      <help_brief>option to save computed A grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/A_gs_file">
+      <label>Save A grids file:</label>
+      <default>[case_prefix]_2D-A.nc</default>
+      <type>string</type>
+      <help_brief>filename for A grid stack</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_Q_GRIDS">
+      <label>Save Q grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed Q grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/Q_gs_file">
+      <label>Save Q grids file:</label>
+      <default>[case_prefix]_2D-Q.nc</default>
+      <type>string</type>
+      <help_brief>filename for Q grid stack</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_QS_GRIDS">
+      <label>Save Qs grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed Qs grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/Qs_gs_file">
+      <label>Save Qs grids file:</label>
+      <default>[case_prefix]_2D-Qs.nc</default>
+      <type>string</type>
+      <help_brief>filename for Qs grid stack</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_DZ_GRIDS">
+      <label>Save dz grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed dz grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dz_gs_file">
+      <label>Save dz grids file:</label>
+      <default>[case_prefix]_2D-dz.nc</default>
+      <type>string</type>
+      <help_brief>filename for dz grid stack</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_DT_GRIDS">
+      <label>Save dt grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed dt grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dt_gs_file">
+      <label>Save dt grids file:</label>
+      <default>[case_prefix]_2D-dt.nc</default>
+      <type>string</type>
+      <help_brief>filename for dt grid stack</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_DZ_DT_GRIDS">
+      <label>Save dz_dt grids toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed dz_dt grids {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dz_dt_gs_file">
+      <label>Save dz_dt grids file:</label>
+      <default>[case_prefix]_2D-dzdt.nc</default>
+      <type>string</type>
+      <help_brief>filename for dz_dt grid stack</help_brief>
+    </entry>
+
+  </tab>
+
+<!-- ====================================================================== -->
+  <tab name="Output 2">
+    <entry name="/ErodeLocal/Input/Var/save_pixels_dt">
+      <label>Save time series dt:</label>
+      <default>100.0</default>
+      <type>float</type>
+      <range>
+        <min>1.0</min>
+        <max>1e5</max>
+      </range>
+      <help_brief>time interval between time series values [years]</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/pixel_file">
+      <label>Monitored pixels file:</label>
+      <default>[case_prefix]_outlets.txt</default>
+      <type>string</type>
+      <help_brief>filename for monitored pixel info</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_Z_PIXELS">
+      <label>Save z time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed z time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/z_ts_file">
+      <label>Save z pixels file:</label>
+      <default>[case_prefix]_0D-z.txt</default>
+      <type>string</type>
+      <help_brief>filename for time series of z</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_S_PIXELS">
+      <label>Save S time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed S time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/S_ts_file">
+      <label>Save S pixels file:</label>
+      <default>[case_prefix]_0D-S.txt</default>
+      <type>string</type>
+      <help_brief>filename for time series of S</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_A_PIXELS">
+      <label>Save A time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed A time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/A_ts_file">
+      <label>Save A pixels file:</label>
+      <default>[case_prefix]_0D-A.txt</default>
+      <type>string</type>
+      <help_brief>filename for time series of A</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_Q_PIXELS">
+      <label>Save Q time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed Q time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/Q_ts_file">
+      <label>Save Q pixels file:</label>
+      <default>[case_prefix]_0D-Q.txt</default>
+      <type>string</type>
+      <help_brief>filename for time series of Q</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_QS_PIXELS">
+      <label>Save Qs time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed Qs time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/Qs_ts_file">
+      <label>Save Qs pixels file:</label>
+      <default>[case_prefix]_0D-Qs.txt</default>
+      <type>string</type>
+      <help_brief>filename for time series of Qs</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_DZ_PIXELS">
+      <label>Save dz time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed dz time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dz_ts_file">
+      <label>Save dz pixels file:</label>
+      <default>[case_prefix]_0D-dz.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of dz</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_DT_PIXELS">
+      <label>Save dt time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed dt time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dt_ts_file">
+      <label>Save dt pixels file:</label>
+      <default>[case_prefix]_0D-dt.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of dt</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/SAVE_DZ_DT_PIXELS">
+      <label>Save Qs time series toggle:</label>
+      <default>No</default>
+      <type>string</type>
+      <help_brief>option to save computed dz_dt time series {Yes; No}</help_brief>
+    </entry>
+
+    <entry name="/ErodeLocal/Input/Var/dz_dt_ts_file">
+      <label>Save Qs pixels file:</label>
+      <default>[case_prefix]_0D-dzdt.nc</default>
+      <type>string</type>
+      <help_brief>filename for time series of dz_dt</help_brief>
+    </entry>
+
+  </tab>
+<!-- ====================================================================== -->
+  <tab name="About">
+    <entry name="/ErodeLocal/ModelName">
+      <label>Model name:</label>
+      <help_brief>Name of the model</help_brief>
+      <default>ErodeLocal</default>
+      <type>String</type>
+    </entry>
+
+    <entry name="/ErodeLocal/ModelAuthor">
+      <label>Author name:</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Scott D. Peckham </default>
+      <type>String</type>
+    </entry>
+
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file:</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:Erode-Local</default>
+      <type>String</type>
+    </entry>
+
+  </tab>
+</dialog>
+
