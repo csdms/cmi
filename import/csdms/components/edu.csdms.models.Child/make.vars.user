@@ -6,10 +6,12 @@
 # bocca config CLASSNAME --var=VARUSER --value=VALUE
 # --------------------------------------------------------------
 # Include path directives, including paths to Fortran modules
-INCLUDES = -I/data/progs/child/nightly/include/child/ChildInterface -I/data/progs/glib/2.25/include/glib-2.0 -I/data/progs/glib/2.25/lib/glib-2.0/include
+INCLUDES = ${CHILD_INCLUDES}
+#INCLUDES = -I/data/progs/child/nightly/include/child/ChildInterface -I/data/progs/glib/2.25/include/glib-2.0 -I/data/progs/glib/2.25/lib/glib-2.0/include
 
 # Library paths and names, binaries
-LIBS = -L/data/progs/child/nightly/lib -L/data/progs/glib/2.25/lib -lchild-devel -lglib-2.0
+LIBS = ${CHILD_LIBS}
+#LIBS = -L/data/progs/child/nightly/lib -L/data/progs/glib/2.25/lib -lchild-devel -lglib-2.0
 
 # java 
 CLASSPATH_USER=
