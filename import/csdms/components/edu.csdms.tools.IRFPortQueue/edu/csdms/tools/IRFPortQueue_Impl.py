@@ -190,6 +190,7 @@ class IRFPortQueue:
 
 # DO-NOT-DELETE splicer.begin(initialize_ports)
     # Call the initialize method for each port in the queue.
+    print properties
     for (name, port) in self._ports.items ():
       try:
         print "%s: Trying CMI_initialize" % name
@@ -384,18 +385,19 @@ class IRFPortQueue:
 # DO-NOT-DELETE splicer.begin(add_mapper)
     # The mapper is a string of the form,
     #   var_name@port_name:mapper_method
+    print 'IRFPortQueue: Adding mapper %s' % mapper
     try:
         (full_name, method) = mapper.split (':')
     except ValueError:
-        print 'ERROR: %s: Bad mapper name (missing method)'
+        print 'ERROR: %s: Bad mapper name (missing method)' % mapper
 
     try:
         (var_name, port_name) = full_name.split ('@')
     except ValueError:
-        print 'ERROR: %s: Bad full var name name (var_name@port_name)'
+        print 'ERROR: %s: Bad full var name name (var_name@port_name)' % full_name
 
     if self._mappers.has_key (full_name):
-        print 'ERROR: %s: Mapper exists'
+        print 'ERROR: %s: Mapper exists' % full_name
 
     # If a mapper can't be created, it is set to None
     self._mappers[full_name] = None
@@ -404,17 +406,19 @@ class IRFPortQueue:
     try:
         port = self._ports[port_name]
     except KeyError:
-        print 'ERROR: %s: Port not found'
+        print 'ERROR: %s: Port not found' % port_name
 
     # Get the destination ElementSet
     try:
       element_set = self._client.get_element_set (var_name)
+      print 'IRFPortQueue: Size of destination ElementSet is %s' % element_set.getElementCount ()
     except Exception as e:
       element_set = None
 
     # Get the source ElementSet
     try:
       src_element_set = port.get_element_set (var_name)
+      print 'IRFPortQueue: Size of source ElementSet is %s' % src_element_set.getElementCount ()
     except Exception as e:
       print 'Error getting source element set: %s' % e
 
@@ -463,6 +467,7 @@ class IRFPortQueue:
 
 # DO-NOT-DELETE splicer.begin(run_mapper)
     # Get the requested mapper
+    print "IRFPortQueue: Running mapper %s" % mapper
     try:
         map = self._mappers[mapper]
     except KeyError:
@@ -474,13 +479,17 @@ class IRFPortQueue:
     except KeyError:
       print 'Unable to locate port %s.' % name
 
+    print "IRFPortQueue: Get value set for %s" % var_name
     # Get the ValueSet from the source port
     src_value_set = port.get_value_set (var_name)
     src_scalar_set = edu.csdms.openmi.ScalarSet.ScalarSet (src_value_set)
+    print "IRFPortQueue: Size of source ValueSet is %d" % src_scalar_set.getCount ()
 
     if map is not None:
         try:
+            print "IRFPortQueue: Run the mapper."
             dst_scalar_set = map.mapScalarValues (src_scalar_set)
+            print "IRFPortQueue: Ran the mapper."
         except:
             print 'There was an error mapping %s' % src_value
     else:
@@ -489,9 +498,11 @@ class IRFPortQueue:
     dst_ivalue_set = edu.csdms.openmi.IValueSet.IValueSet (dst_scalar_set)
 
     try:
-        self._client.set_value_set (dst_value, dst_ivalue_set)
+        print "IRFPortQueue: Setting values for %s." % var_name
+        self._client.set_value_set (var_name, dst_ivalue_set)
     except Exception as e:
         print 'There was an error setting values: %s' % e
+    print "IRFPortQueue: Mapper is finished."
 
 # DO-NOT-DELETE splicer.end(run_mapper)
 

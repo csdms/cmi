@@ -64,9 +64,6 @@ package edu version 0.0 {
                 edu.csdms.ports.IRFPort get_port(in string name);	                	
 
                 
-                edu.csdms.ports.CMIPort get_cmi_port(in string name);	                	
-
-                
                 bool check_time_spans(in double start, in double end);	                	
 
                 
