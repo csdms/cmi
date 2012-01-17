@@ -6,6 +6,7 @@
 
   <class name="tools.IRFPortQueue" language="python">
     <requires>edu.csdms.ports.IRFPort</requires>
+    <requires>edu.csdms.ports.CMIPort</requires>
     <requires>gov.cca.Port</requires>
     <requires>ScalarSet</requires>
     <requires>ElementMapper</requires>
@@ -42,6 +43,7 @@
     <requires>gov.cca.Type</requires>
     <requires>gov.cca.TypeMap</requires>
     <requires>edu.csdms.ports.IRFPort</requires>
+    <requires>edu.csdms.ports.CMIPort</requires>
     <requires>tools.IRasterOutputFile</requires>
     <import-sidl/>
     <import-impl/>

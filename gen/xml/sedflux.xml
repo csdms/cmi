@@ -11,10 +11,11 @@
 
   <component name="models.Sedflux3D" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>edu.csdms.ports.IRFPort@WaterDischarge</uses>
-    <uses>edu.csdms.ports.IRFPort@SubaerialErosion</uses>
+    <!--uses>edu.csdms.ports.CMIPort@WaterDischarge</uses>
+    <uses>edu.csdms.ports.CMIPort@SubaerialErosion</uses-->
+    <uses>edu.csdms.ports.CMIPort@SubaerialDelta</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>edu.csdms.ports.IRFPort@SubaqueousErosion</provides>
+    <provides>edu.csdms.ports.CMIPort@SubaqueousDelta</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
@@ -27,9 +28,9 @@
   </component>
   <component name="models.Sedflux2D" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>edu.csdms.ports.IRFPort@WaterDischarge</uses>
+    <uses>edu.csdms.ports.CMIPort@SubaerialDelta</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>edu.csdms.ports.IRFPort@Elevation</provides>
+    <provides>edu.csdms.ports.CMIPort@SubaqueousDelta</provides>
     <requires>ScalarSet</requires>
     <requires>IScalarSet</requires>
     <requires>ValueSet</requires>
