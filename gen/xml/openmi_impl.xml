@@ -4,6 +4,7 @@
   <xi:include href="openmi_interface.xml" parse="xml"/>
 
   <!--- The Alterra SDK implementation of OpenMI -->
+<!--
   <class name="openmi.Time" language="java">
     <implements>ITime</implements>
   </class>
@@ -20,6 +21,7 @@
     <import-impl/>
     <extras>make.vars.user</extras>
   </class>
+-->
   <class name="openmi.SpatialReference" language="java">
     <implements>ISpatialReference</implements>
     <import-sidl/>

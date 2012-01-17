@@ -2,6 +2,7 @@
   name="openmi" language="java">
 
   <!-- The OpenMI interface -->
+<!--
   <interface name="openmi.ITime">
     <import-sidl/>
   </interface>
@@ -12,6 +13,7 @@
     <import-sidl/>
     <requires>openmi.ITimeStamp</requires>
   </interface>
+-->
   <interface name="openmi.ISpatialReference">
     <import-sidl/>
   </interface>
