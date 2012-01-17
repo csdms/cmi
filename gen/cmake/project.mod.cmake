@@ -23,6 +23,7 @@ module load internal
 module load roms
 module load stm
 module load marssim
+module load bmi cmi
 
 if {![info exists env{CMT_PROJECT_TEMPLATE_PATH}]} {
   setenv CMT_PROJECT_TEMPLATE_PATH "@TEMPLATE_DIR@"

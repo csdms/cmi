@@ -2,6 +2,7 @@
 source /usr/local/modules/init/bash
 module load openmi cem/alpha sedflux/devel hydrotrend/3.0 child internal roms stm
 module load marssim aquatellus
+module bmi cmi
 
 if [ -z "${CMT_PROJECT_DIALOG_PATH+x}" ] ; then
   export CMT_PROJECT_DIALOG_PATH=@CONFIG_DIR@
