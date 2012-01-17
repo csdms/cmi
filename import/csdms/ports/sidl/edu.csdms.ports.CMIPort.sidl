@@ -75,6 +75,31 @@ package edu version 0.0 {
                 
                 void CMI_print_traceback();	                	
 
+                // Grid information
+                // Uniform rectilinear
+                array<double, 1> CMI_get_grid_spacing(in string long_var_name);	                	
+
+                
+                array<double, 1> CMI_get_grid_lower_left(in string long_var_name);	                	
+
+                
+                array<int, 1> CMI_get_grid_shape(in string long_var_name);	                	
+
+                // Non-uniform rectilinear, curvilinear
+                array<double, 1> CMI_get_grid_x(in string long_var_name);	                	
+
+                
+                array<double, 1> CMI_get_grid_y(in string long_var_name);	                	
+
+                
+                array<double, 1> CMI_get_grid_z(in string long_var_name);	                	
+
+                // Unstructured
+                array<int, 1> get_grid_connectivity(in string long_var_name);	                	
+
+                
+                array<int, 1> get_grid_offset(in string long_var_name);	                	
+
                 
                 bool initialize(in string config_file);	                	
 
@@ -153,9 +178,17 @@ package edu version 0.0 {
                 
                 array<double, 1> get_time_span();	                	
 
-                //                edu.csdms.openmi.IValueSet get_value_set(in string val_string);
-                //                edu.csdms.openmi.IElementSet get_element_set(in string val_string);
+                
+                edu.csdms.openmi.IValueSet get_value_set(in string val_string);	                	
+
+                
+                edu.csdms.openmi.IElementSet get_element_set(in string val_string);	                	
+
+                
                 array<> get_value_set_data(in string val_string);	                	
+
+                
+                void set_value_set(in string val_string, in edu.csdms.openmi.IValueSet values);	                	
 
                 // DO-NOT-DELETE bocca.splicer.end(edu.csdms.ports.CMIPort.methods)
             }
