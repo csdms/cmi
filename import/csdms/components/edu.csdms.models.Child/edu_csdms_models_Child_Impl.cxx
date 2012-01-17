@@ -31,8 +31,8 @@
 #ifndef included_edu_csdms_openmi_ScalarSet_hxx
 #include "edu_csdms_openmi_ScalarSet.hxx"
 #endif
-#ifndef included_edu_csdms_ports_IRFPort_hxx
-#include "edu_csdms_ports_IRFPort.hxx"
+#ifndef included_edu_csdms_ports_CMIPort_hxx
+#include "edu_csdms_ports_CMIPort.hxx"
 #endif
 #ifndef included_edu_csdms_tools_ConfigDialog_hxx
 #include "edu_csdms_tools_ConfigDialog.hxx"
@@ -151,9 +151,8 @@ void edu::csdms::models::Child_impl::_ctor() {
                << " constructing " << this << std::endl;
 
    #endif // _BOCCA_CTOR_MESSAGES
-  this->is_initialized = false;
-  this->logging_is_initialized = false;
-  this->log = NULL;
+  //this->state = NULL;
+  this->status = CMI_STATUS_CREATED;
 
   // bocca-default-code. User may edit or delete.end(edu.csdms.models.Child._ctor)
 
@@ -231,31 +230,17 @@ edu::csdms::models::Child_impl::boccaSetServices_impl (
     throw;
   }    
 
-  // Provide a edu.csdms.ports.IRFPort port with port name WaterDischarge 
+  // Provide a edu.csdms.ports.CMIPort port with port name SubaerialDelta 
   try{
     this->d_services.addProvidesPort(
                    port,              // implementing object
-                   "WaterDischarge", // port instance name
-                   "edu.csdms.ports.IRFPort",     // full sidl type of port
+                   "SubaerialDelta", // port instance name
+                   "edu.csdms.ports.CMIPort",     // full sidl type of port
                    typeMap);          // properties for the port
   } catch ( ::gov::cca::CCAException ex )  {
     BOCCA_EXTEND_THROW_CXX(ex, 
         "edu.csdms.models.Child: Error calling addProvidesPort(port,"
-        "\"WaterDischarge\", \"edu.csdms.ports.IRFPort\", typeMap) ", -2);
-    throw;
-  }    
-
-  // Provide a edu.csdms.ports.IRFPort port with port name SubaerialErosion 
-  try{
-    this->d_services.addProvidesPort(
-                   port,              // implementing object
-                   "SubaerialErosion", // port instance name
-                   "edu.csdms.ports.IRFPort",     // full sidl type of port
-                   typeMap);          // properties for the port
-  } catch ( ::gov::cca::CCAException ex )  {
-    BOCCA_EXTEND_THROW_CXX(ex, 
-        "edu.csdms.models.Child: Error calling addProvidesPort(port,"
-        "\"SubaerialErosion\", \"edu.csdms.ports.IRFPort\", typeMap) ", -2);
+        "\"SubaerialDelta\", \"edu.csdms.ports.CMIPort\", typeMap) ", -2);
     throw;
   }    
 
@@ -272,16 +257,16 @@ edu::csdms::models::Child_impl::boccaSetServices_impl (
     throw;
   }
 
-  // Use a edu.csdms.ports.IRFPort port with port name SubaqueousErosion 
+  // Use a edu.csdms.ports.CMIPort port with port name SubaqueousDelta 
   try{
     this->d_services.registerUsesPort(
-                   "SubaqueousErosion", // port instance name
-                   "edu.csdms.ports.IRFPort",     // full sidl type of port
+                   "SubaqueousDelta", // port instance name
+                   "edu.csdms.ports.CMIPort",     // full sidl type of port
                     typeMap);         // properties for the port
   } catch ( ::gov::cca::CCAException ex )  {
     BOCCA_EXTEND_THROW_CXX(ex,
-       "edu.csdms.models.Child: Error calling registerUsesPort(\"SubaqueousErosion\", "
-       "\"edu.csdms.ports.IRFPort\", typeMap) ", -2);
+       "edu.csdms.models.Child: Error calling registerUsesPort(\"SubaqueousDelta\", "
+       "\"edu.csdms.ports.CMIPort\", typeMap) ", -2);
     throw;
   }
 
@@ -325,28 +310,14 @@ edu::csdms::models::Child_impl::boccaReleaseServices_impl (
 
   }
 
-  // Un-provide edu.csdms.ports.IRFPort port with port name WaterDischarge 
+  // Un-provide edu.csdms.ports.CMIPort port with port name SubaerialDelta 
   try{
-    services.removeProvidesPort("WaterDischarge");
+    services.removeProvidesPort("SubaerialDelta");
   } catch ( ::gov::cca::CCAException ex )  {
 
 #ifdef _BOCCA_STDERR
     std::cerr << "edu.csdms.models.Child: Error calling removeProvidesPort("
-              << "\"WaterDischarge\") at " 
-              << __FILE__ << ": " << __LINE__ -4 << ": " << ex.getNote() 
-              << std::endl;
-#endif // _BOCCA_STDERR
-
-  }
-
-  // Un-provide edu.csdms.ports.IRFPort port with port name SubaerialErosion 
-  try{
-    services.removeProvidesPort("SubaerialErosion");
-  } catch ( ::gov::cca::CCAException ex )  {
-
-#ifdef _BOCCA_STDERR
-    std::cerr << "edu.csdms.models.Child: Error calling removeProvidesPort("
-              << "\"SubaerialErosion\") at " 
+              << "\"SubaerialDelta\") at " 
               << __FILE__ << ": " << __LINE__ -4 << ": " << ex.getNote() 
               << std::endl;
 #endif // _BOCCA_STDERR
@@ -367,14 +338,14 @@ edu::csdms::models::Child_impl::boccaReleaseServices_impl (
 
   }
 
-  // Release edu.csdms.ports.IRFPort port with port name SubaqueousErosion 
+  // Release edu.csdms.ports.CMIPort port with port name SubaqueousDelta 
   try{
-    services.unregisterUsesPort("SubaqueousErosion");
+    services.unregisterUsesPort("SubaqueousDelta");
   } catch ( ::gov::cca::CCAException ex )  {
 
 #ifdef _BOCCA_STDERR
     std::cerr << "edu.csdms.models.Child: Error calling unregisterUsesPort("
-              << "\"SubaqueousErosion\") at " 
+              << "\"SubaqueousDelta\") at " 
               << __FILE__ << ":" << __LINE__ -4 << ": " << ex.getNote() 
               << std::endl;
 #endif // _BOCCA_STDERR
@@ -393,7 +364,7 @@ edu::csdms::models::Child_impl::boccaReleaseServices_impl (
 void
 edu::csdms::models::Child_impl::boccaForceUsePortInclude_impl (
   /* in */::gov::cca::ports::ParameterPortFactory& dummy0,
-  /* in */::edu::csdms::ports::IRFPort& dummy1,
+  /* in */::edu::csdms::ports::CMIPort& dummy1,
   /* in */::edu::csdms::openmi::ElementType dummy2,
   /* in */::edu::csdms::tools::TemplateFiles& dummy3,
   /* in */::edu::csdms::tools::IRFPortQueue& dummy4,
@@ -474,14 +445,20 @@ edu::csdms::models::Child_impl::setServices_impl (
   }
 
   ppf.initParameterData (this->userinput, "Configure");
-  ppf.setBatchTitle (this->userinput, "Child Parameters");
-
+  ppf.setBatchTitle (this->userinput, CMI_COMPONENT_NAME " Parameters");
+fprintf (stderr, "Child: Create dialog\n");
+fflush (stderr);
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
-
-    dialog.read ("Child.xml");
+fprintf (stderr, "Child: Read dialog\n");
+fflush (stderr);
+    dialog.read (CMI_COMPONENT_NAME ".xml");
+fprintf (stderr, "Child: Construct dialog\n");
+fflush (stderr);
     dialog.construct (ppf, this->userinput);
+fprintf (stderr, "Child: Done with dialog\n");
+fflush (stderr);
   }
 
   ppf.addParameterPort(this->userinput, services);
@@ -553,6 +530,15 @@ edu::csdms::models::Child_impl::go_impl ()
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.go)
   int bocca_status = 0;
 
+  this->is_driver = TRUE;
+
+  this->CMI_initialize (NULL);
+  this->CMI_run (-1);
+  this->CMI_finalize ();
+
+  return bocca_status;
+
+#if 0
   {
     ::sidl::array< ::std::string> properties =
       sidl::array< ::std::string>::create1d(2);
@@ -592,15 +578,728 @@ edu::csdms::models::Child_impl::go_impl ()
 
   PRINT (1, "Model is complete");
   return bocca_status;
+#endif
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.go)
+}
+
+/**
+ * Method:  CMI_initialize[]
+ */
+bool
+edu::csdms::models::Child_impl::CMI_initialize_impl (
+  /* in */const ::std::string& config_file ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_initialize)
+
+  if (this->status >= CMI_STATUS_INITIALIZING)
+    return TRUE;
+  else
+    this->status = CMI_STATUS_INITIALIZING;
+
+  ::std::cerr << CMI_COMPONENT_NAME ": Status is "
+              << this->CMI_get_status () << ::std::endl;
+
+  fprintf (stderr, "%s: Create PortQueue.\n", CMI_COMPONENT_NAME);
+  { // Create port queue.
+    ::edu::csdms::ports::CMIPort port =
+      ::babel_cast<edu::csdms::ports::CMIPort>(*this);
+
+    this->ports = ::edu::csdms::tools::IRFPortQueue::_create ();
+
+    this->ports.initialize_cmi (this->d_services, port);
+
+    this->ports.add_ports (CMI_PORT_NAMES);
+
+    this->ports.connect_cmi_ports ();
+  }
+  
+  fprintf (stderr, "%s: Read config dialog.\n", CMI_COMPONENT_NAME);
+  { // Read parameters from the config dialog.
+    ::edu::csdms::tools::TemplateFiles tmpls;
+    const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
+    const char *dest_files = CMI_TEMPLATE_DEST_FILES;
+    string val;
+
+    tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
+    tmpls.add_files (CMI_TEMPLATE_SOURCE_FILES, CMI_TEMPLATE_DEST_FILES);
+    tmpls.substitute (this->userinput, "/"CMI_COMPONENT_NAME"/Input/Var/",
+        ".");
+
+    val = this->userinput.getString (
+        "/"CMI_COMPONENT_NAME"/Input/Var/SimulationName",
+        CMI_COMPONENT_NAME);
+    this->userinput.putString (
+        "/"CMI_COMPONENT_NAME"/SimulationName",
+        val);
+  }
+
+  fprintf (stderr, "%s: Call BMI initialize.\n", CMI_COMPONENT_NAME);
+  /* The contents of this file will be something like,
+   * Child Child.in
+   * */
+  this->state.initialize ("Child_command_line.txt");
+
+  fprintf (stderr, "%s: Create PrintQueue.\n", CMI_COMPONENT_NAME);
+  { // Set up the print queue.
+    ::edu::csdms::ports::CMIPort port =
+      ::babel_cast<edu::csdms::ports::CMIPort>(*this);
+    this->print_q = ::edu::csdms::tools::PrintQueue::_create ();
+
+    this->print_q.initialize_cmi (this->userinput, "/"CMI_COMPONENT_NAME,
+        port);
+    this->print_q.add_files_from_list (CMI_OUTPUT_FILE_NS);
+  }
+
+#if CMI_TURN_OFF_PORTS
+  fprintf (stderr, "%s: Forgetting ports for now.\n", CMI_COMPONENT_NAME);
+#else
+  fprintf (stderr, "%s: Initialize ports.\n", CMI_COMPONENT_NAME);
+  this->ports.initialize_ports (0);
+#endif
+#if CMI_TURN_OFF_MAPPING
+  fprintf (stderr, "%s: Mapping is turned off.\n", CMI_COMPONENT_NAME);
+#else
+  fprintf (stderr, "%s: Initialize mappers.\n", CMI_COMPONENT_NAME);
+  this->ports.add_mappers (CMI_MAPPERS);
+
+  fprintf (stderr, "%s: Map initial values.\n", CMI_COMPONENT_NAME);
+  this->ports.run_mappers ();
+#endif
+
+  this->status = CMI_STATUS_INITIALIZED;
+
+  ::std::cerr << CMI_COMPONENT_NAME ": Status is "
+              << this->CMI_get_status () << ::std::endl;
+
+  return TRUE;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_initialize)
+}
+
+/**
+ * Method:  CMI_run_for[]
+ */
+bool
+edu::csdms::models::Child_impl::CMI_run_for_impl (
+  /* in */double time_interval,
+  /* in */const ::std::string& time_units,
+  /* in */const ::std::string& stop_rule,
+  /* in array<double> */::sidl::array<double>& stop_vars ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_run_for)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_run_for} (CMI_run_for method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_run_for)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_run_for");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_run_for)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_run_for)
+}
+
+/**
+ * Method:  CMI_run[]
+ */
+bool
+edu::csdms::models::Child_impl::CMI_run_impl (
+  /* in */double time_interval ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_run)
+  ::std::cerr << CMI_COMPONENT_NAME ": Status is "
+              << this->CMI_get_status () << ::std::endl;
+
+  if (this->status == CMI_STATUS_UPDATING)
+    return TRUE;
+  else
+    this->status = CMI_STATUS_UPDATING;
+
+  fprintf (stderr, "%s: Updating until %f.\n", CMI_COMPONENT_NAME, time_interval);
+  {
+    double print_time = this->print_q.next_print_time ();
+    fprintf (stderr, "%s: Next print time is %f.\n", CMI_COMPONENT_NAME, print_time);
+    while (print_time>0 && print_time<time_interval)
+    {
+      this->status = CMI_STATUS_UPDATED;
+      fprintf (stderr, "%s: Running until print time %f.\n", CMI_COMPONENT_NAME, print_time);
+      this->CMI_run (print_time);
+      this->print_q.print_all (print_time);
+      print_time = this->print_q.next_print_time ();
+      fprintf (stderr, "%s: Print time is now %f.\n", CMI_COMPONENT_NAME, print_time);
+    }
+  }
+/* 
+  if (time_interval > this->state.get_end_time ())
+    time_interval = this->state.get_end_time ();
+*/
+  
+  fprintf (stderr, "%s: Updating (0) ports until %f.\n", CMI_COMPONENT_NAME, time_interval);
+  { // Run model until the stop time
+    double now = this->state.get_current_time ();
+    double port_queue_dt = CMI_PORT_QUEUE_DT;
+    double t = now + port_queue_dt;
+    for (; t<time_interval; t+=port_queue_dt)
+    {
+      //this->print_q.print_all (now);
+
+#if CMI_TURN_OFF_PORTS
+      fprintf (stderr, "%s: Forgetting ports for now.\n", CMI_COMPONENT_NAME);
+#else
+      fprintf (stderr, "%s: Updating (1) ports until %f.\n", CMI_COMPONENT_NAME, now);
+      fflush (stderr);
+      this->ports.run_ports (now);
+#endif
+
+#if CMI_TURN_OFF_MAPPING
+      fprintf (stderr, "%s: Not mapping values (0).\n", CMI_COMPONENT_NAME);
+#else
+      fprintf (stderr, "%s: Map values.\n", CMI_COMPONENT_NAME);
+      fflush (stderr);
+
+      this->ports.run_mappers ();
+#endif
+
+      fprintf (stderr, "%s: Updating myself until %f.\n", CMI_COMPONENT_NAME, t);
+      fflush (stderr);
+      this->state.update_until (t);
+      now = this->state.get_current_time ();
+    }
+
+    if (t>time_interval)
+    { // The last partial time step (if necessary).
+      //this->print_q.print_all (time_interval);
+#if CMI_TURN_OFF_PORTS
+      fprintf (stderr, "%s: Forgetting ports for now.\n", CMI_COMPONENT_NAME);
+#else
+      fprintf (stderr, "%s: Updating (2) ports until %f.\n", CMI_COMPONENT_NAME, now);
+      fflush (stderr);
+      this->ports.run_ports (now);
+#endif
+
+#if CMI_TURN_OFF_MAPPING
+      fprintf (stderr, "%s: Not mapping values (1).\n", CMI_COMPONENT_NAME);
+#else
+      fprintf (stderr, "%s: Map values.\n", CMI_COMPONENT_NAME);
+      fflush (stderr);
+      this->ports.run_mappers ();
+#endif
+
+      fprintf (stderr, "%s: Updating myself until %f.\n", CMI_COMPONENT_NAME, time_interval);
+      fflush (stderr);
+      // NOTE: Child.run may accept a dt not a time. 
+      this->state.update_until (time_interval);
+    }
+  }
+
+  // NOTE: We may need to mask nodes below sea level.
+  // this->state.MaskNodesBelowElevation (0);
+
+  this->status = CMI_STATUS_UPDATED;
+  ::std::cerr << CMI_COMPONENT_NAME ": Status is "
+              << this->CMI_get_status () << ::std::endl;
+
+  return TRUE;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_run)
+}
+
+/**
+ * Method:  CMI_finalize[]
+ */
+bool
+edu::csdms::models::Child_impl::CMI_finalize_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_finalize)
+  this->status = CMI_STATUS_FINALIZING;
+
+  this->state.finalize ();
+
+  this->is_driver = FALSE;
+  //this->state = NULL;
+
+  this->print_q.close ();
+  this->ports.finalize_ports ();
+  this->ports.disconnect_ports ();
+
+  this->status = CMI_STATUS_FINALIZED;
+
+  return TRUE;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_finalize)
+}
+
+/**
+ * Method:  CMI_run_model[]
+ */
+bool
+edu::csdms::models::Child_impl::CMI_run_model_impl (
+  /* in */const ::std::string& config_file,
+  /* in */const ::std::string& stop_rule,
+  /* in */double stop_var ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_run_model)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_run_model} (CMI_run_model method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_run_model)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_run_model");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_run_model)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_run_model)
+}
+
+/**
+ * Method:  CMI_get_values[]
+ */
+::sidl::basearray
+edu::csdms::models::Child_impl::CMI_get_values_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_values)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_values} (CMI_get_values method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_values)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_values");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_values)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_values)
+}
+
+/**
+ * Method:  CMI_set_values[]
+ */
+void
+edu::csdms::models::Child_impl::CMI_set_values_impl (
+  /* in */const ::std::string& long_var_name,
+  /* in array<> */::sidl::basearray& in_values ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_set_values)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_set_values} (CMI_set_values method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_set_values)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_set_values");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_set_values)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_set_values)
+}
+
+/**
+ * Method:  CMI_get_status[]
+ */
+::std::string
+edu::csdms::models::Child_impl::CMI_get_status_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_status)
+  switch (this->status) {
+    case CMI_STATUS_CREATED:
+      return ::std::string ("Created");
+    case CMI_STATUS_INITIALIZING:
+      return ::std::string ("Initializing");
+    case CMI_STATUS_INITIALIZED:
+      return ::std::string ("Initialized");
+    case CMI_STATUS_UPDATING:
+      return ::std::string ("Updating");
+    case CMI_STATUS_UPDATED:
+      return ::std::string ("Updated");
+    case CMI_STATUS_FINALIZING:
+      return ::std::string ("Finalizing");
+    case CMI_STATUS_FINALIZED:
+      return ::std::string ("Finalized");
+    default:
+      return ::std::string ("Unknown");
+  }
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_status)
+}
+
+/**
+ * Method:  CMI_get_component_name[]
+ */
+::std::string
+edu::csdms::models::Child_impl::CMI_get_component_name_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_component_name)
+  return std::string (CMI_COMPONENT_NAME);
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_component_name)
+}
+
+/**
+ * Method:  CMI_get_input_item_list[]
+ */
+::sidl::array< ::std::string>
+edu::csdms::models::Child_impl::CMI_get_input_item_list_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_input_item_list)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_input_item_list} (CMI_get_input_item_list method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_input_item_list)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_input_item_list");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_input_item_list)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_input_item_list)
+}
+
+/**
+ * Method:  CMI_get_output_item_list[]
+ */
+::sidl::array< ::std::string>
+edu::csdms::models::Child_impl::CMI_get_output_item_list_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_output_item_list)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_output_item_list} (CMI_get_output_item_list method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_output_item_list)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_output_item_list");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_output_item_list)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_output_item_list)
+}
+
+/**
+ * Method:  CMI_get_required_ports[]
+ */
+void
+edu::csdms::models::Child_impl::CMI_get_required_ports_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_required_ports)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_required_ports} (CMI_get_required_ports method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_required_ports)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_required_ports");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_required_ports)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_required_ports)
+}
+
+/**
+ * Method:  CMI_release_required_ports[]
+ */
+void
+edu::csdms::models::Child_impl::CMI_release_required_ports_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_release_required_ports)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_release_required_ports} (CMI_release_required_ports method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_release_required_ports)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_release_required_ports");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_release_required_ports)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_release_required_ports)
+}
+
+/**
+ * Method:  CMI_get_values_at_indices[]
+ */
+::sidl::basearray
+edu::csdms::models::Child_impl::CMI_get_values_at_indices_impl (
+  /* in */const ::std::string& long_var_name,
+  /* in array<int> */::sidl::array<int32_t>& indices ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_values_at_indices)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_values_at_indices} (CMI_get_values_at_indices method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_values_at_indices)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_values_at_indices");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_values_at_indices)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_values_at_indices)
+}
+
+/**
+ * Method:  CMI_set_values_at_indices[]
+ */
+void
+edu::csdms::models::Child_impl::CMI_set_values_at_indices_impl (
+  /* in */const ::std::string& long_var_name,
+  /* in array<int> */::sidl::array<int32_t>& indices,
+  /* in array<> */::sidl::basearray& in_values ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_set_values_at_indices)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_set_values_at_indices} (CMI_set_values_at_indices method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_set_values_at_indices)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_set_values_at_indices");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_set_values_at_indices)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_set_values_at_indices)
+}
+
+/**
+ * Method:  CMI_print_traceback[]
+ */
+void
+edu::csdms::models::Child_impl::CMI_print_traceback_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_print_traceback)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_print_traceback} (CMI_print_traceback method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_print_traceback)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_print_traceback");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_print_traceback)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_print_traceback)
+}
+
+/**
+ * Method:  CMI_get_grid_spacing[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::CMI_get_grid_spacing_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_grid_spacing)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_grid_spacing} (CMI_get_grid_spacing method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_grid_spacing)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_grid_spacing");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_grid_spacing)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_spacing)
+}
+
+/**
+ * Method:  CMI_get_grid_lower_left[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::CMI_get_grid_lower_left_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_grid_lower_left)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_grid_lower_left} (CMI_get_grid_lower_left method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_grid_lower_left)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_grid_lower_left");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_grid_lower_left)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_lower_left)
+}
+
+/**
+ * Method:  CMI_get_grid_shape[]
+ */
+::sidl::array<int32_t>
+edu::csdms::models::Child_impl::CMI_get_grid_shape_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_grid_shape)
+  // Insert-Code-Here {edu.csdms.models.Child.CMI_get_grid_shape} (CMI_get_grid_shape method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.CMI_get_grid_shape)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "CMI_get_grid_shape");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_grid_shape)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_shape)
+}
+
+/**
+ * Method:  CMI_get_grid_x[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::CMI_get_grid_x_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_grid_x)
+  sidl::array<double> vals;
+  int len;
+  double * x = this->state.get_grid_x (long_var_name, len);
+  int * lower = new int[1];
+  int * upper = new int[1];
+  int * stride = new int[1];
+  
+  lower[0] = 0;
+  upper[0] = len-1;
+  stride[0] = 1;
+  
+  vals.borrow (x, 1, lower, upper, stride);
+
+  delete [] stride;
+  delete [] upper;
+  delete [] lower;
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_x)
+}
+
+/**
+ * Method:  CMI_get_grid_y[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::CMI_get_grid_y_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_grid_y)
+  sidl::array<double> vals;
+  int len;
+  double * y = this->state.get_grid_y (long_var_name, len);
+  int * lower = new int[1];
+  int * upper = new int[1];
+  int * stride = new int[1];
+  
+  lower[0] = 0;
+  upper[0] = len-1;
+  stride[0] = 1;
+  
+  vals.borrow (y, 1, lower, upper, stride);
+
+  delete [] stride;
+  delete [] upper;
+  delete [] lower;
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_y)
+}
+
+/**
+ * Method:  CMI_get_grid_z[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::CMI_get_grid_z_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_grid_z)
+  sidl::array<double> vals;
+  int len;
+  double * z = this->state.get_grid_z (long_var_name, len);
+  int * lower = new int[1];
+  int * upper = new int[1];
+  int * stride = new int[1];
+  
+  lower[0] = 0;
+  upper[0] = len-1;
+  stride[0] = 1;
+  
+  vals.borrow (z, 1, lower, upper, stride);
+
+  delete [] stride;
+  delete [] upper;
+  delete [] lower;
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_z)
+}
+
+/**
+ * Method:  get_grid_connectivity[]
+ */
+::sidl::array<int32_t>
+edu::csdms::models::Child_impl::get_grid_connectivity_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_connectivity)
+  sidl::array<int> vals;
+  int len;
+  int * connectivity = this->state.get_grid_connectivity (long_var_name,
+                                                          len);
+  int * lower = new int[1];
+  int * upper = new int[1];
+  int * stride = new int[1];
+  
+  lower[0] = 0;
+  upper[0] = len-1;
+  stride[0] = 1;
+  
+  vals.borrow (connectivity, 1, lower, upper, stride);
+
+  delete [] stride;
+  delete [] upper;
+  delete [] lower;
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_connectivity)
+}
+
+/**
+ * Method:  get_grid_offset[]
+ */
+::sidl::array<int32_t>
+edu::csdms::models::Child_impl::get_grid_offset_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_offset)
+  sidl::array<int> vals;
+  int len;
+  int * offset = this->state.get_grid_offset (long_var_name, len);
+  int * lower = new int[0];
+  int * upper = new int[len-1];
+  int * stride = new int[1];
+
+  lower[0] = 0;
+  upper[0] = len-1;
+  stride[0] = 1;
+  
+  vals.borrow (offset, 1, lower, upper, stride);
+
+  delete [] stride;
+  delete [] upper;
+  delete [] lower;
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_offset)
 }
 
 /**
  * Method:  initialize[]
  */
-void
+bool
 edu::csdms::models::Child_impl::initialize_impl (
-  /* in array<string> */::sidl::array< ::std::string>& properties ) 
+  /* in */const ::std::string& config_file ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.initialize)
   {
@@ -614,7 +1313,7 @@ edu::csdms::models::Child_impl::initialize_impl (
     if (this->is_initialized)
     {
       PRINT (0, "Child is already initialized\n");
-      return;
+      return TRUE;
     }
 
     { /* Read Ports Configure tab */
@@ -701,7 +1400,7 @@ edu::csdms::models::Child_impl::initialize_impl (
     }
 
     PRINT (2, "Initialize model uses ports");
-    this->irf_ports.initialize_ports (properties);
+    this->irf_ports.initialize_ports (NULL);
 
     if (this->subaqueous_erosion_port_is_on)
     { /*   Create the WaterDischarge mapper */
@@ -719,104 +1418,32 @@ edu::csdms::models::Child_impl::initialize_impl (
     }
   }
 
-  return;
+  return TRUE;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.initialize)
 }
 
 /**
- * Method:  run[]
+ * Method:  run_for[]
  */
-void
-edu::csdms::models::Child_impl::run_impl (
-  /* in */double time ) 
+bool
+edu::csdms::models::Child_impl::run_for_impl (
+  /* in */double time_interval,
+  /* in */const ::std::string& time_units,
+  /* in */const ::std::string& stop_rule,
+  /* in array<double> */::sidl::array<double>& stop_vars ) 
 {
-  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.run)
-  {
-    if (this->is_initialized)
-    {
-      double current = this->state.GetCurrentTime ();
-      //double horizon = current + this->state.GetRemainingRunTime ();
-      const double horizon = 1e6;
-      double print_time = this->print_queue.next_print_time ();
-
-      fprintf (stderr, "CHILD: current time is %f\n", current);
-      fprintf (stderr, "CHILD: time is %f\n", time);
-
-      while (print_time<time)
-      {
-        this->run_impl (print_time);
-        print_time = this->print_queue.next_print_time ();
-      }
-
-      fprintf (stderr, "CHILD: current time is %f\n", current);
-      fprintf (stderr, "CHILD: time is %f\n", time);
-
-      current = this->state.GetCurrentTime ();
-
-      if (time>horizon)
-      {
-        PRINT (1, "Requested time is greater than horizon.");
-      } 
-      else if (time>current)
-      { 
-        double t;
-        const double dt = 1.;
-        const double stop_time = time;
-
-        fprintf (stderr, "DEBUG: run from %f to %f\n", current, time);
-        fflush (stderr);
-
-        while (current<stop_time)
-        {
-          t = current + dt;
-          if (t>stop_time)
-            t = stop_time;
-
-          fprintf (stderr, "CHILD: Run ports\n");
-          fprintf (stderr, "CHILD: current time is %f\n", current);
-          fprintf (stderr, "CHILD: time is %f\n", t);
-          fflush (stderr);
-
-          this->irf_ports.run_ports (current);
-
-          if (this->subaqueous_erosion_port_is_on)
-          { /*   Run and map SubaqueousErosion values */
-            //this->irf_ports.map_value ("SubaqueousErosion", "elevation",
-            //                           "SeaFloorElevation");
-            //this->irf_ports.map_value ("SubaqueousErosion", "erosion",
-            //                           "SeaFloorElevation");
-
-            this->irf_ports.map_value ("SubaqueousErosion", "erosion",
-                                       "SeaFloorErosion");
-          }
-
-          fprintf (stderr, "CHILD: Time before run is %f\n", this->state.GetCurrentTime ());
-          fflush (stderr);
-
-          // Mask out nodes below sea level
-          this->state.MaskNodesBelowElevation (0);
-          //this->state.Run (time-current);
-          this->state.Run (dt);
-          fprintf (stderr, "CHILD: Time after run is %f\n", this->state.GetCurrentTime ());
-          fflush (stderr);
-
-          PRINT (2, "Print everything in the queue");
-          this->print_queue.print_all (t);
-
-          current = this->state.GetCurrentTime ();
-        }
-      }
-      else
-      {
-        fprintf (stderr, "DEBUG: time < current (%f<%f\n", time, current);
-        fflush (stderr);
-      }
-    }
-  }
-
-  PRINT (2, "End of this run step");
-  return;
-  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.run)
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.run_for)
+  // Insert-Code-Here {edu.csdms.models.Child.run_for} (run_for method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.run_for)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "run_for");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.run_for)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.run_for)
 }
 
 /**
@@ -848,6 +1475,264 @@ edu::csdms::models::Child_impl::finalize_impl ()
   }
   return;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.finalize)
+}
+
+/**
+ * Method:  run_model[]
+ */
+bool
+edu::csdms::models::Child_impl::run_model_impl (
+  /* in */const ::std::string& config_file,
+  /* in */const ::std::string& stop_rule,
+  /* in */double stop_var ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.run_model)
+  // Insert-Code-Here {edu.csdms.models.Child.run_model} (run_model method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.run_model)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "run_model");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.run_model)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.run_model)
+}
+
+/**
+ * Method:  get_values[]
+ */
+::sidl::basearray
+edu::csdms::models::Child_impl::get_values_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_values)
+  // Insert-Code-Here {edu.csdms.models.Child.get_values} (get_values method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_values)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_values");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_values)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_values)
+}
+
+/**
+ * Method:  set_values[]
+ */
+void
+edu::csdms::models::Child_impl::set_values_impl (
+  /* in */const ::std::string& long_var_name,
+  /* in array<> */::sidl::basearray& in_values ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.set_values)
+  // Insert-Code-Here {edu.csdms.models.Child.set_values} (set_values method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.set_values)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "set_values");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.set_values)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.set_values)
+}
+
+/**
+ * Method:  get_status[]
+ */
+::std::string
+edu::csdms::models::Child_impl::get_status_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_status)
+  // Insert-Code-Here {edu.csdms.models.Child.get_status} (get_status method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_status)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_status");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_status)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_status)
+}
+
+/**
+ * Method:  get_component_name[]
+ */
+::std::string
+edu::csdms::models::Child_impl::get_component_name_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_component_name)
+  // Insert-Code-Here {edu.csdms.models.Child.get_component_name} (get_component_name method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_component_name)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_component_name");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_component_name)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_component_name)
+}
+
+/**
+ * Method:  get_input_item_list[]
+ */
+::sidl::array< ::std::string>
+edu::csdms::models::Child_impl::get_input_item_list_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_input_item_list)
+  // Insert-Code-Here {edu.csdms.models.Child.get_input_item_list} (get_input_item_list method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_input_item_list)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_input_item_list");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_input_item_list)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_input_item_list)
+}
+
+/**
+ * Method:  get_output_item_list[]
+ */
+::sidl::array< ::std::string>
+edu::csdms::models::Child_impl::get_output_item_list_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_output_item_list)
+  // Insert-Code-Here {edu.csdms.models.Child.get_output_item_list} (get_output_item_list method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_output_item_list)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_output_item_list");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_output_item_list)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_output_item_list)
+}
+
+/**
+ * Method:  get_required_ports[]
+ */
+void
+edu::csdms::models::Child_impl::get_required_ports_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_required_ports)
+  // Insert-Code-Here {edu.csdms.models.Child.get_required_ports} (get_required_ports method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_required_ports)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_required_ports");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_required_ports)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_required_ports)
+}
+
+/**
+ * Method:  release_required_ports[]
+ */
+void
+edu::csdms::models::Child_impl::release_required_ports_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.release_required_ports)
+  // Insert-Code-Here {edu.csdms.models.Child.release_required_ports} (release_required_ports method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.release_required_ports)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "release_required_ports");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.release_required_ports)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.release_required_ports)
+}
+
+/**
+ * Method:  get_values_at_indices[]
+ */
+::sidl::basearray
+edu::csdms::models::Child_impl::get_values_at_indices_impl (
+  /* in */const ::std::string& long_var_name,
+  /* in array<int> */::sidl::array<int32_t>& indices ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_values_at_indices)
+  // Insert-Code-Here {edu.csdms.models.Child.get_values_at_indices} (get_values_at_indices method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_values_at_indices)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_values_at_indices");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_values_at_indices)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_values_at_indices)
+}
+
+/**
+ * Method:  set_values_at_indices[]
+ */
+void
+edu::csdms::models::Child_impl::set_values_at_indices_impl (
+  /* in */const ::std::string& long_var_name,
+  /* in array<int> */::sidl::array<int32_t>& indices,
+  /* in array<> */::sidl::basearray& in_values ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.set_values_at_indices)
+  // Insert-Code-Here {edu.csdms.models.Child.set_values_at_indices} (set_values_at_indices method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.set_values_at_indices)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "set_values_at_indices");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.set_values_at_indices)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.set_values_at_indices)
+}
+
+/**
+ * Method:  print_traceback[]
+ */
+void
+edu::csdms::models::Child_impl::print_traceback_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.print_traceback)
+  // Insert-Code-Here {edu.csdms.models.Child.print_traceback} (print_traceback method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.print_traceback)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "print_traceback");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.print_traceback)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.print_traceback)
 }
 
 /**
@@ -1084,6 +1969,122 @@ edu::csdms::models::Child_impl::get_time_span_impl ()
 }
 
 /**
+ * Method:  get_value_set[]
+ */
+::edu::csdms::openmi::IValueSet
+edu::csdms::models::Child_impl::get_value_set_impl (
+  /* in */const ::std::string& val_string ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_value_set)
+  ::edu::csdms::openmi::ScalarSet scalarSet =
+    ::edu::csdms::openmi::ScalarSet::_create();
+  
+  std::cout << "val_string = " + val_string << std::endl;
+
+  {
+    int len = 0;
+    //double * data = this->state.get_double (val_string, len);
+    double * data;
+    //sidl::array<double> vals = sidl::array<double>::create1d (len);
+    sidl::array<double> vals;
+    int * lower = new int[1];
+    int * upper = new int[1];
+    int * stride = new int[1];
+
+    fprintf (stderr, "%s: Call BMI_Get_double.\n", CMI_COMPONENT_NAME);
+    data = this->state.get_double (val_string, len);
+
+    fprintf (stderr, "%s: n_vals=%d.\n", CMI_COMPONENT_NAME, len);
+    fprintf (stderr, "%s: vals[0]=%f.\n", CMI_COMPONENT_NAME, data[0]);
+    fprintf (stderr, "%s: vals[1]=%f.\n", CMI_COMPONENT_NAME, data[0]);
+    fprintf (stderr, "%s: vals[2]=%f.\n", CMI_COMPONENT_NAME, data[0]);
+    fprintf (stderr, "%s: vals[len-1]=%f.\n", CMI_COMPONENT_NAME, data[len-1]);
+
+    lower[0] = 0;
+    upper[0] = len-1;
+    stride[0] = 1;
+  
+    vals.borrow (data, 1, lower, upper, stride);
+
+    delete [] stride;
+    delete [] upper;
+    delete [] lower;
+
+    scalarSet.init (vals);
+  }
+
+  return (::edu::csdms::openmi::IValueSet) scalarSet;
+#if 0
+  /* New child interface (triangles) */
+  if (val_string.compare (0,4,"Cell")==0)
+  { /* If using triangles */
+    const int n_elements = this->state.GetTriangleCount ();
+    std::vector<double> vec = state.GetValueSet (
+                                val_string.substr (4,val_string.length ()));
+    sidl::array<double> vals = sidl::array<double>::create1d(3*n_elements);
+    std::vector<long> vertices = this->state.GetTriangleVertexIDs ();
+
+    fprintf (stderr, "CHILD: n_elements is %d\n", n_elements);
+    // For each element
+    for (int i=0; i<n_elements; i++)
+    {
+      // For each vertex
+      for (int j=2; j>=0; j--)
+      {
+        int id = vertices[3*i+j];
+        vals.set (3*i+j, vec[id]);
+      }
+    }
+    scalarSet.init(vals);
+  }
+  else
+  { /* If using points */
+    const int len = this->state.GetNodeCount ();
+    std::vector<double> vec = state.GetValueSet (val_string);
+    sidl::array<double> vals = sidl::array<double>::create1d(len);
+
+    fprintf (stderr, "CHILD: len is %d\n", len);
+    fprintf (stderr, "CHILD: vec.size is %d\n", vec.size ());
+    assert (len==vec.size ());
+/*
+    if (val_string.compare (0,4,"erosion")==0)
+    {
+      for (int i=0; i<len; i++)
+        if (i%5==0)
+          vals.set (i, -1.);
+        else
+          vals.set (i, 0.);
+    }
+    else
+*/
+    {
+      double max = -1e32;
+      double min = 1e32;
+      for (int i=0; i<len; i++)
+      {
+//        if (!state.IsInteriorNode (i))
+//          vec[i] = 0.;
+        //vec[i] /= 10.;
+        vals.set (i, vec[i]);
+
+        if (vec[i]>max)
+          max = vec[i];
+        if (vec[i]<min)
+          min = vec[i];
+      }
+      fprintf (stderr, "CHILD: max is %f\n", max);
+      fprintf (stderr, "CHILD: min is %f\n", min);
+    }
+
+    scalarSet.init(vals);
+  }
+  return (::edu::csdms::openmi::IValueSet) scalarSet;
+#endif
+
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_value_set)
+}
+
+/**
  * Method:  get_element_set[]
  */
 ::edu::csdms::openmi::IElementSet
@@ -1094,7 +2095,7 @@ edu::csdms::models::Child_impl::get_element_set_impl (
   ::edu::csdms::openmi::ElementSet elementSet =
     ::edu::csdms::openmi::ElementSet::_create ();
 
-  elementSet.setID ("Child");
+  elementSet.setID (CMI_COMPONENT_NAME);
   
   //::edu::csdms::openmi::XYPolygon
   //elementSet.setElementType ((::edu::csdms::openmi::ElementType)4L);
@@ -1102,10 +2103,78 @@ edu::csdms::models::Child_impl::get_element_set_impl (
   elementSet.setElementType ((::edu::csdms::openmi::ElementType)1L);
   //elementSet.setSpatialReference();
 
+  std::cout << CMI_COMPONENT_NAME << ": " << val_string << std::endl;
 
-  fprintf (stderr, "Child: get elements\n");
+  fprintf (stderr, "%s: Get elements.\n", CMI_COMPONENT_NAME);
   fflush (stderr);
 
+  {
+    int x_len, y_len, z_len;
+    int connectivity_len, offset_len;
+    double * x;
+    double * y;
+    double * z;
+    int * connectivity;
+    int * offsets;
+
+    fprintf (stderr, "%s: Get grid x, y, z.\n", CMI_COMPONENT_NAME);
+    // x, y, and z coordinate of each point.
+    x = this->state.get_grid_x (val_string, x_len);
+    y = this->state.get_grid_y (val_string, y_len);
+    z = this->state.get_grid_z (val_string, z_len);
+
+    fprintf (stderr, "%s: x_len is %d.\n", CMI_COMPONENT_NAME, x_len);
+    fprintf (stderr, "%s: y_len is %d.\n", CMI_COMPONENT_NAME, y_len);
+    fprintf (stderr, "%s: z_len is %d.\n", CMI_COMPONENT_NAME, z_len);
+
+    fprintf (stderr, "%s: Get grid connectivity.\n", CMI_COMPONENT_NAME);
+    // Connect points in an element to their x, y, and z position.
+    connectivity = this->state.get_grid_connectivity (val_string, connectivity_len);
+    fprintf (stderr, "%s: connectivity_len is %d.\n", CMI_COMPONENT_NAME, connectivity_len);
+
+    fprintf (stderr, "%s: Get grid offsets.\n", CMI_COMPONENT_NAME);
+    // Index offset into connectivity array for each element.
+    offsets = this->state.get_grid_offset (val_string, offset_len);
+    fprintf (stderr, "%s: offset_len is %d.\n", CMI_COMPONENT_NAME, offset_len);
+
+    fprintf (stderr, "%s: Create element set.\n", CMI_COMPONENT_NAME);
+    // Loop over elements
+    for (int i=0, j_0=0; i<offset_len; i++)
+    {
+      ::edu::csdms::openmi::Element element =
+        ::edu::csdms::openmi::Element::_create ();
+      const int j_1 = offsets[i];
+
+      // Loop over vertices of the element
+      for (int j=j_0; j<j_1; j++)
+      {
+        const int id = connectivity[j];
+        ::edu::csdms::openmi::Vertex vertex =
+          ::edu::csdms::openmi::Vertex::_create ();
+
+        vertex.setX (x[id]);
+        vertex.setY (y[id]);
+        vertex.setZ (z[id]);
+
+        element.addVertex (vertex);
+      }
+
+      elementSet.addElement (element);
+
+      j_0 = j_1;
+    }
+
+    fprintf (stderr, "%s: Clean up.\n", CMI_COMPONENT_NAME);
+    delete [] offsets;
+    delete [] connectivity;
+    delete [] z;
+    delete [] y;
+    delete [] x;
+  }
+
+  fprintf (stderr, "%s: Return IElementSet.\n", CMI_COMPONENT_NAME);
+  return (::edu::csdms::openmi::IElementSet) elementSet;
+#if 0
   { /* New Child interface (triangles) */
     const int n_vertices = 3;
     const int coord_stride = 3;
@@ -1193,88 +2262,8 @@ edu::csdms::models::Child_impl::get_element_set_impl (
   }
 
   return (::edu::csdms::openmi::IElementSet) elementSet;
+#endif
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_element_set)
-}
-
-/**
- * Method:  get_value_set[]
- */
-::edu::csdms::openmi::IValueSet
-edu::csdms::models::Child_impl::get_value_set_impl (
-  /* in */const ::std::string& val_string ) 
-{
-  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_value_set)
-  ::edu::csdms::openmi::ScalarSet scalarSet =
-    ::edu::csdms::openmi::ScalarSet::_create();
-  
-  std::cout << "val_string = " + val_string << std::endl;
-
-  /* New child interface (triangles) */
-  if (val_string.compare (0,4,"Cell")==0)
-  { /* If using triangles */
-    const int n_elements = this->state.GetTriangleCount ();
-    std::vector<double> vec = state.GetValueSet (
-                                val_string.substr (4,val_string.length ()));
-    sidl::array<double> vals = sidl::array<double>::create1d(3*n_elements);
-    std::vector<long> vertices = this->state.GetTriangleVertexIDs ();
-
-    fprintf (stderr, "CHILD: n_elements is %d\n", n_elements);
-    // For each element
-    for (int i=0; i<n_elements; i++)
-    {
-      // For each vertex
-      for (int j=2; j>=0; j--)
-      {
-        int id = vertices[3*i+j];
-        vals.set (3*i+j, vec[id]);
-      }
-    }
-    scalarSet.init(vals);
-  }
-  else
-  { /* If using points */
-    const int len = this->state.GetNodeCount ();
-    std::vector<double> vec = state.GetValueSet (val_string);
-    sidl::array<double> vals = sidl::array<double>::create1d(len);
-
-    fprintf (stderr, "CHILD: len is %d\n", len);
-    fprintf (stderr, "CHILD: vec.size is %d\n", vec.size ());
-    assert (len==vec.size ());
-/*
-    if (val_string.compare (0,4,"erosion")==0)
-    {
-      for (int i=0; i<len; i++)
-        if (i%5==0)
-          vals.set (i, -1.);
-        else
-          vals.set (i, 0.);
-    }
-    else
-*/
-    {
-      double max = -1e32;
-      double min = 1e32;
-      for (int i=0; i<len; i++)
-      {
-//        if (!state.IsInteriorNode (i))
-//          vec[i] = 0.;
-        //vec[i] /= 10.;
-        vals.set (i, vec[i]);
-
-        if (vec[i]>max)
-          max = vec[i];
-        if (vec[i]<min)
-          min = vec[i];
-      }
-      fprintf (stderr, "CHILD: max is %f\n", max);
-      fprintf (stderr, "CHILD: min is %f\n", min);
-    }
-
-    scalarSet.init(vals);
-  }
-
-  return (::edu::csdms::openmi::IValueSet) scalarSet;
-  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_value_set)
 }
 
 /**
@@ -1288,6 +2277,27 @@ edu::csdms::models::Child_impl::get_value_set_data_impl (
   sidl::array<double> vals;
   
   std::cout << "val_string = " + val_string << std::endl;
+
+  {
+    int len;
+    double * data = this->state.get_double (val_string, len);
+    int * lower = new int[1];
+    int * upper = new int[1];
+    int * stride = new int[1];
+
+    lower[0] = 0;
+    upper[0] = len-1;
+    stride[0] = 1;
+  
+    vals.borrow (data, 1, lower, upper, stride);
+
+    delete [] stride;
+    delete [] upper;
+    delete [] lower;
+  }
+
+  return vals;
+#if 0
    /* New child interface (triangles) */
 
   if (val_string.compare (0,4,"Cell")==0)
@@ -1350,6 +2360,7 @@ edu::csdms::models::Child_impl::get_value_set_data_impl (
   }
 
   return vals;
+#endif
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_value_set_data)
 }
 
@@ -1362,40 +2373,39 @@ edu::csdms::models::Child_impl::set_value_set_impl (
   /* in */::edu::csdms::openmi::IValueSet& values ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.set_value_set)
-  {
-    const int len = values.getCount ();
-    std::vector<double> val (len);
-    ::edu::csdms::openmi::IScalarSet scalars =
-      ::babel_cast< ::edu::csdms::openmi::IScalarSet>(values);
-      //(::edu::csdms::openmi::IScalarSet) values;
-    double max = -1e32;
-    double min = 1e32;
+    double * vals;
 
-    for (int i=0; i<len; i++)
-    {
-      val[i] = scalars.getScalar (i);
-      if (!state.IsInteriorNode (i))
-        val[i] = 0;
-      //val[i] *= 10.;
-      if (val[i]>max)
-        max = val[i];
-      if (val[i]<min)
-        min = val[i];
+    fprintf (stderr, "%s: Setting %s.\n", CMI_COMPONENT_NAME,
+        val_string.c_str ());
+    { // Copy values from the IScalarSet to a c-array
+      const int len = values.getCount ();
+      ::edu::csdms::openmi::IScalarSet scalars =
+        ::babel_cast< ::edu::csdms::openmi::IScalarSet>(values);
+
+      fprintf (stderr, "%s: Got ScalarSet.\n", CMI_COMPONENT_NAME);
+      vals = new double[len];
+      for (int i=0; i<len; i++)
+        vals[i] = scalars.getScalar (i);
     }
 
-    fprintf (stderr, "Child: Max erosion is %f\n", max);
-    fprintf (stderr, "Child: Min erosion is %f\n", min);
-    fflush (stderr);
+    { // Set values through the c-array
+      const int n_dim = 1;
+      int len;
+      double * x = this->state.get_grid_x (val_string, len);
+      int * shape = new int[1];
 
-    if (val_string.compare (0,4,"elev")==0)
-      this->state.SetValueSet ("elev", val);
-    else
-      this->state.ExternalErosionAndDeposition (val);
-      //this->state.ExternalErodeAndDepositToElevation (val);
-    //this->state.ExternalErosionAndDeposition (val);
-  }
+      fprintf (stderr, "%s: Calling BMI_Set_double.\n", CMI_COMPONENT_NAME);
+      shape[0] =  len;
+      this->state.set_double (val_string, vals, n_dim, shape);
 
-  return;
+      delete [] shape;
+      delete [] x;
+    }
+
+    delete [] vals;
+
+    fprintf (stderr, "%s: Values are set.\n", CMI_COMPONENT_NAME);
+    return;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.set_value_set)
 }
 

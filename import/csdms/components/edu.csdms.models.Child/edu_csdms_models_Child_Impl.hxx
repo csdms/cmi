@@ -39,8 +39,8 @@
 #ifndef included_edu_csdms_openmi_ScalarSet_hxx
 #include "edu_csdms_openmi_ScalarSet.hxx"
 #endif
-#ifndef included_edu_csdms_ports_IRFPort_hxx
-#include "edu_csdms_ports_IRFPort.hxx"
+#ifndef included_edu_csdms_ports_CMIPort_hxx
+#include "edu_csdms_ports_CMIPort.hxx"
 #endif
 #ifndef included_edu_csdms_tools_ConfigDialog_hxx
 #include "edu_csdms_tools_ConfigDialog.hxx"
@@ -94,6 +94,29 @@
 #include <childInterface.h>
 #include <glib.h>
 
+typedef enum
+{
+  CMI_STATUS_CREATED = 0,
+  CMI_STATUS_INITIALIZING,
+  CMI_STATUS_INITIALIZED,
+  CMI_STATUS_UPDATING,
+  CMI_STATUS_UPDATED,
+  CMI_STATUS_FINALIZING,
+  CMI_STATUS_FINALIZED
+}
+CMI_Status;
+
+#define CMI_COMPONENT_NAME "Child"
+#define CMI_PORT_NAMES "SubaqueousDelta"
+#define CMI_TEMPLATE_SOURCE_FILES "Child.in.in,Child_command_line.txt.in"
+#define CMI_TEMPLATE_DEST_FILES "Child.in,Child_command_line.txt"
+#define CMI_PORT_QUEUE_DT (1.)
+#define CMI_MAPPERS "Elevation@SubaqueousDelta:Weighted Mean"
+#define CMI_OUTPUT_FILE_NS "Output/Grid,Output/CellGrid"
+
+#define CMI_TURN_OFF_PORTS 0
+#define CMI_TURN_OFF_MAPPING 0
+
 #if !defined (PRINT)
 # define PRINT(l, m) {  \
   string prefix ("Child:"); \
@@ -128,6 +151,10 @@ namespace edu {
 
         gov::cca::TypeMap userinput;
         childInterface state;
+        CMI_Status status;
+        bool is_driver;
+        ::edu::csdms::tools::IRFPortQueue ports;
+        ::edu::csdms::tools::PrintQueue print_q;
 
         ::edu::csdms::tools::IRFPortQueue irf_ports;
         ::edu::csdms::tools::PrintQueue print_queue;
@@ -156,8 +183,8 @@ namespace edu {
           Child_impl( struct edu_csdms_models_Child__object * ior ) : StubBase(
             ior,true), 
           ::gov::cca::Port((ior==NULL) ? NULL : &((*ior).d_gov_cca_port)),
-          ::edu::csdms::ports::IRFPort((ior==NULL) ? NULL : &((
-            *ior).d_edu_csdms_ports_irfport)),
+          ::edu::csdms::ports::CMIPort((ior==NULL) ? NULL : &((
+            *ior).d_edu_csdms_ports_cmiport)),
           ::gov::cca::Component((ior==NULL) ? NULL : &((
             *ior).d_gov_cca_component)),
           ::gov::cca::ComponentRelease((ior==NULL) ? NULL : &((
@@ -214,7 +241,7 @@ namespace edu {
         void
         boccaForceUsePortInclude_impl (
           /* in */::gov::cca::ports::ParameterPortFactory& dummy0,
-          /* in */::edu::csdms::ports::IRFPort& dummy1,
+          /* in */::edu::csdms::ports::CMIPort& dummy1,
           /* in */::edu::csdms::openmi::ElementType dummy2,
           /* in */::edu::csdms::tools::TemplateFiles& dummy3,
           /* in */::edu::csdms::tools::IRFPortQueue& dummy4,
@@ -308,9 +335,55 @@ namespace edu {
         /**
          * user defined non-static method.
          */
-        void
-        initialize_impl (
-          /* in array<string> */::sidl::array< ::std::string>& properties
+        bool
+        CMI_initialize_impl (
+          /* in */const ::std::string& config_file
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
+        CMI_run_for_impl (
+          /* in */double time_interval,
+          /* in */const ::std::string& time_units,
+          /* in */const ::std::string& stop_rule,
+          /* in array<double> */::sidl::array<double>& stop_vars
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
+        CMI_run_impl (
+          /* in */double time_interval
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
+        CMI_finalize_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        bool
+        CMI_run_model_impl (
+          /* in */const ::std::string& config_file,
+          /* in */const ::std::string& stop_rule,
+          /* in */double stop_var
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::basearray
+        CMI_get_values_impl (
+          /* in */const ::std::string& long_var_name
         )
         ;
 
@@ -318,8 +391,158 @@ namespace edu {
          * user defined non-static method.
          */
         void
-        run_impl (
-          /* in */double time
+        CMI_set_values_impl (
+          /* in */const ::std::string& long_var_name,
+          /* in array<> */::sidl::basearray& in_values
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::std::string
+        CMI_get_status_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::std::string
+        CMI_get_component_name_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array< ::std::string>
+        CMI_get_input_item_list_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array< ::std::string>
+        CMI_get_output_item_list_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        void
+        CMI_get_required_ports_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        void
+        CMI_release_required_ports_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::basearray
+        CMI_get_values_at_indices_impl (
+          /* in */const ::std::string& long_var_name,
+          /* in array<int> */::sidl::array<int32_t>& indices
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        void
+        CMI_set_values_at_indices_impl (
+          /* in */const ::std::string& long_var_name,
+          /* in array<int> */::sidl::array<int32_t>& indices,
+          /* in array<> */::sidl::basearray& in_values
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        void
+        CMI_print_traceback_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
+        CMI_get_grid_spacing_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
+        CMI_get_grid_lower_left_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<int32_t>
+        CMI_get_grid_shape_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
+        CMI_get_grid_x_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
+        CMI_get_grid_y_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
+        CMI_get_grid_z_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<int32_t>
+        get_grid_connectivity_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<int32_t>
+        get_grid_offset_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
+        initialize_impl (
+          /* in */const ::std::string& config_file
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
+        run_for_impl (
+          /* in */double time_interval,
+          /* in */const ::std::string& time_units,
+          /* in */const ::std::string& stop_rule,
+          /* in array<double> */::sidl::array<double>& stop_vars
         )
         ;
 
@@ -328,6 +551,92 @@ namespace edu {
          */
         void
         finalize_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        bool
+        run_model_impl (
+          /* in */const ::std::string& config_file,
+          /* in */const ::std::string& stop_rule,
+          /* in */double stop_var
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::basearray
+        get_values_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        void
+        set_values_impl (
+          /* in */const ::std::string& long_var_name,
+          /* in array<> */::sidl::basearray& in_values
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::std::string
+        get_status_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::std::string
+        get_component_name_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array< ::std::string>
+        get_input_item_list_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array< ::std::string>
+        get_output_item_list_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        void
+        get_required_ports_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        void
+        release_required_ports_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::basearray
+        get_values_at_indices_impl (
+          /* in */const ::std::string& long_var_name,
+          /* in array<int> */::sidl::array<int32_t>& indices
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        void
+        set_values_at_indices_impl (
+          /* in */const ::std::string& long_var_name,
+          /* in array<int> */::sidl::array<int32_t>& indices,
+          /* in array<> */::sidl::basearray& in_values
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        void
+        print_traceback_impl() ;
         /**
          * user defined non-static method.
          */
@@ -402,8 +711,8 @@ namespace edu {
         /**
          * user defined non-static method.
          */
-        ::edu::csdms::openmi::IElementSet
-        get_element_set_impl (
+        ::edu::csdms::openmi::IValueSet
+        get_value_set_impl (
           /* in */const ::std::string& val_string
         )
         ;
@@ -411,8 +720,8 @@ namespace edu {
         /**
          * user defined non-static method.
          */
-        ::edu::csdms::openmi::IValueSet
-        get_value_set_impl (
+        ::edu::csdms::openmi::IElementSet
+        get_element_set_impl (
           /* in */const ::std::string& val_string
         )
         ;

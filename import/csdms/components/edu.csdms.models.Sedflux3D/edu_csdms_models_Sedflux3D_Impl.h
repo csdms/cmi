@@ -18,8 +18,14 @@
 #ifndef included_edu_csdms_models_Sedflux3D_h
 #include "edu_csdms_models_Sedflux3D.h"
 #endif
+#ifndef included_edu_csdms_openmi_IElementSet_h
+#include "edu_csdms_openmi_IElementSet.h"
+#endif
 #ifndef included_edu_csdms_openmi_IScalarSet_h
 #include "edu_csdms_openmi_IScalarSet.h"
+#endif
+#ifndef included_edu_csdms_openmi_IValueSet_h
+#include "edu_csdms_openmi_IValueSet.h"
 #endif
 #ifndef included_edu_csdms_openmi_ScalarSet_h
 #include "edu_csdms_openmi_ScalarSet.h"
@@ -95,7 +101,14 @@
           "${SimulationName}_sediment.kvf,${SimulationName}_sealevel.csv," \
           "Sedflux3D_command_line.txt"
 #define CMI_CONFIG_DIALOG_XML_FILE "Sedflux3D.xml"
+#define CMI_PORT_NAMES "SubaerialDelta"
+#define CMI_PORT_QUEUE_DT (1.)
+#define CMI_MAPPERS "DepositionToElevation@SubaerialDelta:Weighted Mean," \
+                    "WaterDischarge@SubaerialDelta:Weighted Mean"
+#define CMI_OUTPUT_FILE_NS "Output/Grid,Output/Cube"
 
+#define CMI_TURN_OFF_PORTS 0
+#define CMI_TURN_OFF_MAPPING 1
 
 #include <eh_utils.h>
 #include <sed.h>
@@ -187,29 +200,17 @@ impl_edu_csdms_models_Sedflux3D__dtor(
  */
 
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_ConfigDialog(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_ports_CMIPort__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_ports_CMIPort(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_TemplateFiles__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_TemplateFiles(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct gov_cca_Services__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_gov_cca_Services(const char* url, 
-  sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_PrintQueue__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_PrintQueue(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_openmi_IScalarSet__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_IScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_Verbose__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_Verbose(const char* 
-  url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ScalarSet__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ValueSet__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ValueSet(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_sidl_BaseInterface(const char* url, 
@@ -220,6 +221,24 @@ extern struct edu_csdms_tools_IRFPortQueue__object*
 extern struct gov_cca_ports_ParameterPortFactory__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_gov_cca_ports_ParameterPortFactory(
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_IValueSet__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_IValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_ConfigDialog__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_ConfigDialog(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct gov_cca_Services__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_gov_cca_Services(const char* url, 
+  sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_Verbose__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_Verbose(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ValueSet__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ScalarSet__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ScalarSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 #endif /*WITH_RMI*/
 extern
 void
@@ -249,14 +268,15 @@ void
 impl_edu_csdms_models_Sedflux3D_boccaForceUsePortInclude(
   /* in */ edu_csdms_models_Sedflux3D self,
   /* in */ gov_cca_ports_ParameterPortFactory dummy0,
-  /* in */ edu_csdms_tools_IRFPortQueue dummy1,
-  /* in */ edu_csdms_tools_Verbose dummy2,
-  /* in */ edu_csdms_openmi_ValueSet dummy3,
-  /* in */ edu_csdms_tools_TemplateFiles dummy4,
-  /* in */ edu_csdms_openmi_ScalarSet dummy5,
-  /* in */ edu_csdms_tools_ConfigDialog dummy6,
-  /* in */ edu_csdms_openmi_IScalarSet dummy7,
-  /* in */ edu_csdms_tools_PrintQueue dummy8,
+  /* in */ edu_csdms_ports_CMIPort dummy1,
+  /* in */ edu_csdms_tools_IRFPortQueue dummy2,
+  /* in */ edu_csdms_tools_Verbose dummy3,
+  /* in */ edu_csdms_openmi_ValueSet dummy4,
+  /* in */ edu_csdms_tools_TemplateFiles dummy5,
+  /* in */ edu_csdms_openmi_ScalarSet dummy6,
+  /* in */ edu_csdms_tools_ConfigDialog dummy7,
+  /* in */ edu_csdms_openmi_IScalarSet dummy8,
+  /* in */ edu_csdms_tools_PrintQueue dummy9,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
@@ -326,27 +346,6 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_values(
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-struct sidl_double__array*
-impl_edu_csdms_models_Sedflux3D_CMI_get_grid_spacing(
-  /* in */ edu_csdms_models_Sedflux3D self,
-  /* in */ const char* long_var_name,
-  /* out */ sidl_BaseInterface *_ex);
-
-extern
-struct sidl_double__array*
-impl_edu_csdms_models_Sedflux3D_CMI_get_grid_corner(
-  /* in */ edu_csdms_models_Sedflux3D self,
-  /* in */ const char* long_var_name,
-  /* out */ sidl_BaseInterface *_ex);
-
-extern
-struct sidl_int__array*
-impl_edu_csdms_models_Sedflux3D_CMI_get_grid_shape(
-  /* in */ edu_csdms_models_Sedflux3D self,
-  /* in */ const char* long_var_name,
-  /* out */ sidl_BaseInterface *_ex);
-
-extern
 void
 impl_edu_csdms_models_Sedflux3D_CMI_set_values(
   /* in */ edu_csdms_models_Sedflux3D self,
@@ -411,6 +410,62 @@ extern
 void
 impl_edu_csdms_models_Sedflux3D_CMI_print_traceback(
   /* in */ edu_csdms_models_Sedflux3D self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_CMI_get_grid_spacing(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_CMI_get_grid_lower_left(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_int__array*
+impl_edu_csdms_models_Sedflux3D_CMI_get_grid_shape(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_CMI_get_grid_x(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_CMI_get_grid_y(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_CMI_get_grid_z(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_int__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_connectivity(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_int__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_offset(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
@@ -590,36 +645,46 @@ impl_edu_csdms_models_Sedflux3D_get_time_span(
   /* out */ sidl_BaseInterface *_ex);
 
 extern
+edu_csdms_openmi_IValueSet
+impl_edu_csdms_models_Sedflux3D_get_value_set(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* val_string,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+edu_csdms_openmi_IElementSet
+impl_edu_csdms_models_Sedflux3D_get_element_set(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* val_string,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
 struct sidl__array*
 impl_edu_csdms_models_Sedflux3D_get_value_set_data(
   /* in */ edu_csdms_models_Sedflux3D self,
   /* in */ const char* val_string,
   /* out */ sidl_BaseInterface *_ex);
 
+extern
+void
+impl_edu_csdms_models_Sedflux3D_set_value_set(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* val_string,
+  /* in */ edu_csdms_openmi_IValueSet values,
+  /* out */ sidl_BaseInterface *_ex);
+
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_ConfigDialog(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_ports_CMIPort__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_ports_CMIPort(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_TemplateFiles__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_TemplateFiles(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct gov_cca_Services__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_gov_cca_Services(const char* url, 
-  sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_PrintQueue__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_PrintQueue(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_openmi_IScalarSet__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_IScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_Verbose__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_Verbose(const char* 
-  url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ScalarSet__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ValueSet__object* 
-  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ValueSet(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_sidl_BaseInterface(const char* url, 
@@ -630,6 +695,24 @@ extern struct edu_csdms_tools_IRFPortQueue__object*
 extern struct gov_cca_ports_ParameterPortFactory__object* 
   impl_edu_csdms_models_Sedflux3D_fconnect_gov_cca_ports_ParameterPortFactory(
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_IValueSet__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_IValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_ConfigDialog__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_ConfigDialog(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct gov_cca_Services__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_gov_cca_Services(const char* url, 
+  sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_Verbose__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_tools_Verbose(const char* 
+  url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ValueSet__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ValueSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_openmi_ScalarSet__object* 
+  impl_edu_csdms_models_Sedflux3D_fconnect_edu_csdms_openmi_ScalarSet(const 
+  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 #endif /*WITH_RMI*/
 
 /* DO-NOT-DELETE splicer.begin(_hmisc) */
