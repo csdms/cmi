@@ -3,7 +3,7 @@ margin name:            Adriatic
 vertical resolution:    ${ZResolution}
 x resolution:           ${XResolution}
 y resolution:           ${YResolution}
-bathymetry file:        ${BathyFile}
+bathymetry file:        ${BathymetryFile}
 sediment file:          ${SedimentFile}
 
 [ epoch ]
