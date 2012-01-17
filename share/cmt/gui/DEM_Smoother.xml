@@ -10,35 +10,35 @@
 
     <entry name="/DEMSmoother/Input/Var/in_directory">
       <label>Input directory:</label>
-      <default>/data/sims/erode/small_ky</default>
+      <default>/home/csdms/models/erode/0.5/share/data/KY_Sub/</default>
       <type>string</type>
       <help_brief>input directory</help_brief>
     </entry>
 
     <entry name="/DEMSmoother/Input/Var/out_directory">
       <label>Output directory:</label>
-      <default>~/CMT_Output/DEM_Smoother_Test</default>
+      <default>~/CMT_Output</default>
       <type>string</type>
       <help_brief>output directory</help_brief>
     </entry>
 
     <entry name="/DEMSmoother/Input/Var/site_prefix">
       <label>Site prefix:</label>
-      <default>Small</default>
+      <default>KY_Sub</default>
       <type>string</type>
       <help_brief>file prefix for the study site</help_brief>
     </entry>
 
     <entry name="/DEMSmoother/Input/Var/case_prefix">
       <label>Case prefix:</label>
-      <default>Case1</default>
+      <default>Smooth1</default>
       <type>string</type>
       <help_brief>file prefix for the model scenario</help_brief>
     </entry>
 
     <entry name="/DEMSmoother/Input/Var/n_steps">
       <label>Number of steps:</label>
-      <default>1</default>
+      <default>3</default>
       <type>long</type>
       <range>
         <min>1</min>
@@ -71,7 +71,7 @@
 
     <entry name="/DEMSmoother/Input/Var/p">
       <label>Flint's Law p:</label>
-      <default>-0.55</default>
+      <default>-0.64</default>
       <type>float</type>
       <range>
         <min>-1.0</min>
@@ -89,7 +89,7 @@
 
     <entry name="/DEMSmoother/Input/Var/profile_file">
       <label>Profile filename:</label>
-      <default>[site_prefix]_prof1.txt</default>
+      <default>[site_prefix]_main_profile.txt</default>
       <type>string</type>
       <help_brief>filename of text file with long. profile info</help_brief>
     </entry>
