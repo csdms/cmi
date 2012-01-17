@@ -1,12 +1,24 @@
 <dialog>
   <tab name="Input Files and Directories">
-    <entry name="/Child/Input/Dir">
+    <!--entry name="/Child/Input/Dir">
       <label>Input directory</label>
       <help_brief>Path to input files. {cb;GUI;/data/sims/child/Delta}</help_brief>
       <default>GUI</default>
       <type>String</type>
+    </entry-->
+    <entry name="/Child/Input/Var/InitializationFile">
+      <label>Initialization file</label>
+      <default>GUI</default>
+      <help_brief>Child initialization file {cb;GUI;Enter path to initialization file}</help_brief>
+      <type>String</type>
     </entry>
-    <entry name="/Child/SitePrefix">
+    <entry name="/Child/Input/Var/SimulationName">
+      <label>Simulation case name</label>
+      <help_brief>Name of the simulation</help_brief>
+      <default>Child</default>
+      <type>String</type>
+    </entry>
+    <!--entry name="/Child/SitePrefix">
       <label>Site prefix</label>
       <help_brief>Site prefix for input/output files.</help_brief>
       <default>Delta</default>
@@ -17,7 +29,7 @@
       <help_brief>Case prefix for input/output files.</help_brief>
       <default>20x80</default>
       <type>String</type>
-    </entry>
+    </entry-->
   </tab>
   <tab name="Run Parameters">
     <entry name="/Child/Input/Var/RunDuration">
@@ -35,7 +47,7 @@
     <entry name="/Child/Input/Var/UpliftType">
       <label>Type of uplift</label>
       <help_brief>Type of uplift (0=none, 1=uniform, 2=block) {dl;0;1;2}</help_brief>
-      <default>0</default>
+      <default>2</default>
       <type>Int</type>
       <range>
         <min>0</min>
@@ -146,10 +158,10 @@
       <default>VTK</default>
       <type>String</type>
     </entry>
-    <entry class="OutputFile" name="/Child/Output/Grid/Var/elevation"/>
-    <entry class="OutputFile" name="/Child/Output/Grid/Var/erosion"/>
-    <entry class="OutputFile" name="/Child/Output/Grid/Var/discharge"/>
-    <entry class="OutputFile" name="/Child/Output/Grid/Var/sediment"/>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/Elevation"/>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/Erosion"/>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/Discharge"/>
+    <entry class="OutputFile" name="/Child/Output/Grid/Var/Sediment"/>
   </tab>
   <tab name="Output Cell Grids">
     <entry name="/Child/Output/CellGrid/Dir">
@@ -174,10 +186,10 @@
       <default>VTK</default>
       <type>String</type>
     </entry>
-    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Cellelevation"/>
-    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Cellerosion"/>
-    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Celldischarge"/>
-    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/Cellsediment"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellElevation"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellErosion"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellDischarge"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellSsediment"/>
   </tab>
   <tab name="About">
     <entry name="/Child/ModelName">
