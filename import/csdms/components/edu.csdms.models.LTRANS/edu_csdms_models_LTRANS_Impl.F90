@@ -22,6 +22,7 @@
 #include "sidl_ClassInfo_fAbbrev.h"
 #include "sidl_BaseClass_fAbbrev.h"
 #include "edu_csdms_tools_PrintQueue_fAbbrev.h"
+#include "edu_csdms_openmi_IScalarSet_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
 #include "edu_csdms_tools_IRFPortQueue_fAbbrev.h"
@@ -30,15 +31,13 @@
 #include "edu_csdms_models_LTRANS_fAbbrev.h"
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
 #include "gov_cca_CCAException_fAbbrev.h"
-#include "edu_csdms_openmi_ElementType_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
-#include "edu_csdms_openmi_ElementMapper_fAbbrev.h"
 #include "edu_csdms_tools_Verbose_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
 #include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
+#include "edu_csdms_openmi_ValueSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
-#include "edu_csdms_openmi_ElementSet_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
 #include "sidl_string_fAbbrev.h"
@@ -650,15 +649,14 @@ recursive subroutine boccaForceUsePortI70q2v74knq_mi(self, dummy0, dummy1,     &
   exception)
   use sidl
   use sidl_NotImplementedException
-  use edu_csdms_openmi_ElementType
+  use edu_csdms_openmi_IScalarSet
   use edu_csdms_ports_CMIPort
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_LTRANS
-  use edu_csdms_openmi_ElementMapper
-  use edu_csdms_openmi_ElementSet
   use edu_csdms_openmi_ScalarSet
+  use edu_csdms_openmi_ValueSet
   use edu_csdms_tools_ConfigDialog
   use edu_csdms_tools_IRFPortQueue
   use edu_csdms_tools_PrintQueue
@@ -675,21 +673,21 @@ recursive subroutine boccaForceUsePortI70q2v74knq_mi(self, dummy0, dummy1,     &
   ! in
   type(edu_csdms_ports_CMIPort_t) :: dummy1
   ! in
-  integer (kind=sidl_enum) :: dummy2
+  type(edu_csdms_tools_TemplateFiles_t) :: dummy2
   ! in
-  type(edu_csdms_tools_TemplateFiles_t) :: dummy3
+  type(edu_csdms_tools_IRFPortQueue_t) :: dummy3
   ! in
-  type(edu_csdms_tools_IRFPortQueue_t) :: dummy4
+  type(edu_csdms_tools_Verbose_t) :: dummy4
   ! in
-  type(edu_csdms_tools_Verbose_t) :: dummy5
+  type(edu_csdms_openmi_ValueSet_t) :: dummy5
   ! in
-  type(edu_csdms_openmi_ElementMapper_t) :: dummy6
+  type(edu_csdms_ports_CMIPort_t) :: dummy6
   ! in
   type(edu_csdms_openmi_ScalarSet_t) :: dummy7
   ! in
   type(edu_csdms_tools_ConfigDialog_t) :: dummy8
   ! in
-  type(edu_csdms_openmi_ElementSet_t) :: dummy9
+  type(edu_csdms_openmi_IScalarSet_t) :: dummy9
   ! in
   type(edu_csdms_tools_PrintQueue_t) :: dummy10
   ! in
@@ -920,52 +918,73 @@ recursive subroutine edu_csdms_models_LTRANS_go_mi(self, retval, exception)
   type(edu_csdms_tools_TemplateFiles_t) :: template
   type(edu_csdms_models_LTRANS_wrap) :: dp
   character (len=2048) :: input_dir
-  character (len=2048) :: site_prefix
-  character (len=2048) :: case_prefix
+  character (len=2048) :: isStandalone
   integer :: ng, seconds, stepT
   
+  double precision :: days_dbl, time_interval
 
   ! As the execution is in the go method this component is the Driver
   dp%d_private_data%isDriver = .TRUE.
-
+  print *, "LTRANS_CMI> LTRANS status: Driver"
+  call flush()
   call edu_csdms_models_LTRANS__get_data_m(self, dp)
 
   call getString (dp%d_private_data%userinput, "/LTRANS/Input/Dir", ".", input_dir, exception)
-  call getString (dp%d_private_data%userinput, "/LTRANS/SitePrefix", "", site_prefix, exception)
-  call getString (dp%d_private_data%userinput, "/LTRANS/CasePrefix", "", case_prefix, exception)
-  call getInteger (dp%d_private_data%userinput, "/LTRANS/Input/Var/dt", 0.0D0, dt, exception)
-  
+  call getInt (dp%d_private_data%userinput, "/LTRANS/Input/Var/dt", 1, dt, exception)
+  call getString (dp%d_private_data%userinput, "/LTRANS/Input/Var/isStandalone", "", isStandalone, exception)
+
   !TODO: For some reason getDouble not working, changing to getInteger (For testing)
-  !call getDouble (dp%d_private_data%userinput, "/LTRANS/Input/Var/days", 0, days, exception)
-  call getInteger (dp%d_private_data%userinput, "/LTRANS/Input/Var/days", 0.0D0, days, exception)
+  call getDouble (dp%d_private_data%userinput, "/LTRANS/Input/Var/days", 1.0D0, days_dbl, exception)
+  !call getInt (dp%d_private_data%userinput, "/LTRANS/Input/Var/days", 1, days, exception)
+  days = days_dbl
+  print *, "LTRANS_CMI> dt: ", dt, " days: ", days
+  call flush()
 
   if (input_dir=="GUI") then
-    print *, "CCA> Input from User Input"
+    print *, "LTRANS_CMI> Input from User Input"
     call new (template, exception)
-    print *, "CCA> Creating output file"
-    call add_file (template, "LTRANS.data.in", "LTRANS.data", exception)
-    call add_file (template, "LTRANS_grid.data.in", "GRID.data", exception)
-    call substitute (template, dp%d_private_data%userinput, &
-          "/LTRANS/Input/Var/", ".", exception);
+    print *, "LTRANS_CMI> Creating output file"
+    ! If ltrans is coupled use a different input file template
+    if(isStandalone == 'FALSE') then
+        print *, 'Is project runing in standalone mode: ', isStandalone
+        call add_file (template, "LTRANS_coupled.data.in", "LTRANS.data", exception)
+        !call add_file (template, "LTRANS_grid.data.in", "GRID.data", exception)
+        call substitute (template, dp%d_private_data%userinput, "/LTRANS/Input/Var/", ".", exception);
+    else
+        call add_file (template, "LTRANS.data.in", "LTRANS.data", exception)
+        !call add_file (template, "LTRANS_grid.data.in", "GRID.data", exception)
+        call substitute (template, dp%d_private_data%userinput, "/LTRANS/Input/Var/", ".", exception);
+    end if
   else
-    print *, "CCA> Input from File"
-  endif
+    print *, "LTRANS_CMI> Input from File"
+    print *, 'LTRANS_CMI> Copying input file to working directory: ', input_dir
+    call system("cp " // input_dir // " .")
+  end if
 
-  print *, 'CCA> Getting the component ready'
-  call LTR_CMI_initializev31n7eesph_mi("Null", retval, exception)
-  
-  !days*24*60*60 = total number of seconds to run the model
-  !divide that by dt to get the number of external time steps
-  seconds = days*DBLE(24)*DBLE(60)*DBLE(60) !Total seconds to run model
-  stepT   = int(seconds/dt)                 !number of external time steps
-  print *, 'CCA> Total seconds to run model: ', seconds
-  print *, 'CCA> Number of external time step: ', stepT
-  do p=1,stepT
-    call LTRANS_CMI_run4nqryolxalh_xn_mi(p, retval, exception)
-  enddo 
-  
-  call LTRAN_CMI_finalizehz7pezx1ae_mi(retval, exception) 
-  print *, 'CCA> Done.'
+  if(trim(isStandalone) == 'FALSE') then
+    print *, 'LTRANS_CMI> Getting the component ready, running as a coupled component'
+    call LTR_CMI_initializev31n7eesph_mi(self, "NULL", retval, exception)
+
+    !days*24*60*60 = total number of seconds to run the model
+    !divide that by dt to get the number of external time steps
+    seconds = days*DBLE(24)*DBLE(60)*DBLE(60) !Total seconds to run model
+    stepT   = int(seconds/dt)                 !number of external time steps
+    print *, 'LTRANS_CMI> Total seconds to run model: ', seconds
+    print *, 'LTRANS_CMI> Number of external time step: ', stepT
+    print *, 'Time step: ' 
+    print *, real(p)
+    do p=1,stepT
+        time_interval=real(p)
+        call LTRANS_CMI_run4nqryolxalh_xn_mi(self, time_interval, retval, exception)
+    enddo
+    call flush()
+    print *, "LTRANS_cmi> Run finished. Finalizing model..."
+    call LTRAN_CMI_finalizehz7pezx1ae_mi(self, retval, exception)
+  else
+    print *, 'ltrans cmi> Running as a standalone component'
+    call run_LTRANS()
+  end if
+  print *, 'LTRANS_CMI> Done.'
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.go)
 end subroutine edu_csdms_models_LTRANS_go_mi
@@ -989,6 +1008,7 @@ recursive subroutine LTR_CMI_initializev31n7eesph_mi(self, config_file,        &
   use gov_cca_TypeMap
   use edu_csdms_tools_IRFPortQueue 
   use edu_csdms_ports_CMIPort
+  use sidl_string_array
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_initialize.use)
   implicit none
   type(edu_csdms_models_LTRANS_t) :: self
@@ -1007,34 +1027,91 @@ recursive subroutine LTR_CMI_initializev31n7eesph_mi(self, config_file,        &
  
 ! This method has not been implemented
 ! 
-  type(edu_csdms_models_LTRANS_wrap) :: ltrans_data
+  type(edu_csdms_models_LTRANS_wrap) :: dp
   type(edu_csdms_tools_IRFPortQueue_t) :: port_queue
-  !type(edu_csdms_ports_CMIPort_t) :: cmi_port
+  type(edu_csdms_ports_CMIPort_t) :: cmi_port
+!  type(sidl_string_1d) :: properties
+  type(edu_csdms_ports_CMIPort_t) :: ocean_port
+  type(sidl__array) :: return_sidl_array
+  integer :: long_var_names_array_size
+  integer :: i
 
-  print *, "CCA> Initializing LTRANS component"
-  ltrans_data%d_private_data%cmi_status = 'Initializing'
+
+  call edu_csdms_models_LTRANS__get_data_m(self, dp)
+
+  print *, "LTRANS_CMI> Initializing LTRANS component"
+  dp%d_private_data%cmi_status = 'I'
 
   !call get_port("Ocean", ocean_port)
 
   call cast(self, cmi_port, exception)
 
   ! This will initialize the IRFPortQueue
-  call initialize(ltrans_data%d_private_data%d_services, cmi_port, exception)
+  print *, "LTRANS_CMI> Initialize port queue"
+  call new(port_queue, exception) 
+  call initialize_cmi(port_queue, dp%d_private_data%d_services, cmi_port, exception)
 
   ! Add ports to the IRFPortQueue
-  call add_ports(ltrans_data%d_private_data%CMI_PORT_NAMES)
-  call connect_ports()
+  print *, "LTRANS_CMI> Adding ports to IRFPortQueue"
+  print *, "LTRANS_CMI> Added Ports: ", trim(dp%d_private_data%CMI_PORT_NAMES)
+  call add_ports(port_queue, dp%d_private_data%CMI_PORT_NAMES, exception)
+
+  print *, "LTRANS_CMI> Connecting uses ports in queue and Initialize uses ports"
+  call connect_cmi_ports(port_queue, exception)
 
   ! Initializing the uses ports
-  call initialize_ports("Null")
+  ! print *, "LTRANS_CMI> Initialize uses ports"
+  ! Commenting 'initialize_ports' of irfportqueu. The properties arguement is causing a segmentation fault.
+  ! call initialize_ports(port_queue, properties, exception)
+
+  print *, "LTRANS_CMI> Getting the uses port Ocean"
+  call get_cmi_port(port_queue, "Ocean", ocean_port, exception)
+
+  !print *, "LTRANS_CMI> Get values of ROMS Grid"
+  !dp%d_private_data%long_var_names(5) = "angle_between_xi_axis_and_east"
+  !dp%d_private_data%long_var_names(6) = "bathymetry_at_rho_points"
+  !dp%d_private_data%long_var_names(7) = "latitude_of_rho_points"
+  !dp%d_private_data%long_var_names(8) = "latitude_of_u_points"
+  !dp%d_private_data%long_var_names(9) = "latitude_of_v_points"
+  !dp%d_private_data%long_var_names(10) = "longitude_of_rho_points"
+  !dp%d_private_data%long_var_names(11) = "longitude_of_u_points"  
+  !dp%d_private_data%long_var_names(12) = "longitude_of_v_points"
+  !dp%d_private_data%long_var_names(13) = "mask_on_rho_points"
+  !dp%d_private_data%long_var_names(14) = "mask_on_u_points"
+  !dp%d_private_data%long_var_names(15) = "mask_on_v_points"
+
+  dp%d_private_data%long_var_names(1) = "free_surface"
+  dp%d_private_data%long_var_names(2) = "u_momentum_component"
+  dp%d_private_data%long_var_names(3) = "v_momentum_component"
+  dp%d_private_data%long_var_names(4) = "vertical_momentum_component"
+  dp%d_private_data%long_var_names(5) = "salinity_vertical_diffusion_coefficient"
+  dp%d_private_data%long_var_names(6) = "salinity"
+  dp%d_private_data%long_var_names(7) = "potential_temperature"
+  ! Grid initialization values, for now this is been read from file
+  dp%d_private_data%long_var_names(8) = "s_coordinate_stretching_curves_at_rho_points"
+  dp%d_private_data%long_var_names(9) = "s_coordinate_stretching_curves_at_w_points"
+  dp%d_private_data%long_var_names(10) = "s_coordinate_independent_variable_at_vertical_rho_points"
+  dp%d_private_data%long_var_names(11) = "s_coordinate_independent_variable_at_vertical_w_points"
+
+  ! Call get values of ROMS component
+  !long_var_names_array_size = SIZE(dp%d_private_data%long_var_names)
+  ! do i = 8, long_var_names_array_size
+  !   call flush()
+  !   print *, "LTRANS_CMI> Getting Value for ", trim(dp%d_private_data%long_var_names(i))
+  !   call CMI_get_values(ocean_port, TRIM(dp%d_private_data%long_var_names(i)), return_sidl_array, exception)
+  !   call flush()
+  !   print *, "LTRANS_CMI> Setting Value for ", trim(dp%d_private_data%long_var_names(i))
+  !   call LTR_CMI_set_valuespoyw79p49f_mi(self, TRIM(dp%d_private_data%long_var_names(i)), return_sidl_array, exception)
+  ! end do
 
   ! Initializing LTRANS
-  call ltrans_initialize("Null")
-  ltrans_data%d_private_data%cmi_status = 'Initialized'
-  print *, "CCA> Initialization Done."
+  print *, "LTRANS_CMI> Calling LTRANS initialize"
+  call ltrans_initialize(config_file)
+  dp%d_private_data%cmi_status = 'I'
+  print *, "LTRANS_CMI> Initialization Done."
 
   ! Setting IRFPortQueue to the global vriable
-  ltrans_data%d_private_data%irf_port_queue = port_queue
+  dp%d_private_data%irf_port_queue = port_queue
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_initialize)
 end subroutine LTR_CMI_initializev31n7eesph_mi
@@ -1127,30 +1204,49 @@ recursive subroutine LTRANS_CMI_run4nqryolxalh_xn_mi(self, time_interval,      &
 
   type(edu_csdms_ports_CMIPort_t) :: ocean_port
   type(edu_csdms_tools_IRFPortQueue_t) :: port_queue 
-  type(edu_csdms_models_LTRANS_wrap) :: ltrans_data
+  type(edu_csdms_models_LTRANS_wrap) :: dp
   type(sidl__array) :: return_sidl_array  
+  type(sidl__array) :: return_sidl_array2
   integer :: long_var_names_array_size
   integer :: i
-
-  ltrans_data%d_private_data%cmi_status = 'Updating'
-  port_queue = ltrans_data%d_private_data%irf_port_queue 
+  logical :: isfirstTimeStep=.true.
  
-  print *, "CCA> Run all the connected ports for current timestep"
-  call run_ports(time_interval)
+  call edu_csdms_models_LTRANS__get_data_m(self, dp)
 
-  call get_port(self, "Ocean", ocean_port, exception)
+  dp%d_private_data%cmi_status = 'U'
+  port_queue = dp%d_private_data%irf_port_queue 
+ 
+  print *, "LTRANS_CMI> Run all the connected ports for current timestep: ", time_interval
+  call run_ports(port_queue, time_interval, exception)
+
+  call get_cmi_port(port_queue, "Ocean", ocean_port, exception)
   
   ! Call get values of ROMS component
-  print *, "CCA> Get values of ROMS for each timestep"
-  long_var_names_array_size = SIZE(ltrans_data%d_private_data%long_var_names)
-  do i = 1, long_var_names_array_size
-    print *, TRIM(ltrans_data%d_private_data%long_var_names(i)) , ", value for timestep ", time_interval
-    call CMI_get_values(ocean_port, TRIM(ltrans_data%d_private_data%long_var_names(i), return_sidl_array, exception) 
-    print *, "value: ", return_sidl_array
-    CMI_set_values(self, TRIM(self, ltrans_data%d_private_data%long_var_names(i)), return_sidl_array, exception)
-  end do
+  print *, "LTRANS_CMI> Get values of ROMS for timestep ", time_interval
+  long_var_names_array_size = SIZE(dp%d_private_data%long_var_names)
+   do i = 1, 7
+     call flush()
+     print *, "LTRANS_CMI> Getting Value for ", trim(dp%d_private_data%long_var_names(i)), ", value for timestep ", time_interval
+     call CMI_get_values(ocean_port, TRIM(dp%d_private_data%long_var_names(i)), return_sidl_array, exception) 
+     call flush()
+     print *, "LTRANS_CMI> Setting Value for ", trim(dp%d_private_data%long_var_names(i)), ", value for timestep ", time_interval
+     call LTR_CMI_set_valuespoyw79p49f_mi(self, TRIM(dp%d_private_data%long_var_names(i)), return_sidl_array, exception)
+   end do
 
-  call ltran_update(time_interval)
+   if(isfirstTimeStep)then
+        print *, 'ltrans bmi> Getting values to get the node depth'
+        do i = 8, long_var_names_array_size
+            call flush()     
+            print *, "LTRANS_CMI> Getting Value for ", trim(dp%d_private_data%long_var_names(i)), ", value for timestep ", time_interval
+            call CMI_get_values(ocean_port, TRIM(dp%d_private_data%long_var_names(i)), return_sidl_array, exception)     
+            call flush()
+            print *, "LTRANS_CMI> Setting Value for ", trim(dp%d_private_data%long_var_names(i)), ", value for timestep ", time_interval
+            call LTR_CMI_set_valuespoyw79p49f_mi(self, TRIM(dp%d_private_data%long_var_names(i)), return_sidl_array, exception)
+        end do 
+        isfirstTimeStep=.false.
+    end if
+  ! 
+  call ltrans_update(time_interval)
     
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_run)
 end subroutine LTRANS_CMI_run4nqryolxalh_xn_mi
@@ -1185,8 +1281,21 @@ recursive subroutine LTRAN_CMI_finalizehz7pezx1ae_mi(self, retval, exception)
 ! 
 ! This method has not been implemented
 ! 
+  type(edu_csdms_ports_CMIPort_t) :: ocean_port
+  type(edu_csdms_tools_IRFPortQueue_t) :: port_queue
+  type(edu_csdms_models_LTRANS_wrap) :: dp
 
-  print *, "CCA> Finalize LTRANS"
+  call edu_csdms_models_LTRANS__get_data_m(self, dp)
+
+  dp%d_private_data%cmi_status = 'F'
+  port_queue = dp%d_private_data%irf_port_queue
+
+  call get_cmi_port(port_queue, "Ocean", ocean_port, exception)
+
+  print *, 'Ltrans_cmi> Finalizing ocean port'  
+  call finalize_ports(port_queue, exception)
+
+  print *, "LTRANS_CMI> Finalize LTRANS"
   call ltran_finalize()
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_finalize)
@@ -1258,6 +1367,8 @@ recursive subroutine LTR_CMI_get_valuesdq97diqspd_mi(self, long_var_name,      &
   use edu_csdms_models_LTRANS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_get_values.use)
   ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_get_values.use} (use statements)
+  use edu_csdms_tools_IRFPortQueue
+  use edu_csdms_ports_CMIPort
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_values.use)
   implicit none
   type(edu_csdms_models_LTRANS_t) :: self
@@ -1277,15 +1388,83 @@ recursive subroutine LTR_CMI_get_valuesdq97diqspd_mi(self, long_var_name,      &
 ! This method has not been implemented
 ! 
 
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.LTRANS.CMI_get_values)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.LTRANS.CMI_get_values)
+  integer :: type
+  character*10 :: rank_chr
+  integer :: rank
+  integer, parameter :: double = selected_real_kind(15, 307)
+  real(kind=double), pointer :: array_1d(:)
+  real(kind=double), allocatable :: array_2d(:,:)
+  real(kind=double), allocatable :: array_3d(:, :, :)
+  real(kind=double), allocatable :: array_4d(:, :, :, :)
+  integer(selected_int_kind(9)) :: array_len, dimensn, dx, dy, dz, du, increment_index
+  integer (selected_int_kind(9)), dimension(:), allocatable :: lower_bnd, upper_bnd, increment
+  type(sidl_double_1d) :: double_1d
+  type(sidl_double_2d) :: double_2d
+  type(sidl_double_3d) :: double_3d
+  type(sidl_double_4d) :: double_4d
+
+  call get_var_rank(long_var_name, rank_chr)
+  read (rank_chr,'(I10)') rank
+  print *, "LTRANS_CMI> Getting value at the bmi level for LTRANS for ", long_var_name, " and array rank ", rank
+  select case(rank)
+        case(1)
+            call get_1D_double(long_var_name, array_1d)
+            call size(array_1d, array_len)
+            allocate(lower_bnd(1))
+            allocate(upper_bnd(array_len))
+            allocate(increment(1))
+            dimensn=1
+            !call sidl_double__array_cast(array_1d, double_array)
+            ! This method creates a proxy SIDL multi-dimensional array using data provided by a third party
+            ! Converting a double 1d array to a sidl double array
+            call sidl_double__array_borrow(array_1d(1), dimensn, lower_bnd, upper_bnd, increment, double_1d)
+            ! Converting a sidl double array to a sidl array
+            call sidl__array_cast(double_1d, retval)
+            deallocate(lower_bnd, upper_bnd, increment)
+        case(2)
+            call get_2D_double(long_var_name, array_2d)
+            call size(array_2d, array_len)
+            call size(array_2d, 1, dx)
+            call size(array_2d, 2, dy)
+            increment_index = dx * dy
+            allocate(lower_bnd(2))
+            allocate(upper_bnd(array_len))
+            allocate(increment(increment_index))
+            dimensn=2
+            call sidl_double__array_borrow(array_2d(1, 1), dimensn, lower_bnd, upper_bnd, increment, double_2d)
+            call sidl__array_cast(double_2d, retval)
+        case(3)
+            call get_3D_double(long_var_name, array_3d)
+            call size(array_3d, array_len)
+            call size(array_3d, 1, dx)
+            call size(array_3d, 2, dy)
+            call size(array_3d, 3, dz)
+            increment_index = dx * dy * dz
+            allocate(lower_bnd(3))
+            allocate(upper_bnd(array_len))
+            allocate(increment(increment_index))
+            dimensn=3
+            call sidl_double__array_borrow(array_3d(1, 1, 1), dimensn, lower_bnd, upper_bnd, increment, double_3d)
+            call sidl__array_cast(double_3d, retval)
+        case(4)
+            call get_4D_double(long_var_name, array_4d)
+            call size(array_4d, array_len)
+            call size(array_4d, 1, dx)
+            call size(array_4d, 2, dy)
+            call size(array_4d, 3, dz)
+            call size(array_4d, 4, du)
+            increment_index = dx * dy * dz * du
+            allocate(lower_bnd(4))
+            allocate(upper_bnd(array_len))
+            allocate(increment(increment_index))
+            dimensn=4
+            call sidl_double__array_borrow(array_4d(1, 1, 1, 1), dimensn, lower_bnd, upper_bnd, increment, double_4d)
+            call sidl__array_cast(double_4d, retval)
+        case default
+            print *, 'LTRANS_CMI> Error in fetching the value for the requested variable: ', long_var_name
+            !return_value = -1
+  end select
+  print *, "LTRANS_CMI> Done, returning from get_values"
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_get_values)
 end subroutine LTR_CMI_get_valuesdq97diqspd_mi
 
@@ -1305,8 +1484,7 @@ recursive subroutine LTR_CMI_set_valuespoyw79p49f_mi(self, long_var_name,      &
   use edu_csdms_models_LTRANS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.LTRANS.CMI_set_values.use)
   ! Insert-Code-Here {edu.csdms.models.LTRANS.CMI_set_values.use} (use statements)
-  use sidl__array_type
-  use sidl__array_dimen
+  use sidl_double_array
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_set_values.use)
   implicit none
   type(edu_csdms_models_LTRANS_t) :: self
@@ -1325,26 +1503,47 @@ recursive subroutine LTR_CMI_set_valuespoyw79p49f_mi(self, long_var_name,      &
 ! 
 ! This method has not been implemented
 ! 
-  integer :: type
+  character(len=100) :: rank_chr
   integer :: rank
-
-  call sidl__array_type(in_values, type) 
-  call sidl__array_dimen(in_values, rank)
+  double precision, pointer :: array_1d(:)
+  double precision, pointer :: array_2d(:,:)
+  double precision, pointer :: array_3d(:, :, :)
+  double precision, pointer :: array_4d(:, :, :, :)
+  character(len=20) :: short_name
+  type(sidl_double_1d) :: sidl_dble_1d_arr
+  type(sidl_double_2d) :: sidl_dble_2d_arr
+  type(sidl_double_3d) :: sidl_dble_3d_arr
+  type(sidl_double_4d) :: sidl_dble_4d_arr
+ 
+  call get_var_rank(trim(long_var_name), rank_chr)
+  read (rank_chr,'(I10)') rank
+  call get_var_name(trim(long_var_name), short_name)
+  print *, "LTRANSS_CMI> Getting array at the bmi level for ROMS for ", trim(long_var_name), ". Short name: ", trim(short_name), ". Array rank: ", rank
+  call flush()
   
-  print *, "CCA> Setting value at the bmi level for LTRANS for ", long_var_name, " and array rank ", rank
   select case(rank)
         case(1)
-            set_1D_double(long_var_name, in_values)
-        case(2)            
-            set_2D_double(long_var_name, in_values) 
+            call cast(in_values, sidl_dble_1d_arr)
+            !call sidl_double__array_access_m(sidl_dble_1d_arr, refarray, low, up, str, indx)
+            !call sidl_double__array_cast_m(in_values, array_1d)
+            call set_1D_double(trim(short_name), sidl_dble_1d_arr%d_data)
+        case(2)
+            call cast(in_values, sidl_dble_2d_arr)
+            call set_2D_double(trim(short_name), sidl_dble_2d_arr%d_data)
+
         case(3)
-            set_3D_double(long_var_name, in_values)
+            call cast(in_values, sidl_dble_3d_arr)
+            call set_3D_double(trim(short_name), sidl_dble_3d_arr%d_data)
         case(4)
-            set_4D_double(long_var_name, in_values)
+            call cast(in_values, sidl_dble_4d_arr)
+            call set_4D_double(trim(short_name), sidl_dble_4d_arr%d_data)
+
         case default
-            print *, 'CCA> Error in fetching the value for the requested variable: ', long_var_name
-            return_value = -1
+            print *, 'LTRANS_CMI> Error in fetching the value for the requested variable: ', long_var_name
+            !return_value = -1
   end select
+  print *, 'LTRANS_CMI> Done Setting values'
+  call flush()
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.LTRANS.CMI_set_values)
 end subroutine LTR_CMI_set_valuespoyw79p49f_mi
