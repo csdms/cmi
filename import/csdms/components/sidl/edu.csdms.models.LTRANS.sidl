@@ -69,7 +69,7 @@ package edu version 0.0 {
                 void boccaThrowException(in string message);
                 
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.ports.CMIPort dummy1, in edu.csdms.openmi.ElementType dummy2, in edu.csdms.tools.TemplateFiles dummy3, in edu.csdms.tools.IRFPortQueue dummy4, in edu.csdms.tools.Verbose dummy5, in edu.csdms.openmi.ElementMapper dummy6, in edu.csdms.openmi.ScalarSet dummy7, in edu.csdms.tools.ConfigDialog dummy8, in edu.csdms.openmi.ElementSet dummy9, in edu.csdms.tools.PrintQueue dummy10);
+                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.ports.CMIPort dummy1, in edu.csdms.tools.TemplateFiles dummy2, in edu.csdms.tools.IRFPortQueue dummy3, in edu.csdms.tools.Verbose dummy4, in edu.csdms.openmi.ValueSet dummy5, in edu.csdms.ports.CMIPort dummy6, in edu.csdms.openmi.ScalarSet dummy7, in edu.csdms.tools.ConfigDialog dummy8, in edu.csdms.openmi.IScalarSet dummy9, in edu.csdms.tools.PrintQueue dummy10);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.models.LTRANS:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }
