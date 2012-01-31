@@ -22,6 +22,7 @@
 #include "sidl_ClassInfo_fAbbrev.h"
 #include "sidl_BaseClass_fAbbrev.h"
 #include "edu_csdms_tools_PrintQueue_fAbbrev.h"
+#include "edu_csdms_openmi_IScalarSet_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
 #include "edu_csdms_tools_IRFPortQueue_fAbbrev.h"
@@ -30,15 +31,13 @@
 #include "sidl_BaseException_fAbbrev.h"
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
 #include "gov_cca_CCAException_fAbbrev.h"
-#include "edu_csdms_openmi_ElementType_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
-#include "edu_csdms_openmi_ElementMapper_fAbbrev.h"
 #include "edu_csdms_tools_Verbose_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
 #include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
+#include "edu_csdms_openmi_ValueSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
-#include "edu_csdms_openmi_ElementSet_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
 #include "sidl_string_fAbbrev.h"
@@ -636,14 +635,14 @@ recursive subroutine boccaForceUsePortIl2a5zd63z__mi(self, dummy0, dummy1,     &
   dummy2, dummy3, dummy4, dummy5, dummy6, dummy7, dummy8, dummy9, exception)
   use sidl
   use sidl_NotImplementedException
-  use edu_csdms_openmi_ElementType
+  use edu_csdms_openmi_IScalarSet
+  use edu_csdms_ports_CMIPort
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_ROMS
-  use edu_csdms_openmi_ElementMapper
-  use edu_csdms_openmi_ElementSet
   use edu_csdms_openmi_ScalarSet
+  use edu_csdms_openmi_ValueSet
   use edu_csdms_tools_ConfigDialog
   use edu_csdms_tools_IRFPortQueue
   use edu_csdms_tools_PrintQueue
@@ -658,21 +657,21 @@ recursive subroutine boccaForceUsePortIl2a5zd63z__mi(self, dummy0, dummy1,     &
   ! in
   type(gov_cca_ports_ParameterPortFactory_t) :: dummy0
   ! in
-  integer (kind=sidl_enum) :: dummy1
+  type(edu_csdms_tools_TemplateFiles_t) :: dummy1
   ! in
-  type(edu_csdms_tools_TemplateFiles_t) :: dummy2
+  type(edu_csdms_tools_IRFPortQueue_t) :: dummy2
   ! in
-  type(edu_csdms_tools_IRFPortQueue_t) :: dummy3
+  type(edu_csdms_tools_Verbose_t) :: dummy3
   ! in
-  type(edu_csdms_tools_Verbose_t) :: dummy4
+  type(edu_csdms_openmi_ValueSet_t) :: dummy4
   ! in
-  type(edu_csdms_openmi_ElementMapper_t) :: dummy5
+  type(edu_csdms_ports_CMIPort_t) :: dummy5
   ! in
   type(edu_csdms_openmi_ScalarSet_t) :: dummy6
   ! in
   type(edu_csdms_tools_ConfigDialog_t) :: dummy7
   ! in
-  type(edu_csdms_openmi_ElementSet_t) :: dummy8
+  type(edu_csdms_openmi_IScalarSet_t) :: dummy8
   ! in
   type(edu_csdms_tools_PrintQueue_t) :: dummy9
   ! in
@@ -905,7 +904,6 @@ recursive subroutine edu_csdms_models_ROMS_go_mi(self, retval, exception)
   type(edu_csdms_tools_TemplateFiles_t) :: template
   type(edu_csdms_models_ROMS_wrap) :: dp
   character (len=2048) :: input_dir
-  character (len=2048) :: input_file
   character (len=2048) :: site_prefix
   character (len=2048) :: case_prefix
   integer :: ng
@@ -916,8 +914,6 @@ recursive subroutine edu_csdms_models_ROMS_go_mi(self, retval, exception)
   call edu_csdms_models_ROMS__get_data_m(self, dp)
   call getString (dp%d_private_data%userinput, "/ROMS/Input/Dir", ".", &
                   input_dir, exception)
-  call getString (dp%d_private_data%userinput, "/ROMS/Input/File", ".", &
-                  input_file, exception)
   call getString (dp%d_private_data%userinput, "/ROMS/SitePrefix", "", &
                   site_prefix, exception)
   call getString (dp%d_private_data%userinput, "/ROMS/CasePrefix", "", &
@@ -928,53 +924,33 @@ recursive subroutine edu_csdms_models_ROMS_go_mi(self, retval, exception)
                   dt, exception)
   call getDouble (dp%d_private_data%userinput, "/ROMS/Input/Var/RunInterval", 0.0D0, &
                   RunInterval, exception)
-
-  print *, 'Input dir: ', input_dir
-  print *, 'Input File: ', input_file
+  print *, 'ROMS_CMI> ROMS component set as Driver'
+  print *, 'ROMS_CMI> Reading Input: ', input_dir
 
   if (input_dir=="GUI") then
-    input_dir = "."
-    print *, "Input from GUI"
-    call new (template, exception)
-    print *, "Creating new file: ocean.in"
-    call add_file (template, "ROMS_ser_upwelling.in.in", "ocean.in", &
-                   exception)
-    call add_file (template, "ROMS_ser_varinfo.dat.in", "varinfo.dat", &
-                   exception)
-    print *, "Substitute"
-    call substitute (template, dp%d_private_data%userinput, & 
-          "/ROMS/Input/Var/", ".", exception);
     RunInterval = ntimes * dt    
-  else
-    print *, 'Copying varinfo.dat to working directory... '
-    call system("cp " // trim(input_dir) // "/varinfo.dat" // " .") 
-    input_file = trim(input_dir) // "/" // trim(input_file)
-    print *, "Input from File: ", input_file
   endif
 
-  print *, "Reading ", input_file
-  open (stdinp, FILE=input_file, ACTION='read')
-
-  print *, "Initialize ROMS"
+  print *, "ROMS_CMI> Initialize ROMS"
   if (exit_flag.eq.NoError) then
     !dp%d_private_data%first=.TRUE.
     !call ROMS_initialize (dp%d_private_data%first)
-    ROM_CMI_initializeav9vv8cbzw_mi("Null", retval, exception)
+    call ROM_CMI_initializeav9vv8cbzw_mi(self, "Null", retval, exception)
   end if
 
   if (exit_flag.eq.NoError) then
     !print *, "Run ROMS for time steps:", RunInterval
     !call ROMS_run (RunInterval)
-    ROMS_CMI_runwdvzvh87fw3mpjcc_mi(RunInterval, retval, exception)
+    call ROMS_CMI_runwdvzvh87fw3mpjcc_mi(self, RunInterval, retval, exception)
   end if
   
   if (exit_flag.eq.NoError) then
      !print *, 'Finalize ROMS...'
      !call ROMS_finalize()
-     call ROMS_CMI_finalizeeld4zoe74zy_mi(retval, exception)
+     call ROMS_CMI_finalizeeld4zoe74zy_mi(self, retval, exception)
   end if
   
-  print *, "CCA> Done."
+  print *, "ROMS_CMI> Done."
   return
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.go)
 end subroutine edu_csdms_models_ROMS_go_mi
@@ -994,6 +970,8 @@ recursive subroutine ROM_CMI_initializeav9vv8cbzw_mi(self, config_file,        &
   use edu_csdms_models_ROMS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.CMI_initialize.use)
   ! Insert-Code-Here {edu.csdms.models.ROMS.CMI_initialize.use} (use statements)
+  use edu_csdms_tools_TemplateFiles
+  use gov_cca_TypeMap
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.CMI_initialize.use)
   implicit none
   type(edu_csdms_models_ROMS_t) :: self
@@ -1012,12 +990,46 @@ recursive subroutine ROM_CMI_initializeav9vv8cbzw_mi(self, config_file,        &
 ! 
 ! This method has not been implemented
 ! 
+  type(edu_csdms_tools_TemplateFiles_t) :: template
   type(edu_csdms_models_ROMS_wrap) :: dp
+  character (len=2048) :: input_file
+  character (len=2048) :: input_dir
+
+  print *, 'ROMS_CMI> Status: CMI Initialize'
+  call edu_csdms_models_ROMS__get_data_m(self, dp)
+  call getString (dp%d_private_data%userinput, "/ROMS/Input/Dir", ".", &
+                  input_dir, exception)
+  call getString (dp%d_private_data%userinput, "/ROMS/Input/File", ".", &
+                  input_file, exception)
+    
+  print *, 'ROMS_CMI> Input dir: ', trim(input_dir)
+  print *, 'ROMS_CMI> Input File: ', trim(input_file)
+
+  if (input_dir=="GUI") then
+    input_dir = "."
+    print *, "ROMS_CMI> Input from GUI"
+    call new (template, exception)
+    print *, "ROMS_CMI> Creating new file: ocean.in"
+    call add_file (template, "ROMS_ser_upwelling.in.in", "ocean.in", &
+                   exception)
+    call add_file (template, "ROMS_ser_varinfo.dat.in", "varinfo.dat", &
+                   exception)
+    print *, "ROMS_CMI> Substitute"
+    call substitute (template, dp%d_private_data%userinput, &
+          "/ROMS/Input/Var/", ".", exception);
+  else
+    print *, 'ROMS_CMI> Copying varinfo.dat to working directory... '
+    call system("cp " // trim(input_dir) // "/varinfo.dat" // " .")
+    input_file = trim(input_dir) // "/" // trim(input_file)
+    print *, "ROMS_CMI> Input from File: ", trim(input_file)
+  endif
+
+  print *, "ROMS_CMI> Reading ", trim(input_file)
+  open (stdinp, FILE=input_file, ACTION='read')
   
-  print *, "CCA> Initializing ROMS component"
-  dp%d_private_data%first=.TRUE.
-  call ROMS_initialize (dp%d_private_data%first)
-  print *, "CCA> ROMS component initialized"
+  print *, "ROMS_CMI> Initializing ROMS component"
+  call roms_bmi_initialize (config_file)
+  print *, "ROMS_CMI> ROMS component initialized"
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.CMI_initialize)
 end subroutine ROM_CMI_initializeav9vv8cbzw_mi
@@ -1108,9 +1120,9 @@ recursive subroutine ROMS_CMI_runwdvzvh87fw3mpjcc_mi(self, time_interval,      &
 ! 
 ! This method has not been implemented
 
-  print *, "CCA> Run ROMS for time steps:", time_interval
-  call ROMS_run (time_interval)
-  print *, 'CCA> ROMS run finished'
+  print *, "ROMS_CMI> Run ROMS for time steps:", time_interval
+  call roms_bmi_update (time_interval)
+  print *, 'ROMS_CMI> ROMS run finished'
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.CMI_run)
 end subroutine ROMS_CMI_runwdvzvh87fw3mpjcc_mi
@@ -1146,9 +1158,9 @@ recursive subroutine ROMS_CMI_finalizeeld4zoe74zy_mi(self, retval, exception)
 ! This method has not been implemented
 ! 
 
-  print *, 'CCA> ROMS finalizing'
-  call ROMS_finalize()
-  print *, 'CCA> ROMS finalize Done.'
+  print *, 'ROMS_CMI> ROMS finalizing'
+  call roms_bmi_finalize()
+  print *, 'ROMS_CMI> ROMS finalize Done.'
 
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.CMI_finalize)
 end subroutine ROMS_CMI_finalizeeld4zoe74zy_mi
@@ -1219,6 +1231,10 @@ recursive subroutine ROM_CMI_get_values4sh6vju81q_mi(self, long_var_name,      &
   use edu_csdms_models_ROMS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.CMI_get_values.use)
   ! Insert-Code-Here {edu.csdms.models.ROMS.CMI_get_values.use} (use statements)
+  use edu_csdms_tools_IRFPortQueue
+  use edu_csdms_ports_CMIPort
+  use sidl_array_type
+  use sidl_double_array
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.CMI_get_values.use)
   implicit none
   type(edu_csdms_models_ROMS_t) :: self
@@ -1238,15 +1254,148 @@ recursive subroutine ROM_CMI_get_values4sh6vju81q_mi(self, long_var_name,      &
 ! This method has not been implemented
 ! 
 
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.CMI_get_values)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.CMI_get_values)
+  character(len=100) :: rank_chr
+  character(len=20) :: short_name
+  integer :: rank, i
+  double precision, pointer :: array_1d(:)
+  !double precision, pointer :: array_1d_ptr 
+  double precision, pointer :: array_2d(:,:)
+  double precision, pointer :: array_3d(:, :, :)
+  double precision, pointer :: array_4d(:, :, :, :)
+  integer(selected_int_kind(9)) :: array_len, dimensn
+  integer (selected_int_kind(9)), dimension(:), allocatable :: low, up, strd
+  type(sidl_double_1d) :: double_1d
+  type(sidl_double_2d) :: double_2d
+  type(sidl_double_3d) :: double_3d
+  type(sidl_double_4d) :: double_4d
+  double precision :: val
+  integer (selected_int_kind(8))    :: indx, n, len_ref
+  real (selected_real_kind(17,308)), dimension(1) :: refarray
+  integer (selected_int_kind(8)), dimension(3)    :: l, u, s
+  integer (selected_int_kind(8))    :: ind, j, k
+
+  call flush() 
+  print *, 'ROMS cmi> get rank'
+  call flush() 
+  call roms_get_var_rank(trim(long_var_name), rank_chr)
+  read (rank_chr,'(I10)') rank
+  call roms_get_var_name(trim(long_var_name), short_name)
+  print *, "ROMS_CMI> Getting array at the bmi level for ROMS for ", trim(long_var_name), ". Short name: ", trim(short_name), ". Array rank: ", rank
+  call flush()
+  select case(rank)
+        case(1)
+            call roms_get_1D_double(trim(short_name), array_1d)
+            array_len=size(array_1d)
+            !print *, "ROMS_CMI> Size of the array: "
+            !print*, array_len
+            allocate(low(1))
+            allocate(up(1))
+            allocate(strd(1))
+            dimensn=1
+            low(1)=lbound(array_1d, 1)
+            up(1)=ubound(array_1d, 1)
+            strd(1)=1
+            !print *, shape(array_1d)
+            !print *, array_1d
+            ! This method creates a proxy SIDL multi-dimensional array using data provided by a third party
+            ! Converting a double 1d array to a sidl double array
+            call sidl_double__array_borrow_m(array_1d(1), dimensn, low, up, strd, double_1d)
+
+            call cast(double_1d, retval)
+            deallocate(low, up, strd)
+        case(2)
+            call roms_get_2D_double(trim(short_name), array_2d)
+            array_len=size(array_2d)
+            !print *, "ROMS_CMI> Size of the array: "
+            !print*, array_len
+            dimensn=2
+            
+            allocate(low(dimensn))
+            do n=1,dimensn
+                low(n)=lbound(array_2d, n)
+            end do 
+            
+            allocate(up(dimensn))
+            do n=1,dimensn
+                up(n)=ubound(array_2d, n)
+            end do
+            
+            allocate(strd(dimensn))
+            strd(1)=1
+            strd(2)= 1*size(array_2d, 1)
+            !print *, array_2d
+            
+            call sidl_double__array_borrow_m(array_2d(1, 1), dimensn, low, up, strd, double_2d)
+ 
+            !call sidl_double__array_length_m(double_1d, lenn)
+            call cast(double_2d, retval)
+            deallocate(low, up, strd)
+        case(3)
+            call roms_get_3D_double(trim(short_name), array_3d)
+            array_len=size(array_3d)
+            !print *, "ROMS_CMI> Size of the array: "
+            !print*, array_len
+            call flush()
+            dimensn=3
+
+            allocate(low(dimensn))
+            do n=1,dimensn
+                low(n)=lbound(array_3d, n)
+            end do
+
+            allocate(up(dimensn))
+            do n=1,dimensn
+                up(n)=ubound(array_3d, n)
+            end do
+            
+            allocate(strd(dimensn))
+            strd(1)=1
+            strd(2)= 1*size(array_3d, 1)
+            strd(3)= strd(2)*size(array_3d, 2)
+            !print *, shape(array_3d)
+            !print *, array_3d(low(1), low(2), up(3))
+            call flush()
+            call sidl_double__array_borrow_m(array_3d(low(1), low(2), low(3)), dimensn, low, up, strd, double_3d)
+            !call sidl_double__array_length_m(double_1d, lenn)
+            call cast(double_3d, retval)
+            deallocate(low, up, strd)
+        case(4)
+            call roms_get_4D_double(trim(short_name), array_4d)
+            array_len=size(array_4d)
+            !print *, "ROMS_CMI> Size of the array: "
+            !print*, array_len
+            dimensn=4
+
+            allocate(low(dimensn))
+            do n=1,dimensn
+                low(n)=lbound(array_4d, n)
+            end do
+            
+            allocate(up(dimensn))
+            do n=1,dimensn
+                up(n)=ubound(array_4d, n)
+            end do
+
+            allocate(strd(dimensn))
+            strd(1)=1
+            strd(2)= 1*size(array_4d, 1)
+            strd(3)= strd(2)*size(array_4d, 2)
+            strd(4)= strd(3)*size(array_4d, 3)
+            
+            !print *, shape(array_4d)
+            !print *, array_4d(low(1), low(2), low(3), up(4))
+            call flush()
+            call sidl_double__array_borrow_m(array_4d(low(1), low(2), low(3), low(4)), dimensn, low, up, strd, double_4d)
+            !call sidl_double__array_length_m(double_1d, lenn)
+            call cast(double_4d, retval)
+            deallocate(low, up, strd)
+        case default
+            print *, 'ROMS_CMI> Error in fetching the value for the requested variable: ', long_var_name
+            !return_value = -1
+        end select
+  print *, "ROMS_CMI> Done, returning from get_values"
+  call flush()
+
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.CMI_get_values)
 end subroutine ROM_CMI_get_values4sh6vju81q_mi
 
@@ -2748,6 +2897,7 @@ recursive subroutine ROM_get_raster_res39vivwsrmq_mi(self, val_string, retval, &
   use edu_csdms_models_ROMS_impl
   ! DO-NOT-DELETE splicer.begin(edu.csdms.models.ROMS.get_raster_res.use)
   ! Insert-Code-Here {edu.csdms.models.ROMS.get_raster_res.use} (use statements)
+
   ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_raster_res.use)
   implicit none
   type(edu_csdms_models_ROMS_t) :: self
@@ -2767,15 +2917,6 @@ recursive subroutine ROM_get_raster_res39vivwsrmq_mi(self, val_string, retval, &
 ! This method has not been implemented
 ! 
 
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.ROMS.get_raster_res)
-  type(sidl_BaseInterface_t) :: throwaway
-  type(sidl_NotImplementedException_t) :: notImpl
-  call new(notImpl, exception)
-  call setNote(notImpl, 'Not Implemented', exception)
-  call cast(notImpl, exception,throwaway)
-  call deleteRef(notImpl,throwaway)
-  return
-  ! DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.ROMS.get_raster_res)
 ! DO-NOT-DELETE splicer.end(edu.csdms.models.ROMS.get_raster_res)
 end subroutine ROM_get_raster_res39vivwsrmq_mi
 
