@@ -22,6 +22,7 @@
 #include "sidl_ClassInfo_fAbbrev.h"
 #include "sidl_BaseClass_fAbbrev.h"
 #include "edu_csdms_tools_PrintQueue_fAbbrev.h"
+#include "edu_csdms_openmi_IScalarSet_fAbbrev.h"
 #include "gov_cca_Component_fAbbrev.h"
 #include "sidl_BaseInterface_fAbbrev.h"
 #include "edu_csdms_tools_IRFPortQueue_fAbbrev.h"
@@ -30,15 +31,13 @@
 #include "edu_csdms_tools_ConfigDialog_fAbbrev.h"
 #include "edu_csdms_models_chesROMS_fAbbrev.h"
 #include "gov_cca_CCAException_fAbbrev.h"
-#include "edu_csdms_openmi_ElementType_fAbbrev.h"
 #include "sidl_RuntimeException_fAbbrev.h"
 #include "gov_cca_Services_fAbbrev.h"
-#include "edu_csdms_openmi_ElementMapper_fAbbrev.h"
 #include "edu_csdms_tools_Verbose_fAbbrev.h"
 #include "gov_cca_ComponentRelease_fAbbrev.h"
 #include "edu_csdms_openmi_ScalarSet_fAbbrev.h"
+#include "edu_csdms_openmi_ValueSet_fAbbrev.h"
 #include "gov_cca_ports_GoPort_fAbbrev.h"
-#include "edu_csdms_openmi_ElementSet_fAbbrev.h"
 #include "sidl_double_fAbbrev.h"
 #include "sidl_int_fAbbrev.h"
 #include "sidl_string_fAbbrev.h"
@@ -636,14 +635,14 @@ recursive subroutine boccaForceUsePortIoqcioir79q_mi(self, dummy0, dummy1,     &
   dummy2, dummy3, dummy4, dummy5, dummy6, dummy7, dummy8, dummy9, exception)
   use sidl
   use sidl_NotImplementedException
-  use edu_csdms_openmi_ElementType
+  use edu_csdms_openmi_IScalarSet
+  use edu_csdms_ports_CMIPort
   use gov_cca_ports_ParameterPortFactory
   use sidl_BaseInterface
   use sidl_RuntimeException
   use edu_csdms_models_chesROMS
-  use edu_csdms_openmi_ElementMapper
-  use edu_csdms_openmi_ElementSet
   use edu_csdms_openmi_ScalarSet
+  use edu_csdms_openmi_ValueSet
   use edu_csdms_tools_ConfigDialog
   use edu_csdms_tools_IRFPortQueue
   use edu_csdms_tools_PrintQueue
@@ -658,21 +657,21 @@ recursive subroutine boccaForceUsePortIoqcioir79q_mi(self, dummy0, dummy1,     &
   ! in
   type(gov_cca_ports_ParameterPortFactory_t) :: dummy0
   ! in
-  integer (kind=sidl_enum) :: dummy1
+  type(edu_csdms_tools_TemplateFiles_t) :: dummy1
   ! in
-  type(edu_csdms_tools_TemplateFiles_t) :: dummy2
+  type(edu_csdms_tools_IRFPortQueue_t) :: dummy2
   ! in
-  type(edu_csdms_tools_IRFPortQueue_t) :: dummy3
+  type(edu_csdms_tools_Verbose_t) :: dummy3
   ! in
-  type(edu_csdms_tools_Verbose_t) :: dummy4
+  type(edu_csdms_openmi_ValueSet_t) :: dummy4
   ! in
-  type(edu_csdms_openmi_ElementMapper_t) :: dummy5
+  type(edu_csdms_ports_CMIPort_t) :: dummy5
   ! in
   type(edu_csdms_openmi_ScalarSet_t) :: dummy6
   ! in
   type(edu_csdms_tools_ConfigDialog_t) :: dummy7
   ! in
-  type(edu_csdms_openmi_ElementSet_t) :: dummy8
+  type(edu_csdms_openmi_IScalarSet_t) :: dummy8
   ! in
   type(edu_csdms_tools_PrintQueue_t) :: dummy9
   ! in
