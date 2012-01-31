@@ -3,8 +3,8 @@
   <tab name="Project">
     <entry name="/LTRANS/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/ltrans/sabgom_roms}</help_brief>
-      <default>GUI</default>
+      <help_brief>Path to input files. {cb;GUI;/home/csdms/sims/ltrans/macroms/ltransv2/LTRANS.data;/data/sims/ltrans/sabgom_roms}</help_brief>
+      <default>/home/csdms/sims/ltrans/macroms/ltransv2/LTRANS.data</default>
       <type>String</type>
     </entry>
 
@@ -25,7 +25,7 @@
     <entry name="/LTRANS/Input/Var/numpar">
       <label>Number of particles:</label>
       <help_brief>Number of Lagrangian particles to track</help_brief>
-      <default>10000</default>
+      <default>500</default>
       <type>Int</type>
       <range>
         <min>1</min>
@@ -36,40 +36,51 @@
     <entry name="/LTRANS/Input/Var/parfile">
       <label>Initial particle location filename:</label>
       <help_brief>Initial particle location filename</help_brief>
-      <default>initial_part_location.csv</default>
+      <default>/home/csdms/models/ltrans/3.5/input/initial_part_location.csv</default>
       <type>String</type>
     </entry>
 
     <entry name="/LTRANS/Input/Var/days">
       <label>Number of days to run model:</label>
       <help_brief>Number of days to run the model</help_brief>
-      <default>100.0</default>
+      <default>10.0</default>
       <type>Float</type>
       <range>
         <min>1.0</min>
-        <max>1e3</max>
+        <max>100.0</max>
+      </range>
+    </entry>
+
+    <entry name="/LTRANS/Input/Var/iprint">
+      <label>Print interval for LTRANS output:</label>
+      <help_brief>Print interval for LTRANS output (e.g. 3600 = every hour) [seconds]</help_brief>
+      <default>3600</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>1000000</max>
       </range>
     </entry>
 
     <entry name="/LTRANS/Input/Var/idt">
       <label>Particle tracking (internal) timestep:</label>
       <help_brief>Particle tracking (internal) timestep [seconds]</help_brief>
-      <default>300.0</default>
-      <type>Float</type>
+      <default>120</default>
+      <type>Int</type>
       <range>
-        <min>1.0</min>
-        <max>1e4</max>
+        <min>1</min>
+        <max>10000</max>
       </range>
     </entry>
 
     <entry name="/LTRANS/Input/Var/dt">
       <label>Hydrodynamic model (external) timestep:</label>
       <help_brief>Hydrodynamic model timestep (e.g. time betweem ROMS model predictions) [seconds]</help_brief>
-      <default>3600.0</default>
-      <type>Float</type>
+      <default>1800</default>
+      <type>Int</type>
       <range>
-        <min>1.0</min>
-        <max>1e6</max>
+        <min>1</min>
+        <max>1000000</max>
       </range>
     </entry>
   </tab>
@@ -78,36 +89,44 @@
 
     <entry name="/LTRANS/Input/Var/NCgridfile">
       <label>ROMS NetCDF model grid filename:</label>
-      <help_brief>ROMS NetCDF model grid filename (Use the full path) </help_brief>
-      <default>'http://geoport.whoi.edu/thredds/dodsC/usgs/data1/csherwood/sabgomx/sabgomXhisX0001.nc'</default>
+      <help_brief>ROMS NetCDF model grid filename </help_brief>
+      <default>/home/csdms/models/ltrans/3.5/input/CPB_GRID_wUV.nc</default>
       <type>String</type>
     </entry>
 
+   <entry name="/LTRANS/Input/Var/isStandalone">
+      <label>Run LTRANS as a standalone model:</label>
+      <help_brief>Run LTRANS as a standalone model, set the following properties {FALSE;TRUE}</help_brief>
+      <default>FALSE</default>
+      <type>String</type>
+    </entry>
+
+
     <entry name="/LTRANS/Input/Var/prefix">
       <label>ROMS NetCDF input filename prefix:</label>
-      <help_brief>ROMS NetCDF input filename prefix (Use the full path) </help_brief>
-      <default>'http://geoport.whoi.edu/thredds/dodsC/usgs/data1/csherwood/sabgomx/sabgomXhis'</default>
+      <help_brief>ROMS NetCDF input filename prefix (Use the full path in quotes) {cb;Not Set;/home/csdms/models/ltrans/3.5/input/y95hdr_}</help_brief>
+      <default>Not Set</default>
       <type>String</type>
     </entry>
 
     <entry name="/LTRANS/Input/Var/suffix">
       <label>ROMS NetCDF input filename suffix:</label>
-      <help_brief>ROMS NetCDF input filename suffix </help_brief>
-      <default>'.nc'</default>
+      <help_brief>ROMS NetCDF input filename suffix {cb;Not Set;.nc}</help_brief>
+      <default>Not Set</default>
       <type>String</type>
     </entry>
 
     <entry name="/LTRANS/Input/Var/filenum">
       <label>Number string for First NetCDF input filename:</label>
-      <help_brief>Number string for First NetCDF input filename </help_brief>
-      <default>0001</default>
+      <help_brief>Number string for First NetCDF input filename {cb;Not Set;182}</help_brief>
+      <default>Not Set</default>
       <type>String</type>
     </entry>
 
     <entry name="/LTRANS/Input/Var/numdigits">
       <label>Number of digits in number portion of filename:</label>
-      <help_brief>Number of digits in number portion of filename (with leading zeros) </help_brief>
-      <default>4</default>
+      <help_brief>Number of digits in number portion of filename (with leading zeros) {cb;3;4;5;6;7;8;9;10}</help_brief>
+      <default>3</default>
       <type>Int</type>
       <range>
         <min>3</min>
@@ -117,20 +136,20 @@
 
     <entry name="/LTRANS/Input/Var/startfile">
       <label>Switch to indicate this is the first file:</label>
-      <help_brief>Switch to indicate this is the first file [.TRUE. or .FALSE.] </help_brief>
-      <default>.TRUE.</default>
+      <help_brief>Switch to indicate this is the first file [.TRUE. or .FALSE.] {.FALSE.;.TRUE.}</help_brief>
+      <default>.FALSE.</default>
       <type>String</type>
     </entry>
 
-    <entry name="/LTRANS/Input/Var/modanum">
+    <!--entry name="/LTRANS/Input/Var/modanum">
       <label>Switch to indicate ?????:</label>
       <help_brief>Switch to indicate ????? [.TRUE. or .FALSE.] </help_brief>
       <default>.FALSE.</default>
       <type>String</type>
-    </entry>
+    </entry-->
   </tab>
 
-  <tab name="ROMS Grid">
+  <!--tab name="ROMS Grid">
 
     <entry name="/LTRANS/Input/Var/ui">
       <label>U-grid dimension in x direction:</label>
@@ -274,13 +293,13 @@
         <max>1000000</max>
       </range>
     </entry>
-  </tab>
+  </tab-->
 
   <tab name="ROMS">
     <entry name="/LTRANS/Input/Var/us">
       <label>Number of RHO grid s-levels in ROMS hydro model:</label>
       <help_brief>Number of RHO grid s-levels in ROMS hydro model </help_brief>
-      <default>36</default>
+      <default>20</default>
       <type>Int</type>
       <range>
         <min>1</min>
@@ -291,7 +310,7 @@
     <entry name="/LTRANS/Input/Var/ws">
       <label>Number of W grid s-levels in ROMS hydro model:</label>
       <help_brief>Number of W grid s-levels in ROMS hydro model </help_brief>
-      <default>37</default>
+      <default>21</default>
       <type>Int</type>
       <range>
         <min>1</min>
@@ -302,7 +321,7 @@
     <entry name="/LTRANS/Input/Var/tdim">
       <label>Number of timesteps per ROMS hydro predictions file:</label>
       <help_brief>Number of timesteps per ROMS hydro predictions file </help_brief>
-      <default>24</default>
+      <default>144</default>
       <type>Int</type>
       <range>
         <min>1</min>
@@ -313,17 +332,17 @@
     <entry name="/LTRANS/Input/Var/hc">
       <label>Min depth used in ROMS S-level transformations:</label>
       <help_brief>Min depth used in ROMS S-level transformations </help_brief>
-      <default>5.0</default>
+      <default>0.2</default>
       <type>Float</type>
       <range>
-        <min>1.0</min>
+        <min>0.1</min>
         <max>500.0</max>
       </range>
     </entry>
     <entry name="/LTRANS/Input/Var/z0">
       <label>ROMS bed roughness parameter:</label>
       <help_brief>ROMS bed roughness parameter </help_brief>
-      <default>0.02</default>
+      <default>0.0005</default>
       <type>Float</type>
       <range>
         <min>1e-4</min>
@@ -331,13 +350,13 @@
       </range>
     </entry>
 
-    <entry name="/LTRANS/Input/Var/UVmaskEdit">
+    <!--entry name="/LTRANS/Input/Var/UVmaskEdit">
       <label>Switch to use U and V masks for boundary module:</label>
       <help_brief> If TRUE, adjust U and V masks to add extra wet U and V elements.
                    If FALSE, adjust RHO mask to change the boundaries and cut off.</help_brief>
       <default>.FALSE.</default>
       <type>String</type>
-    </entry>
+    </entry-->
 
     <entry name="/LTRANS/Input/Var/Vtransform">
       <label>Choice of vertical transformation equation:</label>
@@ -398,7 +417,7 @@
     <entry name="/LTRANS/Input/Var/readDens">
       <label>Read water density from netCDF file (.TRUE.) or use constDens (.FALSE.):</label>
       <help_brief>Read water density from netCDF file (.TRUE.) or use constDens (.FALSE.) </help_brief>
-      <default>.TRUE.</default>
+      <default>.FALSE.</default>
       <type>String</type>
     </entry>
 
@@ -499,7 +518,7 @@
       <help_brief>Choice of behavior type [0=Passive, 1=Near-surface, 2=Near-bottom,
                   3=DVM, 4=C.virginica oyster larvae, 5=C.ariakensis oyster larvae,
                   6=constant, 7=Tidal stream transport, 8=oil droplets] </help_brief>
-      <default>8</default>
+      <default>0</default>
       <type>Int</type>
       <range>
         <min>0</min>
@@ -514,10 +533,17 @@
       <type>String</type>
     </entry>
 
+    <entry name="/LTRANS/Input/Var/mortality">
+      <label>Switch to set if particles can die:</label>
+      <help_brief>.TRUE. if particles can die; else .FALSE. </help_brief>
+      <default>.TRUE.</default>
+      <type>String</type>
+    </entry>
+
     <entry name="/LTRANS/Input/Var/deadage">
       <label>Age at which particle stops moving (i.e. dies):</label>
       <help_brief>Age at which particle stops moving (i.e. dies) [seconds] (applies to all behavior types) </help_brief>
-      <default>5184000</default>
+      <default>691200</default>
       <type>Int</type>
       <range>
         <min>1</min>
@@ -528,7 +554,7 @@
     <entry name="/LTRANS/Input/Var/pediage">
       <label>Age when particle reaches max swim speed and can settle:</label>
       <help_brief> Age when particle reaches max swim speed and can settle [seconds] </help_brief>
-      <default>103680</default>
+      <default>345600</default>
       <type>Int</type>
       <range>
         <min>1</min>
@@ -539,29 +565,29 @@
     <entry name="/LTRANS/Input/Var/swimstart">
       <label>Age that swimming or sinking begins:</label>
       <help_brief>Age that swimming or sinking begins [seconds] </help_brief>
-      <default>0</default>
-      <type>Int</type>
+      <default>0.0</default>
+      <type>Float</type>
       <range>
-        <min>1</min>
-        <max>1000000000</max>
+        <min>0.0</min>
+        <max>1e9</max>
       </range>
     </entry>
 
     <entry name="/LTRANS/Input/Var/swimslow">
       <label>Swimming speed when particles begin to swim:</label>
       <help_brief>Swimming speed when particles begin to swim [m/s] </help_brief>
-      <default>0.00025</default>
+      <default>0.005</default>
       <type>Float</type>
       <range>
         <min>0.0</min>
-        <max>1e-6</max>
+        <max>1.0</max>
       </range>
     </entry>
 
     <entry name="/LTRANS/Input/Var/swimfast">
       <label>Maximum swimming speed:</label>
       <help_brief>Maximum swimming speed [m/s] </help_brief>
-      <default>0.003</default>
+      <default>0.043</default>
       <type>Float</type>
       <range>
         <min>0.0</min>
@@ -583,10 +609,10 @@
     <entry name="/LTRANS/Input/Var/sink">
       <label>Sinking velocity for behavior type 6:</label>
       <help_brief>Sinking velocity for behavior type 6 only </help_brief>
-      <default>0.0006</default>
+      <default>-0.0003</default>
       <type>Float</type>
       <range>
-        <min>0.0</min>
+        <min>-1.0</min>
         <max>1.0</max>
       </range>
     </entry>
@@ -594,7 +620,7 @@
     <entry name="/LTRANS/Input/Var/Hswimspeed">
       <label>Horizontal swimming speed for behavior type 7:</label>
       <help_brief>Horizontal swimming speed for behavior type 7 (Tidal Stream Transport) [m/s] </help_brief>
-      <default>0.0</default>
+      <default>0.9</default>
       <type>Float</type>
       <range>
         <min>0.0</min>
@@ -693,14 +719,14 @@
     <entry name="/LTRANS/Input/Var/holesExist">
       <label>Switch to allow holes in habitat:</label>
       <help_brief>Switch to allow holes in habitat [.TRUE. or .FALSE.] </help_brief>
-      <default>.FALSE.</default>
+      <default>.TRUE.</default>
       <type>String</type>
     </entry>
 
     <entry name="/LTRANS/Input/Var/habitatfile">
       <label>Habitat polygon filename:</label>
       <help_brief>Habitat polygon filename </help_brief>
-      <default>sample_habitat_edges.csv</default>
+      <default>'/home/csdms/models/ltrans/3.5/input/sample_habitat_edges.csv'</default>
       <type>String</type>
     </entry>
 
@@ -740,7 +766,7 @@
     <entry name="/LTRANS/Input/Var/holefile">
       <label>Holes in habitat filename:</label>
       <help_brief>Holes in habitat filename </help_brief>
-      <default>sample_habitat_holes.csv</default>
+      <default>'/home/csdms/models/ltrans/3.5/input/sample_habitat_holes.csv'</default>
       <type>String</type>
     </entry>
 
@@ -778,7 +804,7 @@
     </entry>
   </tab>
 
-  <tab name="Oil">
+  <!--tab name="Oil">
 
     <entry name="/LTRANS/Input/Var/interfacial">
       <label>Interfacial tension for oil [N/m]:</label>
@@ -819,24 +845,20 @@
         <max>1e-3</max>
       </range>
     </entry>
-  </tab>
+  </tab-->
 
   <tab name="Mapping">
 
-    <entry name="/LTRANS/Input/Var/Earth_Radius">
-      <label>Equatorial radius of the Earth [m]:</label>
-      <help_brief>Equatorial radius of the Earth [m] </help_brief>
-      <default>6378000</default>
-      <type>Float</type>
-      <range>
-        <min>6377000</min>
-        <max>6379000</max>
-      </range>
-    </entry>
-
-    <entry name="/LTRANS/Input/Var/MercatorProjection">
+    <!--entry name="/LTRANS/Input/Var/MercatorProjection">
       <label>Switch to use Mercator projection from SEAGRID:</label>
       <help_brief>Switch to use Mercator projection from SEAGRID [.TRUE. or .FALSE.] </help_brief>
+      <default>.FALSE.</default>
+      <type>String</type>
+    </entry-->
+
+    <entry name="/LTRANS/Input/Var/SphericalProjection">
+      <label>Switch to use Spherical Projection from ROMS:</label>
+      <help_brief>Switch to use Spherical Projection from ROMS [.TRUE. or .FALSE.] </help_brief>
       <default>.TRUE.</default>
       <type>String</type>
     </entry>
@@ -844,22 +866,22 @@
     <entry name="/LTRANS/Input/Var/latmin">
       <label>Minimum latitude value:</label>
       <help_brief>Minimum latitude value (only used if Mercator switch is FALSE) </help_brief>
-      <default>30.0</default>
-      <type>Float</type>
+      <default>30</default>
+      <type>Int</type>
       <range>
-        <min>-90.0</min>
-        <max>90.0</max>
+        <min>-90</min>
+        <max>90</max>
       </range>
     </entry>
 
     <entry name="/LTRANS/Input/Var/lonmin">
       <label>Minimum longitude value:</label>
       <help_brief>Minimum longitude value (only used if Mercator switch is FALSE) </help_brief>
-      <default>-134.0</default>
-      <type>Float</type>
+      <default>-134</default>
+      <type>Int</type>
       <range>
-        <min>-180.0</min>
-        <max>180.0</max>
+        <min>-180</min>
+        <max>180</max>
       </range>
     </entry>
 
@@ -867,7 +889,7 @@
       <label>Equatorial radius of the Earth [m]:</label>
       <help_brief>Equatorial radius of the Earth [m] </help_brief>
       <default>6378000</default>
-      <type>Float</type>
+      <type>Int</type>
       <range>
         <min>6377000</min>
         <max>6379000</max>
@@ -899,10 +921,21 @@
       </range>
     </entry>
 
+    <entry name="/LTRANS/Input/Var/ErrorFlag">
+      <label>Options to do if an error occurs:</label>
+      <help_brief>0=stop, 1=return particle to previous location,2=kill particle and stop tracking,3=set particle out of bounds and stop tracking. Note: Options 1-3 will output information to ErrorLog.txt </help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>3</max>
+      </range>
+    </entry>
+
     <entry name="/LTRANS/Input/Var/BoundaryBLNs">
       <label>Switch to create Surfer Blanking Files of boundaries:</label>
       <help_brief>Switch to create Surfer Blanking Files of boundaries [.TRUE. or .FALSE.] </help_brief>
-      <default>.FALSE.</default>
+      <default>.TRUE.</default>
       <type>String</type>
     </entry>
 
@@ -910,6 +943,27 @@
       <label>Switch to compute salinity and temp. at particle location:</label>
       <help_brief>Switch to compute salinity and temp. at particle location [.TRUE. or .FALSE.] </help_brief>
       <default>.FALSE.</default>
+      <type>String</type>
+    </entry>
+
+    <entry name="/LTRANS/Input/Var/TrackCollisions">
+      <label>Switch to write Bottom and Land Hit Files:</label>
+      <help_brief> [.TRUE.=yes, .FALSE.=no] </help_brief>
+      <default>.TRUE.</default>
+      <type>String</type>
+    </entry>
+
+    <entry name="/LTRANS/Input/Var/WriteHeaders">
+      <label>Switch to write .txt files with column headers:</label>
+      <help_brief>[.TRUE.=yes, .FALSE.=no] </help_brief>
+      <default>.TRUE.</default>
+      <type>String</type>
+    </entry>
+
+    <entry name="/LTRANS/Input/Var/WriteModelTiming">
+      <label>Switch to write .csv file with model timing data:</label>
+      <help_brief> [.TRUE.=yes, .FALSE.=no] </help_brief>
+      <default>.TRUE.</default>
       <type>String</type>
     </entry>
 
@@ -930,39 +984,28 @@
     <entry name="/LTRANS/Input/Var/outpath">
       <label>Output directory:</label>
       <help_brief>Output directory</help_brief>
-      <default>./output/</default>
+      <default>./ltrans_output/</default>
       <type>String</type>
     </entry>
 
     <entry name="/LTRANS/Input/Var/NCOutFile">
       <label>LTRANS output file (netCDF):</label>
       <help_brief>LTRANS output file (netCDF)</help_brief>
-      <default>output.nc</default>
+      <default>NCOutFile</default>
       <type>String</type>
-    </entry>
-
-    <entry name="/LTRANS/Input/Var/iprint">
-      <label>Print interval for LTRANS output:</label>
-      <help_brief>Print interval for LTRANS output (e.g. 3600 = every hour) [seconds]</help_brief>
-      <default>3600.0</default>
-      <type>Float</type>
-      <range>
-        <min>1.0</min>
-        <max>1e6</max>
-      </range>
     </entry>
 
     <entry name="/LTRANS/Input/Var/outpathGiven">
       <label>Switch to use output directory:</label>
       <help_brief>Switch to use output directory [.TRUE. or .FALSE.] </help_brief>
-      <default>.FALSE.</default>
+      <default>.TRUE.</default>
       <type>String</type>
     </entry>
 
     <entry name="/LTRANS/Input/Var/writeCSV">
       <label>Switch to write output to CSV files:</label>
       <help_brief>Switch to write output to CSV files [.TRUE. or .FALSE.] </help_brief>
-      <default>.FALSE.</default>
+      <default>.TRUE.</default>
       <type>String</type>
     </entry>
 
@@ -972,6 +1015,18 @@
       <default>.TRUE.</default>
       <type>String</type>
     </entry>
+
+    <entry name="/LTRANS/Input/Var/NCtime">
+      <label>Time interval between creation of new NetCDF output files (seconds):</label>
+      <help_brief>Setting this to 0 will result in just one large output file </help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>100000000</max>
+      </range>
+    </entry>
+
   </tab>
 
 <!-- ====================================================================== -->
