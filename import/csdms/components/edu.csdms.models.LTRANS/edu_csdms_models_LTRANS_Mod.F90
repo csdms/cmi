@@ -23,7 +23,7 @@ module edu_csdms_models_LTRANS_impl
 ! Insert use statements here...
   use mod_bmi
   use param_mod, only : days,dt
-  use mod_ltrans, only : p
+  use mod_ltrans, only : run_LTRANS, p
   use edu_csdms_tools_IRFPortQueue
 
 ! Bocca generated code. bocca.protected.begin(edu.csdms.models.LTRANS.use)
@@ -53,31 +53,8 @@ module edu_csdms_models_LTRANS_impl
   character (len=2048) :: cmi_status
   character (len=2048) :: CMI_PORT_NAMES = "Ocean"
 
-  !  ng variable name array
-  character(len=100), dimension(22) :: long_var_names
-  !long_var_names(1) = "s_coordinate_stretching_curves_at_rho_points"
-  !long_var_names(2) = "s_coordinate_stretching_curves_at_w_points"
-  !long_var_names(3) = "s_coordinate_independent_variable_at_vertical_rho_points"
-  !long_var_names(4) = "s_coordinate_independent_variable_at_vertical_w_points"
-  !long_var_names(5) = "cmi_angle_between_xi_axis_and_east"
-  !long_var_names(6) = "bathymetry_at_rho_points"
-  !long_var_names(7) = "latitude_of_rho_points"
-  !long_var_names(8) = "latitude_of_u_points"
-  !long_var_names(9) = "latitude_of_v_points"
-  !long_var_names(10) = "longitude_of_rho_points"
-  !long_var_names(11) = "longitude_of_u_points"  
-  !long_var_names(12) = "longitude_of_v_points"
-  !long_var_names(13) = "mask_on_rho_points"
-  !long_var_names(14) = "mask_on_u_points"
-  !long_var_names(15) = "mask_on_v_points"
-  !long_var_names(16) = "free_surface"
-  !long_var_names(17) = "vertical_momentum_component"
-  !long_var_names(18) = "u_momentum_component"
-  !long_var_names(19) = "v_momentum_component"
-  !long_var_names(20) = "salinity_vertical_diffusion_coefficient"
-  !long_var_names(21) = "salinity"
-  !long_var_names(22) = "potential_temperature"
-
+  ! variable name array
+  character(len=100), dimension(11) :: long_var_names
 
 ! Bocca generated code. bocca.protected.begin(edu.csdms.models.LTRANS.private_data)
   ! Handle to framework Services object
