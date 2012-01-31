@@ -25,9 +25,13 @@ USE mod_param, only : Ngrids
 USE mod_kinds, only : r8
 USE mod_iounits, only : stdinp
 USE mod_scalars, only : ntstart, ntend, exit_flag, NoError
-USE ocean_control_mod, only : ROMS_initialize
-USE ocean_control_mod, only : ROMS_run
-USE ocean_control_mod, only : ROMS_finalize
+use roms_mod_bmi_vars
+use roms_mod_bmi
+use edu_csdms_tools_IRFPortQueue
+
+!USE ocean_control_mod, only : ROMS_initialize
+!USE ocean_control_mod, only : ROMS_run
+!USE ocean_control_mod, only : ROMS_finalize
 
 ! Bocca generated code. bocca.protected.begin(edu.csdms.models.ROMS.use)
   ! CCA framework services module
@@ -49,6 +53,8 @@ USE ocean_control_mod, only : ROMS_finalize
 ! Insert user's private data here.
    type(gov_cca_TypeMap_t) :: userinput
    logical :: first
+
+   character (len=2048) :: cmi_status
 
 !  integer, dimension(Ngrids) :: Tstr
 !  integer, dimension(Ngrids) :: Tend
