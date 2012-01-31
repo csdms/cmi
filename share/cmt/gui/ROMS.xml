@@ -3,43 +3,29 @@
   <tab name="Project">
     <entry name="/ROMS/Input/Dir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb+bb;GUI;/home/csdms/sims/roms/upwelling;/home/csdms/sims/roms/cbofs2/input/}</help_brief>
-      <default>GUI</default>
+      <help_brief>Path to input files. {cb+bb;GUI;/home/csdms/sims/ltrans/macroms;/home/csdms/sims/roms/upwelling;/home/csdms/sims/roms/cbofs2/input/}</help_brief>
+      <default>/home/csdms/sims/ltrans/macroms</default>
       <type>String</type>
     </entry>
     
     <entry name="/ROMS/Input/File">
       <label>Input File name: </label>
       <help_brief>Name of input file.</help_brief>
-      <default>ocean.in</default>
+      <default>macroms.in</default>
       <type>String</type>
     </entry>
     
-    <entry name="/ROMS/SitePrefix">
-      <label>Site prefix:</label>
-      <help_brief>Site prefix for input/output files.</help_brief>
-      <default>upwelling</default>
-      <type>String</type>
-    </entry>
-
-    <entry name="/ROMS/CasePrefix">
-      <label>Case prefix:</label>
-      <help_brief>Case prefix for input/output files.</help_brief>
-      <default>test</default>
-      <type>String</type>
-    </entry>
-
     <entry name="/ROMS/Input/Var/Title">
       <label>ROMS application title:</label>
       <help_brief>ROMS application title</help_brief>
-      <default>Wind-Driven Upwelling/Downwelling over a Periodic Channel</default>
+      <default>Mid-Atlantic, Chesapeake Bay and Delaware Bay Regional Ocean Model</default>
       <type>String</type>
     </entry>
 
     <entry name="/ROMS/Input/Var/MyAppCPP">
       <label>C-preprocessing flag:</label>
       <help_brief>C-preprocessing flag</help_brief>
-      <default>UPWELLING</default>
+      <default>MACROMS</default>
       <type>String</type>
     </entry>
 
