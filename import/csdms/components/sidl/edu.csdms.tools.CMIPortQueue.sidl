@@ -1,0 +1,89 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.comment)
+        
+// Insert-UserCode-Here {edu.csdms.tools.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.comment)
+        package tools version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.CMIPortQueue.comment)
+            
+// Insert-UserCode-Here {edu.csdms.tools.CMIPortQueue.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.CMIPortQueue.comment)
+            class CMIPortQueue 
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.CMIPortQueue.methods)
+                
+// Insert-UserCode-Here {edu.csdms.tools.CMIPortQueue.methods} (Insert your class methods here)
+
+                
+                void initialize(in gov.cca.Services services, in edu.csdms.ports.CMIPort client_port);	                	
+
+                
+                void set_services(in gov.cca.Services services);	                	
+
+                
+                void add_port(in string server);	                	
+
+                
+                void add_ports(in string servers);	                	
+
+                
+                void initialize_ports(in array<string> properties);	                	
+
+                
+                void run_ports(in double time);	                	
+
+                
+                void finalize_ports();	                	
+
+                
+                void connect_ports();	                	
+
+                
+                void disconnect_ports();	                	
+
+                
+                edu.csdms.ports.CMIPort get_port(in string name);	                	
+
+                
+                bool check_time_spans(in double start, in double end);	                	
+
+                
+                void add_mapper(in string mapper);	                	
+
+                
+                void add_mappers(in string mappers);	                	
+
+                
+                void run_mapper(in string mapper);	                	
+
+                
+                void run_mappers();	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.CMIPortQueue.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.CMIPortQueue:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude(in edu.csdms.cmi.IGrid dummy0, in gov.cca.Port dummy1, in edu.csdms.tools.CSDMSGridMapper dummy2, in edu.csdms.ports.CMIPort dummy3);
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.CMIPortQueue:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+
