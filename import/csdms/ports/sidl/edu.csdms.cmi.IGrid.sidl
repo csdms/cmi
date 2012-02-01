@@ -1,0 +1,49 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.cmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.cmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.cmi.comment)
+        package cmi {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.cmi.IGrid.comment)
+            
+// Insert-UserCode-Here {edu.csdms.cmi.IGrid.comment} (Insert your interface comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.cmi.IGrid.comment)
+            interface IGrid
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.cmi.IGrid.methods)
+                
+// Insert-UserCode-Here {edu.csdms.cmi.IGrid.methods} (Insert your interface methods here)
+
+                
+                array<double, 1> get_x();	                	
+
+                
+                array<double, 1> get_y();	                	
+
+                
+                array<double, 1> get_z();	                	
+
+                
+                array<int, 1> get_connectivity();	                	
+
+                
+                array<int, 1> get_offset();	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.cmi.IGrid.methods)
+            }
+        }
+    }
+}
