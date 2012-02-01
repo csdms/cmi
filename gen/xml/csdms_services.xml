@@ -1,0 +1,121 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms_tools" language="python">
+
+  <xi:include href="cmi_interface.xml" parse="xml"/>
+  <xi:include href="csdms_ports.xml" parse="xml"/>
+
+  <class name="tools.CMIGrid" language="python">
+    <implements>IGrid</implements>
+  </class>
+  <class name="tools.CMIGridPoints" language="python">
+    <implements>IGrid</implements>
+  </class>
+  <class name="tools.CMIGridUniformRectilinear" language="python">
+    <implements>IGrid</implements>
+  </class>
+  <class name="tools.CSDMSGridMapper" language="python">
+    <implements>IGridMapper</implements>
+    <requires>IGrid</requires>
+  </class>
+  <class name="tools.OpenMIGridMapper" language="java">
+    <implements>IGridMapper</implements>
+    <requires>IGrid</requires>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="tools.CMIPortQueue" language="python">
+    <requires>edu.csdms.ports.CMIPort</requires>
+    <requires>gov.cca.Port</requires>
+    <requires>edu.csdms.cmi.IGrid</requires>
+    <requires>edu.csdms.tools.CSDMSGridMapper</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="tools.ConfigDialog" language="python">
+    <requires>gov.cca.TypeMap</requires>
+    <requires>gov.cca.ports.ParameterPortFactory</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="tools.ConfigFile" language="python">
+    <implements>IConfigFile</implements>
+    <requires>gov.cca.TypeMap</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="tools.CMIConfigFile" language="python">
+    <implements>IConfigFile</implements>
+    <requires>gov.cca.TypeMap</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <interface name="tools.IRasterOutputFile">
+    <import-sidl/>
+  </interface>
+  <interface name="tools.IRasterOutputFiles">
+    <requires>tools.IRasterOutputFile</requires>
+    <import-sidl/>
+  </interface>
+  <class name="tools.BOVRasterFile" language="python">
+    <implements>IRasterOutputFile</implements>
+  </class>
+  <class name="tools.NCRasterFile" language="python">
+    <implements>IRasterOutputFile</implements>
+  </class>
+
+  <class name="tools.PrintQueue" language="python">
+    <extras>make.vars.user</extras>
+    <requires>gov.cca.Type</requires>
+    <requires>gov.cca.TypeMap</requires>
+    <requires>edu.csdms.ports.CMIPort</requires>
+    <requires>tools.IRasterOutputFile</requires>
+    <import-sidl/>
+    <import-impl/>
+  </class>
+
+  <class name="tools.RasterOutputFiles" language="python">
+    <implements>IRasterOutputFiles</implements>
+    <requires>IRasterOutputFile</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <interface name="tools.IMessageLogger">
+    <import-sidl/>
+  </interface>
+
+  <class name="tools.Verbose" language="python">
+    <implements>IMessageLogger</implements>
+    <import-sidl/>
+  </class>
+
+  <interface name="tools.ITemplateFile">
+    <requires>gov.cca.TypeMap</requires>
+    <import-sidl/>
+  </interface>
+  <class name="tools.TemplateFile" language="python">
+    <implements>ITemplateFile</implements>
+    <requires>gov.cca.TypeMap</requires>
+    <requires>gov.cca.Type</requires>
+    <import-sidl/>
+  </class>
+  <interface name="tools.ITemplateFiles">
+    <requires>gov.cca.TypeMap</requires>
+    <import-sidl/>
+  </interface>
+  <class name="tools.TemplateFiles" language="python">
+    <implements>ITemplateFiles</implements>
+    <requires>gov.cca.TypeMap</requires>
+    <requires>gov.cca.Type</requires>
+    <import-sidl/>
+  </class>
+
+</project>
