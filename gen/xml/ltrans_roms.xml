@@ -6,7 +6,7 @@
   <xi:include href="csdms_ports.xml" parse="xml"/>
   <xi:include href="csdms_tools.xml" parse="xml"/>
 
-  <component name="models.ROMS" language="f90">
+  <component name="models.MACROMS" language="f90">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>gov.cca.ports.GoPort@Run</provides>
     <provides>edu.csdms.ports.CMIPort@Ocean</provides>
@@ -96,7 +96,7 @@
     <extras>make.vars.user</extras>
   </component>
 
- <component name="models.LTRANSReader" language="f90">
+ <!--component name="models.LTRANSReader" language="f90">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <provides>edu.csdms.ports.CMIPort@Ocean</provides>
     <requires>ScalarSet</requires>
@@ -111,6 +111,6 @@
     <extras>make.vars.user</extras>
     <import-impl/>
     <extras>make.vars.user</extras>
-  </component>
+  </component-->
 
 </project>
