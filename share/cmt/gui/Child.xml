@@ -187,6 +187,7 @@
       <type>String</type>
     </entry>
     <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellElevation"/>
+    <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellBedLoadFlux"/>
     <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellErosion"/>
     <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellDischarge"/>
     <entry class="OutputFile" name="/Child/Output/CellGrid/Var/CellSsediment"/>
