@@ -24,7 +24,6 @@ import cmt
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.ports.CMIPort
-import edu.csdms.ports.IRFPort
 import edu.csdms.tools.IRasterOutputFile
 import edu.csdms.tools.PrintQueue
 import gov.cca.Type
@@ -71,7 +70,7 @@ class PrintQueue:
     # ============================
     # gov.cca.TypeMap userinput
     # string base_namespace
-    # edu.csdms.ports.IRFPort port
+    # edu.csdms.ports.CMIPort port
     #
 
     #
@@ -210,15 +209,14 @@ class PrintQueue:
 
 # DO-NOT-DELETE splicer.end(close)
 
-  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2, dummy3, dummy4):
+  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2, dummy3):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
     # gov.cca.Type dummy0
     # gov.cca.TypeMap dummy1
-    # edu.csdms.ports.CMIPort dummy2
-    # edu.csdms.tools.IRasterOutputFile dummy3
-    # edu.csdms.ports.IRFPort dummy4
+    # edu.csdms.tools.IRasterOutputFile dummy2
+    # edu.csdms.ports.CMIPort dummy3
     #
 
     #
@@ -237,7 +235,6 @@ class PrintQueue:
     o1 = dummy1
     o2 = dummy2
     o3 = dummy3
-    o4 = dummy4
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)
