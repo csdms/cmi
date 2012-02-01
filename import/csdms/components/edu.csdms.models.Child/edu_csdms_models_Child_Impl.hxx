@@ -18,35 +18,26 @@
 #ifndef included_edu_csdms_models_Child_IOR_h
 #include "edu_csdms_models_Child_IOR.h"
 #endif
+#ifndef included_edu_csdms_cmi_IGrid_hxx
+#include "edu_csdms_cmi_IGrid.hxx"
+#endif
 #ifndef included_edu_csdms_models_Child_hxx
 #include "edu_csdms_models_Child.hxx"
-#endif
-#ifndef included_edu_csdms_openmi_ElementMapper_hxx
-#include "edu_csdms_openmi_ElementMapper.hxx"
-#endif
-#ifndef included_edu_csdms_openmi_ElementSet_hxx
-#include "edu_csdms_openmi_ElementSet.hxx"
-#endif
-#ifndef included_edu_csdms_openmi_ElementType_hxx
-#include "edu_csdms_openmi_ElementType.hxx"
-#endif
-#ifndef included_edu_csdms_openmi_IElementSet_hxx
-#include "edu_csdms_openmi_IElementSet.hxx"
-#endif
-#ifndef included_edu_csdms_openmi_IValueSet_hxx
-#include "edu_csdms_openmi_IValueSet.hxx"
-#endif
-#ifndef included_edu_csdms_openmi_ScalarSet_hxx
-#include "edu_csdms_openmi_ScalarSet.hxx"
 #endif
 #ifndef included_edu_csdms_ports_CMIPort_hxx
 #include "edu_csdms_ports_CMIPort.hxx"
 #endif
+#ifndef included_edu_csdms_tools_CMIConfigFile_hxx
+#include "edu_csdms_tools_CMIConfigFile.hxx"
+#endif
+#ifndef included_edu_csdms_tools_CMIGrid_hxx
+#include "edu_csdms_tools_CMIGrid.hxx"
+#endif
+#ifndef included_edu_csdms_tools_CMIPortQueue_hxx
+#include "edu_csdms_tools_CMIPortQueue.hxx"
+#endif
 #ifndef included_edu_csdms_tools_ConfigDialog_hxx
 #include "edu_csdms_tools_ConfigDialog.hxx"
-#endif
-#ifndef included_edu_csdms_tools_IRFPortQueue_hxx
-#include "edu_csdms_tools_IRFPortQueue.hxx"
 #endif
 #ifndef included_edu_csdms_tools_PrintQueue_hxx
 #include "edu_csdms_tools_PrintQueue.hxx"
@@ -111,7 +102,7 @@ CMI_Status;
 #define CMI_TEMPLATE_SOURCE_FILES "Child.in.in,Child_command_line.txt.in"
 #define CMI_TEMPLATE_DEST_FILES "Child.in,Child_command_line.txt"
 #define CMI_PORT_QUEUE_DT (1.)
-#define CMI_MAPPERS "Elevation@SubaqueousDelta:Weighted Mean"
+#define CMI_MAPPERS "SeaFloorElevation@SubaqueousDelta:Weighted Mean"
 #define CMI_OUTPUT_FILE_NS "Output/Grid,Output/CellGrid"
 
 #define CMI_TURN_OFF_PORTS 0
@@ -153,10 +144,11 @@ namespace edu {
         childInterface state;
         CMI_Status status;
         bool is_driver;
-        ::edu::csdms::tools::IRFPortQueue ports;
+        ::edu::csdms::tools::CMIConfigFile cfg_file;
+        ::edu::csdms::tools::CMIPortQueue ports;
         ::edu::csdms::tools::PrintQueue print_q;
 
-        ::edu::csdms::tools::IRFPortQueue irf_ports;
+        //::edu::csdms::tools::IRFPortQueue irf_ports;
         ::edu::csdms::tools::PrintQueue print_queue;
         ::edu::csdms::tools::Verbose log;
 
@@ -242,15 +234,13 @@ namespace edu {
         boccaForceUsePortInclude_impl (
           /* in */::gov::cca::ports::ParameterPortFactory& dummy0,
           /* in */::edu::csdms::ports::CMIPort& dummy1,
-          /* in */::edu::csdms::openmi::ElementType dummy2,
-          /* in */::edu::csdms::tools::TemplateFiles& dummy3,
-          /* in */::edu::csdms::tools::IRFPortQueue& dummy4,
-          /* in */::edu::csdms::tools::Verbose& dummy5,
-          /* in */::edu::csdms::openmi::ElementMapper& dummy6,
-          /* in */::edu::csdms::openmi::ScalarSet& dummy7,
-          /* in */::edu::csdms::tools::ConfigDialog& dummy8,
-          /* in */::edu::csdms::openmi::ElementSet& dummy9,
-          /* in */::edu::csdms::tools::PrintQueue& dummy10
+          /* in */::edu::csdms::tools::CMIGrid& dummy2,
+          /* in */::edu::csdms::tools::Verbose& dummy3,
+          /* in */::edu::csdms::tools::CMIConfigFile& dummy4,
+          /* in */::edu::csdms::tools::TemplateFiles& dummy5,
+          /* in */::edu::csdms::tools::ConfigDialog& dummy6,
+          /* in */::edu::csdms::tools::CMIPortQueue& dummy7,
+          /* in */::edu::csdms::tools::PrintQueue& dummy8
         )
         ;
 
@@ -420,6 +410,24 @@ namespace edu {
         /**
          * user defined non-static method.
          */
+        bool
+        CMI_has_output_item_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
+        CMI_has_input_item_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
         void
         CMI_get_required_ports_impl() ;
         /**
@@ -528,45 +536,17 @@ namespace edu {
         /**
          * user defined non-static method.
          */
-        bool
-        initialize_impl (
-          /* in */const ::std::string& config_file
+        ::edu::csdms::cmi::IGrid
+        get_grid_impl (
+          /* in */const ::std::string& long_var_name
         )
         ;
 
         /**
          * user defined non-static method.
          */
-        bool
-        run_for_impl (
-          /* in */double time_interval,
-          /* in */const ::std::string& time_units,
-          /* in */const ::std::string& stop_rule,
-          /* in array<double> */::sidl::array<double>& stop_vars
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        void
-        finalize_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        bool
-        run_model_impl (
-          /* in */const ::std::string& config_file,
-          /* in */const ::std::string& stop_rule,
-          /* in */double stop_var
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::basearray
-        get_values_impl (
+        ::sidl::array<double>
+        get_grid_values_impl (
           /* in */const ::std::string& long_var_name
         )
         ;
@@ -575,173 +555,9 @@ namespace edu {
          * user defined non-static method.
          */
         void
-        set_values_impl (
+        set_grid_values_impl (
           /* in */const ::std::string& long_var_name,
-          /* in array<> */::sidl::basearray& in_values
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::std::string
-        get_status_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        ::std::string
-        get_component_name_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::array< ::std::string>
-        get_input_item_list_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::array< ::std::string>
-        get_output_item_list_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        void
-        get_required_ports_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        void
-        release_required_ports_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::basearray
-        get_values_at_indices_impl (
-          /* in */const ::std::string& long_var_name,
-          /* in array<int> */::sidl::array<int32_t>& indices
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        void
-        set_values_at_indices_impl (
-          /* in */const ::std::string& long_var_name,
-          /* in array<int> */::sidl::array<int32_t>& indices,
-          /* in array<> */::sidl::basearray& in_values
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        void
-        print_traceback_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        int64_t
-        getRaster_nx_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        int64_t
-        getRaster_ny_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        double
-        getRaster_dx_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        double
-        getRaster_dy_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        double
-        getRaster_ulx_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        double
-        getRaster_uly_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::array<double>
-        getRaster_grid_impl (
-          /* in */const ::std::string& val_string
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::array<int32_t>
-        get_raster_dimen_impl (
-          /* in */const ::std::string& val_string
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::array<double>
-        get_raster_res_impl (
-          /* in */const ::std::string& val_string
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::basearray
-        get_raster_data_impl (
-          /* in */const ::std::string& val_string
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::array<double>
-        get_time_span_impl() ;
-        /**
-         * user defined non-static method.
-         */
-        ::edu::csdms::openmi::IValueSet
-        get_value_set_impl (
-          /* in */const ::std::string& val_string
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::edu::csdms::openmi::IElementSet
-        get_element_set_impl (
-          /* in */const ::std::string& val_string
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        ::sidl::basearray
-        get_value_set_data_impl (
-          /* in */const ::std::string& val_string
-        )
-        ;
-
-        /**
-         * user defined non-static method.
-         */
-        void
-        set_value_set_impl (
-          /* in */const ::std::string& val_string,
-          /* in */::edu::csdms::openmi::IValueSet& values
+          /* in array<double> */::sidl::array<double>& vals
         )
         ;
 
