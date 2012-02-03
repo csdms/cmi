@@ -12,6 +12,7 @@
 
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
+import logging
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.tools.IMessageLogger
@@ -23,9 +24,6 @@ import sidl.RuntimeException
 import sidl.NotImplementedException
 
 # DO-NOT-DELETE splicer.begin(_before_type)
-from cmt import CMTVerbose
-
-import sys
 # DO-NOT-DELETE splicer.end(_before_type)
 
 class Verbose:
@@ -54,6 +52,110 @@ class Verbose:
 # with native delegation
   def _getStub(self):
     return self.__IORself
+
+  def initialize(self, name, level):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # string name
+    # int level
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(initialize)
+    # These are the log level values
+    # NOTSET = 0
+    # DEBUG = 10
+    # INFO = 20
+    # WARNING = 30
+    # ERROR = 40
+    # CRITICAL = 50
+    self._logger = logging.getLogger (name)
+    self._logger.setLevel (level)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter ('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    ch.setFormatter (formatter)
+
+    self._logger.addHandler (ch)
+
+# DO-NOT-DELETE splicer.end(initialize)
+
+  def info(self, message):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # string message
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(info)
+    self._logger.info (message)
+# DO-NOT-DELETE splicer.end(info)
+
+  def debug(self, message):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # string message
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(debug)
+    self._logger.debug (message)
+# DO-NOT-DELETE splicer.end(debug)
+
+  def warning(self, message):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # string message
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(warning)
+    self._logger.warning (message)
+# DO-NOT-DELETE splicer.end(warning)
+
+  def error(self, message):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # string message
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(error)
+    self._logger.error (message)
+# DO-NOT-DELETE splicer.end(error)
 
   def boccaForceUsePortInclude(self):
     #
@@ -86,7 +188,7 @@ class Verbose:
     #
 
 # DO-NOT-DELETE splicer.begin(set_log_level)
-    self._verbose = CMTVerbose (level)
+    self._logger.setLevel (level)
 # DO-NOT-DELETE splicer.end(set_log_level)
 
   def log(self, level, message):
@@ -104,7 +206,7 @@ class Verbose:
     #
 
 # DO-NOT-DELETE splicer.begin(log)
-    self._verbose (level, message)
+    self._logger.log (level, message)
 # DO-NOT-DELETE splicer.end(log)
 
 # DO-NOT-DELETE splicer.begin(_final)

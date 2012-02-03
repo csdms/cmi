@@ -26,6 +26,22 @@ package edu version 0.0 {
                 // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.tools.Verbose.methods)
                 
 // Insert-UserCode-Here {edu.csdms.tools.Verbose.methods} (Insert your class methods here)
+
+                
+                void initialize(in string name, in int level);	                	
+
+                
+                void info(in string message);	                	
+
+                
+                void debug(in string message);	                	
+
+                
+                void warning(in string message);	                	
+
+                
+                void error(in string message);	                	
+
                 // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.Verbose.methods)
 
 
