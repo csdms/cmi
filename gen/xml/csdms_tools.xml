@@ -2,7 +2,7 @@
   name="csdms_tools" language="python">
 
   <xi:include href="cmi_interface.xml" parse="xml"/>
-  <!--xi:include href="openmi_impl.xml" parse="xml"/-->
+  <xi:include href="openmi_impl.xml" parse="xml"/>
   <xi:include href="csdms_ports.xml" parse="xml"/>
 
   <class name="tools.CMIGrid" language="python">
@@ -27,7 +27,7 @@
     <requires>IGrid</requires>
     <extras>make.vars.user</extras>
   </class>
-  <!--class name="tools.IRFPortQueue" language="python">
+  <class name="tools.IRFPortQueue" language="python">
     <requires>edu.csdms.ports.IRFPort</requires>
     <requires>edu.csdms.ports.CMIPort</requires>
     <requires>gov.cca.Port</requires>
@@ -36,7 +36,7 @@
     <import-sidl/>
     <import-impl/>
     <extras>make.vars.user</extras>
-  </class-->
+  </class>
 
   <class name="tools.CMIPortQueue" language="python">
     <requires>edu.csdms.ports.CMIPort</requires>
