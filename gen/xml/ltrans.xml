@@ -5,6 +5,7 @@
   <xi:include href="openmi_impl.xml" parse="xml"/>
   <xi:include href="csdms_ports.xml" parse="xml"/>
   <xi:include href="csdms_tools.xml" parse="xml"/>
+  <xi:include href="csdms_services.xml" parse="xml"/>
 
   <component name="models.LTRANS" language="f90">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
