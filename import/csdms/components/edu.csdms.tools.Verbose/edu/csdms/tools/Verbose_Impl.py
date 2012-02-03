@@ -12,6 +12,7 @@
 
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
+import os
 import logging
 # DO-NOT-DELETE splicer.end(_initial)
 
@@ -75,6 +76,16 @@ class Verbose:
     # WARNING = 30
     # ERROR = 40
     # CRITICAL = 50
+    try:
+        level = int (os.environ['CMT_VERBOSE'])
+    except KeyError:
+        pass
+    except ValueError:
+        try:
+            level = level_string[level]
+        except KeyError:
+            pass
+
     self._logger = logging.getLogger (name)
     self._logger.setLevel (level)
 
