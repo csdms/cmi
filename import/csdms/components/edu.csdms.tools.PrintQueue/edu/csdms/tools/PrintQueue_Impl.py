@@ -53,9 +53,13 @@ class PrintQueue:
 # DO-NOT-DELETE splicer.begin(__init__)
 
     # Put your code here...
-    self._q = None
-    self._log = edu.csdms.tools.Verbose ()
-    self._log.initialize ('PrintQueue', 1)
+    print 'Creating print queue'
+    try:
+        self._q = None
+        self._log = edu.csdms.tools.Verbose.Verbose ()
+        self._log.initialize ('PrintQueue', 1)
+    except Exception as e:
+        print 'ERROR: unable to create print queue: %s' % e
 
     # Bocca generated code. bocca.protected.begin(edu.csdms.tools.PrintQueue._init) 
     self.bocca_print_errs = True
@@ -84,6 +88,7 @@ class PrintQueue:
     #
 
 # DO-NOT-DELETE splicer.begin(initialize)
+    self._log.info ('Initializing print queue')
     attr = {}
     for key in userinput.getAllKeys (gov.cca.Type.String):
       if key.startswith (base_namespace):
@@ -94,12 +99,12 @@ class PrintQueue:
     for key in userinput.getAllKeys (gov.cca.Type.Double):
       if key.startswith (base_namespace):
         attr[key] = userinput.getDouble (key, 0.)
-    sys.stdout.flush ()
     try:
       self._q = cmt.PrintQueue (attr, base_namespace, port)
     except Exception as e:
       self._log.error ('Unexpected error (%s)' % e)
       raise
+    self._log.info ('Initialized print queue')
 # DO-NOT-DELETE splicer.end(initialize)
 
   def initialize_cmi(self, userinput, base_namespace, port):
@@ -217,11 +222,11 @@ class PrintQueue:
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # gov.cca.Type dummy0
-    # gov.cca.TypeMap dummy1
-    # edu.csdms.tools.IRasterOutputFile dummy2
-    # edu.csdms.ports.CMIPort dummy3
-    # edu.csdms.tools.Verbose dummy4
+    # edu.csdms.tools.Verbose dummy0
+    # gov.cca.Type dummy1
+    # gov.cca.TypeMap dummy2
+    # edu.csdms.tools.IRasterOutputFile dummy3
+    # edu.csdms.ports.CMIPort dummy4
     #
 
     #

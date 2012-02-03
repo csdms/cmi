@@ -123,7 +123,7 @@ class TemplateFiles:
     for (src, dest) in zip (src_files, dst_files):
         try:
             self._files.add_file (src, rename=dest)
-            print "Adding %s -> %s" % (src, dest)
+            #print "Adding %s -> %s" % (src, dest)
         except Exception as e:
             print "%s: Unable to add template file: %s" % (src, e)
 # DO-NOT-DELETE splicer.end(add_files)
@@ -158,7 +158,7 @@ class TemplateFiles:
     except Exception as e:
       print 'Error creating mapping: %s' % e
     try:
-      print "Substitute %s -> %s" % (base, todir)
+      #print "Substitute %s -> %s" % (base, todir)
       self._files.substitute (d, todir=todir, base=base)
     except Exception as e:
       print 'Error writing template files: %s' % e

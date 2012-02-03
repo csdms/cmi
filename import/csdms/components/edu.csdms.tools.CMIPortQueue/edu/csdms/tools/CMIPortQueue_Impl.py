@@ -197,7 +197,7 @@ class CMIPortQueue:
       try:
         port.CMI_run (time)
       except Exception as e:
-        self._log.error ("%s (%s)" % (e, name))
+        self._log.error ("Unexpected error running port %s (%s)" % (name, e))
     self._log.info ("Updated ports.")
 # DO-NOT-DELETE splicer.end(run_ports)
 
