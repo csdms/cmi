@@ -26,6 +26,7 @@ import cmt
 import edu.csdms.ports.CMIPort
 import edu.csdms.tools.IRasterOutputFile
 import edu.csdms.tools.PrintQueue
+import edu.csdms.tools.Verbose
 import gov.cca.Type
 import gov.cca.TypeMap
 import sidl.BaseClass
@@ -53,6 +54,9 @@ class PrintQueue:
 
     # Put your code here...
     self._q = None
+    self._log = edu.csdms.tools.Verbose ()
+    self._log.initialize ('PrintQueue', 1)
+
     # Bocca generated code. bocca.protected.begin(edu.csdms.tools.PrintQueue._init) 
     self.bocca_print_errs = True
     # Bocca generated code. bocca.protected.end(edu.csdms.tools.PrintQueue._init) 
@@ -94,7 +98,7 @@ class PrintQueue:
     try:
       self._q = cmt.PrintQueue (attr, base_namespace, port)
     except Exception as e:
-      print 'ERROR: %s: Unable to create PrintQueue' % e
+      self._log.error ('Unexpected error (%s)' % e)
       raise
 # DO-NOT-DELETE splicer.end(initialize)
 
@@ -128,7 +132,7 @@ class PrintQueue:
     try:
       self._q = cmt.PrintQueue (attr, base_namespace, port)
     except Exception as e:
-      print 'ERROR: %s: Unable to create PrintQueue' % e
+      self._log.error ('Unexpected error (%s)' % e)
       raise
 # DO-NOT-DELETE splicer.end(initialize_cmi)
 
@@ -209,7 +213,7 @@ class PrintQueue:
 
 # DO-NOT-DELETE splicer.end(close)
 
-  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2, dummy3):
+  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2, dummy3, dummy4):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
@@ -217,6 +221,7 @@ class PrintQueue:
     # gov.cca.TypeMap dummy1
     # edu.csdms.tools.IRasterOutputFile dummy2
     # edu.csdms.ports.CMIPort dummy3
+    # edu.csdms.tools.Verbose dummy4
     #
 
     #
@@ -235,6 +240,7 @@ class PrintQueue:
     o1 = dummy1
     o2 = dummy2
     o3 = dummy3
+    o4 = dummy4
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)

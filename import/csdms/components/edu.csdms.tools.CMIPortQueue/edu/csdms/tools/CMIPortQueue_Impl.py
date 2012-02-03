@@ -18,6 +18,7 @@ import edu.csdms.cmi.IGrid
 import edu.csdms.ports.CMIPort
 import edu.csdms.tools.CMIPortQueue
 import edu.csdms.tools.CSDMSGridMapper
+import edu.csdms.tools.Verbose
 import gov.cca.Port
 import gov.cca.Services
 import sidl.BaseClass
@@ -59,8 +60,8 @@ class CMIPortQueue:
     # mapper instances.
     self._mappers = {}
 
-    #self._log = edu.csdms.tools.Verbose.Verbose ()
-    #self._log.set_log_level (1)
+    self._log = edu.csdms.tools.Verbose.Verbose ()
+    self._log.initialize ("CMIPortQueue", 1)
 
     # Bocca generated code. bocca.protected.begin(edu.csdms.tools.CMIPortQueue._init) 
     self.bocca_print_errs = True
@@ -109,7 +110,7 @@ class CMIPortQueue:
     if self._services is None:
         self._services = services
     else:
-        print 'CMIPortQueue: ERROR: services has already been set.'
+        self._log.error ("Services already set")
 # DO-NOT-DELETE splicer.end(set_services)
 
   def add_port(self, server):
@@ -127,11 +128,11 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(add_port)
     # Add a port to the queue.
-    print "%s: Adding server port" % server
+    self._log.info ("Adding server port %s" % server)
     if server not in self._servers:
         self._servers.append (server)
     else:
-        print "ERROR: %s: Duplicate server port" % server
+        self._log.error ("Duplicate server port (%s)" % server)
 # DO-NOT-DELETE splicer.end(add_port)
 
   def add_ports(self, servers):
@@ -149,10 +150,10 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(add_ports)
     # servers is a comma-separated list of port names to add the the queue.
-    print "%s: Adding server ports" % servers
+    self._log.info ("Adding server ports (%s)" % servers)
     for server in servers.split (','):
         self.add_port (server)
-    #self._servers.add_ports (servers)
+    self._log.info ("Added server ports.")
 # DO-NOT-DELETE splicer.end(add_ports)
 
   def initialize_ports(self, properties):
@@ -170,10 +171,10 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(initialize_ports)
     # Call the initialize method for each port in the queue.
-    print properties
+    self._log.info ("Initializing ports.")
     for (name, port) in self._ports.items ():
-        print "%s: CMI_initialize" % name
         port.CMI_initialize (properties)
+    self._log.info ("Initialized ports.")
 # DO-NOT-DELETE splicer.end(initialize_ports)
 
   def run_ports(self, time):
@@ -191,13 +192,13 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(run_ports)
     # Call the run method for each port in the queue.
+    self._log.info ("Updating ports.")
     for (name, port) in self._ports.items ():
       try:
-        print "%s: CMI_run (%f)" % (name, time)
         port.CMI_run (time)
-        print "%s: Updated." % name
       except Exception as e:
-        print "%s: %s: Updating error." % (name, e)
+        self._log.error ("%s (%s)" % (e, name))
+    self._log.info ("Updated ports.")
 # DO-NOT-DELETE splicer.end(run_ports)
 
   def finalize_ports(self):
@@ -209,9 +210,10 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(finalize_ports)
     # Call the finalize method for each port in the queue.
+    self._log.info ("Finalizing ports.")
     for (name, port) in self._ports.items ():
-        print "%s: CMI_finalize" % name
         port.CMI_finalize ()
+    self._log.info ("Finalized ports.")
 # DO-NOT-DELETE splicer.end(finalize_ports)
 
   def connect_ports(self):
@@ -223,30 +225,29 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(connect_ports)
     # Connect CMIPorts in the queue.
-    print "Connecting CMI ports"
+    self._log.info ("Connecting ports.")
     for server in self._servers:
 
-      #self._log.log (2, 'Connecting %s port' %server)
-      print 'Connecting %s port' % server
+      self._log.info ("Connecting %s port." % server)
       try:
         port = self._services.getPort (server)
       except Exception, e:
         if self.bocca_print_errs or True:
-          print "tools.irfports: port %s not connected." % server
+          self._log.error ("tools.irfports: port %s not connected." % server)
         e.args = "tools.irfports: port %s not connected:\n%s" % (server, e.args)
         raise
 
       cmi_port = edu.csdms.ports.CMIPort.CMIPort (port)
       if not cmi_port:
         if self.bocca_print_errs or True:
-          print "tools.cmiports: Error casting port gov.cca.Port " + \
-                "to %s type ports.CMIPort" % server
+          self._log.error ("tools.cmiports: Error casting port gov.cca.Port " + \
+                           "to %s type ports.CMIPort" % server)
         ex = sidl.SIDLException.SIDLException()
         ex.setNote(__name__,0, 'Error casting self Port to ports.CMIPort')
         raise sidl.SIDLException._Exception, ex
 
       self._ports[server] = cmi_port
-      print 'Connected %s port' % server
+      self._log.info ("Connected ports.")
 # DO-NOT-DELETE splicer.end(connect_ports)
 
   def disconnect_ports(self):
@@ -258,9 +259,10 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(disconnect_ports)
     # Disconnect each of the ports.
+    self._log.info ("Disconnecting ports.")
     for server in self._servers:
-      #self._log.log (2, 'Disconnecting %s port.' % server)
       self._services.releasePort (server)
+    self._log.info ("Disconnected ports.")
 # DO-NOT-DELETE splicer.end(disconnect_ports)
 
   def get_port(self, name):
@@ -319,19 +321,19 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.begin(add_mapper)
     # The mapper is a string of the form,
     #   var_name@port_name:mapper_method
-    print 'CMIPortQueue: Adding mapper %s' % mapper
+    self._log.info ("Adding mapper (%s)." % mapper)
     try:
         (full_name, method) = mapper.split (':')
     except ValueError:
-        print 'CMIPortQueue: ERROR: %s: Bad mapper name (missing method)' % mapper
+        self._log.warning ("Missing method in mapper name (%s)" % mapper)
 
     try:
         (var_name, port_name) = full_name.split ('@')
     except ValueError:
-        print 'CMIPortQueue: ERROR: %s: Bad full var name name (var_name@port_name)' % full_name
+        self._log.error ('Bad full var name name (var_name@port_name) (%s)' % full_name)
 
     if self._mappers.has_key (full_name):
-        print 'CMIPortQueue: ERROR: %s: Mapper exists' % full_name
+        self._log.warning ("Maper exists (%s)" % full_name)
 
     # If a mapper can't be created, it is set to None
     self._mappers[full_name] = None
@@ -340,12 +342,11 @@ class CMIPortQueue:
     try:
         port = self._ports[port_name]
     except KeyError:
-        print 'CMIPortQueue: ERROR: %s: Port not found' % port_name
+        self._log.error ("Port not found (%s)" % port_name)
 
     # Get the destination ElementSet
     try:
       dst_grid = self._client.get_grid (var_name)
-      #print 'CMIPortQueue: Size of destination ElementSet is %s' % element_set.getElementCount ()
     except Exception as e:
       element_set = None
 
@@ -354,25 +355,26 @@ class CMIPortQueue:
       src_grid = port.get_grid (var_name)
       #print 'CMIPortQueue: Size of source ElementSet is %s' % src_element_set.getElementCount ()
     except Exception as e:
-      print 'Error getting source grid set: %s' % e
+      self._log.error ("Unable to get source grid (%s)" % e)
 
     # Create a mapper
-    print 'CMIPortQueue: Using CSDMSGridMapper'
+    self._log.error ("Using CSDMSGridMapper")
     try:
         mapper = edu.csdms.tools.CSDMSGridMapper.CSDMSGridMapper ()
     except Exception as e:
-        print 'CMIPortQueue: ERROR: Unable to create mapper: %s' % e
+        self._log.error ("Unable to create mapper (%s)" % e)
     #mapper = edu.csdms.tools.OpenMIGridMapper ()
     #mapper = edu.csdms.tools.ESMFGridMapper ()
+
     try:
-        print 'CMIPortQueue: Initializing CSDMSGridMapper'
+        self._log.info ("Initializing mapper")
         mapper.initialize (dst_grid, src_grid)
-        print 'CMIPortQueue: Initialized CSDMSGridMapper'
+        self._log.info ("Initialized mapper")
     except Exception as e:
-        print 'CMIPortQueue: Error initializing mapper: %s' % e
+        self._log.error ("Unable to initialize mapper (%s)" % e)
 
     self._mappers[full_name] = mapper
-    print 'CMIPortQueue: Added mapper %s' % mapper
+    self._log.info ("Added mapper (%s)", mapper)
 # DO-NOT-DELETE splicer.end(add_mapper)
 
   def add_mappers(self, mappers):
@@ -390,8 +392,10 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(add_mappers)
     # mappers is a comma-separated list of mapper names
+    self._log.info ("Adding mappers (%s)", mappers)
     for mapper in mappers.split (','):
         self.add_mapper (mapper)
+    self._log.info ("Added mappers")
 # DO-NOT-DELETE splicer.end(add_mappers)
 
   def run_mapper(self, mapper):
@@ -409,59 +413,54 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(run_mapper)
     # Get the requested mapper
-    print "CMIPortQueue: Running mapper full name is %s" % mapper
+    self._log.info ("Running mapper (%s)", mapper)
     try:
         map = self._mappers[mapper]
     except KeyError:
-        print 'Unable to locate mapper %s.' % mapper
+        self._log.error ("Unable to locate mapper")
     except Exception as e:
-        print "CMIPortQueue: ERROR: %s" % e
+        self._log.error ("Unexpected error (%s)" % e)
 
-    print "CMIPortQueue: Found a mapper"
+    self._log.info ("Found a mapper")
     (var_name, port_name) = mapper.split ('@')
-    print "CMIPortQueue: Var name is %s" % var_name
-    print "CMIPortQueue: Port name is %s" % port_name
+
     try:
         port = self._ports[port_name]
     except KeyError:
-        print 'Unable to locate port %s.' % name
+        self._log.error ("Unable to locate port (%s)", name)
     except Exception as e:
-        print "CMIPortQueue: ERROR: %s" % e
+        self._log.error ("Unexpected error (%s)" % e)
 
     # Get the ValueSet from the source port
     try:
-        print "CMIPortQueue: Get value set for %s" % var_name
+        self._log.info ("Get source grid values (%s)" % var_name)
         src_values = port.get_grid_values (var_name)
-        print "CMIPortQueue: Got it."
+        self._log.info ("Got grid values")
     except Exception as e:
-        print "CMIPortQueue: ERROR: Unable to get source values: %s" % e
-    #print "CMIPortQueue: Size of source ValueSet is %d" % src_scalar_set.getCount ()
+        self._log.error ("Unable to get source grid values (%s)" % e)
 
     if map is not None:
         try:
-            print "CMIPortQueue: Run the mapper."
-            #dst_values = map.run (src_values)
-            print 'CMIPortQueue: Does client have var %s' % var_name
+            self._log.info ("Running the mapper")
             if self._client.CMI_has_output_item (var_name):
-                print 'CMIPortQueue: Yes it does.'
+                self._log.info ("Running in-place")
                 dst_values = self._client.get_grid_values (var_name)
-                print 'CMIPortQueue: Got it.'
                 map.run_inplace (src_values, dst_values)
             else:
-                print 'CMIPortQueue: No it does not.'
                 dst_values = map.run (src_values)
-            print "CMIPortQueue: Ran the mapper."
+            self._log.info ("Ran the mapper")
         except Exception as e:
-            print 'CMIPortQueue: There was an error mapping: %s' % e
+            self._log.error ("Unable to run mapper (%s)" % e)
     else:
+        self._log.info ("Using a direct mapping.")
         dst_values = src_values
 
     try:
-        print "CMIPortQueue: Setting values for %s." % var_name
+        self._log.info ("Setting grid values.")
         self._client.set_grid_values (var_name, dst_values)
     except Exception as e:
-        print 'There was an error setting values: %s' % e
-    print "CMIPortQueue: Mapper is finished."
+        self._log.error ("Unable to set values (%s)" % e)
+    self._log.info ("Ran mapper.")
 # DO-NOT-DELETE splicer.end(run_mapper)
 
   def run_mappers(self):
@@ -473,27 +472,28 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(run_mappers)
     # mappers is a comma-separated list of mapper names
+    self._log.info ("Running all mappers.")
     try:
         for mapper in self._mappers.keys ():
             try:
-                print "CMIPortQueue: Mapping..."
                 self.run_mapper (mapper)
-                print "CMIPortQueue: Mapped."
             except Exception as e:
-                print 'CMIPortQueue: There was an error running a mapper: %s' % e
+                self._log.error ("Unexpected error (%s)" % e)
     except Exception as e:
-        print 'CMIPortQueue: There was an error running the mappers: %s' % e
+        self._log.error ("Unexpected error (%s)" % e)
+    self._log.info ("Ran all mappers.")
 
 # DO-NOT-DELETE splicer.end(run_mappers)
 
-  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2, dummy3):
+  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2, dummy3, dummy4):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # edu.csdms.cmi.IGrid dummy0
-    # gov.cca.Port dummy1
-    # edu.csdms.tools.CSDMSGridMapper dummy2
-    # edu.csdms.ports.CMIPort dummy3
+    # edu.csdms.tools.Verbose dummy0
+    # edu.csdms.cmi.IGrid dummy1
+    # gov.cca.Port dummy2
+    # edu.csdms.tools.CSDMSGridMapper dummy3
+    # edu.csdms.ports.CMIPort dummy4
     #
 
     #
@@ -512,6 +512,7 @@ class CMIPortQueue:
     o1 = dummy1
     o2 = dummy2
     o3 = dummy3
+    o4 = dummy4
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)

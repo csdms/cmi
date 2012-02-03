@@ -415,6 +415,12 @@ edu::csdms::models::Child_impl::setServices_impl (
   
   // Insert-UserCode-Here{edu.csdms.models.Child.setServices:epilog}
   this->userinput = services.createTypeMap ();
+
+  {
+    this->log = ::edu::csdms::tools::Verbose::_create ();
+    this->log.initialize (CMI_COMPONENT_NAME, 1);
+  }
+
   ::gov::cca::Port gcp = services.getPort("ppf");
 
   {
@@ -516,6 +522,7 @@ edu::csdms::models::Child_impl::go_impl ()
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.go)
   int bocca_status = 0;
 
+  this->log.info ("Go");
   this->is_driver = TRUE;
 
   this->CMI_initialize (NULL);
@@ -524,47 +531,6 @@ edu::csdms::models::Child_impl::go_impl ()
 
   return bocca_status;
 
-#if 0
-  {
-    ::sidl::array< ::std::string> properties =
-      sidl::array< ::std::string>::create1d(2);
-    double duration;
-
-    fprintf (stderr, "Running GO\n");
-    if (!this->logging_is_initialized)
-    {
-      fprintf (stderr, "Set up logging\n");
-      this->log = ::edu::csdms::tools::Verbose::_create ();
-      fprintf (stderr, "Logging is set up\n");
-      this->log.set_log_level (1);
-      fprintf (stderr, "Logging level set\n");
-      this->logging_is_initialized = true;
-    }
-
-    PRINT(1, "Read input paramaters");
-    { /*   Get site and case prefixes from the GUI */
-      string site_prefix = userinput.getString ("/Child/SitePrefix", "");
-      string case_prefix = userinput.getString ("/Child/CasePrefix", "");
-
-      duration= userinput.getDouble ("/Child/Input/Var/RunDuration", 0);
-
-      properties.set (0, site_prefix);
-      properties.set (1, case_prefix);
-    }
-
-    PRINT(1, "Initialize");
-    this->initialize_impl (properties);
-
-    PRINT (1, "Run");
-    this->run_impl (duration);
-
-    PRINT (1, "Finalize");
-    this->finalize_impl ();
-  }
-
-  PRINT (1, "Model is complete");
-  return bocca_status;
-#endif
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.go)
 }
 
@@ -577,15 +543,15 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_initialize)
 
+  this->log.info ("Initializing");
   if (this->status >= CMI_STATUS_INITIALIZING)
     return TRUE;
   else
     this->status = CMI_STATUS_INITIALIZING;
 
-  ::std::cerr << CMI_COMPONENT_NAME ": Status is "
-              << this->CMI_get_status () << ::std::endl;
+  this->log.info (this->CMI_get_status ());
 
-  fprintf (stderr, "%s: Create PortQueue.\n", CMI_COMPONENT_NAME);
+  this->log.info ("Create port queue.");
   { // Create port queue.
     ::edu::csdms::ports::CMIPort port =
       ::babel_cast<edu::csdms::ports::CMIPort>(*this);
@@ -598,8 +564,9 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
 
     this->ports.connect_ports ();
   }
+  this->log.info ("Created port queue.");
   
-  fprintf (stderr, "%s: Read config dialog.\n", CMI_COMPONENT_NAME);
+  this->log.info ("Parse config file.");
   { // Read parameters from the config dialog.
     ::edu::csdms::tools::TemplateFiles tmpls;
     const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
@@ -618,14 +585,14 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
         "/"CMI_COMPONENT_NAME"/SimulationName",
         val);
   }
+  this->log.info ("Parsed config file.");
 
-  fprintf (stderr, "%s: Call BMI initialize.\n", CMI_COMPONENT_NAME);
   /* The contents of this file will be something like,
    * Child Child.in
    * */
   this->state.initialize ("Child_command_line.txt");
 
-  fprintf (stderr, "%s: Create PrintQueue.\n", CMI_COMPONENT_NAME);
+  this->log.info ("Create print queue.");
   { // Set up the print queue.
     ::edu::csdms::ports::CMIPort port =
       ::babel_cast<edu::csdms::ports::CMIPort>(*this);
@@ -635,28 +602,29 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
         port);
     this->print_q.add_files_from_list (CMI_OUTPUT_FILE_NS);
   }
+  this->log.info ("Created print queue.");
 
 #if CMI_TURN_OFF_PORTS
-  fprintf (stderr, "%s: Forgetting ports for now.\n", CMI_COMPONENT_NAME);
+  this->log.warning ("Forgetting ports for now.");
 #else
-  fprintf (stderr, "%s: Initialize ports.\n", CMI_COMPONENT_NAME);
+  this->log.info ("Initialize ports.");
   this->ports.initialize_ports (0);
 #endif
+
 #if CMI_TURN_OFF_MAPPING
-  fprintf (stderr, "%s: Mapping is turned off.\n", CMI_COMPONENT_NAME);
+  this->log.warning ("Mapping is turned off.");
 #else
-  fprintf (stderr, "%s: Initialize mappers.\n", CMI_COMPONENT_NAME);
+  this->log.info ("Initialize mappers.");
   this->ports.add_mappers (CMI_MAPPERS);
 
-  fprintf (stderr, "%s: Map initial values.\n", CMI_COMPONENT_NAME);
+  this->log.info ("Map initial values.");
   this->ports.run_mappers ();
 #endif
 
   this->status = CMI_STATUS_INITIALIZED;
 
-  ::std::cerr << CMI_COMPONENT_NAME ": Status is "
-              << this->CMI_get_status () << ::std::endl;
-
+  this->log.info ("Initialized.");
+  this->log.info (this->CMI_get_status ());
   return TRUE;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_initialize)
 }
@@ -693,98 +661,81 @@ edu::csdms::models::Child_impl::CMI_run_impl (
   /* in */double time_interval ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_run)
-  ::std::cerr << CMI_COMPONENT_NAME ": Status is "
-              << this->CMI_get_status () << ::std::endl;
+  this->log.info ("Updating.");
+  this->log.info (this->CMI_get_status ());
 
   if (this->status == CMI_STATUS_UPDATING)
     return TRUE;
   else
     this->status = CMI_STATUS_UPDATING;
 
-  fprintf (stderr, "%s: Updating until %f.\n", CMI_COMPONENT_NAME, time_interval);
   {
     double print_time = this->print_q.next_print_time ();
-    fprintf (stderr, "%s: Next print time is %f.\n", CMI_COMPONENT_NAME, print_time);
     while (print_time>0 && print_time<time_interval)
     {
       this->status = CMI_STATUS_UPDATED;
-      fprintf (stderr, "%s: Running until print time %f.\n", CMI_COMPONENT_NAME, print_time);
+
+      this->log.info ("Running until next print time.");
       this->CMI_run (print_time);
+
       this->print_q.print_all (print_time);
       print_time = this->print_q.next_print_time ();
-      fprintf (stderr, "%s: Print time is now %f.\n", CMI_COMPONENT_NAME, print_time);
     }
   }
-/* 
-  if (time_interval > this->state.get_end_time ())
-    time_interval = this->state.get_end_time ();
-*/
-  
-  fprintf (stderr, "%s: Updating (0) ports until %f.\n", CMI_COMPONENT_NAME, time_interval);
+
   { // Run model until the stop time
     double now = this->state.get_current_time ();
     double port_queue_dt = CMI_PORT_QUEUE_DT;
     double t = now + port_queue_dt;
     for (; t<time_interval; t+=port_queue_dt)
     {
-      //this->print_q.print_all (now);
-
 #if CMI_TURN_OFF_PORTS
-      fprintf (stderr, "%s: Forgetting ports for now.\n", CMI_COMPONENT_NAME);
+      this->log.warning ("Forgetting ports for now.");
 #else
-      fprintf (stderr, "%s: Updating (1) ports until %f.\n", CMI_COMPONENT_NAME, now);
-      fflush (stderr);
+      this->log.info ("Updating ports.");
       this->ports.run_ports (now);
 #endif
 
 #if CMI_TURN_OFF_MAPPING
-      fprintf (stderr, "%s: Not mapping values (0).\n", CMI_COMPONENT_NAME);
+      this->log.warning ("Not mapping values.");
 #else
-      fprintf (stderr, "%s: Map values.\n", CMI_COMPONENT_NAME);
-      fflush (stderr);
-
+      this->log.info ("Mapping values.");
       this->ports.run_mappers ();
 #endif
 
-      fprintf (stderr, "%s: Updating myself until %f.\n", CMI_COMPONENT_NAME, t);
-      fflush (stderr);
+      this->log.info ("Updating myself.");
       this->state.update_until (t);
+
       now = this->state.get_current_time ();
     }
 
     if (t>time_interval)
     { // The last partial time step (if necessary).
-      //this->print_q.print_all (time_interval);
 #if CMI_TURN_OFF_PORTS
-      fprintf (stderr, "%s: Forgetting ports for now.\n", CMI_COMPONENT_NAME);
+      this->log.warning ("Forgetting ports for now.");
 #else
-      fprintf (stderr, "%s: Updating (2) ports until %f.\n", CMI_COMPONENT_NAME, now);
-      fflush (stderr);
+      this->log.info ("Updating ports.");
       this->ports.run_ports (now);
 #endif
 
 #if CMI_TURN_OFF_MAPPING
-      fprintf (stderr, "%s: Not mapping values (1).\n", CMI_COMPONENT_NAME);
+      this->log.warning ("Not mapping values.");
 #else
-      fprintf (stderr, "%s: Map values.\n", CMI_COMPONENT_NAME);
-      fflush (stderr);
+      this->log.info ("Mapping values.");
       this->ports.run_mappers ();
 #endif
 
-      fprintf (stderr, "%s: Updating myself until %f.\n", CMI_COMPONENT_NAME, time_interval);
-      fflush (stderr);
-      // NOTE: Child.run may accept a dt not a time. 
+      this->log.info ("Updating myself.");
       this->state.update_until (time_interval);
     }
   }
-
-  // NOTE: We may need to mask nodes below sea level.
-  // this->state.MaskNodesBelowElevation (0);
 
   this->status = CMI_STATUS_UPDATED;
   ::std::cerr << CMI_COMPONENT_NAME ": Status is "
               << this->CMI_get_status () << ::std::endl;
 
+  this->log.info ("Updated.");
+  this->log.info (this->CMI_get_status ());
   return TRUE;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_run)
 }
@@ -1330,7 +1281,7 @@ edu::csdms::models::Child_impl::get_grid_values_impl (
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_values)
   sidl::array<double> vals;
 
-  std::cout << "val_string = " + long_var_name << std::endl;
+  this->log.info ("Getting values.");
   {
     int len = 0;
     double * data;
@@ -1338,20 +1289,14 @@ edu::csdms::models::Child_impl::get_grid_values_impl (
     int upper[1];
     int stride[1] = {1};
 
-    fprintf (stderr, "%s: Call BMI_Get_double.\n", CMI_COMPONENT_NAME);
     data = this->state.get_double (long_var_name, len);
-
-    fprintf (stderr, "%s: n_vals=%d.\n", CMI_COMPONENT_NAME, len);
-    fprintf (stderr, "%s: vals[0]=%f.\n", CMI_COMPONENT_NAME, data[0]);
-    fprintf (stderr, "%s: vals[1]=%f.\n", CMI_COMPONENT_NAME, data[0]);
-    fprintf (stderr, "%s: vals[2]=%f.\n", CMI_COMPONENT_NAME, data[0]);
-    fprintf (stderr, "%s: vals[len-1]=%f.\n", CMI_COMPONENT_NAME, data[len-1]);
 
     upper[0] = len-1;
   
     vals.borrow (data, 1, lower, upper, stride);
 
   }
+  this->log.info ("Got values.");
 
   return vals;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_values)
@@ -1367,9 +1312,7 @@ edu::csdms::models::Child_impl::set_grid_values_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.set_grid_values)
 
-    fprintf (stderr, "%s: Setting %s.\n", CMI_COMPONENT_NAME,
-        long_var_name.c_str ());
-
+    this->log.info ("Setting values.");
     { // Set values through the c-array
       const int n_dim = 1;
       int shape[1];
@@ -1377,22 +1320,13 @@ edu::csdms::models::Child_impl::set_grid_values_impl (
       double * x = this->state.get_grid_x (long_var_name, len);
       double * vals_ptr = vals.first ();
 
-      fprintf (stderr, "%s: Calling BMI_Set_double.\n", CMI_COMPONENT_NAME);
       shape[0] =  len;
       this->state.set_double (long_var_name, vals_ptr, n_dim, shape);
-      /*
-      {
-        double * y = this->state.get_grid_y (long_var_name, len);
-        for (int i=0; i<len; i++)
-          fprintf (stderr, "%f, %f: %f\n", x[i], y[i], vals_ptr[i]);
-        fflush (stderr);
-      }
-      */
 
       delete [] x;
     }
 
-    fprintf (stderr, "%s: Values are set.\n", CMI_COMPONENT_NAME);
+    this->log.info ("Set values.");
     return;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.set_grid_values)
 }

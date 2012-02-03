@@ -555,6 +555,13 @@ impl_edu_csdms_models_Sedflux3D_setServices(
   
   /*  Insert-UserCode-Here {edu.csdms.models.Sedflux3D.setServices} (setServices method) */
     pd = edu_csdms_models_Sedflux3D__get_data (self);
+
+    if (!pd->log)
+    {
+      pd->log = edu_csdms_tools_Verbose__create (_ex);
+      edu_csdms_tools_Verbose_initialize (pd->log, CMI_COMPONENT_NAME, 1, _ex);
+    }
+
     pd->userinput = gov_cca_Services_createTypeMap(services, _ex);
 
     {
@@ -565,33 +572,31 @@ impl_edu_csdms_models_Sedflux3D_setServices(
 
     gcp = gov_cca_Services_getPort(services, "ppf", _ex);
     if (!gcp)
-      fprintf (stderr,"ERROR: gcp is NULL.\n");
+      edu_csdms_tools_Verbose_error (pd->log, "gcp is NULL", _ex);
 
     ppf = gov_cca_ports_ParameterPortFactory__cast (gcp, _ex);
     if (!ppf)
-      fprintf (stderr,"ERROR: ppf is NULL.\n");
+      edu_csdms_tools_Verbose_error (pd->log, "ppf is NULL", _ex);
 
     gov_cca_ports_ParameterPortFactory_initParameterData (ppf,
       &(pd->userinput), "Configure", _ex);
 
-    fprintf (stderr, "%s: Set batch title.", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (pd->log, "Set batch title.", _ex);
     gov_cca_ports_ParameterPortFactory_setBatchTitle (ppf,
       pd->userinput, CMI_COMPONENT_NAME" Parameters", _ex);
 
-    fprintf (stderr, "%s: Create config dialog.", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (pd->log, "Create config dialog.", _ex);
     {
       edu_csdms_tools_ConfigDialog dialog =
         edu_csdms_tools_ConfigDialog__create (_ex);
       const char * file = edu_csdms_tools_CMIConfigFile_get_string (
           pd->cfg_file, "CMI_CONFIG_DIALOG_XML_FILE", _ex);
 
-      fprintf (stderr, "%s: %s: Create config dialog.",
-          CMI_COMPONENT_NAME, file);
       edu_csdms_tools_ConfigDialog_read (dialog, file, _ex);
       edu_csdms_tools_ConfigDialog_construct (dialog, ppf,
           pd->userinput, _ex);
     }
-    fprintf (stderr, "%s: Created.", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (pd->log, "Created config dialog.", _ex);
 
     gov_cca_ports_ParameterPortFactory_addParameterPort (ppf,
       pd->userinput, services, _ex);
@@ -697,16 +702,10 @@ impl_edu_csdms_models_Sedflux3D_go(
 
     pd->is_driver = TRUE;
     
-    //PRINT(1, "Initialize sedflux");
-    fprintf (stderr, "Initialize sedflux\n"); fflush (stderr);
     edu_csdms_models_Sedflux3D_CMI_initialize (self, NULL, _ex);
 
-    fprintf (stderr, "Run sedflux\n"); fflush (stderr);
-    //PRINT (1, "Run sedflux");
     edu_csdms_models_Sedflux3D_CMI_run (self, -1, _ex);
 
-    fprintf (stderr, "Finalize sedflux\n"); fflush (stderr);
-    //PRINT (1, "Finalize sedflux");
     edu_csdms_models_Sedflux3D_CMI_finalize (self, _ex);
 EXIT:
     bocca_status = 2;
@@ -738,40 +737,34 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
     struct edu_csdms_models_Sedflux3D__data *this =
              edu_csdms_models_Sedflux3D__get_data (self);
 
-    fprintf (stderr, "%s: Initializing.\n", CMI_COMPONENT_NAME);
-
+    edu_csdms_tools_Verbose_info (this->log, "Initializing.", _ex);
     if (this->status >= CMI_STATUS_INITIALIZING)
       return TRUE;
     else
       this->status = CMI_STATUS_INITIALIZING;
 
-    fprintf (stderr, "%s: Create port queue.\n", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (this->log, "Create port queue.", _ex);
     { // Create port queue.
       edu_csdms_ports_CMIPort port = edu_csdms_ports_CMIPort__cast (self, _ex);
       struct sidl_string__array* ports =
         edu_csdms_tools_CMIConfigFile_get_array (this->cfg_file,
             "CMI_PORT_NAMES", _ex);
-
       this->ports = edu_csdms_tools_CMIPortQueue__create (_ex);
-      fprintf (stderr, "%s: Initialize port queue.\n", CMI_COMPONENT_NAME);
+
+      edu_csdms_tools_Verbose_info (this->log, "Initialize port queue.", _ex);
       edu_csdms_tools_CMIPortQueue_initialize (this->ports,
           this->d_services, port, _ex);
-      fprintf (stderr, "%s: %s: Add ports to queue.\n",
-          CMI_COMPONENT_NAME, CMI_PORT_NAMES);
+
+      edu_csdms_tools_Verbose_info (this->log, "Add ports to queue.", _ex);
       edu_csdms_tools_CMIPortQueue_add_ports (this->ports, CMI_PORT_NAMES,
           _ex);
-      fprintf (stderr, "%s: Connect ports.\n", CMI_COMPONENT_NAME);
+
+      edu_csdms_tools_Verbose_info (this->log, "Connect ports.", _ex);
       edu_csdms_tools_CMIPortQueue_connect_ports (this->ports, _ex);
     }
+    edu_csdms_tools_Verbose_info (this->log, "Created port queue.", _ex);
 
-    fprintf (stderr, "%s: Open log.\n", CMI_COMPONENT_NAME);
-    if (!this->log)
-    {
-      this->log = edu_csdms_tools_Verbose__create (_ex);
-      edu_csdms_tools_Verbose_set_log_level (this->log, 1, _ex);
-    }
-
-    fprintf (stderr, "%s: Read parameters.\n", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (this->log, "Read parameters.", _ex);
     { /* Read parameters from the config dialog. */
       edu_csdms_tools_TemplateFiles template;
       char **src;
@@ -829,42 +822,36 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
       gov_cca_TypeMap_putString (this->userinput,
           "/Sedflux3D/SimulationName", val, _ex);
     }
-/*
-This is what Sedflux3D.txt will look like,
-"sedflux -3 --silent --no-signals --init-file=${INIT_FILE} --input-dir=${INPUT_DIR} --working-dir=${WORKING_DIR}"
-*/
-    fprintf (stderr, "%s: BMI initialize\n", CMI_COMPONENT_NAME);
+
+    edu_csdms_tools_Verbose_info (this->log, "BMI initialize.", _ex);
     this->state = BMI_Initialize (CMI_COMPONENT_NAME"_command_line.txt");
 
-    fprintf (stderr, "%s: Set up PrintQueue.\n", CMI_COMPONENT_NAME);
-    PRINT (2, "Set up PrintQueue");
+    edu_csdms_tools_Verbose_info (this->log, "Create print queue.", _ex);
     {
       edu_csdms_ports_CMIPort port = edu_csdms_ports_CMIPort__cast (self, _ex);
-      fprintf (stderr, "Create PrintQueue\n"); fflush (stderr);
       this->print_queue = edu_csdms_tools_PrintQueue__create (_ex);
-      fprintf (stderr, "Initialize PrintQueue\n"); fflush (stderr);
+
+      edu_csdms_tools_Verbose_info (this->log, "Initialize print queue.", _ex);
       edu_csdms_tools_PrintQueue_initialize (this->print_queue,
           this->userinput, "/"CMI_COMPONENT_NAME, port, _ex);
-      fprintf (stderr, "Add file to PrintQueue\n"); fflush (stderr);
+
+      edu_csdms_tools_Verbose_info (this->log, "Add file to print queue.", _ex);
       edu_csdms_tools_PrintQueue_add_files_from_list (this->print_queue,
           CMI_OUTPUT_FILE_NS, _ex);
-      fprintf (stderr, "Created PrintQueue\n"); fflush (stderr);
     }
+    edu_csdms_tools_Verbose_info (this->log, "Created print queue.", _ex);
 
-    fprintf (stderr, "%s: Initialize uses ports.\n", CMI_COMPONENT_NAME);
-    PRINT (2, "Initialize model uses ports");
+    edu_csdms_tools_Verbose_info (this->log, "Initialize uses ports.", _ex);
     edu_csdms_tools_CMIPortQueue_initialize_ports (this->ports, NULL, _ex);
 
 #if CMI_TURN_OFF_MAPPING
-    fprintf (stderr, "%s: Forgetting mappers.\n", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_warning (this->log, "Forgetting mappers.", _ex);
 #else
-    fprintf (stderr, "%s: Set up mappers.\n", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (this->log, "Set up mappers.", _ex);
     edu_csdms_tools_CMIPortQueue_add_mappers (this->ports, CMI_MAPPERS, _ex);
 #endif
-    //fprintf (stderr, "%s: Run mappers.\n", CMI_COMPONENT_NAME);
-    //edu_csdms_tools_CMIPortQueue_run_mappers (this->ports, _ex);
 
-    fprintf (stderr, "%s: Initialized.\n", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (this->log, "Initialized.", _ex);
     this->status = CMI_STATUS_INITIALIZED;
     return TRUE;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_initialize) */
@@ -929,8 +916,8 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
     struct edu_csdms_models_Sedflux3D__data *this =
              edu_csdms_models_Sedflux3D__get_data (self);
 
-    fprintf (stderr, "%s: Status is %s.\n", CMI_COMPONENT_NAME,
-        edu_csdms_models_Sedflux3D_CMI_get_status (self, _ex));
+    edu_csdms_tools_Verbose_info (this->log, 
+        edu_csdms_models_Sedflux3D_CMI_get_status (self, _ex), _ex);
 
     if (this->status == CMI_STATUS_UPDATING)
       return TRUE;
@@ -940,24 +927,20 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
     if (time_interval<0)
       time_interval = BMI_Get_end_time (this->state);
 
-    //if (time_interval>BMI_Get_end_time (this->state))
-    //  time_interval = BMI_Get_end_time (this->state);
-
-    fprintf (stderr, "%s: Updating until %f.\n", CMI_COMPONENT_NAME, time_interval);
+    edu_csdms_tools_Verbose_info (this->log, "Updating", _ex);
     {
       double print_time = edu_csdms_tools_PrintQueue_next_print_time (
           this->print_queue, _ex);
-      //double stop_time = time_interval;
-      fprintf (stderr, "%s: Next print time is %f.\n", CMI_COMPONENT_NAME, print_time);
       while (print_time>0 && print_time<time_interval)
       {
         this->status = CMI_STATUS_UPDATED;
-        fprintf (stderr, "%s: Running until print time %f.\n", CMI_COMPONENT_NAME, print_time);
+
+        edu_csdms_tools_Verbose_info (this->log, "Running until next print time.", _ex);
         edu_csdms_models_Sedflux3D_CMI_run (self, print_time, _ex);
+
         edu_csdms_tools_PrintQueue_print_all (this->print_queue, print_time, _ex);
         print_time = edu_csdms_tools_PrintQueue_next_print_time (
             this->print_queue, _ex);
-        fprintf (stderr, "%s: Print time is now %f.\n", CMI_COMPONENT_NAME, print_time);
       }
     }
 
@@ -966,39 +949,32 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
       const double port_queue_dt = CMI_PORT_QUEUE_DT;
       double t = now + port_queue_dt;
 
-      fprintf (stderr, "%s: Updating ports until %f.\n", CMI_COMPONENT_NAME, time_interval);
       for (; t<time_interval; t+=port_queue_dt)
       {
-        //edu_csdms_tools_PrintQueue_print_all (this->print_queue,
-        //    BMI_Get_current_time (this->state), _ex);
-
-        //fprintf (stderr, "%s: Forgetting ports for now.\n", CMI_COMPONENT_NAME);
-        fprintf (stderr, "%s: Updating ports until %f.\n", CMI_COMPONENT_NAME, now);
+        edu_csdms_tools_Verbose_info (this->log, "Updating ports.", _ex);
         edu_csdms_tools_CMIPortQueue_run_ports (this->ports, now, _ex);
+
 #if CMI_TURN_OFF_MAPPING
-        fprintf (stderr, "%s: Forgetting mappers.\n", CMI_COMPONENT_NAME);
+        edu_csdms_tools_Verbose_warning (this->log, "Forgetting mappers.", _ex);
 #else
-        fprintf (stderr, "%s: Run mappers.\n", CMI_COMPONENT_NAME);
+        edu_csdms_tools_Verbose_info (this->log, "Running mappers.", _ex);
         edu_csdms_tools_CMIPortQueue_run_mappers (this->ports, _ex);
 #endif
 
-        fprintf (stderr, "%s: Updating myself until %f.\n", CMI_COMPONENT_NAME, t);
+        edu_csdms_tools_Verbose_info (this->log, "Updating myself.", _ex);
         BMI_Update_until (this->state, t);
         now = BMI_Get_current_time (this->state);
       }
 
       if (t>time_interval)
       {
-        //edu_csdms_tools_PrintQueue_print_all (this->print_queue,
-        //    BMI_Get_current_time (this->state), _ex);
-
-        fprintf (stderr, "%s: Updating ports until %f.\n", CMI_COMPONENT_NAME, now);
+        edu_csdms_tools_Verbose_info (this->log, "Updating ports.", _ex);
         edu_csdms_tools_CMIPortQueue_run_ports (this->ports, now, _ex);
 
 #if CMI_TURN_OFF_MAPPING
-        fprintf (stderr, "%s: Forgetting mappers.\n", CMI_COMPONENT_NAME);
+        edu_csdms_tools_Verbose_warning (this->log, "Forgetting mappers.", _ex);
 #else
-        fprintf (stderr, "%s: Run mappers.\n", CMI_COMPONENT_NAME);
+        edu_csdms_tools_Verbose_info (this->log, "Running mappers.", _ex);
         edu_csdms_tools_CMIPortQueue_run_mappers (this->ports, _ex);
 #endif
 
@@ -1006,7 +982,7 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
       }
     }
 
-    fprintf (stderr, "%s: Updated.\n", CMI_COMPONENT_NAME);
+    edu_csdms_tools_Verbose_info (this->log, "Updated.", _ex);
     this->status = CMI_STATUS_UPDATED;
 
     return TRUE;
@@ -1670,13 +1646,6 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_x(
       int upper[1] = {len-1};
       int stride[1] = {1};
   
-      {
-        int i;
-        for (i=lower[0]; i<=upper[0]; i++)
-          fprintf (stderr, "%f (%d), ", x[i], i);
-        fprintf (stderr, "\n---\n");
-      }
-
       vals = sidl_double__array_borrow (x, 1, lower, upper, stride);
     }
 
@@ -1715,12 +1684,6 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_y(
       int upper[1] = {len-1};
       int stride[1] = {1};
   
-      {
-        int i;
-        for (i=lower[0]; i<=upper[0]; i++)
-          fprintf (stderr, "%f (%d), ", y[i], i);
-        fprintf (stderr, "\n---\n");
-      }
       vals = sidl_double__array_borrow (y, 1, lower, upper, stride);
     }
 
@@ -1758,14 +1721,7 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_z(
       int lower[1] = {0};
       int upper[1] = {len-1};
       int stride[1] = {1};
-/* 
-      {
-        int i;
-        for (i=lower[0]; i<=upper[0]; i++)
-          fprintf (stderr, "%f (%d), ", z[i], i);
-        fprintf (stderr, "\n---\n");
-      }
-*/
+
       vals = sidl_double__array_borrow (z, 1, lower, upper, stride);
     }
 
@@ -1918,6 +1874,8 @@ impl_edu_csdms_models_Sedflux3D_get_grid_values(
       struct edu_csdms_models_Sedflux3D__data *this =
         edu_csdms_models_Sedflux3D__get_data (self);
 
+      edu_csdms_tools_Verbose_info (this->log, "Getting values.", _ex);
+
       if (this && this->state)
       {
         int n_dims;
@@ -1938,26 +1896,10 @@ impl_edu_csdms_models_Sedflux3D_get_grid_values(
           {
             lower[i] = 0;
             upper[i] = dimen[i]-1;
-            //upper[i] = dimen[n_dims-i-1]-1;
           }
-          //for (i=1, stride[0]=1; i<n_dims; i++)
-          //  stride[i] = stride[i-1]*dimen[i-1];
           for (i=n_dims-2, stride[n_dims-1]=1; i>=0; i--)
             stride[i] = stride[i+1]*dimen[i+1];
 
-          if (n_dims==2)
-          {
-            int i, i_0;
-            fprintf (stderr, "%s: Getting values\n", CMI_COMPONENT_NAME);
-            fprintf (stderr, "%s: Shape is %dx%d\n", CMI_COMPONENT_NAME,
-                dimen[0], dimen[1]);
-            fprintf (stderr, "%s: Stride is %dx%d\n", CMI_COMPONENT_NAME,
-                stride[0], stride[1]);
-            fflush (stderr);
-          }
-
-          //vals = sidl_double__array_borrow (data, n_dims, lower, upper,
-          //    stride);
           {
             const int _n_dims = 1;
             const int _lower[1] = {0};
@@ -1974,6 +1916,7 @@ impl_edu_csdms_models_Sedflux3D_get_grid_values(
         }
 
       }
+      edu_csdms_tools_Verbose_info (this->log, "Got values.", _ex);
     }
 
     return vals;
@@ -2004,8 +1947,7 @@ impl_edu_csdms_models_Sedflux3D_set_grid_values(
     struct edu_csdms_models_Sedflux3D__data *this =
       edu_csdms_models_Sedflux3D__get_data (self);
 
-    fprintf (stderr, "%s: Setting %s.\n", CMI_COMPONENT_NAME,
-        long_var_name);
+    edu_csdms_tools_Verbose_info (this->log, "Setting values.", _ex);
 
     {
       int n_dim;
@@ -2013,21 +1955,12 @@ impl_edu_csdms_models_Sedflux3D_set_grid_values(
           &n_dim);
       double * vals_ptr = sidl_double__array_first (vals);
 
-      fprintf (stderr, "%s: Calling BMI_Set_double.\n", CMI_COMPONENT_NAME);
-      {
-        int i;
-        for (i=0; i<shape[0]*shape[1]; i++)
-          fprintf (stderr, "%d: %f\n", i, vals_ptr[i]);
-        fflush (stderr);
-      }
       BMI_Set_double (this->state, long_var_name, vals_ptr, n_dim, shape);
 
       g_free (shape);
+      edu_csdms_tools_Verbose_info (this->log, "Set values.", _ex);
     }
 
-    //g_free (vals);
-
-    fprintf (stderr, "%s: Values are set.\n", CMI_COMPONENT_NAME);
     return;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.set_grid_values) */
   }
