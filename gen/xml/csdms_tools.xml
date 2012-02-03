@@ -1,16 +1,48 @@
 <project xmlns:xi="http://www.w3.org/2001/XInclude"
   name="csdms_tools" language="python">
 
-  <xi:include href="openmi_impl.xml" parse="xml"/>
+  <xi:include href="cmi_interface.xml" parse="xml"/>
+  <!--xi:include href="openmi_impl.xml" parse="xml"/-->
   <xi:include href="csdms_ports.xml" parse="xml"/>
 
-  <class name="tools.IRFPortQueue" language="python">
+  <class name="tools.CMIGrid" language="python">
+    <implements>IGrid</implements>
+  </class>
+  <class name="tools.CMIGridPoints" language="python">
+    <implements>IGrid</implements>
+  </class>
+  <class name="tools.CMIGridUniformRectilinear" language="python">
+    <implements>IGrid</implements>
+  </class>
+  <!--class name="tools.CMIGridOpenMI" language="python">
+    <implements>IGrid</implements>
+    <requires>edu.csdms.openmi.IElementSet</requires>
+  </class-->
+  <class name="tools.CSDMSGridMapper" language="python">
+    <implements>IGridMapper</implements>
+    <requires>IGrid</requires>
+  </class>
+  <class name="tools.OpenMIGridMapper" language="java">
+    <implements>IGridMapper</implements>
+    <requires>IGrid</requires>
+    <extras>make.vars.user</extras>
+  </class>
+  <!--class name="tools.IRFPortQueue" language="python">
     <requires>edu.csdms.ports.IRFPort</requires>
     <requires>edu.csdms.ports.CMIPort</requires>
     <requires>gov.cca.Port</requires>
     <requires>ScalarSet</requires>
     <requires>ElementMapper</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class-->
+
+  <class name="tools.CMIPortQueue" language="python">
     <requires>edu.csdms.ports.CMIPort</requires>
+    <requires>gov.cca.Port</requires>
+    <requires>edu.csdms.cmi.IGrid</requires>
+    <requires>edu.csdms.tools.CSDMSGridMapper</requires>
     <import-sidl/>
     <import-impl/>
     <extras>make.vars.user</extras>
@@ -19,6 +51,21 @@
   <class name="tools.ConfigDialog" language="python">
     <requires>gov.cca.TypeMap</requires>
     <requires>gov.cca.ports.ParameterPortFactory</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="tools.ConfigFile" language="python">
+    <implements>IConfigFile</implements>
+    <requires>gov.cca.TypeMap</requires>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+  <class name="tools.CMIConfigFile" language="python">
+    <implements>IConfigFile</implements>
+    <requires>gov.cca.TypeMap</requires>
     <import-sidl/>
     <import-impl/>
     <extras>make.vars.user</extras>
@@ -42,7 +89,7 @@
     <extras>make.vars.user</extras>
     <requires>gov.cca.Type</requires>
     <requires>gov.cca.TypeMap</requires>
-    <requires>edu.csdms.ports.IRFPort</requires>
+    <!--requires>edu.csdms.ports.IRFPort</requires-->
     <requires>edu.csdms.ports.CMIPort</requires>
     <requires>tools.IRasterOutputFile</requires>
     <import-sidl/>

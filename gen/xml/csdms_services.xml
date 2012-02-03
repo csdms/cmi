@@ -4,6 +4,15 @@
   <xi:include href="cmi_interface.xml" parse="xml"/>
   <xi:include href="csdms_ports.xml" parse="xml"/>
 
+  <interface name="tools.IMessageLogger">
+    <import-sidl/>
+  </interface>
+
+  <class name="tools.Verbose" language="python">
+    <implements>IMessageLogger</implements>
+    <import-sidl/>
+  </class>
+
   <class name="tools.CMIGrid" language="python">
     <implements>IGrid</implements>
   </class>
@@ -28,6 +37,7 @@
     <requires>gov.cca.Port</requires>
     <requires>edu.csdms.cmi.IGrid</requires>
     <requires>edu.csdms.tools.CSDMSGridMapper</requires>
+    <requires>edu.csdms.tools.Verbose</requires>
     <import-sidl/>
     <import-impl/>
     <extras>make.vars.user</extras>
@@ -76,6 +86,7 @@
     <requires>gov.cca.TypeMap</requires>
     <requires>edu.csdms.ports.CMIPort</requires>
     <requires>tools.IRasterOutputFile</requires>
+    <requires>edu.csdms.tools.Verbose</requires>
     <import-sidl/>
     <import-impl/>
   </class>
@@ -86,15 +97,6 @@
     <import-sidl/>
     <import-impl/>
     <extras>make.vars.user</extras>
-  </class>
-
-  <interface name="tools.IMessageLogger">
-    <import-sidl/>
-  </interface>
-
-  <class name="tools.Verbose" language="python">
-    <implements>IMessageLogger</implements>
-    <import-sidl/>
   </class>
 
   <interface name="tools.ITemplateFile">
