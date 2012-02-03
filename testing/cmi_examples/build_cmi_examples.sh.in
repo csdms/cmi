@@ -1,0 +1,6 @@
+#! /bin/bash
+
+cd @CMAKE_CURRENT_BINARY_DIR@/../../csdms && \
+  module use . && module load cmi-examples && \
+  ./configure && make
+

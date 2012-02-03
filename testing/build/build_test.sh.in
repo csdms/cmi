@@ -1,0 +1,5 @@
+#! /bin/bash
+
+cd @CMAKE_CURRENT_BINARY_DIR@/../.. && make cmi_examples
+#cd csdms && ./configure && make
+
