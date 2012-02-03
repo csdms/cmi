@@ -1,5 +1,10 @@
 cmake_minimum_required (VERSION 2.6)
 
+include (CTest)
+enable_testing ()
+add_subdirectory (testing/build)
+add_subdirectory (testing/cmi_examples)
+
 # If you want this cmake file to generate a make file that is able to build
 # a new project, add your project's name to the list of projects contained
 # in the PROJECTS variable.
@@ -28,6 +33,7 @@ set (PROJECTS
   roms_builder
   aquatellus
   ltrans_roms
+  cmi_examples
 )
 
 if (NOT DEFINED MODULE_NAME)
