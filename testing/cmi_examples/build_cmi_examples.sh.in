@@ -4,7 +4,7 @@ source /home/csdms/tools/modules/tcl/init/bash
 module load cmake
 module load cca
 
-cd @CMAKE_CURRENT_BINARY_DIR@/../../csdms && \
-  module use . && module load cmi-examples && \
-  ./configure && make
+cd @CMAKE_CURRENT_BINARY_DIR@/../../ && \
+  module use . && module load cmi-examples
+cd csdms && ./configure && make
 
