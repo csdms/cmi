@@ -1,5 +1,8 @@
 #! /bin/bash
 
+source /home/csdms/tools/modules/tcl/init/bash
+module load cmake
+module load cca
+
 cd @CMAKE_CURRENT_BINARY_DIR@/../.. && make cmi_examples
-#cd csdms && ./configure && make
 
