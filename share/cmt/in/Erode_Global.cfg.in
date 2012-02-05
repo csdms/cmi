@@ -7,7 +7,9 @@ in_directory        | ${in_directory}     | string    | input directory
 out_directory       | ${out_directory}    | string    | output directory
 site_prefix         | ${site_prefix}      | string    | prefix for the study site
 case_prefix         | ${case_prefix}      | string    | prefix for a given scenario
-n_steps             | ${n_steps}          | long      | number of time steps
+stop_code           | ${stop_code}        | long      | 0=n_steps, 1=stop_time, 2=steady_state
+n_steps             | ${n_steps}          | long      | number of time steps, if stop_code=0
+stop_time           | ${stop_time}        | float     | time to stop, if stop_code=1
 nx                  | ${nx}               | long      | number of cols in DEM
 ny                  | ${ny}               | long      | number of rows in DEM
 dx                  | ${dx}               | float     | grid cell xsize [meters]
