@@ -36,6 +36,17 @@
       <help_brief>prefix for a given scenario</help_brief>
     </entry>
 
+    <entry name="/ErodeGlobal/Input/Var/stop_code">
+      <label>Stop method code:</label>
+      <default>0</default>
+      <type>long</type>
+      <range>
+        <min>0</min>
+        <max>2</max>
+      </range>
+      <help_brief>stop method code: 0=n_steps, 1=stop_time, 2=steady-state</help_brief>
+    </entry>
+
     <entry name="/ErodeGlobal/Input/Var/n_steps">
       <label>Number of steps:</label>
       <default>1000</default>
@@ -44,7 +55,18 @@
         <min>1</min>
         <max>1e9</max>
       </range>
-      <help_brief>number of time steps</help_brief>
+      <help_brief>number of time steps, if stop_code=0</help_brief>
+    </entry>
+
+    <entry name="/ErodeGlobal/Input/Var/stop_time">
+      <label>Time to stop:</label>
+      <default>1000.0</default>
+      <type>float</type>
+      <range>
+        <min>1</min>
+        <max>1e8</max>
+      </range>
+      <help_brief>time to stop, if stop_code=1</help_brief>
     </entry>
 
     <entry name="/ErodeGlobal/Input/Var/nx">
