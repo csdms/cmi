@@ -66,7 +66,7 @@
         <min>1</min>
         <max>1e8</max>
       </range>
-      <help_brief>time to stop, if stop_code=1</help_brief>
+      <help_brief>time to stop [years], if stop_code=1</help_brief>
     </entry>
 
     <entry name="/ErodeLocal/Input/Var/nx">
@@ -529,14 +529,14 @@
     </entry>
 
     <entry name="/ErodeLocal/Input/Var/SAVE_DZ_DT_PIXELS">
-      <label>Save Qs time series toggle:</label>
+      <label>Save dz/dt time series toggle:</label>
       <default>No</default>
       <type>string</type>
       <help_brief>option to save computed dz_dt time series {Yes; No}</help_brief>
     </entry>
 
     <entry name="/ErodeLocal/Input/Var/dz_dt_ts_file">
-      <label>Save Qs pixels file:</label>
+      <label>Save dz/dt pixels file:</label>
       <default>[case_prefix]_0D-dzdt.nc</default>
       <type>string</type>
       <help_brief>filename for time series of dz_dt</help_brief>
