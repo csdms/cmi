@@ -14,6 +14,7 @@
 # Insert-Code-Here {_initial} ()
 import os
 import logging
+
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.tools.IMessageLogger
@@ -69,13 +70,7 @@ class Verbose:
     #
 
 # DO-NOT-DELETE splicer.begin(initialize)
-    # These are the log level values
-    # NOTSET = 0
-    # DEBUG = 10
-    # INFO = 20
-    # WARNING = 30
-    # ERROR = 40
-    # CRITICAL = 50
+    level_string = {'NOTSET':0, 'DEBUG': 10, 'INFO': 20, 'WARNING': 30, 'ERROR': 40, 'CRITICAL': 50}
     try:
         level = int (os.environ['CMT_VERBOSE'])
     except KeyError:
