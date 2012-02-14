@@ -418,15 +418,17 @@ edu::csdms::models::Child_impl::setServices_impl (
 
   {
     this->log = ::edu::csdms::tools::Verbose::_create ();
-    this->log.initialize (CMI_COMPONENT_NAME, 1);
+    this->log.initialize (CMI_COMPONENT_NAME, 2);
   }
 
   ::gov::cca::Port gcp = services.getPort("ppf");
 
+  this->log.info ("Reading component configuation file");
   {
     this->cfg_file = ::edu::csdms::tools::CMIConfigFile::_create ();
     this->cfg_file.read (CMI_COMPONENT_NAME);
   }
+  this->log.info ("Read component configuation file");
 
   if (gcp._is_nil ())
   {
@@ -445,13 +447,18 @@ edu::csdms::models::Child_impl::setServices_impl (
   ppf.initParameterData (this->userinput, "Configure");
   ppf.setBatchTitle (this->userinput, CMI_COMPONENT_NAME " Parameters");
 
+  this->log.info ("Reading component dialog file");
   {
     ::edu::csdms::tools::ConfigDialog dialog =
       ::edu::csdms::tools::ConfigDialog::_create ();
+    string file = this->cfg_file.get_string ("CMI_CONFIG_DIALOG_XML_FILE");
 
-    dialog.read (CMI_COMPONENT_NAME ".xml");
+    this->log.info ("Reading... ");
+    dialog.read (file);
+    this->log.info ("Constructing... ");
     dialog.construct (ppf, this->userinput);
   }
+  this->log.info ("Read component dialog file");
 
   ppf.addParameterPort(this->userinput, services);
   services.releasePort("ppf");
@@ -555,12 +562,13 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
   { // Create port queue.
     ::edu::csdms::ports::CMIPort port =
       ::babel_cast<edu::csdms::ports::CMIPort>(*this);
+    sidl::array<string> ports = this->cfg_file.get_array ("CMI_PORT_NAMES");
 
     this->ports = ::edu::csdms::tools::CMIPortQueue::_create ();
 
     this->ports.initialize (this->d_services, port);
 
-    this->ports.add_ports (CMI_PORT_NAMES);
+    this->ports.add_ports (ports);
 
     this->ports.connect_ports ();
   }
@@ -569,12 +577,14 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
   this->log.info ("Parse config file.");
   { // Read parameters from the config dialog.
     ::edu::csdms::tools::TemplateFiles tmpls;
-    const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
-    const char *dest_files = CMI_TEMPLATE_DEST_FILES;
+    //const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
+    //const char *dest_files = CMI_TEMPLATE_DEST_FILES;
     string val;
+    sidl::array<string> srcs = this->cfg_file.get_array ("CMI_TEMPLATE_SOURCE_FILES");
+    sidl::array<string> dsts = this->cfg_file.get_array ("CMI_TEMPLATE_DEST_FILES");
 
     tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
-    tmpls.add_files (CMI_TEMPLATE_SOURCE_FILES, CMI_TEMPLATE_DEST_FILES);
+    tmpls.add_files (srcs, dsts);
     tmpls.substitute (this->userinput, "/"CMI_COMPONENT_NAME"/Input/Var/",
         ".");
 
@@ -611,14 +621,18 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
   this->ports.initialize_ports (0);
 #endif
 
-#if CMI_TURN_OFF_MAPPING
-  this->log.warning ("Mapping is turned off.");
-#else
-  this->log.info ("Initialize mappers.");
-  this->ports.add_mappers (CMI_MAPPERS);
+  {
+    sidl::array<string> mappers = this->cfg_file.get_array ("CMI_MAPPERS");
 
-  this->log.info ("Map initial values.");
-  this->ports.run_mappers ();
+#if CMI_TURN_OFF_MAPPING
+    this->log.warning ("Mapping is turned off.");
+#else
+    this->log.info ("Initialize mappers.");
+    this->ports.add_mappers (mappers);
+
+    this->log.info ("Map initial values.");
+    this->ports.run_mappers ();
+  }
 #endif
 
   this->status = CMI_STATUS_INITIALIZED;

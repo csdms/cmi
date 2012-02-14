@@ -559,7 +559,7 @@ impl_edu_csdms_models_Sedflux3D_setServices(
     if (!pd->log)
     {
       pd->log = edu_csdms_tools_Verbose__create (_ex);
-      edu_csdms_tools_Verbose_initialize (pd->log, CMI_COMPONENT_NAME, 1, _ex);
+      edu_csdms_tools_Verbose_initialize (pd->log, CMI_COMPONENT_NAME, 2, _ex);
     }
 
     pd->userinput = gov_cca_Services_createTypeMap(services, _ex);
@@ -756,8 +756,7 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
           this->d_services, port, _ex);
 
       edu_csdms_tools_Verbose_info (this->log, "Add ports to queue.", _ex);
-      edu_csdms_tools_CMIPortQueue_add_ports (this->ports, CMI_PORT_NAMES,
-          _ex);
+      edu_csdms_tools_CMIPortQueue_add_ports (this->ports, ports, _ex);
 
       edu_csdms_tools_Verbose_info (this->log, "Connect ports.", _ex);
       edu_csdms_tools_CMIPortQueue_connect_ports (this->ports, _ex);
@@ -767,20 +766,25 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
     edu_csdms_tools_Verbose_info (this->log, "Read parameters.", _ex);
     { /* Read parameters from the config dialog. */
       edu_csdms_tools_TemplateFiles template;
-      char **src;
-      char **dest;
-      const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
-      const char *dest_files = CMI_TEMPLATE_DEST_FILES;
+      //char **src;
+      //char **dest;
+      //const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
+      //const char *dest_files = CMI_TEMPLATE_DEST_FILES;
       char * val;
       //struct sidl_string__array* src_files =
       //  gov_cca_TypeMap_getStringArray (this->cmi_data,
       //      "CMI_TEMPLATE_SOURCE_FILES", NULL, _ex);
       //sidl_string__array dst_files = gov_cca_TypeMap_getStringArray (
       //    this->cmi_data, "CMI_TEMPLATE_DEST_FILES", NULL, _ex);
+      struct sidl_string__array* srcs =
+        edu_csdms_tools_CMIConfigFile_get_array (this->cfg_file,
+            "CMI_TEMPLATE_SOURCE_FILES", _ex);
+      struct sidl_string__array* dsts =
+        edu_csdms_tools_CMIConfigFile_get_array (this->cfg_file,
+            "CMI_TEMPLATE_DEST_FILES", _ex);
 
       template = edu_csdms_tools_TemplateFiles__create (_ex);
-      edu_csdms_tools_TemplateFiles_add_files (template, src_files,
-          dest_files, _ex);
+      edu_csdms_tools_TemplateFiles_add_files (template, srcs, dsts, _ex);
 
       val = gov_cca_TypeMap_getString (this->userinput,
           "/Sedflux3D/Input/Var/InputDir", "GUI", _ex);
@@ -844,12 +848,17 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
     edu_csdms_tools_Verbose_info (this->log, "Initialize uses ports.", _ex);
     edu_csdms_tools_CMIPortQueue_initialize_ports (this->ports, NULL, _ex);
 
+    {
+      struct sidl_string__array* mappers =
+        edu_csdms_tools_CMIConfigFile_get_array (this->cfg_file,
+            "CMI_MAPPERS", _ex);
 #if CMI_TURN_OFF_MAPPING
-    edu_csdms_tools_Verbose_warning (this->log, "Forgetting mappers.", _ex);
+      edu_csdms_tools_Verbose_warning (this->log, "Forgetting mappers.", _ex);
 #else
-    edu_csdms_tools_Verbose_info (this->log, "Set up mappers.", _ex);
-    edu_csdms_tools_CMIPortQueue_add_mappers (this->ports, CMI_MAPPERS, _ex);
+      edu_csdms_tools_Verbose_info (this->log, "Set up mappers.", _ex);
+      edu_csdms_tools_CMIPortQueue_add_mappers (this->ports, mappers, _ex);
 #endif
+    }
 
     edu_csdms_tools_Verbose_info (this->log, "Initialized.", _ex);
     this->status = CMI_STATUS_INITIALIZED;
