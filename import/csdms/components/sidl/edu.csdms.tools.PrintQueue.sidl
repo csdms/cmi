@@ -55,7 +55,7 @@ package edu version 0.0 {
                 // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.PrintQueue:boccaPrivateMethods)
                 // DO-NOT-EDIT
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in gov.cca.Type dummy0, in gov.cca.TypeMap dummy1, in edu.csdms.tools.IRasterOutputFile dummy2, in edu.csdms.ports.CMIPort dummy3);
+                void boccaForceUsePortInclude(in edu.csdms.tools.Verbose dummy0, in gov.cca.Type dummy1, in gov.cca.TypeMap dummy2, in edu.csdms.tools.IRasterOutputFile dummy3, in edu.csdms.ports.CMIPort dummy4);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.PrintQueue:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }
