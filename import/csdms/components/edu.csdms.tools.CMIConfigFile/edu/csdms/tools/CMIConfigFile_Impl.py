@@ -48,6 +48,9 @@ class CMIConfigFile:
     self._name = None
     self._data = {}
 
+    self._log = edu.csdms.tools.Verbose.Verbose ()
+    self._log.initialize ("CMIConfigFile", 2)
+
     # Bocca generated code. bocca.protected.begin(edu.csdms.tools.CMIConfigFile._init) 
     self.bocca_print_errs = True
     # Bocca generated code. bocca.protected.end(edu.csdms.tools.CMIConfigFile._init) 
@@ -73,7 +76,11 @@ class CMIConfigFile:
     #
 
 # DO-NOT-DELETE splicer.begin(get_string)
-    return self._data[option]
+    try:
+        return self._data[option].strip ()
+    except KeyError as e:
+        self._log.warning ('Missing option (%s)' % e)
+    return None
 # DO-NOT-DELETE splicer.end(get_string)
 
   def get_array(self, option):
@@ -90,10 +97,18 @@ class CMIConfigFile:
     #
 
 # DO-NOT-DELETE splicer.begin(get_array)
-    items = []
-    for item in self._data[option].split (','):
-        items.append (item.strip ())
-    return items
+    try:
+        return self._data[option]
+    except KeyError as e:
+        self._log.warning ('Missing option (%s)' % e)
+    return None
+    #items = []
+    #try:
+    #    for item in self._data[option].split (','):
+    #        items.append (item.strip ())
+    #except KeyError as e:
+    #    self._log.warning ('Missing option (%s)' % e)
+    #return items
 # DO-NOT-DELETE splicer.end(get_array)
 
   def get_int(self, option):
@@ -110,7 +125,11 @@ class CMIConfigFile:
     #
 
 # DO-NOT-DELETE splicer.begin(get_int)
-    return self._data[option]
+    try:
+        return self._data[option]
+    except KeyError as e:
+        self._log.warning ('Missing option (%s)' % e)
+    return None
 # DO-NOT-DELETE splicer.end(get_int)
 
   def get_float(self, option):
@@ -127,7 +146,11 @@ class CMIConfigFile:
     #
 
 # DO-NOT-DELETE splicer.begin(get_float)
-    return self._data[option]
+    try:
+        return self._data[option]
+    except KeyError as e:
+        self._log.warning ('Missing option (%s)' % e)
+    return None
 # DO-NOT-DELETE splicer.end(get_float)
 
   def boccaForceUsePortInclude(self, dummy0):
@@ -176,34 +199,44 @@ class CMIConfigFile:
 
     files = [cfg_file,
              os.path.join (os.path.expanduser ('~/.cmt'), cfg_file)]
-    print 'Reading config file: %s' % ', '.join (files)
+    self._log.info ('Looking for config files (%s)' % ', '.join (files))
+
     try:
         self._parser.read (files)
     except Exception as e:
         print e
 
     try:
-        print 'Reading csdms.cmi section'
-
         section = 'csdms.cmi.%s' % self._name
-        print section
+        self._log.info ('Reading section (%s)' % section)
+
         ports = self._parser.get (section, 'ports')
         template_files = self._parser.get (section, 'template_files')
         mappers = self._parser.get (section, 'mappers')
         dialog_file = self._parser.get (section, 'config_xml_file')
         port_queue_dt = self._parser.getfloat (section, 'port_queue_dt')
 
-        print ports
-        print template_files
-        print mappers
-        print dialog_file
-        print port_queue_dt
+        (srcs, dsts) = ([], [])
+        for file in template_files.split (','):
+            (src, dst) = file.split ('->')
+            srcs.append (src.strip ())
+            dsts.append (dst.strip ())
+        mappers = [m.strip () for m in mappers.split (',')]
+        ports = [p.strip () for p in ports.split (',')]
+
+        self._log.info ('Reading ports (%s)' % ';'.join (ports))
+        self._log.info ('Reading source template files (%s)' % ';'.join (srcs))
+        self._log.info ('Reading destination template files (%s)' % ';'.join (dsts))
+        self._log.info ('Reading mappers (%s)' % ';'.join (mappers))
+        self._log.info ('Reading config_xml_file (%s)' % dialog_file)
+        self._log.info ('Reading ports_queue_dt (%s)' % port_queue_dt)
 
         self._data['CMI_PORT_NAMES'] = ports
-        self._data['CMI_TEMPLATE_FILES'] = template_files
+        self._data['CMI_TEMPLATE_SOURCE_FILES'] = srcs
+        self._data['CMI_TEMPLATE_DEST_FILES'] = dsts
         self._data['CMI_MAPPERS'] = mappers
         self._data['CMI_CONFIG_DIALOG_XML_FILE'] = dialog_file
-        self._data['CMI_PORT_QUEUE_DT'] = port_queue_dt
+        self._data['CMI_PORT_QUEUE_DT'] = float (port_queue_dt)
     except Exception as e:
         print '%s: Unable to add section' % e
 
