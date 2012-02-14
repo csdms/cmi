@@ -17,6 +17,7 @@ import ConfigParser
 
 import edu.csdms.cmi.IConfigFile
 import edu.csdms.tools.ConfigFile
+import edu.csdms.tools.Verbose
 import gov.cca.TypeMap
 import sidl.BaseClass
 import sidl.BaseInterface
@@ -55,11 +56,12 @@ class ConfigFile:
   def _getStub(self):
     return self.__IORself
 
-  def boccaForceUsePortInclude(self, dummy0):
+  def boccaForceUsePortInclude(self, dummy0, dummy1):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # gov.cca.TypeMap dummy0
+    # edu.csdms.tools.Verbose dummy0
+    # gov.cca.TypeMap dummy1
     #
 
     #
@@ -75,6 +77,7 @@ class ConfigFile:
     # DO-NOT-EDIT-BOCCA
     # Bocca generated code. bocca.protected.begin(boccaForceUsePortInclude)
     o0 = dummy0
+    o1 = dummy1
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)
