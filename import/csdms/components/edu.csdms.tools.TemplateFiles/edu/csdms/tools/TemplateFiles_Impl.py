@@ -107,8 +107,8 @@ class TemplateFiles:
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # string srcs
-    # string dests
+    # array<string> srcs
+    # array<string> dests
     #
 
     #
@@ -118,9 +118,9 @@ class TemplateFiles:
     #
 
 # DO-NOT-DELETE splicer.begin(add_files)
-    src_files = srcs.split (',')
-    dst_files = dests.split (',')
-    for (src, dest) in zip (src_files, dst_files):
+    #src_files = srcs.split (',')
+    #dst_files = dests.split (',')
+    for (src, dest) in zip (srcs, dests):
         try:
             self._files.add_file (src, rename=dest)
             #print "Adding %s -> %s" % (src, dest)
