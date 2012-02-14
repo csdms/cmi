@@ -31,7 +31,7 @@ package edu version 0.0 {
                 void add_file(in string src, in string dest);	                	
 
                 
-                void add_files(in string srcs, in string dests);	                	
+                void add_files(in array<string> srcs, in array<string> dests);	                	
 
                 
                 void substitute(in gov.cca.TypeMap mapping, in string base, in string todir);	                	
