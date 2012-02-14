@@ -37,7 +37,7 @@ package edu version 0.0 {
                 void add_port(in string server);	                	
 
                 
-                void add_ports(in string servers);	                	
+                void add_ports(in array<string> servers);	                	
 
                 
                 void initialize_ports(in array<string> properties);	                	
@@ -64,7 +64,7 @@ package edu version 0.0 {
                 void add_mapper(in string mapper);	                	
 
                 
-                void add_mappers(in string mappers);	                	
+                void add_mappers(in array<string> mappers);	                	
 
                 
                 void run_mapper(in string mapper);	                	
@@ -79,7 +79,7 @@ package edu version 0.0 {
                 // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.CMIPortQueue:boccaPrivateMethods)
                 // DO-NOT-EDIT
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in edu.csdms.cmi.IGrid dummy0, in gov.cca.Port dummy1, in edu.csdms.tools.CSDMSGridMapper dummy2, in edu.csdms.ports.CMIPort dummy3);
+                void boccaForceUsePortInclude(in edu.csdms.tools.Verbose dummy0, in edu.csdms.cmi.IGrid dummy1, in gov.cca.Port dummy2, in edu.csdms.tools.CSDMSGridMapper dummy3, in edu.csdms.ports.CMIPort dummy4);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.CMIPortQueue:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }

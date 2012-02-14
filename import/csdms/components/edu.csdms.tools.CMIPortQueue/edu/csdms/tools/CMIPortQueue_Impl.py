@@ -61,7 +61,7 @@ class CMIPortQueue:
     self._mappers = {}
 
     self._log = edu.csdms.tools.Verbose.Verbose ()
-    self._log.initialize ("CMIPortQueue", 1)
+    self._log.initialize ("CMIPortQueue", 2)
 
     # Bocca generated code. bocca.protected.begin(edu.csdms.tools.CMIPortQueue._init) 
     self.bocca_print_errs = True
@@ -139,7 +139,7 @@ class CMIPortQueue:
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # string servers
+    # array<string> servers
     #
 
     #
@@ -150,8 +150,9 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(add_ports)
     # servers is a comma-separated list of port names to add the the queue.
-    self._log.info ("Adding server ports (%s)" % servers)
-    for server in servers.split (','):
+    self._log.info ("Adding server ports (%s)" % ', '.join (servers))
+    #for server in servers.split (','):
+    for server in servers:
         self.add_port (server)
     self._log.info ("Added server ports.")
 # DO-NOT-DELETE splicer.end(add_ports)
@@ -326,30 +327,42 @@ class CMIPortQueue:
         (full_name, method) = mapper.split (':')
     except ValueError:
         self._log.warning ("Missing method in mapper name (%s)" % mapper)
+    except Exception as e:
+        self._log.error ("Unexpected error getting method (%s)" % e)
 
+    self._log.info ("Getting var/port names.")
     try:
         (var_name, port_name) = full_name.split ('@')
     except ValueError:
         self._log.error ('Bad full var name name (var_name@port_name) (%s)' % full_name)
+    except Exception as e:
+        self._log.error ("Unexpected error getting var/port strings (%s)" % e)
 
+    self._log.info ("Looking for existing mapper.")
     if self._mappers.has_key (full_name):
         self._log.warning ("Maper exists (%s)" % full_name)
 
     # If a mapper can't be created, it is set to None
     self._mappers[full_name] = None
 
+    self._log.info ("Getting port.")
     # Find the port
     try:
         port = self._ports[port_name]
     except KeyError:
         self._log.error ("Port not found (%s)" % port_name)
+    except Exception as e:
+        self._log.error ("Unexpected error getting port (%s)" % e)
 
+    self._log.info ("Getting destination grid (%s)." % var_name)
     # Get the destination ElementSet
     try:
       dst_grid = self._client.get_grid (var_name)
     except Exception as e:
+      self._log.warning ("Unable to get client grid (%s)." % e)
       element_set = None
 
+    self._log.info ("Getting source grid.")
     # Get the source ElementSet
     try:
       src_grid = port.get_grid (var_name)
@@ -358,7 +371,7 @@ class CMIPortQueue:
       self._log.error ("Unable to get source grid (%s)" % e)
 
     # Create a mapper
-    self._log.error ("Using CSDMSGridMapper")
+    self._log.info ("Using CSDMSGridMapper")
     try:
         mapper = edu.csdms.tools.CSDMSGridMapper.CSDMSGridMapper ()
     except Exception as e:
@@ -374,14 +387,14 @@ class CMIPortQueue:
         self._log.error ("Unable to initialize mapper (%s)" % e)
 
     self._mappers[full_name] = mapper
-    self._log.info ("Added mapper (%s)", mapper)
+    self._log.info ("Added mapper (%s)" % mapper)
 # DO-NOT-DELETE splicer.end(add_mapper)
 
   def add_mappers(self, mappers):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # string mappers
+    # array<string> mappers
     #
 
     #
@@ -392,8 +405,9 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(add_mappers)
     # mappers is a comma-separated list of mapper names
-    self._log.info ("Adding mappers (%s)", mappers)
-    for mapper in mappers.split (','):
+    self._log.info ("Adding mappers (%s)" % ', '.join (mappers))
+    #for mapper in mappers.split (','):
+    for mapper in mappers:
         self.add_mapper (mapper)
     self._log.info ("Added mappers")
 # DO-NOT-DELETE splicer.end(add_mappers)
@@ -413,7 +427,7 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(run_mapper)
     # Get the requested mapper
-    self._log.info ("Running mapper (%s)", mapper)
+    self._log.info ("Running mapper (%s)" % mapper)
     try:
         map = self._mappers[mapper]
     except KeyError:
