@@ -54,6 +54,7 @@
   <class name="tools.ConfigFile" language="python">
     <implements>IConfigFile</implements>
     <requires>gov.cca.TypeMap</requires>
+    <requires>edu.csdms.tools.Verbose</requires>
     <import-sidl/>
     <import-impl/>
     <extras>make.vars.user</extras>
