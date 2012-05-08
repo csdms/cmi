@@ -1,17 +1,7 @@
 <project xmlns:xi="http://www.w3.org/2001/XInclude"
   name="csdms_ports">
 
-  <!--xi:include href="openmi_interface.xml" parse="xml"/>
-  <xi:include href="openmi_impl.xml" parse="xml"/-->
   <xi:include href="cmi_interface.xml" parse="xml"/>
-
-  <port name="ports.IRFPort">
-    <requires>IElementSet</requires>
-    <requires>IValueSet</requires>
-    <requires>ElementType</requires>
-    <requires>ISpatialReference</requires>
-    <import-sidl/>
-  </port>
 
   <port name="ports.CMIPort">
     <requires>IGrid</requires>
@@ -22,7 +12,4 @@
     <import-sidl/>
   </port>
 
-  <!--port name="models.IRFPort">
-    <import-sidl/>
-  </port-->
 </project>
