@@ -12,7 +12,7 @@
 
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
-import cmt
+import cmt.grids
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.cmi.IGrid
@@ -74,7 +74,8 @@ class CMIGridUniformRectilinear:
 # DO-NOT-DELETE splicer.begin(initialize)
     print 'CMIGridUniformRectilinear: Initializing'
     try:
-        self._grid = cmt.grid.VTKGridUniformRectilinear (shape, spacing, origin, swap=True)
+        #self._grid = cmt.grid.VTKGridUniformRectilinear (shape, spacing, origin, swap=True)
+        self._grid = cmt.grids.UniformRectilinear (shape, spacing, origin, indexing='ij')
     except Exception as e:
         print 'CMIGridUniformRectilinear: ERROR: %s: Unable to initialize grid' % e
     #print self._grid.get_x ()
@@ -148,8 +149,8 @@ class CMIGridUniformRectilinear:
     except Exception as e:
         print 'CMIGridUniformRectilinear: ERROR: Unable to get connectivity: %s' % e
     print 'CMIGridUniformRectilinear: Got connectivity.'
-    print 'CMIGridUniformRectilinear: This is what it is.'
-    print c
+    #print 'CMIGridUniformRectilinear: This is what it is.'
+    #print c
     return c
 # DO-NOT-DELETE splicer.end(get_connectivity)
 
