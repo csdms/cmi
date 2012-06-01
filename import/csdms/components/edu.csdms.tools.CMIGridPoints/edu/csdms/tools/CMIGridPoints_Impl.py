@@ -12,7 +12,7 @@
 
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
-import cmt
+import cmt.grids
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.cmi.IGrid
@@ -70,7 +70,8 @@ class CMIGridPoints:
     #
 
 # DO-NOT-DELETE splicer.begin(initialize)
-    self._grid = cmt.grid.VTKGridPoints (x, y)
+    #self._grid = cmt.grid.VTKGridPoints (x, y)
+    self._grid = cmt.grids.UnstructuredPoints (x, y, set_connectivity=True)
 # DO-NOT-DELETE splicer.end(initialize)
 
   def boccaForceUsePortInclude(self):
