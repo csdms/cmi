@@ -13,6 +13,7 @@
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
 import cmt
+import cmt.mappers
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.cmi.IGrid
@@ -99,24 +100,35 @@ class CSDMSGridMapper:
 # DO-NOT-DELETE splicer.begin(initialize)
     print 'CSDMSGridMapper: Initializing...'
     try:
-        d = cmt.grid.VTKGrid (dest_grid.get_x (), dest_grid.get_y (),
-                              dest_grid.get_connectivity (),
-                              dest_grid.get_offset ())
-        s = cmt.grid.VTKGrid (source_grid.get_x (), source_grid.get_y (),
-                              source_grid.get_connectivity (),
-                              source_grid.get_offset ())
+        #d = cmt.grid.VTKGrid (dest_grid.get_x (), dest_grid.get_y (),
+        print 'CSDMSGridMapper: Creating destination grid'
+        d = cmt.grids.UnstructuredMap (dest_grid.get_x (), dest_grid.get_y (),
+                                       dest_grid.get_connectivity (),
+                                       dest_grid.get_offset ())
+        print 'CSDMSGridMapper: Creating source grid'
+        print 'CSDMSGridMapper: source grid is %s' % source_grid
+        print 'CSDMSGridMapper: source grid x is %s' % source_grid.get_x ()
+        print 'CSDMSGridMapper: source grid y is %s' % source_grid.get_y ()
+        print 'CSDMSGridMapper: source grid c is %s' % source_grid.get_connectivity ()
+        print 'CSDMSGridMapper: source grid o is %s' % source_grid.get_offset ()
+        s = cmt.grids.UnstructuredMap (source_grid.get_x (), source_grid.get_y (),
+                                       source_grid.get_connectivity (),
+                                       source_grid.get_offset ())
     except Exception as e:
         print '%s: ERROR: %s: Unable to create grid' % (__file__, e)
 
     try:
-        choices = cmt.mapper.find_mapper (d, s)
-    except cmt.mapper.IncompatibleGridError as e:
-        print 'ERROR: %s' % e
+        print 'CSDMSGridMapper: Looking for choices'
+        choices = cmt.mappers.find_mapper (d, s)
+    #except cmt.mappers.IncompatibleGridError as e:
+    #    print 'ERROR: %s' % e
     except Exception as e:
         print 'ERROR: %s: Unable to find a mapper' % e
 
     try:
+        print 'CSDMSGridMapper: these are my choices', choices
         self._mapper = choices[0]
+        print 'CSDMSGridMapper: Going to use this one', self._mapper
         self._mapper.initialize (d, s)
     except Exception as e:
         print '%s: ERROR: %s: Unable to initialize mapper' % (__file__, e)
@@ -139,7 +151,16 @@ class CSDMSGridMapper:
     #
 
 # DO-NOT-DELETE splicer.begin(run_inplace)
-    return self._mapper.run (source_vals, dest_vals)
+    print 'CSDMSGridMapper: running in-place'
+    print 'CSDMSGridMapper: ', self._mapper
+    print 'CSDMSGridMapper: ', source_vals
+    print 'CSDMSGridMapper: ', dest_vals
+    try:
+        return self._mapper.run (source_vals, dest_vals)
+    except Exception as e:
+        print 'CSDMSGridMapper: there was an error running mapper: %s' % e
+
+    print 'CSDMSGridMapper: ran in-place'
 # DO-NOT-DELETE splicer.end(run_inplace)
 
   def run(self, source_vals):
