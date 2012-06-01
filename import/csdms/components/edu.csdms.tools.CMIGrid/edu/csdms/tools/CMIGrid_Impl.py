@@ -12,7 +12,7 @@
 
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
-import cmt
+import cmt.grids
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.cmi.IGrid
@@ -73,7 +73,8 @@ class CMIGrid:
 
 # DO-NOT-DELETE splicer.begin(initialize)
     try:
-        self._grid = cmt.grid.VTKGrid (x, y, connectivity, offset)
+        #self._grid = cmt.grid.VTKGrid (x, y, connectivity, offset)
+        self._grid = cmt.grids.Unstructured (x, y, connectivity, offset)
     except Exception as e:
         print 'CMIGrid: ERROR: %s: Unable to create grid' % e
 
@@ -97,9 +98,11 @@ class CMIGrid:
     #
 
 # DO-NOT-DELETE splicer.begin(map_to)
-    self._dst_grid = cmt.grid.VTKGrid (x, y, connectivity, offset)
+    #self._dst_grid = cmt.grid.VTKGrid (x, y, connectivity, offset)
+    self._dst_grid = cmt.grids.Unstructured (x, y, connectivity, offset)
     try:
-        mappers = cmt.mapper.find_mapper (self._dst_grid, self._grid)
+        #mappers = cmt.mapper.find_mapper (self._dst_grid, self._grid)
+        mappers = cmt.mappers.find_mapper (self._dst_grid, self._grid)
     except cmt.mapper.IncompatibleGridError as e:
         print '%s' % e
         self._mapper[name] = None
