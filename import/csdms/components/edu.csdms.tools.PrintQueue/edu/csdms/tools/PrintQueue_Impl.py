@@ -21,6 +21,8 @@ except:
     pass
 
 import cmt
+from cmt import namespace as ns
+from cmt import CmiTimedPrintQueue
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.ports.CMIPort
@@ -53,11 +55,11 @@ class PrintQueue:
 # DO-NOT-DELETE splicer.begin(__init__)
 
     # Put your code here...
-    print 'Creating print queue'
+    print 'Creating print queue (%s)' % IORself
     try:
         self._q = None
         self._log = edu.csdms.tools.Verbose.Verbose ()
-        self._log.initialize ('PrintQueue', 1)
+        self._log.initialize ('PrintQueue', 20)
     except Exception as e:
         print 'ERROR: unable to create print queue: %s' % e
 
@@ -88,6 +90,9 @@ class PrintQueue:
     #
 
 # DO-NOT-DELETE splicer.begin(initialize)
+    self._log = edu.csdms.tools.Verbose.Verbose ()
+    self._log.initialize ('PrintQueue:%s' % base_namespace, 20)
+
     self._log.info ('Initializing print queue')
     attr = {}
     for key in userinput.getAllKeys (gov.cca.Type.String):
@@ -99,11 +104,22 @@ class PrintQueue:
     for key in userinput.getAllKeys (gov.cca.Type.Double):
       if key.startswith (base_namespace):
         attr[key] = userinput.getDouble (key, 0.)
+    #try:
+    #  self._q = cmt.PrintQueue (attr, base_namespace, port)
+    #except Exception as e:
+    #  self._log.error ('Unexpected error (%s)' % e)
+    #  raise
+
+    globs = ns.extract_base (attr, base_namespace)
+    if len (globs)==0:
+        self._log.warning ('No globals for print queue')
+
     try:
-      self._q = cmt.PrintQueue (attr, base_namespace, port)
+        self._q = cmt.CmiTimedPrintQueue (port, globs)
     except Exception as e:
       self._log.error ('Unexpected error (%s)' % e)
       raise
+
     self._log.info ('Initialized print queue')
 # DO-NOT-DELETE splicer.end(initialize)
 
@@ -133,12 +149,22 @@ class PrintQueue:
     for key in userinput.getAllKeys (gov.cca.Type.Double):
       if key.startswith (base_namespace):
         attr[key] = userinput.getDouble (key, 0.)
-    sys.stdout.flush ()
+
+    globs = ns.extract_base (attr, base_namespace)
+    if len (globs)==0:
+        self._log.warning ('No globals for print queue')
+
     try:
-      self._q = cmt.PrintQueue (attr, base_namespace, port)
+        self._q = cmt.CmiTimedPrintQueue (port, globs)
     except Exception as e:
       self._log.error ('Unexpected error (%s)' % e)
       raise
+
+    #try:
+    #  self._q = cmt.PrintQueue (attr, base_namespace, port)
+    #except Exception as e:
+    #  self._log.error ('Unexpected error (%s)' % e)
+    #  raise
 # DO-NOT-DELETE splicer.end(initialize_cmi)
 
   def add_files(self, var_namespace):
