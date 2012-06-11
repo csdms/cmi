@@ -18,6 +18,7 @@ import types
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.tools.ConfigDialog
+import edu.csdms.tools.Verbose
 import gov.cca.TypeMap
 import gov.cca.ports.ParameterPortFactory
 import sidl.BaseClass
@@ -44,7 +45,14 @@ class ConfigDialog:
 # DO-NOT-DELETE splicer.begin(__init__)
 
     # Put your code here...
-    self._dialog = cmt.dialog.ConfigDialog ()
+
+    print 'Creating ConfigDialog'
+    try:
+        self._dialog = cmt.dialog.ConfigDialog ()
+        self._log = edu.csdms.tools.Verbose.Verbose ()
+        self._log.initialize ('ConfigDialog', 20)
+    except Exception as e:
+        print 'ERROR: unable to create ConfigDialog: %s' % e
 
     # Bocca generated code. bocca.protected.begin(edu.csdms.tools.ConfigDialog._init) 
     self.bocca_print_errs = True
@@ -67,15 +75,19 @@ class ConfigDialog:
     #
     # sidl EXPECTED RETURN VALUE(s)
     # =============================
-    # None
+    # string _return
     #
 
 # DO-NOT-DELETE splicer.begin(read)
+    self._log.info ('Parsing config file %s' % file)
     try:
-      self._dialog.read (file)
+        file_read = self._dialog.read (file)
     except Exception as e:
-      print 'ERROR: %s: %s: Unable to parse file.' % (e, file)
-      raise
+        self._log.error ('Unexpected error parsing %s (%s)' % (file, e))
+        raise
+    else:
+        self._log.info ('Parsed config file %s' % file)
+    return file_read
 # DO-NOT-DELETE splicer.end(read)
 
   def construct(self, ppf, userinput):
@@ -93,30 +105,38 @@ class ConfigDialog:
     #
 
 # DO-NOT-DELETE splicer.begin(construct)
-    ppf.setBatchTitle (userinput, "Configure Component")
+    self._log.info ('Constructing ConfigDialog')
 
+    ppf.setBatchTitle (userinput, "Configure Component")
     for tab in self._dialog:
+      self._log.debug ('Found tab %s' % tab.name ())
       ppf.setGroupName (userinput, tab.name ())
       for entry in tab:
-        if entry['type'] == types.FloatType:
-          ppf.addRequestDouble (userinput, entry['name'], entry['help'],
-                                           entry['label'], entry['default'],
-                                           entry['range'][0], entry['range'][1])
-        elif entry['type'] == types.IntType:
-          ppf.addRequestInt (userinput, entry['name'], entry['help'],
-                                        entry['label'], entry['default'],
-                                        entry['range'][0], entry['range'][1])
-        else:
-          ppf.addRequestString (userinput, entry['name'], entry['help'],
-                                           entry['label'], entry['default'])
+        self._log.debug ('Found entry %s' % entry['name'])
+        try:
+            if entry['type'] == types.FloatType:
+                ppf.addRequestDouble (userinput, entry['name'], entry['help'],
+                                      entry['label'], entry['default'],
+                                      entry['range'][0], entry['range'][1])
+            elif entry['type'] == types.IntType:
+                ppf.addRequestInt (userinput, entry['name'], entry['help'],
+                                   entry['label'], entry['default'],
+                                   entry['range'][0], entry['range'][1])
+            else:
+                ppf.addRequestString (userinput, entry['name'], entry['help'],
+                                      entry['label'], entry['default'])
+        except Exception as e:
+            self._log.error ('Unexpected error parsing entry %s (%s)' % (entry['name'], e))
+    self._log.info ('Constructed ConfigDialog')
 # DO-NOT-DELETE splicer.end(construct)
 
-  def boccaForceUsePortInclude(self, dummy0, dummy1):
+  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # gov.cca.TypeMap dummy0
-    # gov.cca.ports.ParameterPortFactory dummy1
+    # edu.csdms.tools.Verbose dummy0
+    # gov.cca.TypeMap dummy1
+    # gov.cca.ports.ParameterPortFactory dummy2
     #
 
     #
@@ -133,6 +153,7 @@ class ConfigDialog:
     # Bocca generated code. bocca.protected.begin(boccaForceUsePortInclude)
     o0 = dummy0
     o1 = dummy1
+    o2 = dummy2
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)

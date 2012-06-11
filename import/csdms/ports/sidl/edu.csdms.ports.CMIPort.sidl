@@ -31,16 +31,34 @@ package edu version 0.0 {
                 bool CMI_initialize(in string config_file);	                	
 
                 
+                bool prepare(in string config_file);	                	
+
+                
                 bool CMI_run_for(in double time_interval, in string time_units, in string stop_rule, in array<double> stop_vars);	                	
 
                 
                 bool CMI_run(in double time_interval);	                	
 
                 
+                bool run(in double time_interval);	                	
+
+                
                 bool CMI_finalize();	                	
 
                 
+                bool finish();	                	
+
+                
                 bool CMI_run_model(in string config_file, in string stop_rule, in double stop_var);	                	
+
+                
+                double CMI_get_start_time();	                	
+
+                
+                double CMI_get_current_time();	                	
+
+                
+                double CMI_get_end_time();	                	
 
                 
                 array<> CMI_get_values(in string long_var_name);	                	
@@ -86,19 +104,37 @@ package edu version 0.0 {
                 array<double, 1> CMI_get_grid_spacing(in string long_var_name);	                	
 
                 
+                array<double, 1> get_grid_spacing(in string long_var_name);	                	
+
+                
                 array<double, 1> CMI_get_grid_lower_left(in string long_var_name);	                	
 
                 
+                array<double, 1> get_grid_lower_left(in string long_var_name);	                	
+
+                
                 array<int, 1> CMI_get_grid_shape(in string long_var_name);	                	
+
+                
+                array<int, 1> get_grid_shape(in string long_var_name);	                	
 
                 // Non-uniform rectilinear, curvilinear
                 array<double, 1> CMI_get_grid_x(in string long_var_name);	                	
 
                 
+                array<double, 1> get_grid_x(in string long_var_name);	                	
+
+                
                 array<double, 1> CMI_get_grid_y(in string long_var_name);	                	
 
                 
+                array<double, 1> get_grid_y(in string long_var_name);	                	
+
+                
                 array<double, 1> CMI_get_grid_z(in string long_var_name);	                	
+
+                
+                array<double, 1> get_grid_z(in string long_var_name);	                	
 
                 // Unstructured
                 array<int, 1> get_grid_connectivity(in string long_var_name);	                	

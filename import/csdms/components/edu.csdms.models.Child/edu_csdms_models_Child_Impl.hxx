@@ -18,6 +18,9 @@
 #ifndef included_edu_csdms_models_Child_IOR_h
 #include "edu_csdms_models_Child_IOR.h"
 #endif
+#ifndef included_edu_csdms_cmi_ComponentHandler_hxx
+#include "edu_csdms_cmi_ComponentHandler.hxx"
+#endif
 #ifndef included_edu_csdms_cmi_IGrid_hxx
 #include "edu_csdms_cmi_IGrid.hxx"
 #endif
@@ -27,23 +30,8 @@
 #ifndef included_edu_csdms_ports_CMIPort_hxx
 #include "edu_csdms_ports_CMIPort.hxx"
 #endif
-#ifndef included_edu_csdms_tools_CMIConfigFile_hxx
-#include "edu_csdms_tools_CMIConfigFile.hxx"
-#endif
 #ifndef included_edu_csdms_tools_CMIGrid_hxx
 #include "edu_csdms_tools_CMIGrid.hxx"
-#endif
-#ifndef included_edu_csdms_tools_CMIPortQueue_hxx
-#include "edu_csdms_tools_CMIPortQueue.hxx"
-#endif
-#ifndef included_edu_csdms_tools_ConfigDialog_hxx
-#include "edu_csdms_tools_ConfigDialog.hxx"
-#endif
-#ifndef included_edu_csdms_tools_PrintQueue_hxx
-#include "edu_csdms_tools_PrintQueue.hxx"
-#endif
-#ifndef included_edu_csdms_tools_TemplateFiles_hxx
-#include "edu_csdms_tools_TemplateFiles.hxx"
 #endif
 #ifndef included_edu_csdms_tools_Verbose_hxx
 #include "edu_csdms_tools_Verbose.hxx"
@@ -140,9 +128,13 @@ namespace edu {
 
   // Insert-UserCode-Here(edu.csdms.models.Child._implementation)
 
-        gov::cca::TypeMap userinput;
+
+        ::edu::csdms::cmi::ComponentHandler handler;
         childInterface state;
         CMI_Status status;
+        ::edu::csdms::tools::Verbose log;
+/*
+        gov::cca::TypeMap userinput;
         bool is_driver;
         ::edu::csdms::tools::CMIConfigFile cfg_file;
         ::edu::csdms::tools::CMIPortQueue ports;
@@ -150,13 +142,12 @@ namespace edu {
 
         //::edu::csdms::tools::IRFPortQueue irf_ports;
         ::edu::csdms::tools::PrintQueue print_queue;
-        ::edu::csdms::tools::Verbose log;
 
         bool subaqueous_erosion_port_is_on;
         bool printer_port_is_on;
         bool is_initialized;
         bool logging_is_initialized;
-
+*/
   // Bocca generated code. bocca.protected.begin(edu.csdms.models.Child._implementation)
   
    gov::cca::Services    d_services; // our cca handle.
@@ -234,13 +225,11 @@ namespace edu {
         boccaForceUsePortInclude_impl (
           /* in */::gov::cca::ports::ParameterPortFactory& dummy0,
           /* in */::edu::csdms::ports::CMIPort& dummy1,
-          /* in */::edu::csdms::tools::CMIGrid& dummy2,
-          /* in */::edu::csdms::tools::Verbose& dummy3,
-          /* in */::edu::csdms::tools::CMIConfigFile& dummy4,
-          /* in */::edu::csdms::tools::TemplateFiles& dummy5,
-          /* in */::edu::csdms::tools::ConfigDialog& dummy6,
-          /* in */::edu::csdms::tools::CMIPortQueue& dummy7,
-          /* in */::edu::csdms::tools::PrintQueue& dummy8
+          /* in */::edu::csdms::ports::CMIPort& dummy2,
+          /* in */::edu::csdms::ports::CMIPort& dummy3,
+          /* in */::edu::csdms::tools::Verbose& dummy4,
+          /* in */::edu::csdms::tools::CMIGrid& dummy5,
+          /* in */::edu::csdms::cmi::ComponentHandler& dummy6
         )
         ;
 
@@ -335,6 +324,15 @@ namespace edu {
          * user defined non-static method.
          */
         bool
+        prepare_impl (
+          /* in */const ::std::string& config_file
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
         CMI_run_for_impl (
           /* in */double time_interval,
           /* in */const ::std::string& time_units,
@@ -356,7 +354,21 @@ namespace edu {
          * user defined non-static method.
          */
         bool
+        run_impl (
+          /* in */double time_interval
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        bool
         CMI_finalize_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        bool
+        finish_impl() ;
         /**
          * user defined non-static method.
          */
@@ -368,6 +380,21 @@ namespace edu {
         )
         ;
 
+        /**
+         * user defined non-static method.
+         */
+        double
+        CMI_get_start_time_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        double
+        CMI_get_current_time_impl() ;
+        /**
+         * user defined non-static method.
+         */
+        double
+        CMI_get_end_time_impl() ;
         /**
          * user defined non-static method.
          */
@@ -474,7 +501,25 @@ namespace edu {
          * user defined non-static method.
          */
         ::sidl::array<double>
+        get_grid_spacing_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
         CMI_get_grid_lower_left_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
+        get_grid_lower_left_impl (
           /* in */const ::std::string& long_var_name
         )
         ;
@@ -484,6 +529,15 @@ namespace edu {
          */
         ::sidl::array<int32_t>
         CMI_get_grid_shape_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<int32_t>
+        get_grid_shape_impl (
           /* in */const ::std::string& long_var_name
         )
         ;
@@ -501,6 +555,15 @@ namespace edu {
          * user defined non-static method.
          */
         ::sidl::array<double>
+        get_grid_x_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
         CMI_get_grid_y_impl (
           /* in */const ::std::string& long_var_name
         )
@@ -510,7 +573,25 @@ namespace edu {
          * user defined non-static method.
          */
         ::sidl::array<double>
+        get_grid_y_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
         CMI_get_grid_z_impl (
+          /* in */const ::std::string& long_var_name
+        )
+        ;
+
+        /**
+         * user defined non-static method.
+         */
+        ::sidl::array<double>
+        get_grid_z_impl (
           /* in */const ::std::string& long_var_name
         )
         ;

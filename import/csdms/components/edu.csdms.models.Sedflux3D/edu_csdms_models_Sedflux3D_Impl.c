@@ -139,8 +139,10 @@ impl_edu_csdms_models_Sedflux3D__ctor(
     }
     dptr->log = NULL;
     dptr->state = NULL;
+    /*
     dptr->status = CMI_STATUS_CREATED;
     dptr->is_driver = FALSE;
+    */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D._ctor) */
   }
 }
@@ -290,9 +292,23 @@ impl_edu_csdms_models_Sedflux3D_boccaSetServices(
                                      typeMap, /* extra properties */
                                      _ex); SIDL_CHECK(*_ex);
 
+  /* Register a use port of type edu.csdms.ports.CMIPort with port name CoastalEnvironment */  
+   gov_cca_Services_registerUsesPort(pd->d_services,   
+                                     "CoastalEnvironment", /* the name seen by the user */
+                                     "edu.csdms.ports.CMIPort", /* sidl name of the port type. */
+                                     typeMap, /* extra properties */
+                                     _ex); SIDL_CHECK(*_ex);
+
   /* Register a use port of type edu.csdms.ports.CMIPort with port name SubaerialDelta */  
    gov_cca_Services_registerUsesPort(pd->d_services,   
                                      "SubaerialDelta", /* the name seen by the user */
+                                     "edu.csdms.ports.CMIPort", /* sidl name of the port type. */
+                                     typeMap, /* extra properties */
+                                     _ex); SIDL_CHECK(*_ex);
+
+  /* Register a use port of type edu.csdms.ports.CMIPort with port name BaseLevel */  
+   gov_cca_Services_registerUsesPort(pd->d_services,   
+                                     "BaseLevel", /* the name seen by the user */
                                      "edu.csdms.ports.CMIPort", /* sidl name of the port type. */
                                      typeMap, /* extra properties */
                                      _ex); SIDL_CHECK(*_ex);
@@ -390,10 +406,24 @@ impl_edu_csdms_models_Sedflux3D_boccaReleaseServices(
    edu_csdms_models_Sedflux3D_checkException(self, throwaway_excpt, errMsg, FALSE, 
                                    &dummy_excpt);
 
+  /* Un-Register a use port of type edu.csdms.ports.CMIPort with port name CoastalEnvironment */  
+   gov_cca_Services_unregisterUsesPort(services, "CoastalEnvironment", 
+                                       &throwaway_excpt);
+   errMsg= "Error: Could not unregisterUsesPort(\"CoastalEnvironment\")";
+   edu_csdms_models_Sedflux3D_checkException(self, throwaway_excpt, errMsg, FALSE, 
+                                   &dummy_excpt);
+
   /* Un-Register a use port of type edu.csdms.ports.CMIPort with port name SubaerialDelta */  
    gov_cca_Services_unregisterUsesPort(services, "SubaerialDelta", 
                                        &throwaway_excpt);
    errMsg= "Error: Could not unregisterUsesPort(\"SubaerialDelta\")";
+   edu_csdms_models_Sedflux3D_checkException(self, throwaway_excpt, errMsg, FALSE, 
+                                   &dummy_excpt);
+
+  /* Un-Register a use port of type edu.csdms.ports.CMIPort with port name BaseLevel */  
+   gov_cca_Services_unregisterUsesPort(services, "BaseLevel", 
+                                       &throwaway_excpt);
+   errMsg= "Error: Could not unregisterUsesPort(\"BaseLevel\")";
    edu_csdms_models_Sedflux3D_checkException(self, throwaway_excpt, errMsg, FALSE, 
                                    &dummy_excpt);
 
@@ -480,13 +510,11 @@ impl_edu_csdms_models_Sedflux3D_boccaForceUsePortInclude(
   /* in */ edu_csdms_models_Sedflux3D self,
   /* in */ gov_cca_ports_ParameterPortFactory dummy0,
   /* in */ edu_csdms_ports_CMIPort dummy1,
-  /* in */ edu_csdms_tools_CMIGridUniformRectilinear dummy2,
-  /* in */ edu_csdms_tools_Verbose dummy3,
-  /* in */ edu_csdms_tools_CMIConfigFile dummy4,
-  /* in */ edu_csdms_tools_TemplateFiles dummy5,
-  /* in */ edu_csdms_tools_ConfigDialog dummy6,
-  /* in */ edu_csdms_tools_CMIPortQueue dummy7,
-  /* in */ edu_csdms_tools_PrintQueue dummy8,
+  /* in */ edu_csdms_ports_CMIPort dummy2,
+  /* in */ edu_csdms_ports_CMIPort dummy3,
+  /* in */ edu_csdms_tools_Verbose dummy4,
+  /* in */ edu_csdms_tools_CMIGridUniformRectilinear dummy5,
+  /* in */ edu_csdms_cmi_ComponentHandler dummy6,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
@@ -502,8 +530,6 @@ impl_edu_csdms_models_Sedflux3D_boccaForceUsePortInclude(
     (void)dummy4;
     (void)dummy5;
     (void)dummy6;
-    (void)dummy7;
-    (void)dummy8;
 
   /* Bocca generated code. bocca.protected.end(edu.csdms.models.Sedflux3D.boccaForceUsePortInclude) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.boccaForceUsePortInclude) */
@@ -562,6 +588,16 @@ impl_edu_csdms_models_Sedflux3D_setServices(
       edu_csdms_tools_Verbose_initialize (pd->log, CMI_COMPONENT_NAME, 2, _ex);
     }
 
+    edu_csdms_tools_Verbose_info (pd->log, "Creating ComponentHandler", _ex);
+    {
+      edu_csdms_ports_CMIPort port = edu_csdms_ports_CMIPort__cast (self, _ex);
+      pd->handler = edu_csdms_cmi_ComponentHandler__create (_ex);
+      edu_csdms_cmi_ComponentHandler_set_up (pd->handler,
+          CMI_COMPONENT_NAME, port, services, _ex);
+    }
+    edu_csdms_tools_Verbose_info (pd->log, "Created ComponentHandler", _ex);
+
+#if 0
     pd->userinput = gov_cca_Services_createTypeMap(services, _ex);
 
     {
@@ -601,7 +637,7 @@ impl_edu_csdms_models_Sedflux3D_setServices(
     gov_cca_ports_ParameterPortFactory_addParameterPort (ppf,
       pd->userinput, services, _ex);
     gov_cca_Services_releasePort (services, "ppf", _ex);
-
+#endif
 
 EXIT:;
     /* Insert additional exception cleanup here if needed. */
@@ -697,9 +733,13 @@ impl_edu_csdms_models_Sedflux3D_go(
   {
     /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.go) */
     int bocca_status = 0;
-    struct edu_csdms_models_Sedflux3D__data *pd =
+    struct edu_csdms_models_Sedflux3D__data *this =
       edu_csdms_models_Sedflux3D__get_data (self);
-
+    
+    //this->status = CMI_STATUS_CREATED;
+    this->status = CMI_STATUS_INITIALIZING;
+    edu_csdms_cmi_ComponentHandler_go (this->handler, _ex);
+/*
     pd->is_driver = TRUE;
     
     edu_csdms_models_Sedflux3D_CMI_initialize (self, NULL, _ex);
@@ -711,6 +751,7 @@ EXIT:
     bocca_status = 2;
     edu_csdms_models_Sedflux3D_CMI_finalize (self, _ex);
     return bocca_status;
+*/
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.go) */
   }
 }
@@ -737,6 +778,25 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
     struct edu_csdms_models_Sedflux3D__data *this =
              edu_csdms_models_Sedflux3D__get_data (self);
 
+    if (this->status < CMI_STATUS_INITIALIZING) {
+      this->status = CMI_STATUS_INITIALIZING;
+      edu_csdms_cmi_ComponentHandler_init_component (this->handler, "", _ex);
+      this->status = CMI_STATUS_INITIALIZED;
+    }
+    /*
+    else {
+      this->state = BMI_Initialize (config_file);
+      if (!this->state)
+        edu_csdms_tools_Verbose_error (this->log, "Unable to initialize", _ex);
+      fprintf (stderr, "config_file = %s\n", config_file);
+      //this->state = BMI_Initialize (CMI_COMPONENT_NAME"_command_line.txt");
+      this->status = CMI_STATUS_INITIALIZED;
+    }
+    */
+
+    return TRUE;
+
+#if 0
     edu_csdms_tools_Verbose_info (this->log, "Initializing.", _ex);
     if (this->status >= CMI_STATUS_INITIALIZING)
       return TRUE;
@@ -759,23 +819,14 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
       edu_csdms_tools_CMIPortQueue_add_ports (this->ports, ports, _ex);
 
       edu_csdms_tools_Verbose_info (this->log, "Connect ports.", _ex);
-      edu_csdms_tools_CMIPortQueue_connect_ports (this->ports, _ex);
+      edu_csdms_tools_CMIPortQueue_connect_all_ports (this->ports, _ex);
     }
     edu_csdms_tools_Verbose_info (this->log, "Created port queue.", _ex);
 
     edu_csdms_tools_Verbose_info (this->log, "Read parameters.", _ex);
     { /* Read parameters from the config dialog. */
       edu_csdms_tools_TemplateFiles template;
-      //char **src;
-      //char **dest;
-      //const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
-      //const char *dest_files = CMI_TEMPLATE_DEST_FILES;
       char * val;
-      //struct sidl_string__array* src_files =
-      //  gov_cca_TypeMap_getStringArray (this->cmi_data,
-      //      "CMI_TEMPLATE_SOURCE_FILES", NULL, _ex);
-      //sidl_string__array dst_files = gov_cca_TypeMap_getStringArray (
-      //    this->cmi_data, "CMI_TEMPLATE_DEST_FILES", NULL, _ex);
       struct sidl_string__array* srcs =
         edu_csdms_tools_CMIConfigFile_get_array (this->cfg_file,
             "CMI_TEMPLATE_SOURCE_FILES", _ex);
@@ -785,7 +836,9 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
 
       template = edu_csdms_tools_TemplateFiles__create (_ex);
       edu_csdms_tools_TemplateFiles_add_files (template, srcs, dsts, _ex);
-
+      //edu_csdms_tools_TemplateFiles_map_variables (template,
+      //    "/"CMI_COMPONENT_NAME"/Input/Var", from_vals, to_vals, _ex);
+/*
       val = gov_cca_TypeMap_getString (this->userinput,
           "/Sedflux3D/Input/Var/InputDir", "GUI", _ex);
       if (g_ascii_strcasecmp (val, "GUI")==0)
@@ -816,15 +869,16 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
       gov_cca_TypeMap_putString (this->userinput,
           "/Sedflux3D/Input/Var/ProcessFile",
           "${SimulationName}_process.kvf", _ex);
+*/
 
       edu_csdms_tools_TemplateFiles_substitute (template,
           this->userinput, "/"CMI_COMPONENT_NAME"/Input/Var/", ".",
           _ex);
 
       val = gov_cca_TypeMap_getString (this->userinput,
-          "/Sedflux3D/Input/Var/SimulationName", CMI_COMPONENT_NAME, _ex);
+          "/"CMI_COMPONENT_NAME"/Input/Var/SimulationName", CMI_COMPONENT_NAME, _ex);
       gov_cca_TypeMap_putString (this->userinput,
-          "/Sedflux3D/SimulationName", val, _ex);
+          "/"CMI_COMPONENT_NAME"/SimulationName", val, _ex);
     }
 
     edu_csdms_tools_Verbose_info (this->log, "BMI initialize.", _ex);
@@ -846,7 +900,7 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
     edu_csdms_tools_Verbose_info (this->log, "Created print queue.", _ex);
 
     edu_csdms_tools_Verbose_info (this->log, "Initialize uses ports.", _ex);
-    edu_csdms_tools_CMIPortQueue_initialize_ports (this->ports, NULL, _ex);
+    edu_csdms_tools_CMIPortQueue_initialize_all_ports (this->ports, NULL, _ex);
 
     {
       struct sidl_string__array* mappers =
@@ -863,7 +917,40 @@ impl_edu_csdms_models_Sedflux3D_CMI_initialize(
     edu_csdms_tools_Verbose_info (this->log, "Initialized.", _ex);
     this->status = CMI_STATUS_INITIALIZED;
     return TRUE;
+#endif
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_initialize) */
+  }
+}
+
+/*
+ * Method:  prepare[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_prepare"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_Sedflux3D_prepare(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* config_file,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.prepare) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+             edu_csdms_models_Sedflux3D__get_data (self);
+
+    this->state = BMI_Initialize (config_file);
+    if (!this->state)
+      edu_csdms_tools_Verbose_error (this->log, "Unable to initialize", _ex);
+    fprintf (stderr, "config_file = %s\n", config_file);
+
+    return TRUE;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.prepare) */
   }
 }
 
@@ -925,6 +1012,26 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
     struct edu_csdms_models_Sedflux3D__data *this =
              edu_csdms_models_Sedflux3D__get_data (self);
 
+    this->status = CMI_STATUS_UPDATING;
+    edu_csdms_cmi_ComponentHandler_run_component (this->handler, time_interval, _ex);
+    this->status = CMI_STATUS_UPDATED;
+
+    return TRUE;
+/*
+    if (this->status < CMI_STATUS_UPDATING) {
+      this->status = CMI_STATUS_UPDATING;
+      edu_csdms_cmi_ComponentHandler_run_component (this->handler, time_interval, _ex);
+    } else {
+      edu_csdms_tools_Verbose_info (this->log, "Running...", _ex);
+      fprintf (stderr, "Running until %f\n", time_interval);
+      BMI_Update_until (this->state, time_interval);
+      edu_csdms_tools_Verbose_info (this->log, "Ran.", _ex);
+      this->status = CMI_STATUS_UPDATED;
+    }
+
+    return TRUE;
+*/
+#if 0
     edu_csdms_tools_Verbose_info (this->log, 
         edu_csdms_models_Sedflux3D_CMI_get_status (self, _ex), _ex);
 
@@ -961,13 +1068,13 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
       for (; t<time_interval; t+=port_queue_dt)
       {
         edu_csdms_tools_Verbose_info (this->log, "Updating ports.", _ex);
-        edu_csdms_tools_CMIPortQueue_run_ports (this->ports, now, _ex);
+        edu_csdms_tools_CMIPortQueue_run_all_ports (this->ports, now, _ex);
 
 #if CMI_TURN_OFF_MAPPING
         edu_csdms_tools_Verbose_warning (this->log, "Forgetting mappers.", _ex);
 #else
         edu_csdms_tools_Verbose_info (this->log, "Running mappers.", _ex);
-        edu_csdms_tools_CMIPortQueue_run_mappers (this->ports, _ex);
+        edu_csdms_tools_CMIPortQueue_run_all_mappers (this->ports, _ex);
 #endif
 
         edu_csdms_tools_Verbose_info (this->log, "Updating myself.", _ex);
@@ -978,13 +1085,13 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
       if (t>time_interval)
       {
         edu_csdms_tools_Verbose_info (this->log, "Updating ports.", _ex);
-        edu_csdms_tools_CMIPortQueue_run_ports (this->ports, now, _ex);
+        edu_csdms_tools_CMIPortQueue_run_all_ports (this->ports, now, _ex);
 
 #if CMI_TURN_OFF_MAPPING
         edu_csdms_tools_Verbose_warning (this->log, "Forgetting mappers.", _ex);
 #else
         edu_csdms_tools_Verbose_info (this->log, "Running mappers.", _ex);
-        edu_csdms_tools_CMIPortQueue_run_mappers (this->ports, _ex);
+        edu_csdms_tools_CMIPortQueue_run_all_mappers (this->ports, _ex);
 #endif
 
         BMI_Update_until (this->state, time_interval);
@@ -995,7 +1102,41 @@ impl_edu_csdms_models_Sedflux3D_CMI_run(
     this->status = CMI_STATUS_UPDATED;
 
     return TRUE;
+#endif
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_run) */
+  }
+}
+
+/*
+ * Method:  run[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_run"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_Sedflux3D_run(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ double time_interval,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.run) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+             edu_csdms_models_Sedflux3D__get_data (self);
+
+    edu_csdms_tools_Verbose_info (this->log, "Running...", _ex);
+    fprintf (stderr, "Running until %f\n", time_interval);
+    BMI_Update_until (this->state, time_interval);
+    edu_csdms_tools_Verbose_info (this->log, "Ran.", _ex);
+    //this->status = CMI_STATUS_UPDATED;
+
+    return TRUE;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.run) */
   }
 }
 
@@ -1020,6 +1161,21 @@ impl_edu_csdms_models_Sedflux3D_CMI_finalize(
     struct edu_csdms_models_Sedflux3D__data *this =
              edu_csdms_models_Sedflux3D__get_data (self);
 
+    if (this->status < CMI_STATUS_FINALIZING) {
+      this->status = CMI_STATUS_FINALIZING;
+      edu_csdms_cmi_ComponentHandler_finalize_component (this->handler, _ex);
+      this->status = CMI_STATUS_FINALIZED;
+    }
+    /*
+    else {
+      BMI_Finalize (this->state);
+      this->status = CMI_STATUS_FINALIZED;
+    }
+    */
+
+
+    return TRUE;
+#if 0
     this->status = CMI_STATUS_FINALIZING;
 
     {
@@ -1034,7 +1190,36 @@ impl_edu_csdms_models_Sedflux3D_CMI_finalize(
     this->status = CMI_STATUS_FINALIZED;
 
     return TRUE;
+#endif
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_finalize) */
+  }
+}
+
+/*
+ * Method:  finish[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_finish"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_Sedflux3D_finish(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.finish) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+             edu_csdms_models_Sedflux3D__get_data (self);
+
+    BMI_Finalize (this->state);
+
+    return TRUE;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.finish) */
   }
 }
 
@@ -1070,6 +1255,81 @@ impl_edu_csdms_models_Sedflux3D_CMI_run_model(
   EXIT:;
     /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux3D.CMI_run_model) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_run_model) */
+  }
+}
+
+/*
+ * Method:  CMI_get_start_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_CMI_get_start_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_Sedflux3D_CMI_get_start_time(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.CMI_get_start_time) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+             edu_csdms_models_Sedflux3D__get_data (self);
+    return BMI_Get_start_time (this->state);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_start_time) */
+  }
+}
+
+/*
+ * Method:  CMI_get_current_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_CMI_get_current_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_Sedflux3D_CMI_get_current_time(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.CMI_get_current_time) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+             edu_csdms_models_Sedflux3D__get_data (self);
+    return BMI_Get_current_time (this->state);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_current_time) */
+  }
+}
+
+/*
+ * Method:  CMI_get_end_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_CMI_get_end_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_Sedflux3D_CMI_get_end_time(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.CMI_get_end_time) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+             edu_csdms_models_Sedflux3D__get_data (self);
+    return BMI_Get_end_time (this->state);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_end_time) */
   }
 }
 
@@ -1194,16 +1454,7 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_component_name(
   *_ex = 0;
   {
     /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.CMI_get_component_name) */
-    /* Insert-Code-Here {edu.csdms.models.Sedflux3D.CMI_get_component_name} (
-      CMI_get_component_name method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux3D.CMI_get_component_name) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux3D.CMI_get_component_name) */
+    return strdup (CMI_COMPONENT_NAME);
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_component_name) */
   }
 }
@@ -1529,7 +1780,12 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_spacing(
     double * spacing;
     int n_dims;
 
+    fprintf (stderr, "getting spacing\n");
+    fprintf (stderr, "long_var_name = %s\n", long_var_name);
     spacing = BMI_Get_grid_spacing (this->state, long_var_name, &n_dims);
+    fprintf (stderr, "got spacing\n");
+    fprintf (stderr, "spacing is %fx%f\n", spacing[0], spacing[1]);
+
     sidl_spacing = sidl_double__array_create1d (n_dims);
 
     {
@@ -1542,6 +1798,51 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_spacing(
     return sidl_spacing;
   EXIT:;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_grid_spacing) */
+  }
+}
+
+/*
+ * Method:  get_grid_spacing[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_get_grid_spacing"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_spacing(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.get_grid_spacing) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+      edu_csdms_models_Sedflux3D__get_data (self);
+    struct sidl_double__array* sidl_spacing;
+    double * spacing;
+    int n_dims;
+
+    fprintf (stderr, "getting spacing\n");
+    fprintf (stderr, "long_var_name = %s\n", long_var_name);
+    spacing = BMI_Get_grid_spacing (this->state, long_var_name, &n_dims);
+    fprintf (stderr, "got spacing\n");
+    fprintf (stderr, "spacing is %fx%f\n", spacing[0], spacing[1]);
+
+    sidl_spacing = sidl_double__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_double__array_set1 (sidl_spacing, i, spacing[i]);
+    }
+
+    g_free (spacing);
+    return sidl_spacing;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.get_grid_spacing) */
   }
 }
 
@@ -1571,6 +1872,7 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_lower_left(
     int n_dims;
 
     corner = BMI_Get_grid_lower_left_corner (this->state, long_var_name, &n_dims);
+    fprintf (stderr, "origin is %f x %f\n", corner[0], corner[1]);
     sidl_corner = sidl_double__array_create1d (n_dims);
 
     {
@@ -1580,8 +1882,51 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_lower_left(
     }
 
     g_free (corner);
+    fprintf (stderr, "got origin\n");
     return sidl_corner;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_grid_lower_left) */
+  }
+}
+
+/*
+ * Method:  get_grid_lower_left[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_get_grid_lower_left"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_lower_left(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.get_grid_lower_left) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+      edu_csdms_models_Sedflux3D__get_data (self);
+    struct sidl_double__array * sidl_corner;
+    double * corner;
+    int n_dims;
+
+    corner = BMI_Get_grid_lower_left_corner (this->state, long_var_name, &n_dims);
+    fprintf (stderr, "origin is %f x %f\n", corner[0], corner[1]);
+    sidl_corner = sidl_double__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_double__array_set1 (sidl_corner, i, corner[i]);
+    }
+
+    g_free (corner);
+    fprintf (stderr, "got origin\n");
+    return sidl_corner;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.get_grid_lower_left) */
   }
 }
 
@@ -1611,6 +1956,7 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_shape(
     int n_dims;
 
     shape = BMI_Get_grid_shape (this->state, long_var_name, &n_dims);
+    fprintf (stderr, "shape is %dx%d\n", shape[0], shape[1]);
     sidl_shape = sidl_int__array_create1d (n_dims);
 
     {
@@ -1622,6 +1968,47 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_shape(
     g_free (shape);
     return sidl_shape;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_grid_shape) */
+  }
+}
+
+/*
+ * Method:  get_grid_shape[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_get_grid_shape"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_int__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_shape(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.get_grid_shape) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+      edu_csdms_models_Sedflux3D__get_data (self);
+    struct sidl_int__array* sidl_shape;
+    int * shape;
+    int n_dims;
+
+    shape = BMI_Get_grid_shape (this->state, long_var_name, &n_dims);
+    fprintf (stderr, "(get_grid_shape) shape is %dx%d\n", shape[0], shape[1]);
+    sidl_shape = sidl_int__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_int__array_set1 (sidl_shape, i, shape[i]);
+    }
+
+    g_free (shape);
+    return sidl_shape;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.get_grid_shape) */
   }
 }
 
@@ -1664,6 +2051,44 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_x(
 }
 
 /*
+ * Method:  get_grid_x[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_get_grid_x"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_x(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.get_grid_x) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+      edu_csdms_models_Sedflux3D__get_data (self);
+    struct sidl_double__array* vals = NULL;
+
+    {
+      int len;
+      double * x = BMI_Get_grid_x (this->state, long_var_name, &len);
+      int lower[1] = {0};
+      int upper[1] = {len-1};
+      int stride[1] = {1};
+  
+      vals = sidl_double__array_borrow (x, 1, lower, upper, stride);
+    }
+
+    return vals;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.get_grid_x) */
+  }
+}
+
+/*
  * Method:  CMI_get_grid_y[]
  */
 
@@ -1702,6 +2127,44 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_y(
 }
 
 /*
+ * Method:  get_grid_y[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_get_grid_y"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_y(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.get_grid_y) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+      edu_csdms_models_Sedflux3D__get_data (self);
+    struct sidl_double__array* vals = NULL;
+
+    {
+      int len;
+      double * y = BMI_Get_grid_y (this->state, long_var_name, &len);
+      int lower[1] = {0};
+      int upper[1] = {len-1};
+      int stride[1] = {1};
+  
+      vals = sidl_double__array_borrow (y, 1, lower, upper, stride);
+    }
+
+    return vals;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.get_grid_y) */
+  }
+}
+
+/*
  * Method:  CMI_get_grid_z[]
  */
 
@@ -1736,6 +2199,44 @@ impl_edu_csdms_models_Sedflux3D_CMI_get_grid_z(
 
     return vals;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.CMI_get_grid_z) */
+  }
+}
+
+/*
+ * Method:  get_grid_z[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux3D_get_grid_z"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux3D_get_grid_z(
+  /* in */ edu_csdms_models_Sedflux3D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.get_grid_z) */
+    struct edu_csdms_models_Sedflux3D__data *this =
+      edu_csdms_models_Sedflux3D__get_data (self);
+    struct sidl_double__array* vals = NULL;
+
+    {
+      int len;
+      double * z = BMI_Get_grid_z (this->state, long_var_name, &len);
+      int lower[1] = {0};
+      int upper[1] = {len-1};
+      int stride[1] = {1};
+
+      vals = sidl_double__array_borrow (z, 1, lower, upper, stride);
+    }
+
+    return vals;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.get_grid_z) */
   }
 }
 
@@ -1838,20 +2339,28 @@ impl_edu_csdms_models_Sedflux3D_get_grid(
     /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D.get_grid) */
     /* Insert-Code-Here {edu.csdms.models.Sedflux3D.get_grid} (get_grid method) 
       */
-    struct sidl_double__array* lower_left =
-      edu_csdms_models_Sedflux3D_CMI_get_grid_lower_left (self,
-          long_var_name, _ex);
-    struct sidl_double__array* spacing =
-      edu_csdms_models_Sedflux3D_CMI_get_grid_spacing (self,
-          long_var_name, _ex);
-    struct sidl_int__array* shape =
-      edu_csdms_models_Sedflux3D_CMI_get_grid_shape (self,
-          long_var_name, _ex);
     edu_csdms_tools_CMIGridUniformRectilinear grid =
       edu_csdms_tools_CMIGridUniformRectilinear__create (_ex);
+    fprintf (stderr, "Getting grid\n");
+    {
+      struct sidl_double__array* lower_left =
+        edu_csdms_models_Sedflux3D_get_grid_lower_left (self,
+            long_var_name, _ex);
+      struct sidl_double__array* spacing =
+        edu_csdms_models_Sedflux3D_get_grid_spacing (self,
+            long_var_name, _ex);
+      struct sidl_int__array* shape =
+        edu_csdms_models_Sedflux3D_get_grid_shape (self,
+            long_var_name, _ex);
 
-    edu_csdms_tools_CMIGridUniformRectilinear_initialize (grid,
-        shape, spacing, lower_left, _ex);
+      // Values are given at cells, not nodes.
+      sidl_int__array_set1 (shape, 0, sidl_int__array_get1 (shape, 0));
+      sidl_int__array_set1 (shape, 1, sidl_int__array_get1 (shape, 1));
+
+      edu_csdms_tools_CMIGridUniformRectilinear_initialize (grid,
+          shape, spacing, lower_left, _ex);
+    }
+    fprintf (stderr, "Got grid\n");
 
     return edu_csdms_cmi_IGrid__cast (grid, _ex);
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux3D.get_grid) */

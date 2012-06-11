@@ -46,7 +46,7 @@ package edu version 0.0 {
                 // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.CMIConfigFile:boccaPrivateMethods)
                 // DO-NOT-EDIT
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in gov.cca.TypeMap dummy0);
+                void boccaForceUsePortInclude(in edu.csdms.tools.Verbose dummy0, in gov.cca.TypeMap dummy1);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.CMIConfigFile:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }

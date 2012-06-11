@@ -13,11 +13,13 @@
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
 import ConfigParser
+from ConfigParser import NoOptionError
 import os
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.cmi.IConfigFile
 import edu.csdms.tools.CMIConfigFile
+import edu.csdms.tools.Verbose
 import gov.cca.TypeMap
 import sidl.BaseClass
 import sidl.BaseInterface
@@ -44,7 +46,14 @@ class CMIConfigFile:
 # DO-NOT-DELETE splicer.begin(__init__)
 
     # Put your code here...
-    self._parser = ConfigParser.ConfigParser ()
+    defaults = {'ports': [], 'optional_ports': [], 'init_ports': [],
+                'template_files': [], 'mappers': [],
+                'output_file_namespace': '', 'port_queue_dt': 0.}
+
+    self.required = ['config_xml_file', 'initialize_arg']
+    self.optional = defaults.keys ()
+
+    self._parser = ConfigParser.ConfigParser (defaults)
     self._name = None
     self._data = {}
 
@@ -153,11 +162,12 @@ class CMIConfigFile:
     return None
 # DO-NOT-DELETE splicer.end(get_float)
 
-  def boccaForceUsePortInclude(self, dummy0):
+  def boccaForceUsePortInclude(self, dummy0, dummy1):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # gov.cca.TypeMap dummy0
+    # edu.csdms.tools.Verbose dummy0
+    # gov.cca.TypeMap dummy1
     #
 
     #
@@ -173,6 +183,7 @@ class CMIConfigFile:
     # DO-NOT-EDIT-BOCCA
     # Bocca generated code. bocca.protected.begin(boccaForceUsePortInclude)
     o0 = dummy0
+    o1 = dummy1
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)
@@ -204,39 +215,74 @@ class CMIConfigFile:
     try:
         self._parser.read (files)
     except Exception as e:
-        print e
+        self._log.error ('Error parsing CMI config file (%s)' % e)
 
     try:
         section = 'csdms.cmi.%s' % self._name
         self._log.info ('Reading section (%s)' % section)
 
-        ports = self._parser.get (section, 'ports')
-        template_files = self._parser.get (section, 'template_files')
-        mappers = self._parser.get (section, 'mappers')
-        dialog_file = self._parser.get (section, 'config_xml_file')
-        port_queue_dt = self._parser.getfloat (section, 'port_queue_dt')
+        if not self._parser.has_section (section):
+            self._log.error ('Missing required section (%s)' % section)
+
+        vals = {}
+        missing = []
+        #for entry in self.required + self.optional:
+        for entry in self.required:
+            try:
+                vals[entry] = self._parser.get (section, entry)
+            except NoOptionError:
+                missing.append (entry)
+        for entry in missing:
+            self._log.error ('Missing required entry (%s)' % entry)
+
+        for entry in self.optional:
+            try:
+                vals[entry] = self._parser.get (section, entry)
+            except NoOptionError:
+                pass
 
         (srcs, dsts) = ([], [])
-        for file in template_files.split (','):
+        for file in vals['template_files'].split (','):
             (src, dst) = file.split ('->')
             srcs.append (src.strip ())
             dsts.append (dst.strip ())
-        mappers = [m.strip () for m in mappers.split (',')]
-        ports = [p.strip () for p in ports.split (',')]
+        mappers = [m.strip () for m in vals['mappers'].split (',')]
+        ports = [p.strip () for p in vals['ports'].split (',')]
+        opt_ports = [p.strip () for p in vals['optional_ports'].split (',')]
+        init_ports = [p.strip () for p in vals['init_ports'].split (',')]
+        port_queue_dt = float (vals['port_queue_dt'])
+        output_file_namespace = vals['output_file_namespace']
+        dialog_file = vals['config_xml_file']
+        initialize_arg = vals['initialize_arg']
+
+        #ports = self._parser.get (section, 'ports')
+        #init_ports = self._parser.get (section, 'init_ports')
+        #template_files = self._parser.get (section, 'template_files')
+        #mappers = self._parser.get (section, 'mappers')
+        #dialog_file = self._parser.get (section, 'config_xml_file')
+        #output_file_namespace = self._parser.get (section, 'output_file_namespace')
+        #port_queue_dt = self._parser.getfloat (section, 'port_queue_dt')
 
         self._log.info ('Reading ports (%s)' % ';'.join (ports))
+        self._log.info ('Reading optional ports (%s)' % ';'.join (opt_ports))
+        self._log.info ('Reading init ports (%s)' % ';'.join (init_ports))
         self._log.info ('Reading source template files (%s)' % ';'.join (srcs))
         self._log.info ('Reading destination template files (%s)' % ';'.join (dsts))
         self._log.info ('Reading mappers (%s)' % ';'.join (mappers))
         self._log.info ('Reading config_xml_file (%s)' % dialog_file)
         self._log.info ('Reading ports_queue_dt (%s)' % port_queue_dt)
+        self._log.info ('Reading initialize_arg (%s)' % initialize_arg)
 
         self._data['CMI_PORT_NAMES'] = ports
+        self._data['CMI_OPTIONAL_PORT_NAMES'] = opt_ports
         self._data['CMI_TEMPLATE_SOURCE_FILES'] = srcs
         self._data['CMI_TEMPLATE_DEST_FILES'] = dsts
         self._data['CMI_MAPPERS'] = mappers
         self._data['CMI_CONFIG_DIALOG_XML_FILE'] = dialog_file
-        self._data['CMI_PORT_QUEUE_DT'] = float (port_queue_dt)
+        self._data['CMI_PORT_QUEUE_DT'] = port_queue_dt
+        self._data['CMI_OUTPUT_FILE_NS'] = output_file_namespace
+        self._data['CMI_INIT_PORTS'] = init_ports
+        self._data['CMI_INITIALIZE_ARG'] = initialize_arg
     except Exception as e:
         print '%s: Unable to add section' % e
 

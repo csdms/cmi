@@ -48,7 +48,7 @@ package edu version 0.0 {
                 void boccaReleaseServices(in gov.cca.Services services) throws gov.cca.CCAException;
                 
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.ports.CMIPort dummy1, in edu.csdms.tools.CMIGrid dummy2, in edu.csdms.tools.Verbose dummy3, in edu.csdms.tools.CMIConfigFile dummy4, in edu.csdms.tools.TemplateFiles dummy5, in edu.csdms.tools.ConfigDialog dummy6, in edu.csdms.tools.CMIPortQueue dummy7, in edu.csdms.tools.PrintQueue dummy8);
+                void boccaForceUsePortInclude(in gov.cca.ports.ParameterPortFactory dummy0, in edu.csdms.ports.CMIPort dummy1, in edu.csdms.ports.CMIPort dummy2, in edu.csdms.ports.CMIPort dummy3, in edu.csdms.tools.Verbose dummy4, in edu.csdms.tools.CMIGrid dummy5, in edu.csdms.cmi.ComponentHandler dummy6);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.models.Child:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }

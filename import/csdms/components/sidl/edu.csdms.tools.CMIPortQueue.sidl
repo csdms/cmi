@@ -40,22 +40,46 @@ package edu version 0.0 {
                 void add_ports(in array<string> servers);	                	
 
                 
-                void initialize_ports(in array<string> properties);	                	
+                void add_optional_ports(in array<string> ports);	                	
 
                 
-                void run_ports(in double time);	                	
+                void initialize_all_ports(in array<string> properties);	                	
 
                 
-                void finalize_ports();	                	
+                void initialize_ports(in array<string> ports, in array<string> properties);	                	
 
                 
-                void connect_ports();	                	
+                void run_all_ports(in double time);	                	
 
                 
-                void disconnect_ports();	                	
+                void run_ports(in array<string> ports, in double time);	                	
+
+                
+                void finalize_all_ports();	                	
+
+                
+                void finalize_ports(in array<string> ports);	                	
+
+                
+                void connect_all_ports();	                	
+
+                
+                void connect_ports(in array<string> ports);	                	
+
+                
+                void disconnect_all_ports();	                	
+
+                
+                void disconnect_ports(in array<string> ports);	                	
 
                 
                 edu.csdms.ports.CMIPort get_port(in string name);	                	
+
+                
+                void disable_port(in string port);	                	
+
+                
+                void disable_ports(in array<string> ports);	                	
 
                 
                 bool check_time_spans(in double start, in double end);	                	
@@ -70,7 +94,16 @@ package edu version 0.0 {
                 void run_mapper(in string mapper);	                	
 
                 
-                void run_mappers();	                	
+                void run_all_mappers();	                	
+
+                
+                void run_mappers(in array<string> mappers);	                	
+
+                
+                void run_mappers_for_ports(in array<string> ports);	                	
+
+                
+                void run_mappers_for_port(in string port);	                	
 
                 // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.CMIPortQueue.methods)
 

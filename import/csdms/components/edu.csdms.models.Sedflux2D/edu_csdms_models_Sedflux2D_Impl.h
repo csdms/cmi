@@ -289,6 +289,13 @@ impl_edu_csdms_models_Sedflux2D_CMI_initialize(
 
 extern
 sidl_bool
+impl_edu_csdms_models_Sedflux2D_prepare(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* config_file,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
 impl_edu_csdms_models_Sedflux2D_CMI_run_for(
   /* in */ edu_csdms_models_Sedflux2D self,
   /* in */ double time_interval,
@@ -306,7 +313,20 @@ impl_edu_csdms_models_Sedflux2D_CMI_run(
 
 extern
 sidl_bool
+impl_edu_csdms_models_Sedflux2D_run(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ double time_interval,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
 impl_edu_csdms_models_Sedflux2D_CMI_finalize(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
+impl_edu_csdms_models_Sedflux2D_finish(
   /* in */ edu_csdms_models_Sedflux2D self,
   /* out */ sidl_BaseInterface *_ex);
 
@@ -317,6 +337,24 @@ impl_edu_csdms_models_Sedflux2D_CMI_run_model(
   /* in */ const char* config_file,
   /* in */ const char* stop_rule,
   /* in */ double stop_var,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+double
+impl_edu_csdms_models_Sedflux2D_CMI_get_start_time(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+double
+impl_edu_csdms_models_Sedflux2D_CMI_get_current_time(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+double
+impl_edu_csdms_models_Sedflux2D_CMI_get_end_time(
+  /* in */ edu_csdms_models_Sedflux2D self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
@@ -416,7 +454,21 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_spacing(
 
 extern
 struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_spacing(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
 impl_edu_csdms_models_Sedflux2D_CMI_get_grid_lower_left(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_lower_left(
   /* in */ edu_csdms_models_Sedflux2D self,
   /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
@@ -424,6 +476,13 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_lower_left(
 extern
 struct sidl_int__array*
 impl_edu_csdms_models_Sedflux2D_CMI_get_grid_shape(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_int__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_shape(
   /* in */ edu_csdms_models_Sedflux2D self,
   /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
@@ -437,6 +496,13 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_x(
 
 extern
 struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_x(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
 impl_edu_csdms_models_Sedflux2D_CMI_get_grid_y(
   /* in */ edu_csdms_models_Sedflux2D self,
   /* in */ const char* long_var_name,
@@ -444,7 +510,21 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_y(
 
 extern
 struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_y(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
 impl_edu_csdms_models_Sedflux2D_CMI_get_grid_z(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_z(
   /* in */ edu_csdms_models_Sedflux2D self,
   /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);

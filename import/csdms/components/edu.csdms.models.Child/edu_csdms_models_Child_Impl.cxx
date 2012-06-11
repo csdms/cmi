@@ -13,29 +13,17 @@
 // 
 // Includes for all method dependencies.
 // 
+#ifndef included_edu_csdms_cmi_ComponentHandler_hxx
+#include "edu_csdms_cmi_ComponentHandler.hxx"
+#endif
 #ifndef included_edu_csdms_cmi_IGrid_hxx
 #include "edu_csdms_cmi_IGrid.hxx"
 #endif
 #ifndef included_edu_csdms_ports_CMIPort_hxx
 #include "edu_csdms_ports_CMIPort.hxx"
 #endif
-#ifndef included_edu_csdms_tools_CMIConfigFile_hxx
-#include "edu_csdms_tools_CMIConfigFile.hxx"
-#endif
 #ifndef included_edu_csdms_tools_CMIGrid_hxx
 #include "edu_csdms_tools_CMIGrid.hxx"
-#endif
-#ifndef included_edu_csdms_tools_CMIPortQueue_hxx
-#include "edu_csdms_tools_CMIPortQueue.hxx"
-#endif
-#ifndef included_edu_csdms_tools_ConfigDialog_hxx
-#include "edu_csdms_tools_ConfigDialog.hxx"
-#endif
-#ifndef included_edu_csdms_tools_PrintQueue_hxx
-#include "edu_csdms_tools_PrintQueue.hxx"
-#endif
-#ifndef included_edu_csdms_tools_TemplateFiles_hxx
-#include "edu_csdms_tools_TemplateFiles.hxx"
 #endif
 #ifndef included_edu_csdms_tools_Verbose_hxx
 #include "edu_csdms_tools_Verbose.hxx"
@@ -248,6 +236,19 @@ edu::csdms::models::Child_impl::boccaSetServices_impl (
     throw;
   }
 
+  // Use a edu.csdms.ports.CMIPort port with port name CoastalEnvironment 
+  try{
+    this->d_services.registerUsesPort(
+                   "CoastalEnvironment", // port instance name
+                   "edu.csdms.ports.CMIPort",     // full sidl type of port
+                    typeMap);         // properties for the port
+  } catch ( ::gov::cca::CCAException ex )  {
+    BOCCA_EXTEND_THROW_CXX(ex,
+       "edu.csdms.models.Child: Error calling registerUsesPort(\"CoastalEnvironment\", "
+       "\"edu.csdms.ports.CMIPort\", typeMap) ", -2);
+    throw;
+  }
+
   // Use a edu.csdms.ports.CMIPort port with port name SubaqueousDelta 
   try{
     this->d_services.registerUsesPort(
@@ -257,6 +258,19 @@ edu::csdms::models::Child_impl::boccaSetServices_impl (
   } catch ( ::gov::cca::CCAException ex )  {
     BOCCA_EXTEND_THROW_CXX(ex,
        "edu.csdms.models.Child: Error calling registerUsesPort(\"SubaqueousDelta\", "
+       "\"edu.csdms.ports.CMIPort\", typeMap) ", -2);
+    throw;
+  }
+
+  // Use a edu.csdms.ports.CMIPort port with port name BaseLevel 
+  try{
+    this->d_services.registerUsesPort(
+                   "BaseLevel", // port instance name
+                   "edu.csdms.ports.CMIPort",     // full sidl type of port
+                    typeMap);         // properties for the port
+  } catch ( ::gov::cca::CCAException ex )  {
+    BOCCA_EXTEND_THROW_CXX(ex,
+       "edu.csdms.models.Child: Error calling registerUsesPort(\"BaseLevel\", "
        "\"edu.csdms.ports.CMIPort\", typeMap) ", -2);
     throw;
   }
@@ -329,6 +343,20 @@ edu::csdms::models::Child_impl::boccaReleaseServices_impl (
 
   }
 
+  // Release edu.csdms.ports.CMIPort port with port name CoastalEnvironment 
+  try{
+    services.unregisterUsesPort("CoastalEnvironment");
+  } catch ( ::gov::cca::CCAException ex )  {
+
+#ifdef _BOCCA_STDERR
+    std::cerr << "edu.csdms.models.Child: Error calling unregisterUsesPort("
+              << "\"CoastalEnvironment\") at " 
+              << __FILE__ << ":" << __LINE__ -4 << ": " << ex.getNote() 
+              << std::endl;
+#endif // _BOCCA_STDERR
+
+  }
+
   // Release edu.csdms.ports.CMIPort port with port name SubaqueousDelta 
   try{
     services.unregisterUsesPort("SubaqueousDelta");
@@ -337,6 +365,20 @@ edu::csdms::models::Child_impl::boccaReleaseServices_impl (
 #ifdef _BOCCA_STDERR
     std::cerr << "edu.csdms.models.Child: Error calling unregisterUsesPort("
               << "\"SubaqueousDelta\") at " 
+              << __FILE__ << ":" << __LINE__ -4 << ": " << ex.getNote() 
+              << std::endl;
+#endif // _BOCCA_STDERR
+
+  }
+
+  // Release edu.csdms.ports.CMIPort port with port name BaseLevel 
+  try{
+    services.unregisterUsesPort("BaseLevel");
+  } catch ( ::gov::cca::CCAException ex )  {
+
+#ifdef _BOCCA_STDERR
+    std::cerr << "edu.csdms.models.Child: Error calling unregisterUsesPort("
+              << "\"BaseLevel\") at " 
               << __FILE__ << ":" << __LINE__ -4 << ": " << ex.getNote() 
               << std::endl;
 #endif // _BOCCA_STDERR
@@ -356,13 +398,11 @@ void
 edu::csdms::models::Child_impl::boccaForceUsePortInclude_impl (
   /* in */::gov::cca::ports::ParameterPortFactory& dummy0,
   /* in */::edu::csdms::ports::CMIPort& dummy1,
-  /* in */::edu::csdms::tools::CMIGrid& dummy2,
-  /* in */::edu::csdms::tools::Verbose& dummy3,
-  /* in */::edu::csdms::tools::CMIConfigFile& dummy4,
-  /* in */::edu::csdms::tools::TemplateFiles& dummy5,
-  /* in */::edu::csdms::tools::ConfigDialog& dummy6,
-  /* in */::edu::csdms::tools::CMIPortQueue& dummy7,
-  /* in */::edu::csdms::tools::PrintQueue& dummy8 ) 
+  /* in */::edu::csdms::ports::CMIPort& dummy2,
+  /* in */::edu::csdms::ports::CMIPort& dummy3,
+  /* in */::edu::csdms::tools::Verbose& dummy4,
+  /* in */::edu::csdms::tools::CMIGrid& dummy5,
+  /* in */::edu::csdms::cmi::ComponentHandler& dummy6 ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.boccaForceUsePortInclude)
   // DO-NOT-EDIT-BOCCA
@@ -374,8 +414,6 @@ edu::csdms::models::Child_impl::boccaForceUsePortInclude_impl (
     (void)dummy4;
     (void)dummy5;
     (void)dummy6;
-    (void)dummy7;
-    (void)dummy8;
 
   // Bocca generated code. bocca.protected.end(edu.csdms.models.Child.boccaForceUsePortInclude)
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.boccaForceUsePortInclude)
@@ -414,12 +452,22 @@ edu::csdms::models::Child_impl::setServices_impl (
   // bocca-default-code. User may edit or delete.end(edu.csdms.models.Child.setServices)
   
   // Insert-UserCode-Here{edu.csdms.models.Child.setServices:epilog}
-  this->userinput = services.createTypeMap ();
-
   {
     this->log = ::edu::csdms::tools::Verbose::_create ();
     this->log.initialize (CMI_COMPONENT_NAME, 2);
   }
+
+  this->log.info ("Creating ComponentHandler");
+  {
+    ::edu::csdms::ports::CMIPort port =
+      ::babel_cast<edu::csdms::ports::CMIPort>(*this);
+    this->handler = ::edu::csdms::cmi::ComponentHandler::_create ();
+    this->handler.set_up (CMI_COMPONENT_NAME, port, services);
+  }
+  this->log.info ("Created ComponentHandler");
+
+#if 0
+  this->userinput = services.createTypeMap ();
 
   ::gov::cca::Port gcp = services.getPort("ppf");
 
@@ -462,6 +510,7 @@ edu::csdms::models::Child_impl::setServices_impl (
 
   ppf.addParameterPort(this->userinput, services);
   services.releasePort("ppf");
+#endif
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.setServices)
 }
@@ -528,7 +577,13 @@ edu::csdms::models::Child_impl::go_impl ()
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.go)
   int bocca_status = 0;
+    
+  this->status = CMI_STATUS_INITIALIZING;
+  this->handler.go ();
 
+  return bocca_status;
+
+/*
   this->log.info ("Go");
   this->is_driver = TRUE;
 
@@ -537,6 +592,7 @@ edu::csdms::models::Child_impl::go_impl ()
   this->CMI_finalize ();
 
   return bocca_status;
+  */
 
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.go)
 }
@@ -550,6 +606,15 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_initialize)
 
+  if (this->status < CMI_STATUS_INITIALIZING) {
+    this->status = CMI_STATUS_INITIALIZING;
+    this->handler.init_component ("");
+    this->status = CMI_STATUS_INITIALIZED;
+  }
+
+  return TRUE;
+
+#if 0
   this->log.info ("Initializing");
   if (this->status >= CMI_STATUS_INITIALIZING)
     return TRUE;
@@ -570,15 +635,13 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
 
     this->ports.add_ports (ports);
 
-    this->ports.connect_ports ();
+    this->ports.connect_all_ports ();
   }
   this->log.info ("Created port queue.");
-  
+
   this->log.info ("Parse config file.");
   { // Read parameters from the config dialog.
     ::edu::csdms::tools::TemplateFiles tmpls;
-    //const char *src_files = CMI_TEMPLATE_SOURCE_FILES;
-    //const char *dest_files = CMI_TEMPLATE_DEST_FILES;
     string val;
     sidl::array<string> srcs = this->cfg_file.get_array ("CMI_TEMPLATE_SOURCE_FILES");
     sidl::array<string> dsts = this->cfg_file.get_array ("CMI_TEMPLATE_DEST_FILES");
@@ -586,7 +649,7 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
     tmpls = ::edu::csdms::tools::TemplateFiles::_create ();
     tmpls.add_files (srcs, dsts);
     tmpls.substitute (this->userinput, "/"CMI_COMPONENT_NAME"/Input/Var/",
-        ".");
+        ".", "");
 
     val = this->userinput.getString (
         "/"CMI_COMPONENT_NAME"/Input/Var/SimulationName",
@@ -597,10 +660,7 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
   }
   this->log.info ("Parsed config file.");
 
-  /* The contents of this file will be something like,
-   * Child Child.in
-   * */
-  this->state.initialize ("Child_command_line.txt");
+  this->state.initialize (CMI_COMPONENT_NAME"_command_line.txt");
 
   this->log.info ("Create print queue.");
   { // Set up the print queue.
@@ -618,11 +678,12 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
   this->log.warning ("Forgetting ports for now.");
 #else
   this->log.info ("Initialize ports.");
-  this->ports.initialize_ports (0);
+  this->ports.initialize_all_ports (0);
 #endif
 
   {
     sidl::array<string> mappers = this->cfg_file.get_array ("CMI_MAPPERS");
+    sidl::array<string> init_ports = this->cfg_file.get_array ("CMI_INIT_PORTS");
 
 #if CMI_TURN_OFF_MAPPING
     this->log.warning ("Mapping is turned off.");
@@ -631,7 +692,11 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
     this->ports.add_mappers (mappers);
 
     this->log.info ("Map initial values.");
-    this->ports.run_mappers ();
+    this->ports.run_all_mappers ();
+
+    this->log.info ("Map initial values.");
+    this->ports.run_mappers (init_ports);
+    this->ports.disable_ports (init_ports);
   }
 #endif
 
@@ -640,7 +705,23 @@ edu::csdms::models::Child_impl::CMI_initialize_impl (
   this->log.info ("Initialized.");
   this->log.info (this->CMI_get_status ());
   return TRUE;
+#endif
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_initialize)
+}
+
+/**
+ * Method:  prepare[]
+ */
+bool
+edu::csdms::models::Child_impl::prepare_impl (
+  /* in */const ::std::string& config_file ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.prepare)
+  this->state.initialize (config_file.c_str ());
+  //this->state.initialize (CMI_COMPONENT_NAME"_command_line.txt");
+  return TRUE;
+
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.prepare)
 }
 
 /**
@@ -675,6 +756,23 @@ edu::csdms::models::Child_impl::CMI_run_impl (
   /* in */double time_interval ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_run)
+  this->status = CMI_STATUS_UPDATING;
+  this->handler.run_component (time_interval);
+  this->status = CMI_STATUS_UPDATED;
+
+  return TRUE;
+/*
+  if (this->status < CMI_STATUS_UPDATING) {
+    this->status = CMI_STATUS_UPDATING;
+    this->handler.run_component (time_interval);
+  } else {
+    this->state.update_until (time_interval);
+    this->status = CMI_STATUS_UPDATED;
+  }
+
+  return TRUE;
+*/
+#if 0
   this->log.info ("Updating.");
   this->log.info (this->CMI_get_status ());
 
@@ -707,14 +805,14 @@ edu::csdms::models::Child_impl::CMI_run_impl (
       this->log.warning ("Forgetting ports for now.");
 #else
       this->log.info ("Updating ports.");
-      this->ports.run_ports (now);
+      this->ports.run_all_ports (now);
 #endif
 
 #if CMI_TURN_OFF_MAPPING
       this->log.warning ("Not mapping values.");
 #else
       this->log.info ("Mapping values.");
-      this->ports.run_mappers ();
+      this->ports.run_all_mappers ();
 #endif
 
       this->log.info ("Updating myself.");
@@ -729,14 +827,14 @@ edu::csdms::models::Child_impl::CMI_run_impl (
       this->log.warning ("Forgetting ports for now.");
 #else
       this->log.info ("Updating ports.");
-      this->ports.run_ports (now);
+      this->ports.run_all_ports (now);
 #endif
 
 #if CMI_TURN_OFF_MAPPING
       this->log.warning ("Not mapping values.");
 #else
       this->log.info ("Mapping values.");
-      this->ports.run_mappers ();
+      this->ports.run_all_mappers ();
 #endif
 
       this->log.info ("Updating myself.");
@@ -751,7 +849,21 @@ edu::csdms::models::Child_impl::CMI_run_impl (
   this->log.info ("Updated.");
   this->log.info (this->CMI_get_status ());
   return TRUE;
+#endif
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_run)
+}
+
+/**
+ * Method:  run[]
+ */
+bool
+edu::csdms::models::Child_impl::run_impl (
+  /* in */double time_interval ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.run)
+  this->state.update_until (time_interval);
+  return TRUE;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.run)
 }
 
 /**
@@ -762,6 +874,14 @@ edu::csdms::models::Child_impl::CMI_finalize_impl ()
 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_finalize)
+  if (this->status < CMI_STATUS_FINALIZING) {
+    this->status = CMI_STATUS_FINALIZING;
+    this->handler.finalize_component ();
+    this->status = CMI_STATUS_FINALIZED;
+  }
+
+  return TRUE;
+#if 0
   this->status = CMI_STATUS_FINALIZING;
 
   this->state.finalize ();
@@ -770,13 +890,27 @@ edu::csdms::models::Child_impl::CMI_finalize_impl ()
   //this->state = NULL;
 
   this->print_q.close ();
-  this->ports.finalize_ports ();
-  this->ports.disconnect_ports ();
+  this->ports.finalize_all_ports ();
+  this->ports.disconnect_all_ports ();
 
   this->status = CMI_STATUS_FINALIZED;
 
   return TRUE;
+#endif
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_finalize)
+}
+
+/**
+ * Method:  finish[]
+ */
+bool
+edu::csdms::models::Child_impl::finish_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.finish)
+  this->state.finalize ();
+  return TRUE;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.finish)
 }
 
 /**
@@ -800,6 +934,42 @@ edu::csdms::models::Child_impl::CMI_run_model_impl (
   throw ex;
   // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_run_model)
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_run_model)
+}
+
+/**
+ * Method:  CMI_get_start_time[]
+ */
+double
+edu::csdms::models::Child_impl::CMI_get_start_time_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_start_time)
+  return this->state.get_start_time ();
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_start_time)
+}
+
+/**
+ * Method:  CMI_get_current_time[]
+ */
+double
+edu::csdms::models::Child_impl::CMI_get_current_time_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_current_time)
+  return this->state.get_current_time ();
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_current_time)
+}
+
+/**
+ * Method:  CMI_get_end_time[]
+ */
+double
+edu::csdms::models::Child_impl::CMI_get_end_time_impl () 
+
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.CMI_get_end_time)
+  return this->state.get_end_time ();
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_end_time)
 }
 
 /**
@@ -1083,6 +1253,18 @@ edu::csdms::models::Child_impl::CMI_get_grid_spacing_impl (
 }
 
 /**
+ * Method:  get_grid_spacing[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::get_grid_spacing_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_spacing)
+  return NULL;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_spacing)
+}
+
+/**
  * Method:  CMI_get_grid_lower_left[]
  */
 ::sidl::array<double>
@@ -1104,6 +1286,27 @@ edu::csdms::models::Child_impl::CMI_get_grid_lower_left_impl (
 }
 
 /**
+ * Method:  get_grid_lower_left[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::get_grid_lower_left_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_lower_left)
+  // Insert-Code-Here {edu.csdms.models.Child.get_grid_lower_left} (get_grid_lower_left method)
+  // 
+  // This method has not been implemented
+  // 
+  // DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Child.get_grid_lower_left)
+  ::sidl::NotImplementedException ex = ::sidl::NotImplementedException::_create();
+  ex.setNote("This method has not been implemented");
+  ex.add(__FILE__, __LINE__, "get_grid_lower_left");
+  throw ex;
+  // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.get_grid_lower_left)
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_lower_left)
+}
+
+/**
  * Method:  CMI_get_grid_shape[]
  */
 ::sidl::array<int32_t>
@@ -1122,6 +1325,18 @@ edu::csdms::models::Child_impl::CMI_get_grid_shape_impl (
   throw ex;
   // DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Child.CMI_get_grid_shape)
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_shape)
+}
+
+/**
+ * Method:  get_grid_shape[]
+ */
+::sidl::array<int32_t>
+edu::csdms::models::Child_impl::get_grid_shape_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_shape)
+  return NULL;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_shape)
 }
 
 /**
@@ -1154,6 +1369,35 @@ edu::csdms::models::Child_impl::CMI_get_grid_x_impl (
 }
 
 /**
+ * Method:  get_grid_x[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::get_grid_x_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_x)
+  sidl::array<double> vals;
+  int len;
+  double * x = this->state.get_grid_x (long_var_name, len);
+  int * lower = new int[1];
+  int * upper = new int[1];
+  int * stride = new int[1];
+  
+  lower[0] = 0;
+  upper[0] = len-1;
+  stride[0] = 1;
+  
+  vals.borrow (x, 1, lower, upper, stride);
+
+  delete [] stride;
+  delete [] upper;
+  delete [] lower;
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_x)
+}
+
+/**
  * Method:  CMI_get_grid_y[]
  */
 ::sidl::array<double>
@@ -1183,6 +1427,35 @@ edu::csdms::models::Child_impl::CMI_get_grid_y_impl (
 }
 
 /**
+ * Method:  get_grid_y[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::get_grid_y_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_y)
+  sidl::array<double> vals;
+  int len;
+  double * y = this->state.get_grid_y (long_var_name, len);
+  int * lower = new int[1];
+  int * upper = new int[1];
+  int * stride = new int[1];
+  
+  lower[0] = 0;
+  upper[0] = len-1;
+  stride[0] = 1;
+  
+  vals.borrow (y, 1, lower, upper, stride);
+
+  delete [] stride;
+  delete [] upper;
+  delete [] lower;
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_y)
+}
+
+/**
  * Method:  CMI_get_grid_z[]
  */
 ::sidl::array<double>
@@ -1203,6 +1476,29 @@ edu::csdms::models::Child_impl::CMI_get_grid_z_impl (
 
   return vals;
   // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.CMI_get_grid_z)
+}
+
+/**
+ * Method:  get_grid_z[]
+ */
+::sidl::array<double>
+edu::csdms::models::Child_impl::get_grid_z_impl (
+  /* in */const ::std::string& long_var_name ) 
+{
+  // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid_z)
+  sidl::array<double> vals;
+  int len;
+  double * z = this->state.get_grid_z (long_var_name, len);
+  int lower[1] = {0};
+  int upper[1];
+  int stride[1] = {1};
+  
+  upper[0] = len-1;
+  
+  vals.borrow (z, 1, lower, upper, stride);
+
+  return vals;
+  // DO-NOT-DELETE splicer.end(edu.csdms.models.Child.get_grid_z)
 }
 
 /**
@@ -1272,8 +1568,8 @@ edu::csdms::models::Child_impl::get_grid_impl (
   /* in */const ::std::string& long_var_name ) 
 {
   // DO-NOT-DELETE splicer.begin(edu.csdms.models.Child.get_grid)
-    sidl::array<double> x = this->CMI_get_grid_x (long_var_name);
-    sidl::array<double> y = this->CMI_get_grid_y (long_var_name);
+    sidl::array<double> x = this->get_grid_x (long_var_name);
+    sidl::array<double> y = this->get_grid_y (long_var_name);
     sidl::array<int> c = this->get_grid_connectivity (long_var_name);
     sidl::array<int> o = this->get_grid_offset (long_var_name);
     ::edu::csdms::tools::CMIGrid grid =

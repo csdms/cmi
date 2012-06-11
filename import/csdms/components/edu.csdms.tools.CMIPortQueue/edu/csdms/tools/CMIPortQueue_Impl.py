@@ -29,6 +29,7 @@ import sidl.NotImplementedException
 
 # DO-NOT-DELETE splicer.begin(_before_type)
 import sys
+from collections import OrderedDict
 # DO-NOT-DELETE splicer.end(_before_type)
 
 class CMIPortQueue:
@@ -48,12 +49,16 @@ class CMIPortQueue:
     self._services = None
     self._client = None
     # Names of the server (uses) ports
-    self._servers = []
+    #self._servers = []
+
+    # Name of ports that are not required to be connected.
+    self._optional_ports = set ()
+    self._disabled_ports = {}
 
     # Instances of connected CMIPorts. Dictionary keys are names of ports,
-    # which are contained within self._servers. Dictionary values are
-    # instances of the corresponding port.
-    self._ports = {}
+    # values are values are instances of the corresponding port (or None if
+    # the port is not connected).
+    self._ports = OrderedDict ()
 
     # Instances of variable mappers. Dictionary keys are full names of
     # variables of the form var_name@port_name. Dictionary values are
@@ -91,6 +96,15 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.begin(initialize)
     self._services = services
     self._client = client_port
+
+    self._log = edu.csdms.tools.Verbose.Verbose ()
+    #self._log.initialize ("CMIPortQueue:%s" % client_port.CMI_get_component_name (), 2)
+    try:
+        name = client_port.CMI_get_component_name ()
+    except Exception as e:
+        print 'Error getting name: %s' % e
+    self._log.initialize ("CMIPortQueue:%s" % name, 2)
+
 # DO-NOT-DELETE splicer.end(initialize)
 
   def set_services(self, services):
@@ -128,11 +142,16 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(add_port)
     # Add a port to the queue.
-    self._log.info ("Adding server port %s" % server)
-    if server not in self._servers:
-        self._servers.append (server)
+    port = server.strip ()
+    self._log.info ("Adding server port %s" % port)
+    if len (port)>0:
+        if port not in self._ports:
+            #self._servers.append (server)
+            self._ports[port] = None
+        else:
+            self._log.warning ("Duplicate server port (%s)" % server)
     else:
-        self._log.error ("Duplicate server port (%s)" % server)
+        self._log.warning ("Server string is empty")
 # DO-NOT-DELETE splicer.end(add_port)
 
   def add_ports(self, servers):
@@ -157,7 +176,27 @@ class CMIPortQueue:
     self._log.info ("Added server ports.")
 # DO-NOT-DELETE splicer.end(add_ports)
 
-  def initialize_ports(self, properties):
+  def add_optional_ports(self, ports):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(add_optional_ports)
+    for port in ports:
+        port = port.strip ()
+        self._optional_ports.add (port)
+        self.add_port (port)
+# DO-NOT-DELETE splicer.end(add_optional_ports)
+
+  def initialize_all_ports(self, properties):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
@@ -170,15 +209,47 @@ class CMIPortQueue:
     # None
     #
 
+# DO-NOT-DELETE splicer.begin(initialize_all_ports)
+    # Call the initialize method for each port in the queue.
+    self._log.info ("Initializing ports.")
+    #for (name, port) in self._ports.items ():
+    #    port.CMI_initialize (properties)
+    #self.initialize_ports (self._servers, properties)
+    self.initialize_ports (self._ports.keys (), properties)
+    self._log.info ("Initialized ports.")
+# DO-NOT-DELETE splicer.end(initialize_all_ports)
+
+  def initialize_ports(self, ports, properties):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    # array<string> properties
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
 # DO-NOT-DELETE splicer.begin(initialize_ports)
     # Call the initialize method for each port in the queue.
     self._log.info ("Initializing ports.")
-    for (name, port) in self._ports.items ():
-        port.CMI_initialize (properties)
+    for port_name in ports:
+        self._log.debug ("Initializing port %s" % port_name)
+        try:
+            port = self._ports[port_name]
+            port.CMI_initialize (properties)
+        except KeyError:
+            self._log.warning ("Unable to locate port (%s)" % port_name)
+        except AttributeError:
+            self._log.warning ("Port is not connected (%s)" % port_name)
+        self._log.debug ("Initialized port %s" % port_name)
     self._log.info ("Initialized ports.")
 # DO-NOT-DELETE splicer.end(initialize_ports)
 
-  def run_ports(self, time):
+  def run_all_ports(self, time):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
@@ -191,18 +262,66 @@ class CMIPortQueue:
     # None
     #
 
+# DO-NOT-DELETE splicer.begin(run_all_ports)
+    # Call the run method for each port in the queue.
+    self._log.info ("Updating ports.")
+    #self.run_ports (self._servers, time)
+    self.run_ports (self._ports.keys (), time)
+    self._log.info ("Updated ports.")
+# DO-NOT-DELETE splicer.end(run_all_ports)
+
+  def run_ports(self, ports, time):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    # double time
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
 # DO-NOT-DELETE splicer.begin(run_ports)
     # Call the run method for each port in the queue.
     self._log.info ("Updating ports.")
-    for (name, port) in self._ports.items ():
-      try:
-        port.CMI_run (time)
-      except Exception as e:
-        self._log.error ("Unexpected error running port %s (%s)" % (name, e))
+    for port_name in ports:
+        self._log.info ("Updating port (%s)." % port_name)
+        try:
+            port = self._ports[port_name]
+            port.CMI_run (time)
+        except KeyError:
+            self._log.warning ("Unable to locate port (%s)" % port_name)
+        except AttributeError:
+            self._log.warning ("Port is not connected (%s)" % port_name)
+        self._log.info ("Updated port (%s)." % port_name)
     self._log.info ("Updated ports.")
 # DO-NOT-DELETE splicer.end(run_ports)
 
-  def finalize_ports(self):
+  def finalize_all_ports(self):
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(finalize_all_ports)
+    # Call the finalize method for each port in the queue.
+    self._log.info ("Finalizing ports.")
+    #self.finalize_ports (self._servers)
+    self.finalize_ports (self._ports.keys ())
+    self._log.info ("Finalized ports.")
+# DO-NOT-DELETE splicer.end(finalize_all_ports)
+
+  def finalize_ports(self, ports):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    #
+
     #
     # sidl EXPECTED RETURN VALUE(s)
     # =============================
@@ -212,12 +331,40 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.begin(finalize_ports)
     # Call the finalize method for each port in the queue.
     self._log.info ("Finalizing ports.")
-    for (name, port) in self._ports.items ():
+    for port_name in ports:
+        try:
+            port = self._ports[port_name]
+        except KeyError:
+            self._log.warning ("Unable to locate port (%s)" % port_name)
+        except AttributeError:
+            self._log.warning ("Port is not connected (%s)" % port_name)
         port.CMI_finalize ()
     self._log.info ("Finalized ports.")
 # DO-NOT-DELETE splicer.end(finalize_ports)
 
-  def connect_ports(self):
+  def connect_all_ports(self):
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(connect_all_ports)
+    # Connect CMIPorts in the queue.
+    self._log.info ("Connecting ports.")
+    #self.connect_ports (self._servers)
+    #self.connect_ports (self._optional_servers)
+    self.connect_ports (self._ports.keys ())
+    self._log.info ("Connected ports.")
+# DO-NOT-DELETE splicer.end(connect_all_ports)
+
+  def connect_ports(self, ports):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    #
+
     #
     # sidl EXPECTED RETURN VALUE(s)
     # =============================
@@ -227,31 +374,43 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.begin(connect_ports)
     # Connect CMIPorts in the queue.
     self._log.info ("Connecting ports.")
-    for server in self._servers:
-
-      self._log.info ("Connecting %s port." % server)
-      try:
-        port = self._services.getPort (server)
-      except Exception, e:
-        if self.bocca_print_errs or True:
-          self._log.error ("tools.irfports: port %s not connected." % server)
-        e.args = "tools.irfports: port %s not connected:\n%s" % (server, e.args)
-        raise
-
-      cmi_port = edu.csdms.ports.CMIPort.CMIPort (port)
-      if not cmi_port:
-        if self.bocca_print_errs or True:
-          self._log.error ("tools.cmiports: Error casting port gov.cca.Port " + \
-                           "to %s type ports.CMIPort" % server)
-        ex = sidl.SIDLException.SIDLException()
-        ex.setNote(__name__,0, 'Error casting self Port to ports.CMIPort')
-        raise sidl.SIDLException._Exception, ex
-
-      self._ports[server] = cmi_port
-      self._log.info ("Connected ports.")
+    for port_name in ports:
+        self._log.info ("Connecting %s port." % port_name)
+        try:
+            cmi_port = self.connect_port (port_name)
+        except Exception as e:
+            self._log.error ("Unable to connect port (%s)." % e)
+        else:
+            self._log.info ("Saving %s port." % port_name)
+            try:
+                self._ports[port_name] = cmi_port
+            except Exception as e:
+                self._log.error ("Unable to save port (%s)." % e)
+    self._log.info ("Connected ports.")
 # DO-NOT-DELETE splicer.end(connect_ports)
 
-  def disconnect_ports(self):
+  def disconnect_all_ports(self):
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(disconnect_all_ports)
+    # Disconnect each of the ports.
+    self._log.info ("Disconnecting ports.")
+    #self.disconnect_ports (self._servers)
+    self.disconnect_ports (self._ports.keys ())
+    self._log.info ("Disconnected ports.")
+# DO-NOT-DELETE splicer.end(disconnect_all_ports)
+
+  def disconnect_ports(self, ports):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    #
+
     #
     # sidl EXPECTED RETURN VALUE(s)
     # =============================
@@ -261,8 +420,12 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.begin(disconnect_ports)
     # Disconnect each of the ports.
     self._log.info ("Disconnecting ports.")
-    for server in self._servers:
-      self._services.releasePort (server)
+    for server in ports:
+        #if server in self._servers:
+        if self._ports[server] is not None:
+            self._services.releasePort (server)
+        else:
+            self._log.warning ("Unable to locate port (%s)" % server)
     self._log.info ("Disconnected ports.")
 # DO-NOT-DELETE splicer.end(disconnect_ports)
 
@@ -283,6 +446,62 @@ class CMIPortQueue:
     return self._ports[name]
 # DO-NOT-DELETE splicer.end(get_port)
 
+  def disable_port(self, port):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # string port
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(disable_port)
+    #try:
+    #    self._servers.remove (port)
+    #except ValueError:
+    #    try:
+    #        self._optional_servers.remove (port)
+    #    except ValueError:
+    #        self._log.error ('Port not enabled in queue (%s)' % port)
+    #else:
+    #    self._disabled_ports.add (port)
+    try:
+        self._log.info ("Disabled ports (%s)" % self._disabled_ports.keys ())
+        self._log.info ("Enabled ports (%s)" % self._ports.keys ())
+        self._disabled_ports[port] = self._ports[port]
+    except KeyError:
+        self._log.warning ("Unable to locate port (%s)" % port)
+    except Exception as e:
+        self._log.error ("Unable to locate port (%e)" % e)
+    else:
+        self._ports[port] = None
+
+# DO-NOT-DELETE splicer.end(disable_port)
+
+  def disable_ports(self, ports):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(disable_ports)
+    self._log.info ("Disabling ports (%s)" % ports)
+    for port in ports:
+        self._log.info ("Disabling port (%s)" % port)
+        self.disable_port (port)
+# DO-NOT-DELETE splicer.end(disable_ports)
+
   def check_time_spans(self, start, end):
     #
     # sidl EXPECTED INCOMING TYPES
@@ -300,9 +519,13 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.begin(check_time_spans)
     bad_ports = []
     for (name, port) in self._ports.items ():
-      span = port.get_time_span ()
-      if span[1]<end:
-        bad_ports.append (name)
+        try:
+            span = port.get_time_span ()
+        except AttributeError:
+            pass
+        else:
+            if span[1]<end:
+                bad_ports.append (name)
     return len (bad_ports)==0
 # DO-NOT-DELETE splicer.end(check_time_spans)
 
@@ -322,6 +545,10 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.begin(add_mapper)
     # The mapper is a string of the form,
     #   var_name@port_name:mapper_method
+    if len (mapper.strip ())==0:
+        self._log.warning ("Mapper is empty")
+        return
+
     self._log.info ("Adding mapper (%s)." % mapper)
     try:
         (full_name, method) = mapper.split (':')
@@ -354,7 +581,12 @@ class CMIPortQueue:
     except Exception as e:
         self._log.error ("Unexpected error getting port (%s)" % e)
 
-    self._log.info ("Getting destination grid (%s)." % var_name)
+    if port is None:
+        self._log.warning ("Port is not connected (%s)" % port_name)
+        return
+
+    self._log.info ("Getting destination grid (%s@%s) from %s." %
+                    (var_name, port_name, self._client.CMI_get_component_name ()))
     # Get the destination ElementSet
     try:
       dst_grid = self._client.get_grid (var_name)
@@ -362,7 +594,8 @@ class CMIPortQueue:
       self._log.warning ("Unable to get client grid (%s)." % e)
       element_set = None
 
-    self._log.info ("Getting source grid.")
+    self._log.info ("Getting source grid (%s@%s) from %s." %
+                    (var_name, port_name, port.CMI_get_component_name ()))
     # Get the source ElementSet
     try:
       src_grid = port.get_grid (var_name)
@@ -387,7 +620,7 @@ class CMIPortQueue:
         self._log.error ("Unable to initialize mapper (%s)" % e)
 
     self._mappers[full_name] = mapper
-    self._log.info ("Added mapper (%s)" % mapper)
+    self._log.info ("Added mapper (%s)" % full_name)
 # DO-NOT-DELETE splicer.end(add_mapper)
 
   def add_mappers(self, mappers):
@@ -404,9 +637,7 @@ class CMIPortQueue:
     #
 
 # DO-NOT-DELETE splicer.begin(add_mappers)
-    # mappers is a comma-separated list of mapper names
     self._log.info ("Adding mappers (%s)" % ', '.join (mappers))
-    #for mapper in mappers.split (','):
     for mapper in mappers:
         self.add_mapper (mapper)
     self._log.info ("Added mappers")
@@ -431,9 +662,14 @@ class CMIPortQueue:
     try:
         map = self._mappers[mapper]
     except KeyError:
-        self._log.error ("Unable to locate mapper")
+        self._log.error ("Unable to locate mapper (%s)" % mapper)
+        self._log.error ("Available mappers: %s" % ', '.join (self._mappers.keys ()))
     except Exception as e:
         self._log.error ("Unexpected error (%s)" % e)
+
+    if map is None:
+        self._log.warning ("No mapper (%s)" % mapper)
+        return
 
     self._log.info ("Found a mapper")
     (var_name, port_name) = mapper.split ('@')
@@ -444,6 +680,10 @@ class CMIPortQueue:
         self._log.error ("Unable to locate port (%s)", name)
     except Exception as e:
         self._log.error ("Unexpected error (%s)" % e)
+
+    if port is None:
+        self._log.warning ("Port associated with mapper has been disabled (%s)" % mapper)
+        return
 
     # Get the ValueSet from the source port
     try:
@@ -457,8 +697,9 @@ class CMIPortQueue:
         try:
             self._log.info ("Running the mapper")
             if self._client.CMI_has_output_item (var_name):
-                self._log.info ("Running in-place")
+                self._log.info ("Get destination values for %s" % var_name)
                 dst_values = self._client.get_grid_values (var_name)
+                self._log.info ("Running in-place")
                 map.run_inplace (src_values, dst_values)
             else:
                 dst_values = map.run (src_values)
@@ -477,7 +718,27 @@ class CMIPortQueue:
     self._log.info ("Ran mapper.")
 # DO-NOT-DELETE splicer.end(run_mapper)
 
-  def run_mappers(self):
+  def run_all_mappers(self):
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(run_all_mappers)
+    # mappers is a comma-separated list of mapper names
+    self._log.info ("Running all mappers.")
+    self.run_mappers (self._mappers.keys ())
+    self._log.info ("Ran all mappers.")
+# DO-NOT-DELETE splicer.end(run_all_mappers)
+
+  def run_mappers(self, mappers):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> mappers
+    #
+
     #
     # sidl EXPECTED RETURN VALUE(s)
     # =============================
@@ -486,18 +747,71 @@ class CMIPortQueue:
 
 # DO-NOT-DELETE splicer.begin(run_mappers)
     # mappers is a comma-separated list of mapper names
-    self._log.info ("Running all mappers.")
+    self._log.info ("Running mappers.")
     try:
-        for mapper in self._mappers.keys ():
+        for mapper in mappers:
             try:
+                #self.run_mapper (self._mappers[mapper])
                 self.run_mapper (mapper)
+            except KeyError:
+                self._log.error ("Unable to locate mapper (%s)" % mapper)
             except Exception as e:
                 self._log.error ("Unexpected error (%s)" % e)
     except Exception as e:
         self._log.error ("Unexpected error (%s)" % e)
-    self._log.info ("Ran all mappers.")
-
+    self._log.info ("Ran mappers.")
 # DO-NOT-DELETE splicer.end(run_mappers)
+
+  def run_mappers_for_ports(self, ports):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(run_mappers_for_ports)
+    mappers = []
+    self._log.info ("Looking for mappers for %s." % ','.join (ports))
+    for name in self._mappers.keys ():
+        self._log.info ("Found mapper %s." % name)
+        try:
+            (var_name, port_name, method) = self.split_mapper_name (name)
+        except Exception as e:
+            self._log.error ("Unable to split %s." % e)
+
+        if port_name in ports:
+            mappers.append (name)
+    self._log.info ("Found mappers %s." % ','.join (mappers))
+    self.run_mappers (mappers)
+# DO-NOT-DELETE splicer.end(run_mappers_for_ports)
+
+  def run_mappers_for_port(self, port):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # string port
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # None
+    #
+
+# DO-NOT-DELETE splicer.begin(run_mappers_for_port)
+    mappers = []
+    for name in self._mappers.keys ():
+        (var_name, port_name, method) = self.split_mapper_name (name)
+        if port_name == port:
+            mappers.append (name)
+    self.run_mappers (mappers)
+# DO-NOT-DELETE splicer.end(run_mappers_for_port)
 
   def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2, dummy3, dummy4):
     #
@@ -532,5 +846,68 @@ class CMIPortQueue:
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)
 
 # DO-NOT-DELETE splicer.begin(_final)
+  def split_mapper_name (self, name):
+      try:
+          (full_name, method) = name.split (':')
+      except ValueError:
+          self._log.warning ("Missing method in mapper name (%s)" % name)
+          (full_name, method) = (name, '')
+      except Exception as e:
+          self._log.error ("Unexpected error getting method (%s)" % e)
+
+      self._log.info ("Getting var/port names.")
+      try:
+          (var_name, port_name) = full_name.split ('@')
+      except ValueError:
+          self._log.error ('Bad full var name name (var_name@port_name) (%s)' % full_name)
+          (var_name, port_name) = (full_name, '')
+      except Exception as e:
+          self._log.error ("Unexpected error getting var/port strings (%s)" % e)
+
+      return (var_name, port_name, method)
+
+  def connect_port (self, port):
+    #
+    # sidl EXPECTED INCOMING TYPES
+    # ============================
+    # array<string> ports
+    #
+
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # edu.csdms.ports.CMIPort cmi_port
+    #
+    self._log.info ("Connecting port (%s)." % port)
+    try:
+        port = self._services.getPort (port)
+    except Exception, e:
+        if port in self._optional_ports:
+            self._log.warning ("%s: Optional port is not connected." % port)
+        else:
+            if self.bocca_print_errs or True:
+                self._log.error ("tools.irfports: port %s not connected." % port)
+            e.args = "tools.irfports: port %s not connected:\n%s" % (port, e.args)
+            raise
+    else:
+        self._log.info ("Got %s port." % port)
+
+        cmi_port = edu.csdms.ports.CMIPort.CMIPort (port)
+        if not cmi_port:
+            if self.bocca_print_errs or True:
+              self._log.error ("tools.cmiports: Error casting port gov.cca.Port " + \
+                               "to %s type ports.CMIPort" % port)
+            ex = sidl.SIDLException.SIDLException()
+            ex.setNote(__name__,0, 'Error casting self Port to ports.CMIPort')
+            raise sidl.SIDLException._Exception, ex
+        self._log.info ("Cast %s port." % port)
+
+        if not self._ports.has_key (port):
+            self._log.warning ("Previously unseen port appended to queue (%s)" % port)
+
+        return cmi_port
+
+    self._log.info ("Connected port (%s)." % port)
+
 # Insert-Code-Here {_final} ()
 # DO-NOT-DELETE splicer.end(_final)

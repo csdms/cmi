@@ -28,7 +28,7 @@ package edu version 0.0 {
 // Insert-UserCode-Here {edu.csdms.tools.ConfigDialog.methods} (Insert your class methods here)
 
                 
-                void read(in string file);	                	
+                string read(in string file);	                	
 
                 
                 void construct(in gov.cca.ports.ParameterPortFactory ppf, in gov.cca.TypeMap userinput);	                	
@@ -40,7 +40,7 @@ package edu version 0.0 {
                 // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.tools.ConfigDialog:boccaPrivateMethods)
                 // DO-NOT-EDIT
                 /** This function should never be called, but helps babel generate better code. */
-                void boccaForceUsePortInclude(in gov.cca.TypeMap dummy0, in gov.cca.ports.ParameterPortFactory dummy1);
+                void boccaForceUsePortInclude(in edu.csdms.tools.Verbose dummy0, in gov.cca.TypeMap dummy1, in gov.cca.ports.ParameterPortFactory dummy2);
                 // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.tools.ConfigDialog:boccaPrivateMethods)
                 //-----------------------------------------------------------------------------
             }

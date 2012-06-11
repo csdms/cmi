@@ -820,7 +820,7 @@ impl_edu_csdms_models_Sedflux2D_CMI_initialize(
             "${SimulationName}_sediment.kvf", _ex);
 
       edu_csdms_tools_TemplateFiles_substitute (template,
-          this->userinput, "/"CMI_COMPONENT_NAME"/Input/Var/", ".",
+          this->userinput, "/"CMI_COMPONENT_NAME"/Input/Var/", ".", NULL,
           _ex);
 
       val = gov_cca_TypeMap_getString (this->userinput,
@@ -854,6 +854,38 @@ This is what Sedflux2D.txt will look like,
     this->status = CMI_STATUS_INITIALIZED;
     return TRUE;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_initialize) */
+  }
+}
+
+/*
+ * Method:  prepare[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_prepare"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_Sedflux2D_prepare(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* config_file,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.prepare) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.prepare} (prepare method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.prepare) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.prepare) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.prepare) */
   }
 }
 
@@ -964,6 +996,38 @@ impl_edu_csdms_models_Sedflux2D_CMI_run(
 }
 
 /*
+ * Method:  run[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_run"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_Sedflux2D_run(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ double time_interval,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.run) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.run} (run method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.run) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.run) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.run) */
+  }
+}
+
+/*
  * Method:  CMI_finalize[]
  */
 
@@ -1003,6 +1067,37 @@ impl_edu_csdms_models_Sedflux2D_CMI_finalize(
 }
 
 /*
+ * Method:  finish[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_finish"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_Sedflux2D_finish(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.finish) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.finish} (finish method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.finish) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.finish) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.finish) */
+  }
+}
+
+/*
  * Method:  CMI_run_model[]
  */
 
@@ -1034,6 +1129,102 @@ impl_edu_csdms_models_Sedflux2D_CMI_run_model(
   EXIT:;
     /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.CMI_run_model) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_run_model) */
+  }
+}
+
+/*
+ * Method:  CMI_get_start_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_CMI_get_start_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_Sedflux2D_CMI_get_start_time(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.CMI_get_start_time) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.CMI_get_start_time} (
+      CMI_get_start_time method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.CMI_get_start_time) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.CMI_get_start_time) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_get_start_time) */
+  }
+}
+
+/*
+ * Method:  CMI_get_current_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_CMI_get_current_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_Sedflux2D_CMI_get_current_time(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.CMI_get_current_time) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.CMI_get_current_time} (
+      CMI_get_current_time method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.CMI_get_current_time) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.CMI_get_current_time) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_get_current_time) */
+  }
+}
+
+/*
+ * Method:  CMI_get_end_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_CMI_get_end_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_Sedflux2D_CMI_get_end_time(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.CMI_get_end_time) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.CMI_get_end_time} (
+      CMI_get_end_time method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.CMI_get_end_time) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.CMI_get_end_time) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_get_end_time) */
   }
 }
 
@@ -1537,6 +1728,39 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_spacing(
 }
 
 /*
+ * Method:  get_grid_spacing[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_get_grid_spacing"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_spacing(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.get_grid_spacing) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.get_grid_spacing} (
+      get_grid_spacing method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.get_grid_spacing) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.get_grid_spacing) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.get_grid_spacing) */
+  }
+}
+
+/*
  * Method:  CMI_get_grid_lower_left[]
  */
 
@@ -1566,6 +1790,39 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_lower_left(
   EXIT:;
     /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.CMI_get_grid_lower_left) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_get_grid_lower_left) */
+  }
+}
+
+/*
+ * Method:  get_grid_lower_left[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_get_grid_lower_left"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_lower_left(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.get_grid_lower_left) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.get_grid_lower_left} (
+      get_grid_lower_left method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.get_grid_lower_left) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.get_grid_lower_left) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.get_grid_lower_left) */
   }
 }
 
@@ -1619,6 +1876,39 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_shape(
 }
 
 /*
+ * Method:  get_grid_shape[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_get_grid_shape"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_int__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_shape(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.get_grid_shape) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.get_grid_shape} (
+      get_grid_shape method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.get_grid_shape) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.get_grid_shape) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.get_grid_shape) */
+  }
+}
+
+/*
  * Method:  CMI_get_grid_x[]
  */
 
@@ -1648,6 +1938,39 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_x(
   EXIT:;
     /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.CMI_get_grid_x) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_get_grid_x) */
+  }
+}
+
+/*
+ * Method:  get_grid_x[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_get_grid_x"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_x(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.get_grid_x) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.get_grid_x} (get_grid_x 
+      method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.get_grid_x) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.get_grid_x) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.get_grid_x) */
   }
 }
 
@@ -1685,6 +2008,39 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_y(
 }
 
 /*
+ * Method:  get_grid_y[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_get_grid_y"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_y(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.get_grid_y) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.get_grid_y} (get_grid_y 
+      method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.get_grid_y) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.get_grid_y) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.get_grid_y) */
+  }
+}
+
+/*
  * Method:  CMI_get_grid_z[]
  */
 
@@ -1714,6 +2070,39 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_z(
   EXIT:;
     /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.CMI_get_grid_z) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.CMI_get_grid_z) */
+  }
+}
+
+/*
+ * Method:  get_grid_z[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_Sedflux2D_get_grid_z"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_Sedflux2D_get_grid_z(
+  /* in */ edu_csdms_models_Sedflux2D self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux2D.get_grid_z) */
+    /* Insert-Code-Here {edu.csdms.models.Sedflux2D.get_grid_z} (get_grid_z 
+      method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.Sedflux2D.get_grid_z) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.Sedflux2D.get_grid_z) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D.get_grid_z) */
   }
 }
 
