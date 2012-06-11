@@ -34,7 +34,7 @@ package edu version 0.0 {
                 void add_files(in array<string> srcs, in array<string> dests);	                	
 
                 
-                void substitute(in gov.cca.TypeMap mapping, in string base, in string todir);	                	
+                void substitute(in gov.cca.TypeMap mapping, in string base, in string todir, in string cfg_file);	                	
 
                 // DO-NOT-DELETE bocca.splicer.end(edu.csdms.tools.ITemplateFiles.methods)
             }

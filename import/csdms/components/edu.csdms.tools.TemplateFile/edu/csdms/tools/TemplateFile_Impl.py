@@ -18,6 +18,7 @@ from cmt import namespace as ns
 
 import edu.csdms.tools.ITemplateFile
 import edu.csdms.tools.TemplateFile
+import edu.csdms.tools.Verbose
 import gov.cca.Type
 import gov.cca.TypeMap
 import sidl.BaseClass
@@ -57,12 +58,13 @@ class TemplateFile:
   def _getStub(self):
     return self.__IORself
 
-  def boccaForceUsePortInclude(self, dummy0, dummy1):
+  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # gov.cca.Type dummy0
-    # gov.cca.TypeMap dummy1
+    # edu.csdms.tools.Verbose dummy0
+    # gov.cca.Type dummy1
+    # gov.cca.TypeMap dummy2
     #
 
     #
@@ -79,6 +81,7 @@ class TemplateFile:
     # Bocca generated code. bocca.protected.begin(boccaForceUsePortInclude)
     o0 = dummy0
     o1 = dummy1
+    o2 = dummy2
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)

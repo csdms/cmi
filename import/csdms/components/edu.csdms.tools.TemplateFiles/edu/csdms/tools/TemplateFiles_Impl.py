@@ -18,6 +18,7 @@ from cmt import namespace as ns
 
 import edu.csdms.tools.ITemplateFiles
 import edu.csdms.tools.TemplateFiles
+import edu.csdms.tools.Verbose
 import gov.cca.Type
 import gov.cca.TypeMap
 import sidl.BaseClass
@@ -58,12 +59,13 @@ class TemplateFiles:
   def _getStub(self):
     return self.__IORself
 
-  def boccaForceUsePortInclude(self, dummy0, dummy1):
+  def boccaForceUsePortInclude(self, dummy0, dummy1, dummy2):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
-    # gov.cca.Type dummy0
-    # gov.cca.TypeMap dummy1
+    # edu.csdms.tools.Verbose dummy0
+    # gov.cca.Type dummy1
+    # gov.cca.TypeMap dummy2
     #
 
     #
@@ -80,6 +82,7 @@ class TemplateFiles:
     # Bocca generated code. bocca.protected.begin(boccaForceUsePortInclude)
     o0 = dummy0
     o1 = dummy1
+    o2 = dummy2
     return
     # Bocca generated code. bocca.protected.end(boccaForceUsePortInclude)
 # DO-NOT-DELETE splicer.end(boccaForceUsePortInclude)
@@ -123,18 +126,19 @@ class TemplateFiles:
     for (src, dest) in zip (srcs, dests):
         try:
             self._files.add_file (src, rename=dest)
-            #print "Adding %s -> %s" % (src, dest)
+            print "Adding %s -> %s" % (src, dest)
         except Exception as e:
             print "%s: Unable to add template file: %s" % (src, e)
 # DO-NOT-DELETE splicer.end(add_files)
 
-  def substitute(self, mapping, base, todir):
+  def substitute(self, mapping, base, todir, cfg_file):
     #
     # sidl EXPECTED INCOMING TYPES
     # ============================
     # gov.cca.TypeMap mapping
     # string base
     # string todir
+    # string cfg_file
     #
 
     #
@@ -144,6 +148,9 @@ class TemplateFiles:
     #
 
 # DO-NOT-DELETE splicer.begin(substitute)
+    if len (cfg_file)==0:
+        cfg_file = None
+    print "Substitute %s -> %s" % (base, todir)
     try:
       d = {}
       for key in mapping.getAllKeys (gov.cca.Type.String):
@@ -158,8 +165,9 @@ class TemplateFiles:
     except Exception as e:
       print 'Error creating mapping: %s' % e
     try:
-      #print "Substitute %s -> %s" % (base, todir)
-      self._files.substitute (d, todir=todir, base=base)
+      print "mapping is ", d
+      print "cfg_file is ", cfg_file
+      self._files.substitute (d, todir=todir, base=base, cfg_file=cfg_file)
     except Exception as e:
       print 'Error writing template files: %s' % e
 
