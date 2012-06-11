@@ -1,0 +1,47 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(edu.comment)
+
+// Insert-UserCode-Here {edu.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(edu.comment)
+package edu version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.comment)
+    
+// Insert-UserCode-Here {edu.csdms.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(edu.csdms.comment)
+    package csdms version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.cmi.comment)
+        
+// Insert-UserCode-Here {edu.csdms.cmi.comment} (Insert your package comments here)
+        // DO-NOT-DELETE bocca.splicer.end(edu.csdms.cmi.comment)
+        package cmi version 0.0 {
+
+            // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.cmi.ComponentHandler.comment)
+            
+// Insert-UserCode-Here {edu.csdms.cmi.ComponentHandler.comment} (Insert your class comments here)
+            // DO-NOT-DELETE bocca.splicer.end(edu.csdms.cmi.ComponentHandler.comment)
+            class ComponentHandler implements-all edu.csdms.cmi.IComponentHandler
+            {
+                // DO-NOT-DELETE bocca.splicer.begin(edu.csdms.cmi.ComponentHandler.methods)
+                
+// Insert-UserCode-Here {edu.csdms.cmi.ComponentHandler.methods} (Insert your class methods here)
+
+                
+                void set_up(in string name, in edu.csdms.ports.CMIPort port, in gov.cca.Services services);	                	
+
+                // DO-NOT-DELETE bocca.splicer.end(edu.csdms.cmi.ComponentHandler.methods)
+
+
+                //-----------------------------------------------------------------------------
+                // DO-NOT-DELETE bocca.protected.begin(bocca:edu.csdms.cmi.ComponentHandler:boccaPrivateMethods)
+                // DO-NOT-EDIT
+                /** This function should never be called, but helps babel generate better code. */
+                void boccaForceUsePortInclude(in edu.csdms.tools.TemplateFiles dummy0, in edu.csdms.tools.CMIConfigFile dummy1, in edu.csdms.tools.Verbose dummy2, in gov.cca.Type dummy3, in gov.cca.TypeMap dummy4, in edu.csdms.tools.PrintQueue dummy5, in edu.csdms.tools.ConfigDialog dummy6, in edu.csdms.tools.CMIPortQueue dummy7, in edu.csdms.ports.CMIPort dummy8, in gov.cca.ports.ParameterPortFactory dummy9);
+                // DO-NOT-DELETE bocca.protected.end(bocca:edu.csdms.cmi.ComponentHandler:boccaPrivateMethods)
+                //-----------------------------------------------------------------------------
+            }
+        }
+    }
+}
+
