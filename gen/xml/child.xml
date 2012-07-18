@@ -9,16 +9,22 @@
 
   <component name="models.Child" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.ports.CMIPort@CoastalEnvironment</uses>
     <uses>edu.csdms.ports.CMIPort@SubaqueousDelta</uses>
+    <uses>edu.csdms.ports.CMIPort@BaseLevel</uses>
+
     <provides>gov.cca.ports.GoPort@Run</provides>
     <provides>edu.csdms.ports.CMIPort@SubaerialDelta</provides>
-    <requires>tools.PrintQueue</requires>
+
+    <requires>cmi.ComponentHandler</requires>
+    <requires>tools.Verbose</requires>
+    <requires>tools.CMIGrid</requires>
+
+    <!--requires>tools.PrintQueue</requires>
     <requires>tools.ConfigDialog</requires>
     <requires>tools.CMIConfigFile</requires>
     <requires>tools.CMIPortQueue</requires>
-    <requires>tools.Verbose</requires>
-    <requires>tools.TemplateFiles</requires>
-    <requires>tools.CMIGrid</requires>
+    <requires>tools.TemplateFiles</requires-->
     <extras>make.vars.user</extras>
   </component>
 

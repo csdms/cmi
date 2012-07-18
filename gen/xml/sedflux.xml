@@ -9,18 +9,20 @@
 
   <component name="models.Sedflux3D" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.ports.CMIPort@CoastalEnvironment</uses>
     <uses>edu.csdms.ports.CMIPort@SubaerialDelta</uses>
+    <uses>edu.csdms.ports.CMIPort@BaseLevel</uses>
+
     <provides>gov.cca.ports.GoPort@Run</provides>
     <provides>edu.csdms.ports.CMIPort@SubaqueousDelta</provides>
-    <requires>tools.PrintQueue</requires>
-    <requires>tools.CMIConfigFile</requires>
-    <requires>tools.ConfigDialog</requires>
-    <requires>tools.CMIPortQueue</requires>
+
+    <requires>cmi.ComponentHandler</requires>
     <requires>tools.Verbose</requires>
-    <requires>tools.TemplateFiles</requires>
     <requires>tools.CMIGridUniformRectilinear</requires>
+
     <extras>make.vars.user</extras>
   </component>
+
   <component name="models.Sedflux2D" language="c">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <uses>edu.csdms.ports.CMIPort@SubaerialDelta</uses>

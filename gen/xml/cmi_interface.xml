@@ -1,6 +1,9 @@
 <project xmlns:xi="http://www.w3.org/2001/XInclude"
   name="cmi" language="java">
 
+  <interface name="cmi.IComponentHandler">
+    <import-sidl/>
+  </interface>
   <interface name="cmi.IConfigFile">
     <import-sidl/>
     <requires>gov.cca.TypeMap</requires>
