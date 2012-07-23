@@ -28,7 +28,7 @@
 /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend._includes) */
 
 /* Insert-UserCode-Here {edu.csdms.models.HydroTrend._includes} (includes and arbitrary code) */
-#include <glib.h>
+//#include <glib.h>
 
 /* Bocca generated code. bocca.protected.begin(edu.csdms.models.HydroTrend._includes) */
 #include <stdlib.h>
@@ -134,15 +134,13 @@ impl_edu_csdms_models_HydroTrend__ctor(
   /* Insert-UserCode-Here {edu.csdms.models.HydroTrend._ctor} (constructor method) */
 
     { /* Initialize private data */
-      struct edu_csdms_models_HydroTrend__data* pd =
-        edu_csdms_models_HydroTrend__get_data(self);
 /*
       if (!dptr)
         SIDL_THROW(*_ex, sidl_SIDLException, 
              "NULL data pointer in edu.csdms.models.HydroTrend _ctor");
 */
-      pd->state = NULL;
-      pd->log = NULL;
+      dptr->log = NULL;
+      dptr->state = NULL;
     }
 
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend._ctor) */
@@ -277,11 +275,11 @@ impl_edu_csdms_models_HydroTrend_boccaSetServices(
                                     typeMap,            /* extra properties */
                                     _ex); SIDL_CHECK(*_ex);
 
-   /* Provide a edu.csdms.ports.IRFPort port with port name Discharge */
+   /* Provide a edu.csdms.ports.CMIPort port with port name Discharge */
    gov_cca_Services_addProvidesPort(pd->d_services,   
                                     port,		/* the implementing object */
                                     "Discharge", /* the name seen by the user */
-                                    "edu.csdms.ports.IRFPort", /* sidl name of the port type. */
+                                    "edu.csdms.ports.CMIPort", /* sidl name of the port type. */
                                     typeMap,            /* extra properties */
                                     _ex); SIDL_CHECK(*_ex);
 
@@ -373,7 +371,7 @@ impl_edu_csdms_models_HydroTrend_boccaReleaseServices(
    edu_csdms_models_HydroTrend_checkException(self, throwaway_excpt, errMsg, FALSE, 
                                    &dummy_excpt);
 
-   /* UN-Provide a edu.csdms.ports.IRFPort port with port name Discharge */
+   /* UN-Provide a edu.csdms.ports.CMIPort port with port name Discharge */
    gov_cca_Services_removeProvidesPort(services, "Discharge", 
                                        &throwaway_excpt);
    errMsg = "Error: Could not removeProvidesPort(\"Discharge\")";
@@ -470,10 +468,8 @@ impl_edu_csdms_models_HydroTrend_boccaForceUsePortInclude(
   /* in */ edu_csdms_models_HydroTrend self,
   /* in */ gov_cca_ports_ParameterPortFactory dummy0,
   /* in */ edu_csdms_tools_Verbose dummy1,
-  /* in */ edu_csdms_tools_TemplateFiles dummy2,
-  /* in */ edu_csdms_openmi_ScalarSet dummy3,
-  /* in */ edu_csdms_tools_ConfigDialog dummy4,
-  /* in */ edu_csdms_tools_PrintQueue dummy5,
+  /* in */ edu_csdms_tools_CMIGridUniformRectilinear dummy2,
+  /* in */ edu_csdms_cmi_ComponentHandler dummy3,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
@@ -486,8 +482,6 @@ impl_edu_csdms_models_HydroTrend_boccaForceUsePortInclude(
     (void)dummy1;
     (void)dummy2;
     (void)dummy3;
-    (void)dummy4;
-    (void)dummy5;
 
   /* Bocca generated code. bocca.protected.end(edu.csdms.models.HydroTrend.boccaForceUsePortInclude) */
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.boccaForceUsePortInclude) */
@@ -539,9 +533,22 @@ impl_edu_csdms_models_HydroTrend_setServices(
   
   /*  Insert-UserCode-Here {edu.csdms.models.HydroTrend.setServices} (setServices method) */
     pd = edu_csdms_models_HydroTrend__get_data (self);
-    if (!pd)
-     SIDL_THROW(*_ex, sidl_SIDLException, 
-        "NULL data pointer (pd) in edu.csdms.models.HydroTrend setServices");
+    if (!pd->log) {
+      pd->log = edu_csdms_tools_Verbose__create (_ex);
+      edu_csdms_tools_Verbose_initialize (pd->log, CMI_COMPONENT_NAME, 2, _ex);
+    }
+
+    edu_csdms_tools_Verbose_info (pd->log, "Creating ComponentHandler", _ex);
+
+    {
+      edu_csdms_ports_CMIPort port = edu_csdms_ports_CMIPort__cast (self, _ex);
+      pd->handler = edu_csdms_cmi_ComponentHandler__create (_ex);
+      edu_csdms_cmi_ComponentHandler_set_up (pd->handler,
+          CMI_COMPONENT_NAME, port, services, _ex);
+    }
+    edu_csdms_tools_Verbose_info (pd->log, "Created ComponentHandler", _ex);
+
+#if 0
 
     pd->userinput = gov_cca_Services_createTypeMap(services, _ex); 
 
@@ -568,96 +575,11 @@ impl_edu_csdms_models_HydroTrend_setServices(
       edu_csdms_tools_ConfigDialog_read (dialog, "HydroTrend.xml", _ex);
       edu_csdms_tools_ConfigDialog_construct (dialog, ppf, pd->userinput, _ex);
     }
-#if 0
-    { /* File and directories tab */
-      const char* work_dir = g_get_current_dir ();
-      const char* input_dir = "/data/sims/hydrotrend/Waipaoa";
 
-      gov_cca_ports_ParameterPortFactory_setGroupName (ppf,
-        pd->userinput, "Files and Directories", _ex);
-
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "HydrotrendInputDir", "Path to input files. {bb}",
-        "Input directory", input_dir, _ex);
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "HydrotrendOutputDir", "Path to output files.",
-        "Output directory", work_dir, _ex);
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "HydrotrendSitePrefix", "Site prefix for input/output files.",
-        "Site prefix", "Waipaoa", _ex);
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "HydrotrendCasePrefix", "Case prefix for input/output files.",
-        "Case prefix", "50k", _ex);
-    }
-
-#if 0
-    { /* File and Directories tab */
-      const char* work_dir = g_get_current_dir ();
-
-      gov_cca_ports_ParameterPortFactory_setGroupName (ppf,
-        pd->userinput, "Files and Directories", _ex);
-
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "InputDir", "Path to the folder that contains the HydroTrend input files.",
-        "Input directory", "/data/sims/hydrotrend/Example1", _ex);
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "InputFilePrefix", "Filename prefix for the HydroTrend input files.",
-        "Prefix for input files", "HYDRO", _ex);
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "WorkingDir", "Path to the folder where the HydroTrend simulation will be run.",
-        "Working directory", work_dir, _ex);
-    }
-#endif
-
-    { /* Output tab*/
-      gchar** items = NULL;
-      gchar** item = NULL;
-
-      gov_cca_ports_ParameterPortFactory_setGroupName (ppf,
-        pd->userinput, "Output Files", _ex);
-
-      items = (gchar**)ht_get_exchange_items ();
-      for (item=items; item && *item; item++)
-      {
-        gchar* var_name = g_strdup_printf ("HydrotrendOutput%s", *item);
-        //gchar* var_help = g_strdup_printf (
-        //  "Output file prefix for variable, %s"
-        //  "{cb;OFF;---;<site><case>%s;stdout;stderr}", *item, *item);
-        gchar* var_help = g_strdup_printf (
-          "Output file prefix for variable, %s"
-          "{cb;OFF;hydrotrend_%s.nc}", *item, *item);
-        gchar* var_label = g_strdup_printf ("%s File", *item);
-        gchar* var_default = g_strdup_printf ("OFF");
-
-        gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-          var_name, var_help, var_label, var_default, _ex);
-
-        gov_cca_ports_ParameterPortFactory_addRequestDouble (ppf, pd->userinput,
-          JanTemp, "Temp {Group: Jan}", "January", 10, 0, 100, _ex);
-        g_free (var_name);
-        g_free (var_help);
-        g_free (var_label);
-        g_free (var_default);
-      }
-
-      //g_strfreev (items);
-    }
-
-    { /* About tab */
-      gov_cca_ports_ParameterPortFactory_setGroupName (ppf,
-        pd->userinput, "About", _ex);
-
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "ModelName", "Name of the model.",
-        "Model Name", "HydroTrend", _ex);
-      gov_cca_ports_ParameterPortFactory_addRequestString (ppf, pd->userinput,
-        "AuthorName", "Name of the model author.",
-        "Author Name", "Albert Kettner", _ex);
-    }
-#endif
     gov_cca_ports_ParameterPortFactory_addParameterPort (ppf,
       pd->userinput, services, _ex);
     gov_cca_Services_releasePort (services, "ppf", _ex);
+#endif
 
 EXIT:;
     /* Insert additional exception cleanup here if needed. */
@@ -753,7 +675,14 @@ impl_edu_csdms_models_HydroTrend_go(
   {
     /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.go) */
     int bocca_status = 0;
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
 
+    this->status = CMI_STATUS_INITIALIZING;
+    edu_csdms_cmi_ComponentHandler_go (this->handler, _ex);
+
+    return bocca_status;
+#if 0
     {
       struct sidl_string__array* properties = sidl_string__array_create1d (2);
       struct edu_csdms_models_HydroTrend__data *pd =
@@ -768,9 +697,9 @@ impl_edu_csdms_models_HydroTrend_go(
 
       { /* Set site and case prefix from GUI */
         gchar *site_prefix = gov_cca_TypeMap_getString (pd->userinput,
-                               "/Hydrotrend/SitePrefix", NULL, _ex);
+                               "/HydroTrend/SitePrefix", NULL, _ex);
         gchar *case_prefix = gov_cca_TypeMap_getString (pd->userinput,
-                               "/Hydrotrend/CasePrefix", NULL, _ex);
+                               "/HydroTrend/CasePrefix", NULL, _ex);
 
         /* Duration in years.  Convert to days. */
         duration = gov_cca_TypeMap_getInt (pd->userinput,
@@ -790,8 +719,9 @@ impl_edu_csdms_models_HydroTrend_go(
       PRINT (1, "Finalize");
       edu_csdms_models_HydroTrend_finalize (self, _ex); SIDL_CHECK(*_ex);
     }
-
+    
     return bocca_status;
+#endif
 
 EXIT:
     bocca_status = 2;
@@ -875,205 +805,138 @@ EXIT:
 }
 
 /*
- * Method:  initialize[]
+ * Method:  CMI_initialize[]
  */
 
 #undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_initialize"
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_initialize"
 
 #ifdef __cplusplus
 extern "C"
 #endif
-void
-impl_edu_csdms_models_HydroTrend_initialize(
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_initialize(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in array<string> */ struct sidl_string__array* properties,
+  /* in */ const char* config_file,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
   {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.initialize) */
-    struct edu_csdms_models_HydroTrend__data *pd =
-             edu_csdms_models_HydroTrend__get_data (self);
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_initialize) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
 
-    if (!pd->log)
-    {
-      pd->log = edu_csdms_tools_Verbose__create (_ex);
-      edu_csdms_tools_Verbose_set_log_level (pd->log, 1, _ex);
+    if (this->status < CMI_STATUS_INITIALIZING) {
+      this->status = CMI_STATUS_INITIALIZING;
+      edu_csdms_cmi_ComponentHandler_init_component (this->handler, "", _ex);
+      this->status = CMI_STATUS_INITIALIZED;
     }
 
-    PRINT (2, "Initialize model");
-    {
-      gchar* run_prefix = NULL;
-      gchar* input_dir = NULL;
-      gchar* work_dir = NULL;
+    return TRUE;
 
-      {
-        gchar* site_prefix;
-        gchar* case_prefix;
-        input_dir = gov_cca_TypeMap_getString (pd->userinput,
-                      "/HydroTrend/Input/Dir", NULL, _ex);
-        site_prefix = gov_cca_TypeMap_getString (pd->userinput,
-                        "/HydroTrend/SitePrefix", NULL, _ex);
-        case_prefix = gov_cca_TypeMap_getString (pd->userinput,
-                        "/HydroTrend/CasePrefix", NULL, _ex);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_initialize) */
+  }
+}
 
-        run_prefix = g_strconcat (site_prefix, "_", case_prefix, NULL);
-        work_dir = g_get_current_dir ();
-      }
+/*
+ * Method:  prepare[]
+ */
 
-      if (g_ascii_strcasecmp (input_dir, "GUI")==0)
-      {
-        gchar* to_file = NULL;
-        edu_csdms_tools_TemplateFiles template;
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_prepare"
 
-        template = edu_csdms_tools_TemplateFiles__create (_ex);
-
-        to_file = g_strconcat (run_prefix, ".IN", NULL);
-        edu_csdms_tools_TemplateFiles_add_file (template, 
-          "HydroTrend.IN.in",
-          to_file, _ex);
-        g_free (to_file);
-
-        to_file = g_strconcat (run_prefix, "0.HYPS", NULL);
-        edu_csdms_tools_TemplateFiles_add_file (template, 
-          "HydroTrend.HYPS.in",
-          to_file, _ex);
-        g_free (to_file);
-
-        edu_csdms_tools_TemplateFiles_substitute (template,
-          pd->userinput, "/HydroTrend/Input/Var/", work_dir, _ex);
-
-        input_dir = g_strdup (work_dir);
-      }
-
-      fprintf (stderr, "Looking for input here %s\n", input_dir);
-      fprintf (stderr, "Run prefix is %s\n", run_prefix);
-      fprintf (stderr, "Running model here %s\n", work_dir);
-  
-      if (pd->state==NULL)
-      {
-        /* Initialize hydrotrend. */
-        pd->state = ht_initialize (input_dir, run_prefix, work_dir);
-      }
-      else
-        SIDL_THROW(*_ex, sidl_SIDLException,
-                   "HydroTrend has already been initialized.");
-    }
-
-    PRINT (2, "Set up PrintQueue");
-    {
-      edu_csdms_ports_IRFPort port = edu_csdms_ports_IRFPort__cast (self, _ex); SIDL_CHECK (*_ex);
-      pd->print_queue = edu_csdms_tools_PrintQueue__create (_ex); SIDL_CHECK (*_ex);
-      edu_csdms_tools_PrintQueue_initialize (pd->print_queue, pd->userinput,
-        "/HydroTrend", port, _ex); SIDL_CHECK (*_ex); 
-      edu_csdms_tools_PrintQueue_add_files (pd->print_queue, "Output/Scalar", _ex); SIDL_CHECK (*_ex);
-    }
-
-    PRINT (2, "Model initialization complete");
-
-    return;
-
-#if 0
-    if (pd->state)
-    {
-      fprintf (stderr, "HydroTrend is already initialized\n");
-      fflush (stderr);
-      return;
-    }
-    else
-    {
-#if 0
-      char* input_dir = NULL;
-      char* run_prefix = NULL;
-      char* work_dir = NULL;
-
-      { /* Set the output directory. */
-        work_dir = gov_cca_TypeMap_getString (pd->userinput,
-                     "WorkingDir", NULL, _ex);
-        input_dir = gov_cca_TypeMap_getString (pd->userinput,
-                     "InputDir", NULL, _ex);
-        run_prefix = gov_cca_TypeMap_getString (pd->userinput,
-                     "InputFilePrefix", NULL, _ex);
-  
-        work_dir = g_get_current_dir ();
-        //g_chdir (work_dir);
-      }
-#endif  
-  
-      { /* Initialize hydrotrend */
-        gchar* site_prefix = sidl_string__array_get1 (properties, 0);
-        gchar* case_prefix = sidl_string__array_get1 (properties, 1);
-        gchar* run_prefix = NULL;
-        gchar* input_dir = NULL;
-        gchar* work_dir = NULL;
-
-        input_dir = gov_cca_TypeMap_getString (pd->userinput,
-                      "HydrotrendInputDir", NULL, _ex);
-        work_dir = gov_cca_TypeMap_getString (pd->userinput,
-                     "HydrotrendOutputDir", NULL, _ex);
-        site_prefix = gov_cca_TypeMap_getString (pd->userinput,
-                        "HydrotrendSitePrefix", NULL, _ex);
-        case_prefix = gov_cca_TypeMap_getString (pd->userinput,
-                        "HydrotrendCasePrefix", NULL, _ex);
-  
-        run_prefix = g_strconcat (site_prefix, "_", case_prefix, NULL);
-        work_dir = g_get_current_dir ();
-
-        fprintf (stderr, "Looking for input here %s\n", input_dir);
-        fprintf (stderr, "Run prefix is %s\n", run_prefix);
-        fprintf (stderr, "Running model here %s\n", work_dir);
-  
-        /* Initialize hydrotrend. */
-        pd->state = ht_initialize (input_dir, run_prefix, work_dir);
-      }
-
-      { /* Set up printing */
-        char** items = ht_get_exchange_items ();
-        char** item;
-        char* var_name;
-        char* file;
-        char* units = g_strdup ("-");
-        int i;
-        gchar* output_dir = NULL;
-        gchar* file_path = NULL;
-
-        output_dir = gov_cca_TypeMap_getString (pd->userinput,
-                       "HydrotrendOutputDir", NULL, _ex);
-        
-        pd->ncts_files = edu_csdms_tools_nctsfiles__create (_ex);
-
-        pd->print_vals = g_new (char*, g_strv_length (items));
-
-        for (item=items, i=0; item && *item; item++)
-        {
-          var_name = g_strdup_printf ("HydrotrendOutput%s", *item);
-          file = gov_cca_TypeMap_getString (pd->userinput, var_name, NULL, _ex);
-          file_path = g_build_filename (output_dir, file, NULL);
-          if (g_ascii_strcasecmp (file,"OFF")!=0)
-          {
-            edu_csdms_tools_nctsfiles_add_file (pd->ncts_files, file_path,
-                                                *item, units, _ex);
-            pd->print_vals[i] = g_strdup (*item);
-            i++;
-          }
-          g_free (file_path);
-        }
-        pd->print_vals[i] = NULL;
-        g_free (units);
-
-        edu_csdms_tools_nctsfiles_open_all (pd->ncts_files, _ex);
-
-        //pd->ncts_bedload = tools_ncts__create (_ex);
-        //tools_ncts_open (pd->ncts_bedload, "bedload_flux.nc",
-        //                 "bed_load_flux", "kg/s", _ex);
-      }
-    }
+#ifdef __cplusplus
+extern "C"
 #endif
-EXIT:;
+sidl_bool
+impl_edu_csdms_models_HydroTrend_prepare(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* config_file,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.prepare) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
 
-    return;
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.initialize) */
+    this->state = BMI_Initialize (config_file);
+    if (!this->state) {
+      edu_csdms_tools_Verbose_error (this->log, "Unable to initialize", _ex);
+    }
+
+    return TRUE;
+
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.prepare) */
+  }
+}
+
+/*
+ * Method:  CMI_run_for[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_run_for"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_run_for(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ double time_interval,
+  /* in */ const char* time_units,
+  /* in */ const char* stop_rule,
+  /* in array<double> */ struct sidl_double__array* stop_vars,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_run_for) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_run_for} (CMI_run_for 
+      method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_run_for) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_run_for) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_run_for) */
+  }
+}
+
+/*
+ * Method:  CMI_run[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_run"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_run(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ double time_interval,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_run) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+
+      
+    this->status = CMI_STATUS_UPDATING;
+    edu_csdms_cmi_ComponentHandler_run_component (this->handler, time_interval, _ex);
+    this->status = CMI_STATUS_UPDATED;
+
+    return TRUE;
+
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_run) */
   }
 }
 
@@ -1087,15 +950,24 @@ EXIT:;
 #ifdef __cplusplus
 extern "C"
 #endif
-void
+sidl_bool
 impl_edu_csdms_models_HydroTrend_run(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ double time,
+  /* in */ double time_interval,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
   {
     /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.run) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+
+    edu_csdms_tools_Verbose_info (this->log, "Running...", _ex);
+    BMI_Update_until (this->state, time_interval);
+    edu_csdms_tools_Verbose_info (this->log, "Ran.", _ex);
+
+    return TRUE;
+#if 0
     struct edu_csdms_models_HydroTrend__data *pd =
       edu_csdms_models_HydroTrend__get_data (self);
 
@@ -1249,6 +1121,8 @@ impl_edu_csdms_models_HydroTrend_run(
 
   EXIT:;
 #endif
+#endif
+
 EXIT:;
     return;
     /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.run) */
@@ -1256,585 +1130,1259 @@ EXIT:;
 }
 
 /*
- * Method:  finalize[]
+ * Method:  CMI_finalize[]
  */
 
 #undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_finalize"
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_finalize"
 
 #ifdef __cplusplus
 extern "C"
 #endif
-void
-impl_edu_csdms_models_HydroTrend_finalize(
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_finalize(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
   {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.finalize) */
-    struct edu_csdms_models_HydroTrend__data* pd =
-      edu_csdms_models_HydroTrend__get_data(self);
-
-    PRINT (1, "Clean up.");
-    /* Finalize hydrotrend. */
-    if (pd->state==NULL)
-      SIDL_THROW(*_ex, sidl_SIDLException,
-        "hydrotrend must be initialized before it can be destroyed.");
-
-    PRINT (1, "Call finalize.");
-    ht_finalize (pd->state);
-    pd->state = NULL;
-
-    PRINT (1, "Close print queue");
-    edu_csdms_tools_PrintQueue_close (pd->print_queue, _ex);
-
-    PRINT (1, "Done finalize step");
-    pd->log = NULL;
-
-#if 0
-    if (pd && pd->state)
-    {
-      ht_finalize (pd->state);
-      pd->state = NULL;
-
-      //tools_ncts_close (pd->ncts_bedload, _ex);
-      edu_csdms_tools_nctsfiles_close_all (pd->ncts_files, _ex);
-
-    }
-#endif
-
-EXIT:;
-    PRINT (1, "There was an error");
-    return;
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.finalize) */
-  }
-}
-
-/*
- * Method:  getRaster_nx[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_getRaster_nx"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-int64_t
-impl_edu_csdms_models_HydroTrend_getRaster_nx(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.getRaster_nx) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.getRaster_nx} (
-      getRaster_nx method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.getRaster_nx) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.getRaster_nx) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.getRaster_nx) */
-  }
-}
-
-/*
- * Method:  getRaster_ny[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_getRaster_ny"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-int64_t
-impl_edu_csdms_models_HydroTrend_getRaster_ny(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.getRaster_ny) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.getRaster_ny} (
-      getRaster_ny method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.getRaster_ny) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.getRaster_ny) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.getRaster_ny) */
-  }
-}
-
-/*
- * Method:  getRaster_dx[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_getRaster_dx"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-double
-impl_edu_csdms_models_HydroTrend_getRaster_dx(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.getRaster_dx) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.getRaster_dx} (
-      getRaster_dx method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.getRaster_dx) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.getRaster_dx) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.getRaster_dx) */
-  }
-}
-
-/*
- * Method:  getRaster_dy[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_getRaster_dy"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-double
-impl_edu_csdms_models_HydroTrend_getRaster_dy(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.getRaster_dy) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.getRaster_dy} (
-      getRaster_dy method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.getRaster_dy) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.getRaster_dy) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.getRaster_dy) */
-  }
-}
-
-/*
- * Method:  getRaster_ulx[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_getRaster_ulx"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-double
-impl_edu_csdms_models_HydroTrend_getRaster_ulx(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.getRaster_ulx) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.getRaster_ulx} (
-      getRaster_ulx method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.getRaster_ulx) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.getRaster_ulx) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.getRaster_ulx) */
-  }
-}
-
-/*
- * Method:  getRaster_uly[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_getRaster_uly"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-double
-impl_edu_csdms_models_HydroTrend_getRaster_uly(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.getRaster_uly) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.getRaster_uly} (
-      getRaster_uly method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.getRaster_uly) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.getRaster_uly) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.getRaster_uly) */
-  }
-}
-
-/*
- * Method:  getRaster_grid[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_getRaster_grid"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-struct sidl_double__array*
-impl_edu_csdms_models_HydroTrend_getRaster_grid(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.getRaster_grid) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.getRaster_grid} (
-      getRaster_grid method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.getRaster_grid) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.getRaster_grid) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.getRaster_grid) */
-  }
-}
-
-/*
- * Method:  get_raster_dimen[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_raster_dimen"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-struct sidl_int__array*
-impl_edu_csdms_models_HydroTrend_get_raster_dimen(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_raster_dimen) */
-    struct edu_csdms_models_HydroTrend__data *pd =
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_finalize) */
+    struct edu_csdms_models_HydroTrend__data *this =
       edu_csdms_models_HydroTrend__get_data (self);
-    struct sidl_int__array* dimen = sidl_int__array_create1d (3);
 
-    {
-      int i;
-      for (i=0; i<3; i++)
-        sidl_int__array_set1 (dimen, i, 1);
+    if (this->status < CMI_STATUS_FINALIZING) {
+      this->status = CMI_STATUS_FINALIZING;
+      edu_csdms_cmi_ComponentHandler_finalize_component (this->handler, _ex);
+      this->status = CMI_STATUS_FINALIZED;
     }
 
-    return dimen;
-  EXIT:;
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_raster_dimen) */
+    return TRUE;
+
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_finalize) */
   }
 }
 
 /*
- * Method:  get_raster_res[]
+ * Method:  finish[]
  */
 
 #undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_raster_res"
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_finish"
 
 #ifdef __cplusplus
 extern "C"
 #endif
-struct sidl_double__array*
-impl_edu_csdms_models_HydroTrend_get_raster_res(
+sidl_bool
+impl_edu_csdms_models_HydroTrend_finish(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
   {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_raster_res) */
-    struct edu_csdms_models_HydroTrend__data *pd =
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.finish) */
+    struct edu_csdms_models_HydroTrend__data *this =
       edu_csdms_models_HydroTrend__get_data (self);
-    struct sidl_double__array* res = sidl_double__array_create1d (3);
 
-    {
-      int i;
-      for (i=0; i<3; i++)
-        sidl_double__array_set1 (res, i, 1.);
-    }
+    BMI_Finalize (this->state);
 
-    return res;
-
-  EXIT:;
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_raster_res) */
+    return TRUE;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.finish) */
   }
 }
 
 /*
- * Method:  get_raster_data[]
+ * Method:  CMI_run_model[]
  */
 
 #undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_raster_data"
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_run_model"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_run_model(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* config_file,
+  /* in */ const char* stop_rule,
+  /* in */ double stop_var,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_run_model) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_run_model} (
+      CMI_run_model method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_run_model) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_run_model) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_run_model) */
+  }
+}
+
+/*
+ * Method:  CMI_get_start_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_start_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_HydroTrend_CMI_get_start_time(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_start_time) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+
+    return BMI_Get_start_time (this->state);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_start_time) */
+  }
+}
+
+/*
+ * Method:  CMI_get_current_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_current_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_HydroTrend_CMI_get_current_time(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_current_time) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+
+    return BMI_Get_current_time (this->state);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_current_time) */
+  }
+}
+
+/*
+ * Method:  CMI_get_end_time[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_end_time"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+double
+impl_edu_csdms_models_HydroTrend_CMI_get_end_time(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_end_time) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+
+    return BMI_Get_end_time (this->state);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_end_time) */
+  }
+}
+
+/*
+ * Method:  CMI_get_values[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_values"
 
 #ifdef __cplusplus
 extern "C"
 #endif
 struct sidl__array*
-impl_edu_csdms_models_HydroTrend_get_raster_data(
+impl_edu_csdms_models_HydroTrend_CMI_get_values(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
   {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_raster_data) */
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_values) */
     struct sidl__array* generic = NULL;
 
     {
-      struct sidl_double__array* vals = NULL;
-      struct edu_csdms_models_HydroTrend__data *pd =
-        edu_csdms_models_HydroTrend__get_data (self);
-  
-      if (pd && pd->state)
-      {
-        double data = ht_get_value (pd->state, val_string);
-
-        vals = sidl_double__array_create1d (1);
-        sidl_double__array_set1 (vals, 0, data);
-      }
-    
+      struct sidl_double__array* vals = 
+        edu_csdms_models_HydroTrend_get_grid_values (self, long_var_name, _ex);
       generic = (struct sidl__array*)vals;
     }
 
     return generic;
 
-  EXIT:;
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_raster_data) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_values) */
   }
 }
 
 /*
- * Method:  get_time_span[]
+ * Method:  CMI_set_values[]
  */
 
 #undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_time_span"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-struct sidl_double__array*
-impl_edu_csdms_models_HydroTrend_get_time_span(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_time_span) */
-    struct sidl_double__array* span = sidl_double__array_create1d (2);
-
-    {
-      struct edu_csdms_models_HydroTrend__data *pd =
-        edu_csdms_models_HydroTrend__get_data (self);
-      const double start = ht_get_start_time (pd->state);
-      const double end = ht_get_end_time (pd->state);
-      
-      sidl_double__array_set1 (span, 0, start);
-      sidl_double__array_set1 (span, 1, end);
-    }
-
-    return span;
-  EXIT:;
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_time_span) */
-  }
-}
-
-/*
- * Method:  get_element_set[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_element_set"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-edu_csdms_openmi_IElementSet
-impl_edu_csdms_models_HydroTrend_get_element_set(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_element_set) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.get_element_set} (
-      get_element_set method) */
-    /*
-     * This method has not been implemented
-     */
-
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.get_element_set) */
-    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
-  EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.get_element_set) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_element_set) */
-  }
-}
-
-/*
- * Method:  get_value_set[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_value_set"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-edu_csdms_openmi_IValueSet
-impl_edu_csdms_models_HydroTrend_get_value_set(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_value_set) */
-    edu_csdms_openmi_ScalarSet scalarSet =
-      edu_csdms_openmi_ScalarSet__create (_ex);
-
-    if (scalarSet)
-    {
-      struct sidl_double__array* value_array = sidl_double__array_create1d (1);
-
-      { /* Get the private data. */
-        struct edu_csdms_models_HydroTrend__data* pd =
-          edu_csdms_models_HydroTrend__get_data(self);
-        double val;
-
-        if (pd->state==NULL)
-          SIDL_THROW(*_ex, sidl_SIDLException,
-            "hydrotrend has not been initialized.");
-
-        //qb = ht_get_bedload_flux (pd->state);
-        val = ht_get_value (pd->state, val_string);
-
-        //fprintf (stderr, "Bedload is %f\n", qb);
-
-        sidl_double__array_set1 (value_array, 0, val);
-      }
-
-      edu_csdms_openmi_ScalarSet_init (scalarSet, value_array, _ex);
-
-      sidl_double__array_deleteRef (value_array);
-    }
-    else
-    {
-        SIDL_THROW(*_ex, sidl_SIDLException, "Error creating ValueSet.");
-    }
-
-    return edu_csdms_openmi_IValueSet__cast (scalarSet, _ex);
-
-  EXIT:;
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_value_set) */
-  }
-}
-
-/*
- * Method:  get_value_set_data[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_value_set_data"
-
-#ifdef __cplusplus
-extern "C"
-#endif
-struct sidl__array*
-impl_edu_csdms_models_HydroTrend_get_value_set_data(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* out */ sidl_BaseInterface *_ex)
-{
-  *_ex = 0;
-  {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_value_set_data) */
-    return impl_edu_csdms_models_HydroTrend_get_raster_data (
-             self, val_string, _ex);
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_value_set_data) */
-  }
-}
-
-/*
- * Method:  set_value_set[]
- */
-
-#undef __FUNC__
-#define __FUNC__ "impl_edu_csdms_models_HydroTrend_set_value_set"
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_set_values"
 
 #ifdef __cplusplus
 extern "C"
 #endif
 void
-impl_edu_csdms_models_HydroTrend_set_value_set(
+impl_edu_csdms_models_HydroTrend_CMI_set_values(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* in */ edu_csdms_openmi_IValueSet values,
+  /* in */ const char* long_var_name,
+  /* in array<> */ struct sidl__array* in_values,
   /* out */ sidl_BaseInterface *_ex)
 {
   *_ex = 0;
   {
-    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.set_value_set) */
-    /* Insert-Code-Here {edu.csdms.models.HydroTrend.set_value_set} (
-      set_value_set method) */
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_set_values) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_set_values} (
+      CMI_set_values method) */
     /*
      * This method has not been implemented
      */
 
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.set_value_set) */
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_set_values) */
     SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
   EXIT:;
-    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.set_value_set) */
-    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.set_value_set) */
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_set_values) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_set_values) */
+  }
+}
+
+/*
+ * Method:  CMI_get_status[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_status"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+char*
+impl_edu_csdms_models_HydroTrend_CMI_get_status(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_status) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+
+    switch (this->status) {
+      case CMI_STATUS_CREATED:
+        return "Created";
+      case CMI_STATUS_INITIALIZING:
+        return "Initializing";
+      case CMI_STATUS_INITIALIZED:
+        return "Initialized";
+      case CMI_STATUS_UPDATING:
+        return "Updating";
+      case CMI_STATUS_UPDATED:
+        return "Updated";
+      case CMI_STATUS_FINALIZING:
+        return "Finalizing";
+      case CMI_STATUS_FINALIZED:
+        return "Finalized";
+      default:
+        return "Unknown";
+    }
+
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_status) */
+  }
+}
+
+/*
+ * Method:  CMI_get_component_name[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_component_name"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+char*
+impl_edu_csdms_models_HydroTrend_CMI_get_component_name(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_component_name) */
+    return strdup (CMI_COMPONENT_NAME);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_component_name) */
+  }
+}
+
+/*
+ * Method:  CMI_get_input_item_list[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_input_item_list"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_string__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_input_item_list(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_input_item_list) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_get_input_item_list} (
+      CMI_get_input_item_list method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_get_input_item_list) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_get_input_item_list) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_input_item_list) */
+  }
+}
+
+/*
+ * Method:  CMI_get_output_item_list[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_output_item_list"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_string__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_output_item_list(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_output_item_list) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_get_output_item_list} (
+      CMI_get_output_item_list method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_get_output_item_list) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_get_output_item_list) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_output_item_list) */
+  }
+}
+
+/*
+ * Method:  CMI_has_output_item[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_has_output_item"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_has_output_item(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_has_output_item) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    const char ** names = BMI_Get_output_var_names (this->state);
+    char ** name;
+
+    for (name=(char**)names; *name; name++) {
+      if (g_ascii_strcasecmp (*name, long_var_name)==0) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_has_output_item) */
+  }
+}
+
+/*
+ * Method:  CMI_has_input_item[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_has_input_item"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_has_input_item(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_has_input_item) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    const char ** names = BMI_Get_input_var_names (this->state);
+    char **name;
+
+    for (name=(char**)names; *name; name++)
+      if (g_ascii_strcasecmp (*name, long_var_name)==0)
+        return TRUE;
+    return FALSE;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_has_input_item) */
+  }
+}
+
+/*
+ * Method:  CMI_get_required_ports[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_required_ports"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void
+impl_edu_csdms_models_HydroTrend_CMI_get_required_ports(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_required_ports) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_get_required_ports} (
+      CMI_get_required_ports method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_get_required_ports) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_get_required_ports) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_required_ports) */
+  }
+}
+
+/*
+ * Method:  CMI_release_required_ports[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_release_required_ports"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void
+impl_edu_csdms_models_HydroTrend_CMI_release_required_ports(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_release_required_ports) */
+    /* Insert-Code-Here 
+      {edu.csdms.models.HydroTrend.CMI_release_required_ports} (
+      CMI_release_required_ports method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_release_required_ports) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_release_required_ports) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_release_required_ports) */
+  }
+}
+
+/*
+ * Method:  CMI_get_values_at_indices[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_values_at_indices"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_values_at_indices(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* in array<int> */ struct sidl_int__array* indices,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_values_at_indices) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_get_values_at_indices} 
+      (CMI_get_values_at_indices method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_get_values_at_indices) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_get_values_at_indices) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_values_at_indices) */
+  }
+}
+
+/*
+ * Method:  CMI_set_values_at_indices[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_set_values_at_indices"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void
+impl_edu_csdms_models_HydroTrend_CMI_set_values_at_indices(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* in array<int> */ struct sidl_int__array* indices,
+  /* in array<> */ struct sidl__array* in_values,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_set_values_at_indices) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_set_values_at_indices} 
+      (CMI_set_values_at_indices method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_set_values_at_indices) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_set_values_at_indices) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_set_values_at_indices) */
+  }
+}
+
+/*
+ * Method:  CMI_print_traceback[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_print_traceback"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void
+impl_edu_csdms_models_HydroTrend_CMI_print_traceback(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_print_traceback) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_print_traceback} (
+      CMI_print_traceback method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_print_traceback) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_print_traceback) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_print_traceback) */
+  }
+}
+
+/*
+ * Method:  CMI_get_grid_spacing[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_grid_spacing"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_spacing(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_grid_spacing) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    struct sidl_double__array * sidl_spacing;
+    double * spacing;
+    int n_dims;
+
+    spacing = BMI_Get_grid_spacing (this->state, long_var_name, &n_dims);
+    sidl_spacing = sidl_double__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_double__array_set1 (sidl_spacing, i, spacing[i]);
+    }
+
+    free (spacing);
+    return sidl_spacing;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_grid_spacing) */
+  }
+}
+
+/*
+ * Method:  get_grid_spacing[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_spacing"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_spacing(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_spacing) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    struct sidl_double__array * sidl_spacing;
+    double * spacing;
+    int n_dims;
+
+    spacing = BMI_Get_grid_spacing (this->state, long_var_name, &n_dims);
+    sidl_spacing = sidl_double__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_double__array_set1 (sidl_spacing, i, spacing[i]);
+    }
+
+    free (spacing);
+    return sidl_spacing;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_spacing) */
+  }
+}
+
+/*
+ * Method:  CMI_get_grid_lower_left[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_grid_lower_left"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_lower_left(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_grid_lower_left) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    struct sidl_double__array * sidl_corner;
+    double * corner;
+    int n_dims;
+
+    corner = BMI_Get_grid_lower_left_corner (this->state, long_var_name, &n_dims);
+    sidl_corner = sidl_double__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_double__array_set1 (sidl_corner, i, corner[i]);
+    }
+
+    free (corner);
+    return sidl_corner;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_grid_lower_left) */
+  }
+}
+
+/*
+ * Method:  get_grid_lower_left[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_lower_left"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_lower_left(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_lower_left) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    struct sidl_double__array * sidl_corner;
+    double * corner;
+    int n_dims;
+
+    corner = BMI_Get_grid_lower_left_corner (this->state, long_var_name, &n_dims);
+    sidl_corner = sidl_double__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_double__array_set1 (sidl_corner, i, corner[i]);
+    }
+
+    free (corner);
+    return sidl_corner;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_lower_left) */
+  }
+}
+
+/*
+ * Method:  CMI_get_grid_shape[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_grid_shape"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_int__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_shape(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_grid_shape) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    struct sidl_int__array * sidl_shape;
+    int * shape;
+    int n_dims;
+
+    shape = BMI_Get_grid_shape (this->state, long_var_name, &n_dims);
+    sidl_shape = sidl_int__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_int__array_set1 (sidl_shape, i, shape[i]);
+    }
+
+    free (shape);
+    return sidl_shape;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_grid_shape) */
+  }
+}
+
+/*
+ * Method:  get_grid_shape[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_shape"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_int__array*
+impl_edu_csdms_models_HydroTrend_get_grid_shape(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_shape) */
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+    struct sidl_int__array * sidl_shape;
+    int * shape;
+    int n_dims;
+
+    shape = BMI_Get_grid_shape (this->state, long_var_name, &n_dims);
+    sidl_shape = sidl_int__array_create1d (n_dims);
+
+    {
+      int i;
+      for (i=0; i<n_dims; i++)
+        sidl_int__array_set1 (sidl_shape, i, shape[i]);
+    }
+
+    free (shape);
+    return sidl_shape;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_shape) */
+  }
+}
+
+/*
+ * Method:  CMI_get_grid_x[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_grid_x"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_x(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_grid_x) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_get_grid_x} (
+      CMI_get_grid_x method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_get_grid_x) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_get_grid_x) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_grid_x) */
+  }
+}
+
+/*
+ * Method:  get_grid_x[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_x"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_x(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_x) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.get_grid_x} (get_grid_x 
+      method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.get_grid_x) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.get_grid_x) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_x) */
+  }
+}
+
+/*
+ * Method:  CMI_get_grid_y[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_grid_y"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_y(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_grid_y) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_get_grid_y} (
+      CMI_get_grid_y method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_get_grid_y) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_get_grid_y) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_grid_y) */
+  }
+}
+
+/*
+ * Method:  get_grid_y[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_y"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_y(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_y) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.get_grid_y} (get_grid_y 
+      method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.get_grid_y) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.get_grid_y) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_y) */
+  }
+}
+
+/*
+ * Method:  CMI_get_grid_z[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_CMI_get_grid_z"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_z(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.CMI_get_grid_z) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.CMI_get_grid_z} (
+      CMI_get_grid_z method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.CMI_get_grid_z) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.CMI_get_grid_z) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.CMI_get_grid_z) */
+  }
+}
+
+/*
+ * Method:  get_grid_z[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_z"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_z(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_z) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.get_grid_z} (get_grid_z 
+      method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.get_grid_z) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.get_grid_z) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_z) */
+  }
+}
+
+/*
+ * Method:  get_grid_connectivity[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_connectivity"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_int__array*
+impl_edu_csdms_models_HydroTrend_get_grid_connectivity(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_connectivity) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.get_grid_connectivity} (
+      get_grid_connectivity method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.get_grid_connectivity) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.get_grid_connectivity) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_connectivity) */
+  }
+}
+
+/*
+ * Method:  get_grid_offset[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_offset"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_int__array*
+impl_edu_csdms_models_HydroTrend_get_grid_offset(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_offset) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.get_grid_offset} (
+      get_grid_offset method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.get_grid_offset) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.get_grid_offset) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_offset) */
+  }
+}
+
+/*
+ * Method:  get_grid[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+edu_csdms_cmi_IGrid
+impl_edu_csdms_models_HydroTrend_get_grid(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid) */
+    edu_csdms_tools_CMIGridUniformRectilinear grid =
+      edu_csdms_tools_CMIGridUniformRectilinear__create (_ex);
+
+    {
+      struct sidl_double__array* lower_left = 
+        edu_csdms_models_HydroTrend_get_grid_lower_left (self,
+            long_var_name, _ex);
+      struct sidl_double__array* spacing = 
+        edu_csdms_models_HydroTrend_get_grid_spacing (self,
+            long_var_name, _ex);
+      struct sidl_int__array* shape = 
+        edu_csdms_models_HydroTrend_get_grid_shape (self,
+            long_var_name, _ex);
+
+      sidl_int__array_set1 (shape, 0, sidl_int__array_get1 (shape, 0));
+      sidl_int__array_set1 (shape, 1, sidl_int__array_get1 (shape, 1));
+
+      edu_csdms_tools_CMIGridUniformRectilinear_initialize (grid,
+          shape, spacing, lower_left, _ex);
+    }
+    return edu_csdms_cmi_IGrid__cast (grid, _ex);
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid) */
+  }
+}
+
+/*
+ * Method:  get_grid_values[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_get_grid_values"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_values(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.get_grid_values) */
+    struct sidl_double__array* vals = NULL;
+    struct edu_csdms_models_HydroTrend__data *this =
+      edu_csdms_models_HydroTrend__get_data (self);
+
+    edu_csdms_tools_Verbose_info (this->log, "Getting values.", _ex);
+
+    if (this && this->state) {
+      int n_dims;
+      int * dimen;
+      double * data = BMI_Get_double (this->state, long_var_name, &n_dims,
+          &dimen);
+
+      if (data) {
+        int i;
+        int * lower = (int*)malloc (sizeof (int)*n_dims);
+        int * upper = (int*)malloc (sizeof (int)*n_dims);
+        int * stride = (int*)malloc (sizeof (int)*n_dims);
+        int n_vals = 1;
+
+        for (i=0; i<n_dims; i++) {
+          lower[i] = 0;
+          upper[i] = dimen[i]-1;
+          n_vals *= dimen[i];
+        }
+
+        for (i=n_dims-2, stride[n_dims-1]=1; i>=0; i--)
+          stride[i] = stride[i+1]*dimen[i+1];
+
+        {
+          const int _n_dims = 1;
+          const int _lower[1] = {0};
+          const int _upper[1] = {n_vals-1};
+          const int _stride[1] = {1};
+
+          vals = sidl_double__array_borrow (data, _n_dims, _lower,
+              _upper, _stride);
+        }
+
+        free (stride);
+        free (upper);
+        free (lower);
+      }
+    }
+
+    edu_csdms_tools_Verbose_info (this->log, "Got values.", _ex);
+
+    return vals;
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.get_grid_values) */
+  }
+}
+
+/*
+ * Method:  set_grid_values[]
+ */
+
+#undef __FUNC__
+#define __FUNC__ "impl_edu_csdms_models_HydroTrend_set_grid_values"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void
+impl_edu_csdms_models_HydroTrend_set_grid_values(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* in array<double> */ struct sidl_double__array* vals,
+  /* out */ sidl_BaseInterface *_ex)
+{
+  *_ex = 0;
+  {
+    /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend.set_grid_values) */
+    /* Insert-Code-Here {edu.csdms.models.HydroTrend.set_grid_values} (
+      set_grid_values method) */
+    /*
+     * This method has not been implemented
+     */
+
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.begin(edu.csdms.models.HydroTrend.set_grid_values) */
+    SIDL_THROW(*_ex, sidl_NotImplementedException,     "This method has not been implemented");
+  EXIT:;
+    /* DO-DELETE-WHEN-IMPLEMENTING exception.end(edu.csdms.models.HydroTrend.set_grid_values) */
+    /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend.set_grid_values) */
   }
 }
 /* Babel internal methods, Users should not edit below this line. */

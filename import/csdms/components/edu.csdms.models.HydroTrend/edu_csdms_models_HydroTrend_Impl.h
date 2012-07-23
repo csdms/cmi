@@ -15,29 +15,20 @@
 #ifndef included_sidl_header_h
 #include "sidl_header.h"
 #endif
+#ifndef included_edu_csdms_cmi_ComponentHandler_h
+#include "edu_csdms_cmi_ComponentHandler.h"
+#endif
+#ifndef included_edu_csdms_cmi_IGrid_h
+#include "edu_csdms_cmi_IGrid.h"
+#endif
 #ifndef included_edu_csdms_models_HydroTrend_h
 #include "edu_csdms_models_HydroTrend.h"
 #endif
-#ifndef included_edu_csdms_openmi_IElementSet_h
-#include "edu_csdms_openmi_IElementSet.h"
+#ifndef included_edu_csdms_ports_CMIPort_h
+#include "edu_csdms_ports_CMIPort.h"
 #endif
-#ifndef included_edu_csdms_openmi_IValueSet_h
-#include "edu_csdms_openmi_IValueSet.h"
-#endif
-#ifndef included_edu_csdms_openmi_ScalarSet_h
-#include "edu_csdms_openmi_ScalarSet.h"
-#endif
-#ifndef included_edu_csdms_ports_IRFPort_h
-#include "edu_csdms_ports_IRFPort.h"
-#endif
-#ifndef included_edu_csdms_tools_ConfigDialog_h
-#include "edu_csdms_tools_ConfigDialog.h"
-#endif
-#ifndef included_edu_csdms_tools_PrintQueue_h
-#include "edu_csdms_tools_PrintQueue.h"
-#endif
-#ifndef included_edu_csdms_tools_TemplateFiles_h
-#include "edu_csdms_tools_TemplateFiles.h"
+#ifndef included_edu_csdms_tools_CMIGridUniformRectilinear_h
+#include "edu_csdms_tools_CMIGridUniformRectilinear.h"
 #endif
 #ifndef included_edu_csdms_tools_Verbose_h
 #include "edu_csdms_tools_Verbose.h"
@@ -77,7 +68,13 @@
 #endif
 /* DO-NOT-DELETE splicer.begin(edu.csdms.models.HydroTrend._hincludes) */
 /* Insert-Code-Here {edu.csdms.models.HydroTrend._hincludes} (include files) */
-#include <hydrotrend_api.h>
+//#include <hydrotrend_api.h>
+#include <bmi.h>
+
+#define CMI_COMPONENT_NAME "HydroTrend"
+
+//#include <cmi.h>
+/*
 #if !defined (PRINT)
 # define PRINT(l, m) { \
     struct edu_csdms_models_HydroTrend__data *pd = \
@@ -94,6 +91,8 @@
       edu_csdms_tools_Verbose_log (pd->log, (l), msg, _ex); \
       g_free (msg);} }
 #endif
+*/
+
 /* DO-NOT-DELETE splicer.end(edu.csdms.models.HydroTrend._hincludes) */
 
 /*
@@ -109,11 +108,16 @@ struct edu_csdms_models_HydroTrend__data {
   /* Bocca generated code. bocca.protected.end(edu.csdms.models.HydroTrend._data) */
 
   /* Put other private data members here... */
+  edu_csdms_cmi_ComponentHandler handler;
+  void *state;
+  CMI_Component_status status;
+/*
   gov_cca_TypeMap userinput;
   ht_state* state;
 
   //edu_csdms_tools_IRFPortQueue irf_ports;
   edu_csdms_tools_PrintQueue print_queue;
+*/
   edu_csdms_tools_Verbose log;
 
   //tools_ncts ncts_bedload;
@@ -168,33 +172,24 @@ impl_edu_csdms_models_HydroTrend__dtor(
  */
 
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_ConfigDialog(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_TemplateFiles__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_TemplateFiles(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_cmi_ComponentHandler__object* 
+  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_cmi_ComponentHandler(
+  const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_Services__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_gov_cca_Services(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_PrintQueue__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_PrintQueue(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_Verbose__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_Verbose(const char* 
   url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ScalarSet__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_openmi_ScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_sidl_BaseInterface(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_ports_ParameterPortFactory__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_gov_cca_ports_ParameterPortFactory(
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_IValueSet__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_openmi_IValueSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_CMIGridUniformRectilinear__object* 
+  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_CMIGridUniformRectilinear
+  (const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 #endif /*WITH_RMI*/
 extern
 void
@@ -225,10 +220,8 @@ impl_edu_csdms_models_HydroTrend_boccaForceUsePortInclude(
   /* in */ edu_csdms_models_HydroTrend self,
   /* in */ gov_cca_ports_ParameterPortFactory dummy0,
   /* in */ edu_csdms_tools_Verbose dummy1,
-  /* in */ edu_csdms_tools_TemplateFiles dummy2,
-  /* in */ edu_csdms_openmi_ScalarSet dummy3,
-  /* in */ edu_csdms_tools_ConfigDialog dummy4,
-  /* in */ edu_csdms_tools_PrintQueue dummy5,
+  /* in */ edu_csdms_tools_CMIGridUniformRectilinear dummy2,
+  /* in */ edu_csdms_cmi_ComponentHandler dummy3,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
@@ -252,152 +245,309 @@ impl_edu_csdms_models_HydroTrend_go(
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-void
-impl_edu_csdms_models_HydroTrend_initialize(
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_initialize(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in array<string> */ struct sidl_string__array* properties,
+  /* in */ const char* config_file,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-void
+sidl_bool
+impl_edu_csdms_models_HydroTrend_prepare(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* config_file,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_run_for(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ double time_interval,
+  /* in */ const char* time_units,
+  /* in */ const char* stop_rule,
+  /* in array<double> */ struct sidl_double__array* stop_vars,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_run(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ double time_interval,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
 impl_edu_csdms_models_HydroTrend_run(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ double time,
+  /* in */ double time_interval,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_finalize(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
+impl_edu_csdms_models_HydroTrend_finish(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_run_model(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* config_file,
+  /* in */ const char* stop_rule,
+  /* in */ double stop_var,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+double
+impl_edu_csdms_models_HydroTrend_CMI_get_start_time(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+double
+impl_edu_csdms_models_HydroTrend_CMI_get_current_time(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+double
+impl_edu_csdms_models_HydroTrend_CMI_get_end_time(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_values(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
 void
-impl_edu_csdms_models_HydroTrend_finalize(
+impl_edu_csdms_models_HydroTrend_CMI_set_values(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* in array<> */ struct sidl__array* in_values,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+char*
+impl_edu_csdms_models_HydroTrend_CMI_get_status(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-int64_t
-impl_edu_csdms_models_HydroTrend_getRaster_nx(
+char*
+impl_edu_csdms_models_HydroTrend_CMI_get_component_name(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-int64_t
-impl_edu_csdms_models_HydroTrend_getRaster_ny(
+struct sidl_string__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_input_item_list(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-double
-impl_edu_csdms_models_HydroTrend_getRaster_dx(
+struct sidl_string__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_output_item_list(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-double
-impl_edu_csdms_models_HydroTrend_getRaster_dy(
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_has_output_item(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+sidl_bool
+impl_edu_csdms_models_HydroTrend_CMI_has_input_item(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+void
+impl_edu_csdms_models_HydroTrend_CMI_get_required_ports(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-double
-impl_edu_csdms_models_HydroTrend_getRaster_ulx(
+void
+impl_edu_csdms_models_HydroTrend_CMI_release_required_ports(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-double
-impl_edu_csdms_models_HydroTrend_getRaster_uly(
+struct sidl__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_values_at_indices(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* in array<int> */ struct sidl_int__array* indices,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+void
+impl_edu_csdms_models_HydroTrend_CMI_set_values_at_indices(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* in array<int> */ struct sidl_int__array* indices,
+  /* in array<> */ struct sidl__array* in_values,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+void
+impl_edu_csdms_models_HydroTrend_CMI_print_traceback(
   /* in */ edu_csdms_models_HydroTrend self,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
 struct sidl_double__array*
-impl_edu_csdms_models_HydroTrend_getRaster_grid(
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_spacing(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_spacing(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_lower_left(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_lower_left(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
 struct sidl_int__array*
-impl_edu_csdms_models_HydroTrend_get_raster_dimen(
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_shape(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_int__array*
+impl_edu_csdms_models_HydroTrend_get_grid_shape(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
 struct sidl_double__array*
-impl_edu_csdms_models_HydroTrend_get_raster_res(
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_x(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* out */ sidl_BaseInterface *_ex);
-
-extern
-struct sidl__array*
-impl_edu_csdms_models_HydroTrend_get_raster_data(
-  /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
 struct sidl_double__array*
-impl_edu_csdms_models_HydroTrend_get_time_span(
+impl_edu_csdms_models_HydroTrend_get_grid_x(
   /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-edu_csdms_openmi_IElementSet
-impl_edu_csdms_models_HydroTrend_get_element_set(
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_y(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-edu_csdms_openmi_IValueSet
-impl_edu_csdms_models_HydroTrend_get_value_set(
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_y(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
-struct sidl__array*
-impl_edu_csdms_models_HydroTrend_get_value_set_data(
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_CMI_get_grid_z(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_z(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_int__array*
+impl_edu_csdms_models_HydroTrend_get_grid_connectivity(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_int__array*
+impl_edu_csdms_models_HydroTrend_get_grid_offset(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+edu_csdms_cmi_IGrid
+impl_edu_csdms_models_HydroTrend_get_grid(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
+  /* out */ sidl_BaseInterface *_ex);
+
+extern
+struct sidl_double__array*
+impl_edu_csdms_models_HydroTrend_get_grid_values(
+  /* in */ edu_csdms_models_HydroTrend self,
+  /* in */ const char* long_var_name,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
 void
-impl_edu_csdms_models_HydroTrend_set_value_set(
+impl_edu_csdms_models_HydroTrend_set_grid_values(
   /* in */ edu_csdms_models_HydroTrend self,
-  /* in */ const char* val_string,
-  /* in */ edu_csdms_openmi_IValueSet values,
+  /* in */ const char* long_var_name,
+  /* in array<double> */ struct sidl_double__array* vals,
   /* out */ sidl_BaseInterface *_ex);
 
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_ConfigDialog(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_TemplateFiles__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_TemplateFiles(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_cmi_ComponentHandler__object* 
+  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_cmi_ComponentHandler(
+  const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_Services__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_gov_cca_Services(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_PrintQueue__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_PrintQueue(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_Verbose__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_Verbose(const char* 
   url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_ScalarSet__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_openmi_ScalarSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_sidl_BaseInterface(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_ports_ParameterPortFactory__object* 
   impl_edu_csdms_models_HydroTrend_fconnect_gov_cca_ports_ParameterPortFactory(
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_openmi_IValueSet__object* 
-  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_openmi_IValueSet(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
+extern struct edu_csdms_tools_CMIGridUniformRectilinear__object* 
+  impl_edu_csdms_models_HydroTrend_fconnect_edu_csdms_tools_CMIGridUniformRectilinear
+  (const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 #endif /*WITH_RMI*/
 
 /* DO-NOT-DELETE splicer.begin(_hmisc) */
