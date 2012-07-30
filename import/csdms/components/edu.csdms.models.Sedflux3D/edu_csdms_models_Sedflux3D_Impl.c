@@ -2407,6 +2407,7 @@ impl_edu_csdms_models_Sedflux3D_get_grid_values(
           int * lower = (int*)malloc (sizeof (int)*n_dims);
           int * upper = (int*)malloc (sizeof (int)*n_dims);
           int * stride = (int*)malloc (sizeof (int)*n_dims);
+          int n_vals = 1; 
 
           /* BMI_get_double returns an array that is compact and has
            * unit stride */
@@ -2414,6 +2415,7 @@ impl_edu_csdms_models_Sedflux3D_get_grid_values(
           {
             lower[i] = 0;
             upper[i] = dimen[i]-1;
+            n_vals *= dimen[i];
           }
           for (i=n_dims-2, stride[n_dims-1]=1; i>=0; i--)
             stride[i] = stride[i+1]*dimen[i+1];
@@ -2421,7 +2423,7 @@ impl_edu_csdms_models_Sedflux3D_get_grid_values(
           {
             const int _n_dims = 1;
             const int _lower[1] = {0};
-            const int _upper[1] = {dimen[0]*dimen[1]-1};
+            const int _upper[1] = {n_vals-1};
             const int _stride[1] = {1};
 
             vals = sidl_double__array_borrow (data, _n_dims, _lower,

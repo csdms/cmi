@@ -15,6 +15,9 @@
 #ifndef included_sidl_header_h
 #include "sidl_header.h"
 #endif
+#ifndef included_edu_csdms_cmi_ComponentHandler_h
+#include "edu_csdms_cmi_ComponentHandler.h"
+#endif
 #ifndef included_edu_csdms_cmi_IGrid_h
 #include "edu_csdms_cmi_IGrid.h"
 #endif
@@ -24,23 +27,8 @@
 #ifndef included_edu_csdms_ports_CMIPort_h
 #include "edu_csdms_ports_CMIPort.h"
 #endif
-#ifndef included_edu_csdms_tools_CMIConfigFile_h
-#include "edu_csdms_tools_CMIConfigFile.h"
-#endif
 #ifndef included_edu_csdms_tools_CMIGridUniformRectilinear_h
 #include "edu_csdms_tools_CMIGridUniformRectilinear.h"
-#endif
-#ifndef included_edu_csdms_tools_CMIPortQueue_h
-#include "edu_csdms_tools_CMIPortQueue.h"
-#endif
-#ifndef included_edu_csdms_tools_ConfigDialog_h
-#include "edu_csdms_tools_ConfigDialog.h"
-#endif
-#ifndef included_edu_csdms_tools_PrintQueue_h
-#include "edu_csdms_tools_PrintQueue.h"
-#endif
-#ifndef included_edu_csdms_tools_TemplateFiles_h
-#include "edu_csdms_tools_TemplateFiles.h"
 #endif
 #ifndef included_edu_csdms_tools_Verbose_h
 #include "edu_csdms_tools_Verbose.h"
@@ -83,7 +71,7 @@
 /* Insert-Code-Here {edu.csdms.models.Sedflux2D._hincludes} (include files) */
 
 #include <bmi.h>
-#include <cmi.h>
+//#include <cmi.h>
 
 #define CMI_COMPONENT_NAME "Sedflux2D"
 #define CMI_TEMPLATE_SOURCE_FILES \
@@ -125,6 +113,12 @@ struct edu_csdms_models_Sedflux2D__data {
   /* Bocca generated code. bocca.protected.end(edu.csdms.models.Sedflux2D._data) */
 
   /* Put other private data members here... */
+  edu_csdms_cmi_ComponentHandler handler;
+  void * state;
+  CMI_Component_status status;
+  edu_csdms_tools_Verbose log;
+
+#if 0
   gov_cca_TypeMap userinput;
   //Sedflux_state* state;
   void * state;
@@ -138,6 +132,7 @@ struct edu_csdms_models_Sedflux2D__data {
   /* Left here for backward-compatibility. Will soon be removed. */
   //edu_csdms_tools_IRFPortQueue irf_ports;
   int discharge_port_is_on;
+#endif
 
   /* DO-NOT-DELETE splicer.end(edu.csdms.models.Sedflux2D._data) */
 };
@@ -188,33 +183,21 @@ impl_edu_csdms_models_Sedflux2D__dtor(
  */
 
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_ConfigDialog(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_CMIConfigFile__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_CMIConfigFile(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_ports_CMIPort__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_ports_CMIPort(const char* 
   url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_TemplateFiles__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_TemplateFiles(const 
+extern struct edu_csdms_cmi_ComponentHandler__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_cmi_ComponentHandler(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_Services__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_Services(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_PrintQueue__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_PrintQueue(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_Verbose__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_Verbose(const char* 
   url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_sidl_BaseInterface(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_CMIPortQueue__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_CMIPortQueue(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_ports_ParameterPortFactory__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_ports_ParameterPortFactory(
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);
@@ -251,13 +234,11 @@ impl_edu_csdms_models_Sedflux2D_boccaForceUsePortInclude(
   /* in */ edu_csdms_models_Sedflux2D self,
   /* in */ gov_cca_ports_ParameterPortFactory dummy0,
   /* in */ edu_csdms_ports_CMIPort dummy1,
-  /* in */ edu_csdms_tools_CMIGridUniformRectilinear dummy2,
-  /* in */ edu_csdms_tools_Verbose dummy3,
-  /* in */ edu_csdms_tools_CMIConfigFile dummy4,
-  /* in */ edu_csdms_tools_TemplateFiles dummy5,
-  /* in */ edu_csdms_tools_ConfigDialog dummy6,
-  /* in */ edu_csdms_tools_CMIPortQueue dummy7,
-  /* in */ edu_csdms_tools_PrintQueue dummy8,
+  /* in */ edu_csdms_ports_CMIPort dummy2,
+  /* in */ edu_csdms_ports_CMIPort dummy3,
+  /* in */ edu_csdms_tools_Verbose dummy4,
+  /* in */ edu_csdms_tools_CMIGridUniformRectilinear dummy5,
+  /* in */ edu_csdms_cmi_ComponentHandler dummy6,
   /* out */ sidl_BaseInterface *_ex);
 
 extern
@@ -566,33 +547,21 @@ impl_edu_csdms_models_Sedflux2D_set_grid_values(
   /* out */ sidl_BaseInterface *_ex);
 
 #ifdef WITH_RMI
-extern struct edu_csdms_tools_ConfigDialog__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_ConfigDialog(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_CMIConfigFile__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_CMIConfigFile(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_ports_CMIPort__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_ports_CMIPort(const char* 
   url, sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_TemplateFiles__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_TemplateFiles(const 
+extern struct edu_csdms_cmi_ComponentHandler__object* 
+  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_cmi_ComponentHandler(const 
   char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_Services__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_Services(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_PrintQueue__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_PrintQueue(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct edu_csdms_tools_Verbose__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_Verbose(const char* 
   url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct sidl_BaseInterface__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_sidl_BaseInterface(const char* url, 
   sidl_bool ar, sidl_BaseInterface *_ex);
-extern struct edu_csdms_tools_CMIPortQueue__object* 
-  impl_edu_csdms_models_Sedflux2D_fconnect_edu_csdms_tools_CMIPortQueue(const 
-  char* url, sidl_bool ar, sidl_BaseInterface *_ex);
 extern struct gov_cca_ports_ParameterPortFactory__object* 
   impl_edu_csdms_models_Sedflux2D_fconnect_gov_cca_ports_ParameterPortFactory(
   const char* url, sidl_bool ar, sidl_BaseInterface *_ex);

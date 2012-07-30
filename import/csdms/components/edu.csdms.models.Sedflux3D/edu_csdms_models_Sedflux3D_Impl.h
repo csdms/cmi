@@ -69,7 +69,7 @@
 /* DO-NOT-DELETE splicer.begin(edu.csdms.models.Sedflux3D._hincludes) */
 /* Insert-Code-Here {edu.csdms.models.Sedflux3D._hincludes} (include files) */
 #include <bmi.h>
-#include <cmi.h>
+//#include <cmi.h>
 
 #define CMI_COMPONENT_NAME "Sedflux3D"
 #define CMI_TEMPLATE_SOURCE_FILES \
