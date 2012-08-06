@@ -1,4 +1,2 @@
-sedflux -2 --silent --no-signals --init-file=${InitializationFile}
+sedflux -2 --silent --no-signals --init-file=${InitializationFile} --input-dir=${InputDir}
 
-
---input-dir=${InputDir} --working-dir=.
