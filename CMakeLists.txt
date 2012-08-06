@@ -34,6 +34,8 @@ set (PROJECTS
   aquatellus
   ltrans_roms
   cmi_examples
+  hydrotrend
+  nced_2012
 )
 
 if (NOT DEFINED MODULE_NAME)

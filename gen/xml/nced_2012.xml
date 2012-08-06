@@ -1,0 +1,38 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+
+  <xi:include href="csdms_ports.xml" parse="xml"/>
+  <xi:include href="csdms_services.xml" parse="xml"/>
+
+  <xi:include href="hydrotrend.xml" parse="xml"/>
+
+  <xi:include href="child.xml" parse="xml"/>
+  <xi:include href="sedflux.xml" parse="xml"/>
+
+  <component name="env.Coastal" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.CMIPort@CoastalEnvironment</provides>
+
+    <requires>tools.Verbose</requires>
+    <requires>tools.CMIGridPoints</requires>
+    <requires>cmi.ComponentHandler</requires>
+
+    <extras>make.vars.user</extras>
+  </component>
+
+  <component name="models.BaseLevel" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.CMIPort@BaseLevel</provides>
+
+    <requires>tools.Verbose</requires>
+    <requires>tools.CMIGridPoints</requires>
+    <requires>cmi.ComponentHandler</requires>
+
+    <extras>make.vars.user</extras>
+  </component>
+</project>
+

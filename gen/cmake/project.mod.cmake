@@ -17,14 +17,15 @@ set	@PROJECT_NAME@_root		    @PROJECT_TOP_DIR@
 module load openmi
 module load cem/alpha
 module load sedflux/devel
-module load hydrotrend/3.0
+module load hydrotrend/3.1
 module load child
 module load internal
 module load roms
 module load stm
 module load marssim
-module load bmi cmi
+module load bmi cmi esmf
 
+setenv CMT_PROJECT_ROOT @PROJECT_TOP_DIR@/../..
 if {![info exists env{CMT_PROJECT_TEMPLATE_PATH}]} {
   setenv CMT_PROJECT_TEMPLATE_PATH "@TEMPLATE_DIR@"
 }
