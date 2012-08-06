@@ -1,35 +1,37 @@
 <dialog>
   <tab name="Input Files and Directories">
-    <entry name="/Sedflux/Input/Dir">
+    <entry name="/Sedflux2D/Input/Var/InputDir">
       <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/sedflux/Adriatic}</help_brief>
+      <help_brief>Path to input files. {cb+bb;GUI;Enter path to input files;/home/csdms/sims/Sedflux2D/basecase10k;/home/csdms/sims/Sedflux2D/fallingSL;/home/csdms/sims/Sedflux2D/fastfallingSL;/home/csdms/sims/Sedflux2D/fastrisingSL;/home/csdms/sims/Sedflux2D/fullSLcycle;/home/csdms/sims/Sedflux2D/risingSL}</help_brief>
       <default>GUI</default>
       <type>String</type>
     </entry>
-    <entry name="/Sedflux/SitePrefix">
-      <label>Site prefix</label>
-      <help_brief>Site prefix for input/output files.</help_brief>
-      <default>adriatic</default>
-      <type>String</type>
-    </entry>
-    <entry name="/Sedflux/CasePrefix">
-      <label>Case prefix</label>
-      <help_brief>Case prefix for input/output files.</help_brief>
-      <default>init</default>
+    <entry name="/Sedflux2D/Input/Var/SimulationName">
+      <label>Simulation case name</label>
+      <help_brief>Name of the simulation</help_brief>
+      <default>Sedflux2D</default>
       <type>String</type>
     </entry>
   </tab>
-  <tab name="Ports">
-    <entry name="/Sedflux/Port/Discharge">
-      <label>Water discharge port</label>
-      <help_brief>Use the WaterDischarge provides port. {dl;ON;OFF}</help_brief>
-      <default>ON</default>
+  <tab name="Initialization">
+    <entry name="/Sedflux2D/Input/Var/InitializationFile">
+      <label>Initialization file</label>
+      <default>GUI</default>
+      <help_brief>sedflux initialization file {cb;GUI;Enter path to initialization file}</help_brief>
+      <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_init.kvf</html>]]></replace>
       <type>String</type>
     </entry>
-  </tab>
-  <tab name="Run Parameters">
-    <entry name="/Sedflux/Input/Var/RunDuration">
-      <label>Run duration (years)</label>
+    <entry name="/Sedflux2D/Input/Var/ProcessFile">
+      <label>Process file</label>
+      <default>GUI</default>
+      <help_brief>sedflux process file {dl;GUI}</help_brief>
+      <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_process.kvf</html>]]></replace>
+      <type>String</type>
+    </entry>
+
+    <entry name="/Sedflux2D/Input/Var/RunDuration">
+      <label>Run duration</label>
+      <unit>years</unit>
       <help_brief>Simulation run time in years</help_brief>
       <default>500</default>
       <type>Float</type>
@@ -38,9 +40,10 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/Sedflux/Input/Var/XResolution">
-      <label>Width of basin (m)</label>
-      <help_brief>Width of basin (m)</help_brief>
+    <entry name="/Sedflux2D/Input/Var/AlongShoreWidth">
+      <label>Basin width</label>
+      <unit>meters</unit>
+      <help_brief>Width of basin</help_brief>
       <default>500000</default>
       <type>Float</type>
       <range>
@@ -48,9 +51,10 @@
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/Sedflux/Input/Var/YResolution">
-      <label>Grid resolution in y-direction (m)</label>
-      <help_brief>Grid resolution in y-direction (m)</help_brief>
+    <entry name="/Sedflux2D/Input/Var/CrossShoreResolution">
+      <label>Cross-shore grid spacing</label>
+      <unit>meters</unit>
+      <help_brief>Grid resolution in cross-shore direction</help_brief>
       <default>50</default>
       <type>Float</type>
       <range>
@@ -58,9 +62,10 @@
         <max>10000</max>
       </range>
     </entry>
-    <entry name="/Sedflux/Input/Var/ZResolution">
-      <label>Grid resolution in z-direction (m)</label>
-      <help_brief>grid resolution in z-direction (m)</help_brief>
+    <entry name="/Sedflux2D/Input/Var/VerticalResolution">
+      <label>Vertical resolution</label>
+      <unit>meters</unit>
+      <help_brief>grid resolution in z-direction</help_brief>
       <default>.1</default>
       <type>Float</type>
       <range>
@@ -68,47 +73,418 @@
         <max>10</max>
       </range>
     </entry>
+    <entry name="/Sedflux2D/Input/Var/BathymetryFile">
+      <label>Bathymetry file</label>
+      <help_brief>Choose a bathymetry file. {cb;/home/csdms/sims/sedflux/bathy_files/shallow.csv;Enter path to bathymetry file.;/home/csdms/sims/sedflux/bathy_files/steep.csv}</help_brief>
+      <default><![CDATA[<html>&#36;{SimulationName}_bathy.csv</html>]]> </default>
+      <type>String</type>
+    </entry>
   </tab>
-  <tab name="Processes">
-    <entry name="/Sedflux/Input/Var/SuspendedLoadConc">
-      <label>Suspended load concentration (-)</label>
-      <help_brief>Per-grain suspended load concentration (-)</help_brief>
-      <default>.25</default>
+  <tab name="River">
+    <entry name="/Sedflux2D/Input/Var/RiverFile">
+      <label>River file</label>
+      <help_brief>Specify river values in a files for from the GUI. {cb;GUI;Enter path to bathymetry file.;/home/csdms/sims/sedflux/river_files/low_sediment.kvf;/home/csdms/sims/sedflux/river_files/high_sediment.kvf}</help_brief>
+      <default>GUI</default>
+      <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_river.kvf</html>]]></replace>
+      <type>String</type>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/RiverBedLoadFlux">
+      <label>Bed-load flux</label>
+      <unit>kg/s</unit>
+      <help_brief>Bed-load flux that the river mouth</help_brief>
+      <default>70</default>
       <type>Float</type>
       <range>
         <min>0.01</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/RiverSuspendedLoadConc1">
+      <label>Suspended Load Concentration 1</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Suspended-load concentration for grain size 1</help_brief>
+      <default>.1</default>
+      <type>Float</type>
+      <range>
+        <min>0.01</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/RiverSuspendedLoadConc2">
+      <label>Suspended Load Concentration 2</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Suspended-load concentration for grain size 2</help_brief>
+      <default>.1</default>
+      <type>Float</type>
+      <range>
+        <min>0.01</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/RiverVelocity">
+      <label>River velocity</label>
+      <unit>m/s</unit>
+      <help_brief>River velocity at mouth</help_brief>
+      <default>1.2</default>
+      <type>Float</type>
+      <range>
+        <min>0.5</min>
         <max>5</max>
       </range>
     </entry>
-    <entry name="/Sedflux/Input/Var/BedLoadDumpDistance">
-      <label>Distance to dump bedload (m)</label>
-      <help_brief>Distance to dump bedload (m)</help_brief>
-      <default>5000</default>
+    <entry name="/Sedflux2D/Input/Var/RiverWidth">
+      <label>River width</label>
+      <unit>m</unit>
+      <help_brief>River mouth width</help_brief>
+      <default>400</default>
       <type>Float</type>
       <range>
-        <min>100</min>
-        <max>50000</max>
-      </range>
-    </entry>
-    <entry name="/Sedflux/Input/Var/BedLoadFlux">
-      <label>Bed load flux (kg/s)</label>
-      <help_brief>Bed load flux at river mouth (kg/s)</help_brief>
-      <default>50.0</default>
-      <type>Float</type>
-      <range>
-        <min>0</min>
+        <min>10</min>
         <max>5000</max>
       </range>
     </entry>
+    <entry name="/Sedflux2D/Input/Var/RiverDepth">
+      <label>River depth</label>
+      <unit>m</unit>
+      <help_brief>River depth at mouth</help_brief>
+      <default>4</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>50</max>
+      </range>
+    </entry>
   </tab>
-  <tab name="Output Grids">
-    <entry name="/Sedflux/Output/Grid/Dir">
+  <tab name="Sediment">
+    <entry name="/Sedflux2D/Input/Var/SedimentFile">
+      <label>Sediment file</label>
+      <default>GUI</default>
+      <help_brief>Sediment file {cb;GUI;Enter path to sediment file}</help_brief>
+      <type>String</type>
+      <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_sediment.kvf</html>]]></replace>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentBedLoadGrainSize">
+      <label>Bed-load grain size</label>
+      <unit>microns</unit>
+      <help_brief>Grain size of bed-load component</help_brief>
+      <default>400</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>5000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentBedLoadGrainDensity">
+      <label>Bed-load grain density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Grain density of bed-load component</help_brief>
+      <default>2625</default>
+      <type>Float</type>
+      <range>
+        <min>1000</min>
+        <max>2650</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentBedLoadSaturatedDensity">
+      <label>Bed-load saturated density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Saturated density of bed-load component</help_brief>
+      <default>1850</default>
+      <type>Float</type>
+      <range>
+        <min>1000</min>
+        <max>2650</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentBedLoadMinVoidRatio">
+      <label>Bed-load minimum void ratio</label>
+      <unit>-</unit>
+      <help_brief>Minimum void ratio of bed-load component</help_brief>
+      <default>.3</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentBedLoadDiffusionCoeff">
+      <label>Bed-load diffusion coefficient</label>
+      <unit>-</unit>
+      <help_brief>Diffusion coefficient of bed-load component</help_brief>
+      <default>.25</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad1GrainSize">
+      <label>Suspended-load grain size</label>
+      <unit>microns</unit>
+      <help_brief>Grain size of suspended-load component</help_brief>
+      <default>150</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>5000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad1GrainDensity">
+      <label>Suspended-load grain density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Grain density of suspended-load component</help_brief>
+      <default>2600</default>
+      <type>Float</type>
+      <range>
+        <min>1000</min>
+        <max>2650</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad1SaturatedDensity">
+      <label>Suspended-load saturated density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Saturated density of suspended-load component</help_brief>
+      <default>1800</default>
+      <type>Float</type>
+      <range>
+        <min>1000</min>
+        <max>2650</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad1MinVoidRatio">
+      <label>Suspended-load minimum void ratio</label>
+      <unit>-</unit>
+      <help_brief>Minimum void ratio of suspended-load component</help_brief>
+      <default>.2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad1DiffusionCoeff">
+      <label>Suspended-load diffusion coefficient</label>
+      <unit>-</unit>
+      <help_brief>Diffusion coefficient of suspended-load component</help_brief>
+      <default>.25</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad1RemovalRate">
+      <label>Suspended-load removal rate</label>
+      <unit>1/day</unit>
+      <help_brief>Removal rate of suspended-load component</help_brief>
+      <default>16.8</default>
+      <type>Float</type>
+      <range>
+        <min>.1</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad2GrainSize">
+      <label>Suspended-load grain size</label>
+      <unit>microns</unit>
+      <help_brief>Grain size of suspended-load component</help_brief>
+      <default>150</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>5000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad2GrainDensity">
+      <label>Suspended-load grain density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Grain density of suspended-load component</help_brief>
+      <default>2600</default>
+      <type>Float</type>
+      <range>
+        <min>1000</min>
+        <max>2650</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad2SaturatedDensity">
+      <label>Suspended-load saturated density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Saturated density of suspended-load component</help_brief>
+      <default>1800</default>
+      <type>Float</type>
+      <range>
+        <min>1000</min>
+        <max>2650</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad2MinVoidRatio">
+      <label>Suspended-load minimum void ratio</label>
+      <unit>-</unit>
+      <help_brief>Minimum void ratio of suspended-load component</help_brief>
+      <default>.2</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad2DiffusionCoeff">
+      <label>Suspended-load diffusion coefficient</label>
+      <unit>-</unit>
+      <help_brief>Diffusion coefficient of suspended-load component</help_brief>
+      <default>.25</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SedimentSuspLoad2RemovalRate">
+      <label>Suspended-load removal rate</label>
+      <unit>1/day</unit>
+      <help_brief>Removal rate of suspended-load component</help_brief>
+      <default>9</default>
+      <type>Float</type>
+      <range>
+        <min>.1</min>
+        <max>100</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Sea Level">
+    <entry name="/Sedflux2D/Input/Var/SeaLevelOn">
+      <label>Sea level</label>
+      <help_brief>Turn sea level on or off. {dl;ON;OFF}</help_brief>
+      <default>ON</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SeaLevelFile">
+      <label>Sea level file</label>
+      <help_brief>Read sea level from file. {cb;/home/csdms/sims/sedflux/sea_level_files/linear_fall.csv;Enter path to sea level file.;/home/csdms/sims/sedflux/sea_level_files/linear_rise.csv;/home/csdms/sims/sedflux/sea_level_files/down_up.csv;/home/csdms/sims/sedflux/sea_level_files/up_down.csv}</help_brief>
+      <default><![CDATA[<html>&#36;{SimulationName}_sealevel.csv</html>]]> </default>
+
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Compaction">
+    <entry name="/Sedflux2D/Input/Var/CompactionOn">
+      <label>Compaction</label>
+      <help_brief>Turn compaction on or off. {dl;ON;OFF}</help_brief>
+      <default>ON</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Subsidence">
+    <entry name="/Sedflux2D/Input/Var/SubsidenceOn">
+      <label>Subsidence</label>
+      <help_brief>Turn subsidence on or off. {dl;ON;OFF}</help_brief>
+      <default>OFF</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/SubsidenceFile">
+      <label>Subsidence file</label>
+      <help_brief>Read subsidence from file. {cb;/home/csdms/sims/sedflux/subsidence_files/uniform_uplift.dat;Enter path to subsidence file.;/home/csdms/sims/sedflux/subsidence_files/uniform_subsidence.dat;/home/csdms/sims/sedflux/subsidence_files/ramp.dat}</help_brief>
+      <default><![CDATA[<html>&#36;{SimulationName}_subsidence.dat</html>]]></default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Isostasy">
+    <entry name="/Sedflux2D/Input/Var/IsostasyOn">
+      <label>Isostasy</label>
+      <help_brief>Turn isostasy on or off. {dl;ON;OFF}</help_brief>
+      <default>OFF</default>
+      <type>String</type>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/IsostasyEffectiveElasticThickness">
+      <label>Effective elastic thickness</label>
+      <unit>m</unit>
+      <help_brief>Effective elastic thickness of crust</help_brief>
+      <default>65000</default>
+      <type>Float</type>
+      <range>
+        <min>1000</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/IsostasyYoungsModulus">
+      <label>Young's modulus</label>
+      <unit>Pa</unit>
+      <help_brief>Young's modulus</help_brief>
+      <default>7e10</default>
+      <type>Float</type>
+      <range>
+        <min>1e9</min>
+        <max>1e12</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/IsostasyRelaxationTime">
+      <label>Relaxation time</label>
+      <unit>years</unit>
+      <help_brief>Relaxation time</help_brief>
+      <default>5000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Plume">
+    <entry name="/Sedflux2D/Input/Var/PlumeMaxWidth">
+      <label>Maximum width of plume</label>
+      <unit>km</unit>
+      <help_brief>The maximum along-shore width of the plume solution grid</help_brief>
+      <default>15</default>
+      <type>Float</type>
+      <range>
+        <min>1</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/PlumeCrossShoreNodes">
+      <label>Cross-shore nodes</label>
+      <unit>-</unit>
+      <help_brief>Number of nodes in the cross-shore direction of the plume solution grid (must be odd)</help_brief>
+      <default>21</default>
+      <type>Float</type>
+      <range>
+        <min>3</min>
+        <max>21</max>
+      </range>
+    </entry>
+    <entry name="/Sedflux2D/Input/Var/PlumeRiverMouthNodes">
+      <label>River mouth nodes</label>
+      <unit>-</unit>
+      <help_brief>Number of nodes within the river mouth of the plume solution grid (must be odd)</help_brief>
+      <default>3</default>
+      <type>Float</type>
+      <range>
+        <min>3</min>
+        <max>21</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Bed Load">
+    <entry name="/Sedflux2D/Input/Var/BedLoadDumpLength">
+      <label>Bed-load dump length</label>
+      <unit>m</unit>
+      <help_brief>The distance over which to spread bed load</help_brief>
+      <default>2000</default>
+      <type>Float</type>
+      <range>
+        <min>10</min>
+        <max>10000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="1D Output">
+    <entry name="/Sedflux2D/Output/Grid/Dir">
       <label>Output directory</label>
       <help_brief>Path to output grid files.</help_brief>
       <default>${cwd}</default>
       <type>String</type>
     </entry>
-    <entry name="/Sedflux/Output/Grid/Interval">
+    <entry name="/Sedflux2D/Output/Grid/Interval">
       <label>Interval between output files</label>
       <help_brief>Interval between output files</help_brief>
       <default>10</default>
@@ -118,93 +494,111 @@
       </range>
       <type>Float</type>
     </entry>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorDepth"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorSlope"/>
+    <entry name="/Sedflux2D/Output/Grid/FileFormat">
+      <label>File format</label>
+      <help_brief>Format for output files. {dl;NC}</help_brief>
+      <default>NC</default>
+      <type>String</type>
+    </entry>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Depth"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Slope"/>
     <entry class="OutputFile"
-           name="/Sedflux/Output/Grid/Var/SeaFloorElevation"/>
+           name="/Sedflux2D/Output/Grid/Var/Elevation"/>
     <entry class="OutputFile"
-           name="/Sedflux/Output/Grid/Var/SeaFloorThickness"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorGrain"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorAge"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorSand"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorSilt"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorClay"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorMud"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorFacies"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorDensity"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorPorosity"/>
+           name="/Sedflux2D/Output/Grid/Var/Thickness"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Grain"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Age"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Sand"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Silt"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Clay"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Mud"/>
+    <!--entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Facies"/-->
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Density"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Porosity"/>
     <entry class="OutputFile"
-           name="/Sedflux/Output/Grid/Var/SeaFloorPermeability"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Grid/Var/SeaFloorBasement"/>
+           name="/Sedflux2D/Output/Grid/Var/Permeability"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Grid/Var/Basement"/>
     <entry class="OutputFile"
-           name="/Sedflux/Output/Grid/Var/SeaFloorRiver_mouth"/>
+           name="/Sedflux2D/Output/Grid/Var/River_mouth"/>
   </tab>
-  <tab name="Output Cubes">
-    <entry name="/Sedflux/Output/Cube/Dir">
+  <tab name="2D Output">
+    <entry name="/Sedflux2D/Output/Cube/Dir">
       <label>Output directory</label>
       <help_brief>Path to output cube files.</help_brief>
       <default>${cwd}</default>
       <type>String</type>
     </entry>
-    <entry name="/Sedflux/Output/Cube/Interval">
+    <entry name="/Sedflux2D/Output/Cube/Interval">
       <label>Interval between output files</label>
       <help_brief>Interval between output files</help_brief>
-      <default>10</default>
+      <default>1000</default>
       <range>
         <min>0</min>
         <max>1000000</max>
       </range>
       <type>Int</type>
     </entry>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Age"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Facies"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Pressure"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Density"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Grain_density"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Max_density"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Grain"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Grain_in_meters"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Sand"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Silt"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Clay"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Mud"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Velocity"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Viscosity"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Relative_density"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Porosity"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Porosity_min"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Porosity_max"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Pi"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Permeability"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Void_ratio"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Void_ratio_min"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Void_ratio_max"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Friction_angle"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Consolidation"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Yield_strength"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Dynamic_viscosity"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Mv"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Cv"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Hydraulic_con"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Shear_strength"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Cohesion"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Consolidation"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Consolidation_rate"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Excess_pressure"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Relative_pressure"/>
-    <entry class="OutputFile" name="/Sedflux/Output/Cube/Var/Fraction"/>
+    <entry name="/Sedflux2D/Output/Cube/FileFormat">
+      <label>File format</label>
+      <help_brief>Format for output files. {dl;NC}</help_brief>
+      <default>NC</default>
+      <type>String</type>
+    </entry>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelAge"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelGrain"/>
+    <!--entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelFacies"/-->
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelPressure"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelDensity"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelGrain_density"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelMax_density"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelGrain_in_meters"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelSand"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelSilt"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelClay"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelMud"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelVelocity"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelViscosity"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelRelative_density"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelPorosity"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelPorosity_min"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelPorosity_max"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelPi"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelPermeability"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelVoid_ratio"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelVoid_ratio_min"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelVoid_ratio_max"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelFriction_angle"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelConsolidation"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelYield_strength"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelDynamic_viscosity"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelMv"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelCv"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelHydraulic_con"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelShear_strength"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelCohesion"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelConsolidation"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelConsolidation_rate"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelExcess_pressure"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelRelative_pressure"/>
+    <entry class="OutputFile" name="/Sedflux2D/Output/Cube/Var/VoxelFraction"/>
   </tab>
   <tab name="About">
-    <entry name="/Sedflux/ModelName">
+    <entry name="/Sedflux2D/ModelName">
       <label>Model name</label>
       <help_brief>Name of the model</help_brief>
       <default>sedflux</default>
       <type>String</type>
     </entry>
-    <entry name="/Sedflux/ModelAuthor">
+    <entry name="/Sedflux2D/ModelAuthor">
       <label>Author name</label>
       <help_brief>Name of the model author</help_brief>
       <default>Eric Hutton</default>
+      <type>String</type>
+    </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:Sedflux</default>
       <type>String</type>
     </entry>
   </tab>

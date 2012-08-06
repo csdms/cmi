@@ -552,26 +552,26 @@
       <default>VTK</default>
       <type>String</type>
     </entry>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorDepth"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorSlope"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Depth"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Slope"/>
     <entry class="OutputFile"
            name="/Sedflux3D/Output/Grid/Var/Elevation"/>
     <entry class="OutputFile"
-           name="/Sedflux3D/Output/Grid/Var/SeaFloorThickness"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorGrain"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorAge"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorSand"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorSilt"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorClay"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorMud"/>
+           name="/Sedflux3D/Output/Grid/Var/Thickness"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Grain"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Age"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Sand"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Silt"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Clay"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Mud"/>
     <!--entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorFacies"/-->
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorDensity"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorPorosity"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Density"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Porosity"/>
     <entry class="OutputFile"
-           name="/Sedflux3D/Output/Grid/Var/SeaFloorPermeability"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/SeaFloorBasement"/>
+           name="/Sedflux3D/Output/Grid/Var/Permeability"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Grid/Var/Basement"/>
     <entry class="OutputFile"
-           name="/Sedflux3D/Output/Grid/Var/SeaFloorRiver_mouth"/>
+           name="/Sedflux3D/Output/Grid/Var/River_mouth"/>
   </tab>
   <tab name="3D Output">
     <entry name="/Sedflux3D/Output/Cube/Dir">
@@ -590,43 +590,43 @@
       </range>
       <type>Int</type>
     </entry>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Age"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Grain"/>
-    <!--entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Facies"/-->
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Pressure"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Density"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Grain_density"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Max_density"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Grain_in_meters"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Sand"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Silt"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Clay"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Mud"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Velocity"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Viscosity"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Relative_density"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Porosity"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Porosity_min"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Porosity_max"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Pi"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Permeability"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Void_ratio"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Void_ratio_min"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Void_ratio_max"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Friction_angle"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Consolidation"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Yield_strength"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Dynamic_viscosity"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Mv"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Cv"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Hydraulic_con"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Shear_strength"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Cohesion"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Consolidation"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Consolidation_rate"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Excess_pressure"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Relative_pressure"/>
-    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/Fraction"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelAge"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelGrain"/>
+    <!--entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelFacies"/-->
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelPressure"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelDensity"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelGrain_density"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelMax_density"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelGrain_in_meters"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelSand"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelSilt"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelClay"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelMud"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelVelocity"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelViscosity"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelRelative_density"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelPorosity"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelPorosity_min"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelPorosity_max"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelPi"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelPermeability"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelVoid_ratio"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelVoid_ratio_min"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelVoid_ratio_max"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelFriction_angle"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelConsolidation"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelYield_strength"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelDynamic_viscosity"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelMv"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelCv"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelHydraulic_con"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelShear_strength"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelCohesion"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelConsolidation"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelConsolidation_rate"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelExcess_pressure"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelRelative_pressure"/>
+    <entry class="OutputFile" name="/Sedflux3D/Output/Cube/Var/VoxelFraction"/>
   </tab>
   <tab name="About">
     <entry name="/Sedflux3D/ModelName">

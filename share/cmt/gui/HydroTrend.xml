@@ -6,11 +6,12 @@
      template files and code within the component.
  -->
   <tab name="Input Files and Directories">
-    <entry name="/HydroTrend/Input/Dir">
+    <entry name="/HydroTrend/Input/Var/InputDir">
       <label>Input directory</label>
       <help_brief>Path to input files{cb+bb;GUI;/home/csdms/sims/hydrotrend/default/;/home/csdms/sims/hydrotrend/danube/;/home/csdms/sims/hydrotrend/eel/;/home/csdms/sims/hydrotrend/ganges/;/home/csdms/sims/hydrotrend/lanyang/;/home/csdms/sims/hydrotrend/waipaoa/;/home/csdms/sims/hydrotrend/po/}</help_brief>
       <default>GUI</default>
       <type>String</type>
+      <replace string="GUI">.</replace>
     </entry>
     <!--entry name="/HydroTrend/Input/HypsDir">
       <label>Hypsometry file</label>
@@ -18,18 +19,20 @@
       <default>/home/csdms/sims/hydrotrend/default</default>
       <type>String</type>
     </entry-->
-    <entry name="/HydroTrend/SitePrefix">
-      <label>Site prefix</label>
-      <help_brief>Site prefix for input/output files.</help_brief>
-      <default>Waipaoa</default>
+    <entry name="/HydroTrend/Input/Var/SimulationName">
+      <label>Simulation case name</label>
+      <help_brief>Name of the simulation</help_brief>
+      <default>HYDRO</default>
       <type>String</type>
     </entry>
-    <entry name="/HydroTrend/CasePrefix">
-      <label>Case prefix</label>
-      <help_brief>Case prefix for input/output files.</help_brief>
-      <default>50k</default>
+
+    <!--entry name="/HydroTrend/Input/Var/OutputDir">
+      <label>Output directory</label>
+      <help_brief>Path to output files{cb+bb;GUI;/home/csdms/sims/hydrotrend/default/;/home/csdms/sims/hydrotrend/danube/;/home/csdms/sims/hydrotrend/eel/;/home/csdms/sims/hydrotrend/ganges/;/home/csdms/sims/hydrotrend/lanyang/;/home/csdms/sims/hydrotrend/waipaoa/;/home/csdms/sims/hydrotrend/po/}</help_brief>
+      <default>GUI</default>
       <type>String</type>
-    </entry>
+      <replace string="GUI">.</replace>
+    </entry-->
   </tab>
   <tab name="Run Parameters">
     <entry name="/HydroTrend/Input/Var/RunDuration">
@@ -42,7 +45,7 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/HydroTrend/Input/HypsFile">
+    <entry name="/HydroTrend/Input/Var/HypsFile">
       <label>Hypsometry file</label>
       <help_brief>Path to Hypsometry file{cb+fb;/home/csdms/sims/hydrotrend/default/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/po/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/danube/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/eel/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/ganges/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/lanyang/HYDRO0.HYPS;/home/csdms/sims/hydrotrend/waipaoa/HYDRO0.HYPS}</help_brief>
       <default>/home/csdms/sims/hydrotrend/default/HYDRO0.HYPS</default>
@@ -511,6 +514,12 @@
         <max>1000000</max>
       </range>
       <type>Float</type>
+    </entry>
+    <entry name="/HydroTrend/Output/Scalar/FileFormat">
+      <label>File format</label>
+      <help_brief>Format for output files. {dl;NC}</help_brief>
+      <default>NC</default>
+      <type>String</type>
     </entry>
     <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Velocity"/>
     <entry class="OutputFile" name="/HydroTrend/Output/Scalar/Var/Width"/>
