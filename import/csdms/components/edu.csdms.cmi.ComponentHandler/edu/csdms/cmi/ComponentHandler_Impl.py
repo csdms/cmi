@@ -12,8 +12,19 @@
 
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
-import cmt.status
-import numpy as np
+try:
+    print 'Importing CMT modules...'
+    import cmt.status
+    import numpy as np
+except Exception as e:
+    print 'ERROR: Unable to import: %s' % e
+    print 'This was my search path'
+    import sys
+    for path in sys.path:
+        print '%s' % path
+else:
+    print 'Imported.'
+
 # DO-NOT-DELETE splicer.end(_initial)
 
 import edu.csdms.cmi.ComponentHandler
@@ -55,64 +66,69 @@ class ComponentHandler:
 
     # Put your code here...
 
-    # A gov.cca.TypeMap that holds input from the config dialog
-    self.userinput = None
+    try:
+        print 'Creating ComponentHandler instance'
 
-    # Is this component acting as the driver
-    self.is_driver = False
+        # A gov.cca.TypeMap that holds input from the config dialog
+        self.userinput = None
+
+        # Is this component acting as the driver
+        self.is_driver = False
     
-    # Current status of the component
-    self.status = cmt.status.CREATED
+        # Current status of the component
+        self.status = cmt.status.CREATED
 
-    # Messaging logging for the component
-    print 'Creating logger'
-    try:
-        self.log = edu.csdms.tools.Verbose.Verbose ()
-        self.log.initialize ('ComponentHandler:Unnamed', 20)
-    except Exception as e:
-        print 'Unexpected error creating logger (%s)' % e
-    else:
-        print 'Created logger'
+        # Messaging logging for the component
+        print 'Creating logger'
+        try:
+            self.log = edu.csdms.tools.Verbose.Verbose ()
+            self.log.initialize ('ComponentHandler:Unnamed', 20)
+        except Exception as e:
+            print 'Unexpected error creating logger (%s)' % e
+        else:
+            print 'Created logger'
 
-    self.log.info ('Creating')
-    # Component's config file
-    self.log.info ('Creating ConfigFile')
-    try:
-        self.cfg_file = edu.csdms.tools.CMIConfigFile.CMIConfigFile ()
-    except Exception as e:
-        self.log.error ('Unexpected error creating ConfigFile (%s)' % e)
-    else:
-        self.log.info ('Created ConfigFile')
+        self.log.info ('Creating')
+        # Component's config file
+        self.log.info ('Creating ConfigFile')
+        try:
+            self.cfg_file = edu.csdms.tools.CMIConfigFile.CMIConfigFile ()
+        except Exception as e:
+            self.log.error ('Unexpected error creating ConfigFile (%s)' % e)
+        else:
+            self.log.info ('Created ConfigFile')
         
-    # Queue of component's uses ports
-    self.log.info ('Creating PortQueue')
-    try:
-        self.port_queue = edu.csdms.tools.CMIPortQueue.CMIPortQueue ()
+        # Queue of component's uses ports
+        self.log.info ('Creating PortQueue')
+        try:
+            self.port_queue = edu.csdms.tools.CMIPortQueue.CMIPortQueue ()
+        except Exception as e:
+            self.log.error ('Unexpected error creating PortQueue (%s)' % e)
+        else:
+            self.log.info ('Created PortQueue')
+
+        # Queue of component's print variables 
+        self.log.info ('Creating PrintQueue')
+        try:
+            self.print_queue = edu.csdms.tools.PrintQueue.PrintQueue ()
+        except Exception as e:
+            self.log.error ('Unexpected error creating PrintQueue (%s)' % e)
+        else:
+            self.log.info ('Created PrintQueue')
+
+        # The name of the client
+        self.name = 'Unknown'
+
+        # The CMIPort being handled
+        self.client = None
+
+        # The CCA services associated with the client
+        self.services = None
+
+        self.status = cmt.status.CREATED
+        self.log.info ('Created')
     except Exception as e:
-        self.log.error ('Unexpected error creating PortQueue (%s)' % e)
-    else:
-        self.log.info ('Created PortQueue')
-
-    # Queue of component's print variables 
-    self.log.info ('Creating PrintQueue')
-    try:
-        self.print_queue = edu.csdms.tools.PrintQueue.PrintQueue ()
-    except Exception as e:
-        self.log.error ('Unexpected error creating PrintQueue (%s)' % e)
-    else:
-        self.log.info ('Created PrintQueue')
-
-    # The name of the client
-    self.name = 'Unknown'
-
-    # The CMIPort being handled
-    self.client = None
-
-    # The CCA services associated with the client
-    self.services = None
-
-    self.status = cmt.status.CREATED
-    self.log.info ('Created')
+        print 'ERROR: Unexpected exception creating ComponentHandler: %s' % e
 
     # Bocca generated code. bocca.protected.begin(edu.csdms.cmi.ComponentHandler._init) 
     self.bocca_print_errs = True

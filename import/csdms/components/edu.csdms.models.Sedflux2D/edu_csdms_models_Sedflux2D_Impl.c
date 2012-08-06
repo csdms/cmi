@@ -1592,11 +1592,11 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_spacing(
     double * spacing;
     int n_dims;
 
-    fprintf (stderr, "getting spacing\n");
-    fprintf (stderr, "long_var_name = %s\n", long_var_name);
+    //fprintf (stderr, "getting spacing\n");
+    //fprintf (stderr, "long_var_name = %s\n", long_var_name);
     spacing = BMI_Get_grid_spacing (this->state, long_var_name, &n_dims);
-    fprintf (stderr, "got spacing\n");
-    fprintf (stderr, "spacing is %fx%f\n", spacing[0], spacing[1]);
+    //fprintf (stderr, "got spacing\n");
+    //fprintf (stderr, "spacing is %fx%f\n", spacing[0], spacing[1]);
 
     sidl_spacing = sidl_double__array_create1d (n_dims);
 
@@ -1683,7 +1683,7 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_lower_left(
     int n_dims;
 
     corner = BMI_Get_grid_lower_left_corner (this->state, long_var_name, &n_dims);
-    fprintf (stderr, "origin is %f x %f\n", corner[0], corner[1]);
+    //fprintf (stderr, "origin is %f x %f\n", corner[0], corner[1]);
     sidl_corner = sidl_double__array_create1d (n_dims);
 
     {
@@ -1725,7 +1725,13 @@ impl_edu_csdms_models_Sedflux2D_get_grid_lower_left(
     int n_dims;
 
     corner = BMI_Get_grid_lower_left_corner (this->state, long_var_name, &n_dims);
-    fprintf (stderr, "origin is %f x %f\n", corner[0], corner[1]);
+    if (n_dims==1)
+      fprintf (stderr, "origin is %f\n", corner[0]);
+    else if (n_dims==2)
+      fprintf (stderr, "origin is %f x %f\n", corner[0], corner[1]);
+    else
+      fprintf (stderr, "origin is %f x %f x %f\n", corner[0], corner[1], corner[2]);
+
     sidl_corner = sidl_double__array_create1d (n_dims);
 
     {
@@ -1767,7 +1773,7 @@ impl_edu_csdms_models_Sedflux2D_CMI_get_grid_shape(
     int n_dims;
 
     shape = BMI_Get_grid_shape (this->state, long_var_name, &n_dims);
-    fprintf (stderr, "shape is %dx%d\n", shape[0], shape[1]);
+    //fprintf (stderr, "shape is %dx%d\n", shape[0], shape[1]);
     sidl_shape = sidl_int__array_create1d (n_dims);
 
     {
@@ -1809,7 +1815,14 @@ impl_edu_csdms_models_Sedflux2D_get_grid_shape(
     int n_dims;
 
     shape = BMI_Get_grid_shape (this->state, long_var_name, &n_dims);
-    fprintf (stderr, "(get_grid_shape) shape is %dx%d\n", shape[0], shape[1]);
+    if (n_dims==1) {
+      fprintf (stderr, "(get_grid_shape) shape is %d\n", shape[0]);
+    } else if (n_dims==2) {
+      fprintf (stderr, "(get_grid_shape) shape is %dx%d\n", shape[0], shape[1]);
+    } else {
+      fprintf (stderr, "(get_grid_shape) shape is %dx%dx%d\n", shape[0], shape[1], shape[2]);
+    }
+
     sidl_shape = sidl_int__array_create1d (n_dims);
 
     {
@@ -2164,8 +2177,8 @@ impl_edu_csdms_models_Sedflux2D_get_grid(
             long_var_name, _ex);
 
       // Values are given at cells, not nodes.
-      sidl_int__array_set1 (shape, 0, sidl_int__array_get1 (shape, 0));
-      sidl_int__array_set1 (shape, 1, sidl_int__array_get1 (shape, 1));
+      //sidl_int__array_set1 (shape, 0, sidl_int__array_get1 (shape, 0));
+      //sidl_int__array_set1 (shape, 1, sidl_int__array_get1 (shape, 1));
 
       edu_csdms_tools_CMIGridUniformRectilinear_initialize (grid,
           shape, spacing, lower_left, _ex);
@@ -2221,6 +2234,8 @@ impl_edu_csdms_models_Sedflux2D_get_grid_values(
 
           /* BMI_get_double returns an array that is compact and has
            * unit stride */
+
+          /* No need for this anymore.
           for (i=0; i<n_dims; i++)
           {
             lower[i] = 0;
@@ -2229,6 +2244,12 @@ impl_edu_csdms_models_Sedflux2D_get_grid_values(
           }
           for (i=n_dims-2, stride[n_dims-1]=1; i>=0; i--)
             stride[i] = stride[i+1]*dimen[i+1];
+          */
+          
+          for (i=0; i<n_dims; i++) {
+            n_vals *= dimen[i];
+            fprintf (stderr, "dimen[%d] = %d\n", i, dimen[i]);
+          }
 
           {
             const int _n_dims = 1;
@@ -2238,6 +2259,11 @@ impl_edu_csdms_models_Sedflux2D_get_grid_values(
 
             vals = sidl_double__array_borrow (data, _n_dims, _lower,
                 _upper, _stride);
+
+            fprintf (stderr, "Lower = %d\n", _lower[0]);
+            fprintf (stderr, "Upper = %d\n", _upper[0]);
+            fprintf (stderr, "Stride = %d\n", _stride[0]);
+            fprintf (stderr, "N Dims = %d\n", n_dims);
           }
 
           free (stride);

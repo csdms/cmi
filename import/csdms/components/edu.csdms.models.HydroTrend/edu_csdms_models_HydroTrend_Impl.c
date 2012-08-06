@@ -542,7 +542,10 @@ impl_edu_csdms_models_HydroTrend_setServices(
 
     {
       edu_csdms_ports_CMIPort port = edu_csdms_ports_CMIPort__cast (self, _ex);
+      edu_csdms_tools_Verbose_info (pd->log, "create", _ex);
       pd->handler = edu_csdms_cmi_ComponentHandler__create (_ex);
+      edu_csdms_tools_Verbose_info (pd->log, "set up", _ex);
+      fprintf (stdout, "Name: %s\n", CMI_COMPONENT_NAME); fflush (stdout);
       edu_csdms_cmi_ComponentHandler_set_up (pd->handler,
           CMI_COMPONENT_NAME, port, services, _ex);
     }
