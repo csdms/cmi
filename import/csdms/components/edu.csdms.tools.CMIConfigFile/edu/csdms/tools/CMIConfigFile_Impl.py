@@ -208,8 +208,18 @@ class CMIConfigFile:
     else:
         cfg_file = file
 
+    # Read CMI config files in this order:
+    #  1. Current directory
+    #  2. Home directory
+    #  3. Project directory
     files = [cfg_file,
              os.path.join (os.path.expanduser ('~/.cmt'), cfg_file)]
+    try:
+        files.append (os.path.join (os.environ['CMT_PROJECT_ROOT'],
+                                    'share', 'cmt', 'config', cfg_file))
+    except KeyError:
+        pass
+
     self._log.info ('Looking for config files (%s)' % ', '.join (files))
 
     try:
