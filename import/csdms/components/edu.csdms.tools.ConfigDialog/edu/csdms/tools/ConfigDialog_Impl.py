@@ -111,9 +111,19 @@ class ConfigDialog:
     for tab in self._dialog:
       self._log.debug ('Found tab %s' % tab.name ())
       ppf.setGroupName (userinput, tab.name ())
-      for entry in tab:
-        self._log.debug ('Found entry %s' % entry['name'])
+      for tab_entry in tab:
+        self._log.debug ('Found entry %s' % tab_entry['name'])
         try:
+            entry = {}
+            for key in ['name', 'help', 'label', 'default', 'range', 'type']:
+                try:
+                    entry[key] = tab_entry[key].encode ('utf-8')
+                except AttributeError:
+                    entry[key] = tab_entry[key]
+                #except Exception as e:
+                #    self._log.error ('Unexpected error encoding string %s (%s)' % (key, e))
+                #    entry[key] = tab_entry[key]
+
             if entry['type'] == types.FloatType:
                 ppf.addRequestDouble (userinput, entry['name'], entry['help'],
                                       entry['label'], entry['default'],
@@ -126,7 +136,7 @@ class ConfigDialog:
                 ppf.addRequestString (userinput, entry['name'], entry['help'],
                                       entry['label'], entry['default'])
         except Exception as e:
-            self._log.error ('Unexpected error parsing entry %s (%s)' % (entry['name'], e))
+            self._log.error ('Unexpected error parsing entry %s (%s)' % (tab_entry['name'], e))
     self._log.info ('Constructed ConfigDialog')
 # DO-NOT-DELETE splicer.end(construct)
 
