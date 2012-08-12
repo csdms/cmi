@@ -4,6 +4,7 @@
       <label>Input directory</label>
       <help_brief>Path to input files. {cb+bb;GUI;Enter path to input files;/home/csdms/sims/Sedflux2D/basecase10k;/home/csdms/sims/Sedflux2D/fallingSL;/home/csdms/sims/Sedflux2D/fastfallingSL;/home/csdms/sims/Sedflux2D/fastrisingSL;/home/csdms/sims/Sedflux2D/fullSLcycle;/home/csdms/sims/Sedflux2D/risingSL}</help_brief>
       <default>GUI</default>
+      <replace string="GUI">.</replace>
       <type>String</type>
     </entry>
     <entry name="/Sedflux2D/Input/Var/SimulationName">
@@ -40,29 +41,29 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/Sedflux2D/Input/Var/AlongShoreWidth">
+    <entry name="/Sedflux2D/Input/Var/XResolution">
       <label>Basin width</label>
       <unit>meters</unit>
       <help_brief>Width of basin</help_brief>
-      <default>500000</default>
+      <default>50000</default>
       <type>Float</type>
       <range>
         <min>0</min>
         <max>1e32</max>
       </range>
     </entry>
-    <entry name="/Sedflux2D/Input/Var/CrossShoreResolution">
+    <entry name="/Sedflux2D/Input/Var/YResolution">
       <label>Cross-shore grid spacing</label>
       <unit>meters</unit>
       <help_brief>Grid resolution in cross-shore direction</help_brief>
-      <default>50</default>
+      <default>100</default>
       <type>Float</type>
       <range>
         <min>0</min>
         <max>10000</max>
       </range>
     </entry>
-    <entry name="/Sedflux2D/Input/Var/VerticalResolution">
+    <entry name="/Sedflux2D/Input/Var/ZResolution">
       <label>Vertical resolution</label>
       <unit>meters</unit>
       <help_brief>grid resolution in z-direction</help_brief>
@@ -83,7 +84,7 @@
   <tab name="River">
     <entry name="/Sedflux2D/Input/Var/RiverFile">
       <label>River file</label>
-      <help_brief>Specify river values in a files for from the GUI. {cb;GUI;Enter path to bathymetry file.;/home/csdms/sims/sedflux/river_files/low_sediment.kvf;/home/csdms/sims/sedflux/river_files/high_sediment.kvf}</help_brief>
+      <help_brief>Specify river values in a files for from the GUI. {cb;GUI;Enter path to river file.;/home/csdms/sims/sedflux/river_files/flood_quiet_sediment.kvf;/home/csdms/sims/sedflux/river_files/random_sediment.kvf;/home/csdms/sims/sedflux/river_files/wetdry_sediment.kvf;/home/csdms/sims/sedflux/river_files/low_sediment.kvf;/home/csdms/sims/sedflux/river_files/high_sediment.kvf}</help_brief>
       <default>GUI</default>
       <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_river.kvf</html>]]></replace>
       <type>String</type>
@@ -91,7 +92,7 @@
     <entry name="/Sedflux2D/Input/Var/RiverBedLoadFlux">
       <label>Bed-load flux</label>
       <unit>kg/s</unit>
-      <help_brief>Bed-load flux that the river mouth</help_brief>
+      <help_brief>Bed-load flux at the river mouth</help_brief>
       <default>70</default>
       <type>Float</type>
       <range>
@@ -114,7 +115,7 @@
       <label>Suspended Load Concentration 2</label>
       <unit>kg/m^3</unit>
       <help_brief>Suspended-load concentration for grain size 2</help_brief>
-      <default>.1</default>
+      <default>.2</default>
       <type>Float</type>
       <range>
         <min>0.01</min>
@@ -222,7 +223,7 @@
       <label>Suspended-load grain size</label>
       <unit>microns</unit>
       <help_brief>Grain size of suspended-load component</help_brief>
-      <default>150</default>
+      <default>80</default>
       <type>Float</type>
       <range>
         <min>1</min>
@@ -233,7 +234,7 @@
       <label>Suspended-load grain density</label>
       <unit>kg/m^3</unit>
       <help_brief>Grain density of suspended-load component</help_brief>
-      <default>2600</default>
+      <default>2250</default>
       <type>Float</type>
       <range>
         <min>1000</min>
@@ -288,7 +289,7 @@
       <label>Suspended-load grain size</label>
       <unit>microns</unit>
       <help_brief>Grain size of suspended-load component</help_brief>
-      <default>150</default>
+      <default>12</default>
       <type>Float</type>
       <range>
         <min>1</min>
@@ -299,7 +300,7 @@
       <label>Suspended-load grain density</label>
       <unit>kg/m^3</unit>
       <help_brief>Grain density of suspended-load component</help_brief>
-      <default>2600</default>
+      <default>2100</default>
       <type>Float</type>
       <range>
         <min>1000</min>
@@ -310,7 +311,7 @@
       <label>Suspended-load saturated density</label>
       <unit>kg/m^3</unit>
       <help_brief>Saturated density of suspended-load component</help_brief>
-      <default>1800</default>
+      <default>1400</default>
       <type>Float</type>
       <range>
         <min>1000</min>
@@ -360,7 +361,7 @@
     </entry>
     <entry name="/Sedflux2D/Input/Var/SeaLevelFile">
       <label>Sea level file</label>
-      <help_brief>Read sea level from file. {cb;/home/csdms/sims/sedflux/sea_level_files/linear_fall.csv;Enter path to sea level file.;/home/csdms/sims/sedflux/sea_level_files/linear_rise.csv;/home/csdms/sims/sedflux/sea_level_files/down_up.csv;/home/csdms/sims/sedflux/sea_level_files/up_down.csv}</help_brief>
+      <help_brief>Read sea level from file. {cb;/home/csdms/sims/sedflux/sea_level_files/linear_fall.csv;Enter path to sea level file.;/home/csdms/sims/sedflux/sea_level_files/stable.csv;/home/csdms/sims/sedflux/sea_level_files/linear_rise.csv;/home/csdms/sims/sedflux/sea_level_files/down_up.csv;/home/csdms/sims/sedflux/sea_level_files/up_down.csv;/home/csdms/sims/sedflux/sea_level_files/full_cycle.csv}</help_brief>
       <default><![CDATA[<html>&#36;{SimulationName}_sealevel.csv</html>]]> </default>
 
       <type>String</type>

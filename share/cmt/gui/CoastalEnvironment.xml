@@ -1,0 +1,61 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/CoastalEnvironment/Input/Var/InputDir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {bb}</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/CoastalEnvironment/Input/Var/InputFile">
+      <label>Topography</label>
+      <help_brief>BOV file containing elevations of the coastal environment</help_brief>
+      <default>http://csdms.colorado.edu/thredds/dodsC/benchmark/sample/ramp_bathymetry.nc</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Output">
+    <entry name="/CoastalEnvironment/Output/Grid/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output grid files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/CoastalEnvironment/Output/Grid/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry name="/CoastalEnvironment/Output/Grid/FileFormat">
+      <label>File format</label>
+      <help_brief>Format for output files. {dl;VTK}</help_brief>
+      <default>VTK</default>
+      <type>String</type>
+    </entry>
+    <entry class="OutputFile" name="/CoastalEnvironment/Output/Grid/Var/Elevation"/>
+  </tab>
+  <tab name="About">
+    <entry name="/CoastalEnvironment/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>CoastalEnvironmentEnvironment</default>
+      <type>String</type>
+    </entry>
+    <entry name="/CoastalEnvironment/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Eric Hutton</default>
+      <type>String</type>
+    </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:CoastalEnvironmentEnvironment</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

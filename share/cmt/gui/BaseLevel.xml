@@ -1,0 +1,62 @@
+<dialog>
+  <tab name="Input Files and Directories">
+    <entry name="/BaseLevel/Input/Var/InputDir">
+      <label>Input directory</label>
+      <help_brief>Path to input files. {bb}</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/BaseLevel/Input/Var/InputFile">
+      <label>Input file</label>
+      <!--help_brief>Comma-separated list of BOV files containing base level information (file globbing is allowed)</help_brief-->
+      <help_brief>NetCDF file containing base level information</help_brief>
+      <default>http://csdms.colorado.edu/thredds/dodsC/benchmark/sample/falling_baselevel.nc</default>
+      <type>String</type>
+    </entry>
+  </tab>
+  <tab name="Output">
+    <entry name="/BaseLevel/Output/Grid/Dir">
+      <label>Output directory</label>
+      <help_brief>Path to output grid files.</help_brief>
+      <default>${cwd}</default>
+      <type>String</type>
+    </entry>
+    <entry name="/BaseLevel/Output/Grid/Interval">
+      <label>Interval between output files</label>
+      <help_brief>Interval between output files</help_brief>
+      <default>10</default>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+      <type>Float</type>
+    </entry>
+    <entry name="/BaseLevel/Output/Grid/FileFormat">
+      <label>File format</label>
+      <help_brief>Format for output files. {dl;VTK}</help_brief>
+      <default>VTK</default>
+      <type>String</type>
+    </entry>
+    <entry class="OutputFile" name="/BaseLevel/Output/Grid/Var/BaseLevel"/>
+  </tab>
+  <tab name="About">
+    <entry name="/BaseLevel/ModelName">
+      <label>Model name</label>
+      <help_brief>Name of the model</help_brief>
+      <default>Base-Level Reader</default>
+      <type>String</type>
+    </entry>
+    <entry name="/BaseLevel/ModelAuthor">
+      <label>Author name</label>
+      <help_brief>Name of the model author</help_brief>
+      <default>Eric Hutton</default>
+      <type>String</type>
+    </entry>
+    <entry name="HTML_HELP_FILE">
+      <label>HTML help file</label>
+      <help_brief>URL for HTML help file</help_brief>
+      <default>http://csdms.colorado.edu/wiki/Model_help:BaseLevel</default>
+      <type>String</type>
+    </entry>
+  </tab>
+</dialog>

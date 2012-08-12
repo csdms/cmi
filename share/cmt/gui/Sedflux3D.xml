@@ -18,8 +18,17 @@
       <label>Initialization file</label>
       <default>GUI</default>
       <help_brief>sedflux initialization file {cb;GUI;Enter path to initialization file}</help_brief>
+      <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_init.kvf</html>]]></replace>
       <type>String</type>
     </entry>
+    <entry name="/Sedflux3D/Input/Var/ProcessFile">
+      <label>Process file</label>
+      <default>GUI</default>
+      <help_brief>sedflux process file {dl;GUI}</help_brief>
+      <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_process.kvf</html>]]></replace>
+      <type>String</type>
+    </entry>
+
     <entry name="/Sedflux3D/Input/Var/RunDuration">
       <label>Run duration</label>
       <unit>years</unit>
@@ -31,18 +40,18 @@
         <max>100000</max>
       </range>
     </entry>
-    <entry name="/Sedflux3D/Input/Var/AlongShoreWidth">
+    <entry name="/Sedflux3D/Input/Var/XResolution">
       <label>Grid spacing in x</label>
       <unit>meters</unit>
       <help_brief>Grid spacing in x direction</help_brief>
       <default>1000</default>
       <type>Float</type>
       <range>
-        <min>1</min>
+        <min>0</min>
         <max>10e3</max>
       </range>
     </entry>
-    <entry name="/Sedflux3D/Input/Var/CrossShoreResolution">
+    <entry name="/Sedflux3D/Input/Var/YResolution">
       <label>Grid spacing in y</label>
       <unit>meters</unit>
       <help_brief>Grid spacing in y direction</help_brief>
@@ -53,7 +62,7 @@
         <max>10e3</max>
       </range>
     </entry>
-    <entry name="/Sedflux3D/Input/Var/VerticalResolution">
+    <entry name="/Sedflux3D/Input/Var/ZResolution">
       <label>Vertical resolution</label>
       <unit>meters</unit>
       <help_brief>grid resolution in z-direction</help_brief>
@@ -64,19 +73,21 @@
         <max>10</max>
       </range>
     </entry>
+
     <entry name="/Sedflux3D/Input/Var/BathymetryFile">
       <label>Bathymetry file</label>
       <help_brief>Choose a bathymetry file. {cb;/home/csdms/sims/sedflux/bathy_files/shallow.csv;Enter path to bathymetry file.;/home/csdms/sims/sedflux/bathy_files/steep.csv}</help_brief>
       <default><![CDATA[<html>&#36;{SimulationName}_bathy.csv</html>]]> </default>
       <type>String</type>
     </entry>
+
   </tab>
   <tab name="River">
     <entry name="/Sedflux3D/Input/Var/RiverFile">
       <label>River file</label>
       <default>GUI</default>
-      <help_brief>Specify river values in a files for from the GUI. {cb;GUI;Enter path to bathymetry file.;/home/csdms/sims/sedflux/river_files/low_sediment.csv;/home/csdms/sims/sedflux/river_files/high_sediment.csv}</help_brief>
-      <default>GUI</default>
+      <help_brief>Specify river values in a files for from the GUI. {cb;GUI;Enter path to river file.;/home/csdms/sims/sedflux/river_files/low_sediment.csv;/home/csdms/sims/sedflux/river_files/high_sediment.csv}</help_brief>
+      <replace string="GUI"><![CDATA[<html>&#36;{SimulationName}_river.kvf</html>]]></replace>
       <type>String</type>
     </entry>
     <entry name="/Sedflux3D/Input/Var/RiverBedLoadFlux">

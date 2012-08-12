@@ -1,15 +1,9 @@
 <dialog>
   <tab name="Input Files and Directories">
-    <!--entry name="/Child/Input/Dir">
-      <label>Input directory</label>
-      <help_brief>Path to input files. {cb;GUI;/data/sims/child/Delta}</help_brief>
-      <default>GUI</default>
-      <type>String</type>
-    </entry-->
     <entry name="/Child/Input/Var/InitializationFile">
       <label>Initialization file</label>
       <default>GUI</default>
-      <help_brief>Child initialization file {cb;GUI;Enter path to initialization file}</help_brief>
+      <help_brief>Child initialization file. {cb+bb;GUI;Enter path input file;/home/csdms/sims/Child/Dlim/dlimC1.in;/home/csdms/sims/Child/Dlim/dlim.in;/home/csdms/sims/Child/Dlim/dlim_small2.in;/home/csdms/sims/Child/Dlim/dlim_small.in;/home/csdms/sims/Child/Hillslope1/hillslope1.in;/home/csdms/sims/Child/Hillslope2/hillslope2.in;/home/csdms/sims/Child/Hybrid/erodep1.in;/home/csdms/sims/Child/Network1/network1.in;/home/csdms/sims/Child/Rainfall1/rainfall1.in;/home/csdms/sims/Child/Tlim/tlim1.in;/home/csdms/sims/Child/Tlim/tlim2.in}</help_brief>
       <type>String</type>
     </entry>
     <entry name="/Child/Input/Var/SimulationName">
@@ -18,18 +12,480 @@
       <default>Child</default>
       <type>String</type>
     </entry>
-    <!--entry name="/Child/SitePrefix">
-      <label>Site prefix</label>
-      <help_brief>Site prefix for input/output files.</help_brief>
-      <default>Delta</default>
+  </tab>
+  <tab name="Mesh">
+    <entry name="/Child/Input/Var/GridXSize">
+      <label>Width of grid in x-direction</label>
+      <unit>m</unit>
+      <help_brief>Width of grid in x-direction</help_brief>
+      <default>20000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e6</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/GridYSize">
+      <label>Width of grid in y-direction</label>
+      <unit>m</unit>
+      <help_brief>Width of grid in y-direction</help_brief>
+      <default>40000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e6</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/GridNodeSpacing">
+      <label>Mean distance between grid nodes</label>
+      <unit>m</unit>
+      <help_brief>Mean distance between grid nodes</help_brief>
+      <default>1000</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/OptPtPlace">
+      <label>Point placement</label>
+      <help_brief>How to place points in mesh (0=uniform, 1=perturbed uniform, 2=random) {dl;0;1;2}</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/TypBound">
+      <label>Open boundary</label>
+      <help_brief>Open boundary (0=corner, 1=side, 2=sides, 3=4 sides, 4=specify) {dl;0;1;2,3,4}</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/MeanElev">
+      <label>Mean initial elevation</label>
+      <unit>m</unit>
+      <help_brief>Mean initial elevation</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>-1000000</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/RandElev">
+      <label>Random noise amplitude</label>
+      <unit>m</unit>
+      <help_brief>Maximum amplitude of random noise applied to initial topography</help_brief>
+      <default>1.0</default>
+      <type>Float</type>
+      <range>
+        <min>-1000000</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/SlopedSurf">
+      <label>Initial slope</label>
+      <unit>m</unit>
+      <help_brief>Option for sloping initial surface</help_brief>
+      <default>0.0</default>
+      <type>Float</type>
+      <range>
+        <min>-1000000</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/UpperBoundZ">
+      <label>Elevation of upper boundary</label>
+      <unit>m</unit>
+      <help_brief>Elevation along upper boundary</help_brief>
+      <default>30.0</default>
+      <type>Float</type>
+      <range>
+        <min>-1000000</min>
+        <max>1000000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Climate">
+    <entry name="/Child/Input/Var/StPmean">
+      <label>Mean rainfall intensity</label>
+      <unit>m/yr</unit>
+      <help_brief>Mean rainfall intensity (m/yr) (13.6m/yr=Denver July)</help_brief>
+      <default>13.6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/StStdur">
+      <label>Mean storm duration (yr)</label>
+      <unit>yr</unit>
+      <help_brief>Mean storm duration (yr) (Denver July = 0.00057yrs = 5 hrs)</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/StIstdur">
+      <label>Mean time between storms (yr)</label>
+      <unit>yr</unit>
+      <help_brief>Mean time between storms (yr) (Denver July = 0.01yr = 88hrs)</help_brief>
+      <default>9</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Sediment Transport">
+    <entry name="/Child/Input/Var/KF">
+      <label>Sediment transport efficiency factor</label>
+      <unit>-</unit>
+      <help_brief>sediment transport efficiency factor (dims vary but incls conv s->y)</help_brief>
+      <default>617.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/MF">
+      <label>Sediment transport capacity discharge exponent</label>
+      <unit>-</unit>
+      <help_brief>Sediment transport capacity discharge exponent</help_brief>
+      <default>.66667</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/NF">
+      <label>Sediment transport capacity slope exponent</label>
+      <unit>-</unit>
+      <help_brief>Sediment transport capacity slope exponent</help_brief>
+      <default>.66667</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/PF">
+      <label>Excess shear stress (sic) exponent</label>
+      <unit>-</unit>
+      <help_brief>Excess shear stress (sic) exponent</help_brief>
+      <default>1.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/KB">
+      <label>Bedrock erodibility coefficient</label>
+      <unit>?</unit>
+      <help_brief>Bedrock erodibility coefficient (dimensions in m, kg, yr)</help_brief>
+      <default>.0005</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/KR">
+      <label>Regolith erodibility coefficient</label>
+      <unit>?</unit>
+      <help_brief>Regolith erodibility coefficient (dimensions same as KB)</help_brief>
+      <default>.0005</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/KT">
+      <label>Shear stress (or stream power) coefficient</label>
+      <unit>SI</unit>
+      <help_brief>Shear stress (or stream power) coefficient (in SI units)</help_brief>
+      <default>1000.</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/MB">
+      <label>Bedrock erodibility discharge exponent</label>
+      <unit>-</unit>
+      <help_brief>Bedrock erodibility specific (not total!) discharge exponent</help_brief>
+      <default>0.66667</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/NB">
+      <label>bedrock erodibility slope exponent</label>
+      <unit>-</unit>
+      <help_brief>bedrock erodibility slope exponent</help_brief>
+      <default>0.66667</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/PB">
+      <label>Excess erosion capacity exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent on excess erosion capacity (e.g., excess shear stress)</help_brief>
+      <default>1.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/TauCr">
+      <label>Critical shear stress for detachment-limited-erosion</label>
+      <unit>kg/m/s^2</unit>
+      <help_brief>Critical shear stress for detachment-limited-erosion (kg/m/s^2)</help_brief>
+      <default>5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/TauCb">
+      <label>Critical shear stress for detachment-limited-erosion</label>
+      <unit>kg/m/s^2</unit>
+      <help_brief>Critical shear stress for detachment-limited-erosion (kg/m/s^2)</help_brief>
+      <default>5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/KD">
+      <label>Diffusivity coefficient</label>
+      <unit>m^2/yr</unit>
+      <help_brief>Diffusivity coefficient</help_brief>
+      <default>.01</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/OptDiffDep">
+      <label>Diffusivity deposition</label>
+      <help_brief>1 = diffusion only erodes, never deposits {dl;0;1}</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/DiffusionThreshold">
+      <label>Diffusion threshold</label>
+      <unit>m^2/yr</unit>
+      <help_brief>Diffusion threshold for F(Qs) models; switched off if 0</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/OptDepthDependentDiffusion">
+      <label>Depth dependent diffusion</label>
+      <help_brief>Depth dependent diffusion option {dl;false;true}</help_brief>
+      <default>false</default>
       <type>String</type>
     </entry>
-    <entry name="/Child/CasePrefix">
-      <label>Case prefix</label>
-      <help_brief>Case prefix for input/output files.</help_brief>
-      <default>20x80</default>
-      <type>String</type>
-    </entry-->
+    <entry name="/Child/Input/Var/SoilBulkDensity">
+      <label>Soil bulk density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Soil bulk density</help_brief>
+      <default>1000.</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/CriticalSlope">
+      <label>Critical slope</label>
+      <unit>-</unit>
+      <help_brief>Critical gradient for nonlinear diffusion</help_brief>
+      <default>.5774</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/Beta">
+      <label>fraction sed to bedload</label>
+      <unit>-</unit>
+      <help_brief>Fraction sed to bedload (for F(Qs) rules only)</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Bedrock">
+    <entry name="/Child/Input/Var/BedrockDepth">
+      <label>Depth of bedrock</label>
+      <unit>m</unit>
+      <help_brief>Initial depth of bedrock (make this arbitrarily large)</help_brief>
+      <default>1000000.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/RegInit">
+      <label>Regolith thickness</label>
+      <unit>m</unit>
+      <help_brief>Initial regolith thickness</help_brief>
+      <default>0.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/MaxRegDepth">
+      <label>Max regolith depth</label>
+      <unit>m</unit>
+      <help_brief>Maximum depth of a single regolith layer (also "active layer")</help_brief>
+      <default>1.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1e32</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Weathering">
+    <entry name="/Child/Input/Var/ChemWeatheringLaw">
+      <label>Chemical weathering law</label>
+      <unit>-</unit>
+      <help_brief>Chemical weathering law (possible values 0-1: 0 = None; 1 = Dissolution)</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1.0</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/MaxDissolutionRate">
+      <label>Maximum dissolution rate</label>
+      <unit>kg/m^3/yr</unit>
+      <help_brief>Maximum dissolution rate</help_brief>
+      <default>0.099</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/ChemDepth">
+      <label>Dissolution depth scale</label>
+      <unit>m</unit>
+      <help_brief>Depth scale for dissolution</help_brief>
+      <default>0.18</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/RockDensityInit">
+      <label>Bulk density of rock</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Initial rock bulk density</help_brief>
+      <default>2270</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/ProductionLaw">
+      <label>Production law</label>
+      <help_brief>0 = None; 1 = exponential law; 2 = exp. with density dep. {dl;0;1;2}</help_brief>
+      <default>0</default>
+      <type>Int</type>
+      <range>
+        <min>0</min>
+        <max>3</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/SoilProdRateIntercept">
+      <label>Soil production rate intercept</label>
+      <unit>m/yr</unit>
+      <help_brief>Density-dependent soil production rate intercept</help_brief>
+      <default>0.00055</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/SoilProdRateSlope">
+      <label>Soil production rate slope</label>
+      <unit>(m/yr)/(kg/m^3)</unit>
+      <help_brief>Density-dependent soil production rate slope</help_brief>
+      <default>0.00000017</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/SoilProdDepth">
+      <label>Depth scale for soil production rate</label>
+      <unit>m</unit>
+      <help_brief>depth scale for soil production rate</help_brief>
+      <default>0.30</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/SoilBulkDensity">
+      <label>Soil bulk density</label>
+      <unit>kg/m^3</unit>
+      <help_brief>Bulk density of soil (constant)</help_brief>
+      <default>740</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10000</max>
+      </range>
+    </entry>
   </tab>
   <tab name="Run Parameters">
     <entry name="/Child/Input/Var/RunDuration">
@@ -95,46 +551,247 @@
       </range>
     </entry>
   </tab>
-  <tab name="Ports">
+  <tab name="Grain size">
+    <entry name="/Child/Input/Var/NumGrainSize">
+      <label>Number of grain sizes</label>
+      <help_brief>Number of grain size classes {dl;1;2}</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/RegProportion1">
+      <label>Proportion of grain size diam1 in regolith</label>
+      <unit>-</unit>
+      <help_brief>Proportion of sediments of grain size diam1 in regolith</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/BRProportion1">
+      <label>Proportion of grain size diam1 in bedrock</label>
+      <unit>-</unit>
+      <help_brief>Proportion of sediments of grain size diam1 in bedrock</help_brief>
+      <default>1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/GrainDiam1">
+      <label>Diameter of first grain size class</label>
+      <unit>m</unit>
+      <help_brief>Representative diameter of first grain size class</help_brief>
+      <default>0.001</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/RegProportion2">
+      <label>Proportion of grain size diam2 in regolith</label>
+      <unit>-</unit>
+      <help_brief>Proportion of sediments of grain size diam2 in regolith</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/BRProportion2">
+      <label>Proportion of grain size diam2 in bedrock</label>
+      <unit>-</unit>
+      <help_brief>Proportion of sediments of grain size diam2 in bedrock</help_brief>
+      <default>0.1</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/GrainDiam2">
+      <label>Diameter of second grain size class</label>
+      <unit>m</unit>
+      <help_brief>Representative diameter of second grain size class</help_brief>
+      <default>0.05</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HidingExp">
+      <label>Hiding/protrusion exponent</label>
+      <unit>-</unit>
+      <help_brief>Hiding/protrusion exponent for multiple grain sizes</help_brief>
+      <default>0.75</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+  </tab>
+  <tab name="Channel Geometry">
+    <entry name="/Child/Input/Var/ChanGeomModel">
+      <label>Channel geometry model</label>
+      <help_brief>option for channel width closure 1 = empirical model: Wb = Kw Qb ^ wb, W / Wb = ( Q / Qb ) ^ ws 2 = Parker width closure: tau / tauc = const {dl;1;2}</help_brief>
+      <default>1</default>
+      <type>Int</type>
+      <range>
+        <min>1</min>
+        <max>2</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrWidCoeffDS">
+      <label>Downstream hydraulic width coefficient</label>
+      <unit>m/(m3/s)^exp</unit>
+      <help_brief>Coefficient on downstream hydraulic width</help_brief>
+      <default>10.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrWidExpDS">
+      <label>Downstream hydraulic width exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent on downstream hydraulic width</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrWidExpStn">
+      <label>At-a-station hydraulic width relation exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent on at-a-station hydraulic width relation</help_brief>
+      <default>0.5</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrDepCoeffDS">
+      <label>Downstream hydraulic depth coefficient</label>
+      <unit>m/(m3/s)^exp</unit>
+      <help_brief>Coefficient on downstream hydraulic depth</help_brief>
+      <default>1.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrDepExpDS">
+      <label>Downstream hydraulic depth exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent on downstream hydraulic depth</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrDepExpStn">
+      <label>At-a-station hydraulic depth exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent on at-a-station hydraulic depth</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrRoughCoeffDS">
+      <label>Downstream hydraulic roughness coefficient</label>
+      <unit>-</unit>
+      <help_brief>Coefficient on downstream hydraulic roughness (manning n)</help_brief>
+      <default>0.03</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrRoughExpDS">
+      <label>Downstream hydraulic roughness exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent on downstream hydraulic roughness (manning n)</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/HydrRoughExpStn">
+      <label>At-a-station hydraulic roughness exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent on at-a-station hydraulic roughness</help_brief>
+      <default>0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/BankRoughCoeff">
+      <label>Downstream bank roughness coefficient</label>
+      <unit>-</unit>
+      <help_brief>Coefficient downstream bank roughness (for meand only)</help_brief>
+      <default>15.0</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>100</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/BankRoughExp">
+      <label>Downstream bank roughness exponent</label>
+      <unit>-</unit>
+      <help_brief>Exponent downstream bank roughness (for meand only)</help_brief>
+      <default>0.80</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>10</max>
+      </range>
+    </entry>
+    <entry name="/Child/Input/Var/BankFullEvent">
+      <label>Bankfull precipitation</label>
+      <unit>m/yr</unit>
+      <help_brief>Precipitation rate of a bankfull event</help_brief>
+      <default>13.6</default>
+      <type>Float</type>
+      <range>
+        <min>0</min>
+        <max>1000</max>
+      </range>
+    </entry>
+  </tab>
+  <!--tab name="Ports">
     <entry name="/Child/Port/SubaqueousErosion">
       <label>SubaqueousErosion port</label>
       <help_brief>Use the SubaqueousErosion provides port. {dl;ON;OFF}</help_brief>
       <default>ON</default>
       <type>String</type>
     </entry>
-  </tab>
-  <tab name="Grid">
-    <entry name="/Child/Input/Var/GridXSize">
-      <label>Width of grid in x-direction (m)</label>
-      <help_brief>Width of grid in x-direction (m)</help_brief>
-      <default>20000</default>
-      <type>Float</type>
-      <range>
-        <min>0</min>
-        <max>1e6</max>
-      </range>
-    </entry>
-    <entry name="/Child/Input/Var/GridYSize">
-      <label>Width of grid in y-direction (m)</label>
-      <help_brief>Width of grid in y-direction (m)</help_brief>
-      <default>40000</default>
-      <type>Float</type>
-      <range>
-        <min>0</min>
-        <max>1e6</max>
-      </range>
-    </entry>
-    <entry name="/Child/Input/Var/GridNodeSpacing">
-      <label>Mean distance between grid nodes (m)</label>
-      <help_brief>Mean distance between grid nodes (m)</help_brief>
-      <default>1000</default>
-      <type>Float</type>
-      <range>
-        <min>0</min>
-        <max>10000</max>
-      </range>
-    </entry>
-  </tab>
+  </tab-->
   <tab name="Output Grids">
     <entry name="/Child/Output/Grid/Dir">
       <label>Output directory</label>

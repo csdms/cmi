@@ -10,10 +10,15 @@ ocean salinity (psu):                   35
 density of mantle (kg/m^3):             3300
 
 ['sea level']
-active:                                 no
+active:                                 ${SeaLevelOn}
 logging:                                no
 repeat interval:                        always
-sea level file:                         small_sealevel.csv
+sea level file:                         ${SeaLevelFile}
+
+[ compaction ]
+active:                                 ${CompactionOn}
+logging:                                no
+repeat interval:                        25y
 
 [bbl]
 active:                                 yes

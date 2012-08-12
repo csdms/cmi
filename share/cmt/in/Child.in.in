@@ -23,7 +23,7 @@
 # with a couple of other general settings.
 # 
 OUTFILENAME: name of the run
-delta
+${SimulationName}
 RUNTIME: Duration of run (years)
 ${RunDuration}
 OPINTRVL: Output interval (years)
@@ -65,36 +65,36 @@ ${GridXSize}
 Y_GRID_SIZE: "width" of grid, meters
 ${GridYSize}
 OPT_PT_PLACE: point placement: 0=uniform, 1=perturbed unif., 2=random
-1
+${OptPtPlace}
 GRID_SPACING: mean distance between grid nodes, meters
 ${GridNodeSpacing}
 NUM_PTS: for random grid, number of points to place
 n/a
 TYP_BOUND: open boundary;0=corner,1=side,2= sides,3=4 sides,4=specify
-1
+${TypBound}
 OUTLET_X_COORD: x-coordinate of single outlet, if specified
 n/a
 OUTLET_Y_COORD: y-coordinate of single outlet, if specified
 n/a
 MEAN_ELEV: mean initial elevation, m
-0
+${MeanElev}
 RAND_ELEV: max amplitude of random noise appied to initial topography, m
-1.0
+${RandElev}
 SLOPED_SURF: Option for sloping initial surface
-0
+${SlopedSurf}
 UPPER_BOUND_Z: elevation along upper boundary, m
-30
+${UpperBoundZ}
 #
 #   Climate parameters
 #
 OPTVAR: Option for rainfall variation
 0
 ST_PMEAN: Mean rainfall intensity (m/yr) (13.6m/yr=Denver July)
-13.6
+${StPmean}
 ST_STDUR: Mean storm duration (yr) (Denver July = 0.00057yrs = 5 hrs)
-1
+${StStdur}
 ST_ISTDUR: Mean time between storms (yr) (Denver July = 0.01yr = 88hrs)
-9
+${StIstdur}
 ST_OPTSINVAR: option for sinusoidal variations
 0
 OPTSINVARINFILT: option for sinusoidal variations in infiltration capacity
@@ -171,77 +171,77 @@ DETACHMENT_LAW: detachment capacity law to use (0, 1, 2 ...)
 TRANSPORT_LAW: transport capacity law to use (0, 1, 2 ...)
 1
 KF: sediment transport efficiency factor (dims vary but incls conv s->y)
-617.0
+${KF}
 MF: sediment transport capacity discharge exponent
-0.66667
+${MF}
 NF: sed transport capacity slope exponent
-0.66667
+${NF}
 PF: excess shear stress (sic) exponent
-1.5
+${PF}
 KB: bedrock erodibility coefficient (dimensions in m, kg, yr)
-0.0005
+${KB}
 KR: regolith erodibility coefficient (dimensions same as KB)
-0.0005
+${KR}
 KT:  Shear stress (or stream power) coefficient (in SI units)
-1000
+${KT}
 MB: bedrock erodibility specific (not total!) discharge exponent
-0.66667
+${MB}
 NB: bedrock erodibility slope exponent
-0.66667
+${NB}
 PB: Exponent on excess erosion capacity (e.g., excess shear stress)
-1.5
+${PB}
 TAUCR: critical shear stress for detachment-limited-erosion (kg/m/s^2)
-5
+${TauCr}
 TAUCB: critical shear stress for detachment-limited-erosion (kg/m/s^2)
-5
+${TauCb}
 KD: diffusivity coef (m2/yr)
-0.01
+${KD}
 OPTDIFFDEP: if =1 then diffusion only erodes, never deposits
-0
+${OptDiffDep}
 DIFFUSIONTHRESHOLD: for F(Qs) models; switched off if 0
-0
+${DiffusionThreshold}
 OPT_NONLINEAR_DIFFUSION: Option for using non-linear diffusion
 1
 OPT_DEPTH_DEPENDENT_DIFFUSION:
-false
+${OptDepthDependentDiffusion}
 SOILBULKDENSITY:
-1000.
+${SoilBulkDensity}
 PRODUCTION_LAW:
 ExpLaw
 CRITICAL_SLOPE: critical gradient for nonlinear diffusion
-0.5774
+${CriticalSlope}
 BETA: fraction sed to bedload (for F(Qs) rules only)
-1
+${Beta}
 #
 #   Bedrock and regolith
 #
 BEDROCKDEPTH: initial depth of bedrock (make this arbitrarily large)
-1000000.0
+${BedrockDepth}
 REGINIT: initial regolith thickness
-0.0
+${RegInit}
 MAXREGDEPTH: maximum depth of a single regolith layer (also "active layer")
-1.0
+${MaxRegDepth}
 #
 #   Chemical and physical weathering
 #
 CHEM_WEATHERING_LAW: possible values 0-1: 0 = None; 1 = Dissolution
-0
+${ChemWeatheringLaw}
 MAXDISSOLUTIONRATE: maximum dissolution rate (kg/m3/yr)
-0.099
+${MaxDissolutionRate}
 CHEMDEPTH: depth scale for dissolution (m)
-0.18
+${ChemDepth}
 ROCKDENSITYINIT: initial rock bulk density (kg/m3)
-2270
+${RockDensityInit}
 PRODUCTION_LAW: possible values 0-2: 0 = None; 1 = exponential law; 2 = exp. with density dep.
-0
+${ProductionLaw}
 SOILPRODRATEINTERCEPT: density-dependent soil production rate intercept (m/yr)
-0.00055
+${SoilProdRateIntercept}
 SOILPRODRATESLOPE: density-dependent soil production rate slope ( (m/yr)/(kg/m3) )
-0.00000017
+${SoilProdRateSlope}
 SOILPRODDEPTH: depth scale for soil production rate (m)
-0.30
+${SoilProdDepth}
 SOILBULKDENSITY: bulk density of soil (constant) (kg/m3)
-740
+${SoilBulkDensity}
 #
 #   Tectonics / baselevel boundary conditions
 #
@@ -282,21 +282,21 @@ ZMESHTHRESHOLD
 #    If >1, a multiple-grain-size transport law must be used.)
 #
 NUMGRNSIZE: number of grain size classes
-1
+${NumGrainSize}
 REGPROPORTION1: proportion of sediments of grain size diam1 in regolith [.]
-1
+${RegProportion1}
 BRPROPORTION1: proportion of sediments of grain size diam1 in bedrock [.]
-1
+${BRProportion1}
 GRAINDIAM1: representative diameter of first grain size class [m]
-0.001
+${GrainDiam1}
 REGPROPORTION2: proportion of sediments of grain size diam2 in regolith [.]
-0.1
+${RegProportion2}
 BRPROPORTION2: proportion of sediments of grain size diam2 in bedrock [.]
-0.1
+${BRProportion2}
 GRAINDIAM2: representative diameter of second grain size class [m]
-0.05
+${GrainDiam2}
 HIDINGEXP: hiding/protrusion exponent for multiple grain sizes
-0.75
+${HidingExp}
 #
 #   Hydraulic geometry parameters
 #
@@ -310,31 +310,31 @@ HIDINGEXP: hiding/protrusion exponent for multiple grain sizes
 #     2 = Parker width closure: tau / tauc = const
 #
 CHAN_GEOM_MODEL: option for channel width closure
-1
+${ChanGeomModel}
 HYDR_WID_COEFF_DS: coeff. on downstream hydraulic width (m/(m3/s)^exp)
-10.0
+${HydrWidCoeffDS}
 HYDR_WID_EXP_DS: exponent on downstream hydraulic width relation 
-0.5
+${HydrWidExpDS}
 HYDR_WID_EXP_STN: exp. on at-a-station hydraulic width relation
-0.5
+${HydrWidExpStn}
 HYDR_DEP_COEFF_DS: coeff. on downstream hydraulic depth (m/(m3/s)^exp)
-1.0
+${HydrDepCoeffDS}
 HYDR_DEP_EXP_DS: exponent on downstream hydraulic depth relation 
-0
+${HydrDepExpDS}
 HYDR_DEP_EXP_STN: exp. on at-a-station hydraulic depth relation
-0
+${HydrDepExpStn}
 HYDR_ROUGH_COEFF_DS: coeff. on downstrm hydraulic roughness (manning n)
-0.03
+${HydrRoughCoeffDS}
 HYDR_ROUGH_EXP_DS: exp. on downstream hydraulic roughness
-0
+${HydrRoughExpDS}
 HYDR_ROUGH_EXP_STN: exp on at-a-station hydr. rough.
-0
+${HydrRoughExpStn}
 BANK_ROUGH_COEFF: coeff. downstream bank roughness (for meand only)
-15.0
+${BankRoughCoeff}
 BANK_ROUGH_EXP: exp downstream bank roughness (for meand only)
-0.80
+${BankRoughExp}
 BANKFULLEVENT: precipitation rate of a bankfull event, in m/y
-13.6
+${BankFullEvent}
 #
 #   Other options
 #

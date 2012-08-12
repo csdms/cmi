@@ -1,0 +1,3 @@
+[CoastalEnvironment]
+input_dir=${InputDir}
+elevation_file=${InputFile}

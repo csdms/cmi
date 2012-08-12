@@ -1,0 +1,3 @@
+[BaseLevel]
+input_dir=${InputDir}
+input_file=${InputFile}
