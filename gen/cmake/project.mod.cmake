@@ -18,13 +18,14 @@ module load openmi
 module load cem/alpha
 module load sedflux/devel
 module load hydrotrend/3.1
-module load child
+module load child/cca
 module load internal
 module load roms
 module load stm
 module load marssim
 module load bmi cmi esmf
 
+setenv CMT_VERBOSE 45
 setenv CMT_PROJECT_ROOT @PROJECT_TOP_DIR@/../..
 if {![info exists env{CMT_PROJECT_TEMPLATE_PATH}]} {
   setenv CMT_PROJECT_TEMPLATE_PATH "@TEMPLATE_DIR@"
