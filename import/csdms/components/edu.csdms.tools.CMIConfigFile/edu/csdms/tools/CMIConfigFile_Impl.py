@@ -280,7 +280,7 @@ class CMIConfigFile:
         self._log.info ('Reading destination template files (%s)' % ';'.join (dsts))
         self._log.info ('Reading mappers (%s)' % ';'.join (mappers))
         self._log.info ('Reading config_xml_file (%s)' % dialog_file)
-        self._log.info ('Reading ports_queue_dt (%s)' % port_queue_dt)
+        self._log.info ('Reading ports_queue_dt (%f)' % port_queue_dt)
         self._log.info ('Reading initialize_arg (%s)' % initialize_arg)
 
         self._data['CMI_PORT_NAMES'] = ports

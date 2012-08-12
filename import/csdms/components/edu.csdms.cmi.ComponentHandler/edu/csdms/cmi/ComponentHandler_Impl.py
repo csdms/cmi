@@ -12,6 +12,7 @@
 
 # DO-NOT-DELETE splicer.begin(_initial)
 # Insert-Code-Here {_initial} ()
+import sys
 try:
     print 'Importing CMT modules...'
     import cmt.status
@@ -19,7 +20,6 @@ try:
 except Exception as e:
     print 'ERROR: Unable to import: %s' % e
     print 'This was my search path'
-    import sys
     for path in sys.path:
         print '%s' % path
 else:
@@ -220,6 +220,13 @@ class ComponentHandler:
     #sim_name = self.userinput.getString ("/%s/Input/Var/SimulationName" % self.name, "???")
     #self.log.info ('SimulationName is %s' % sim_name)
 
+    try:
+        self._port_queue_dt = self.cfg_file.get_float ("CMI_PORT_QUEUE_DT")
+    except ValueError:
+        self._port_queue_dt = 1.
+    except Exception as e:
+        self.log.error ('Unable to get port queue de (%s)' % e)
+
     self.log.info ('Construct dialog')
     try:
         dialog.construct (ppf, self.userinput)
@@ -408,6 +415,13 @@ class ComponentHandler:
     else:
         self.log.info ("Ran initialize ports")
 
+    if self.port_queue.get_active_port_count () == 0:
+        self.log.info ('Running as standalone component')
+        self._port_queue_dt = sys.float_info.max
+    else:
+        self.log.info ('Running with %d uses ports' %
+                       self.port_queue.get_active_port_count ())
+
     self.status = cmt.status.INITIALIZED
     self.log.info ('Initialized')
 
@@ -479,7 +493,8 @@ class ComponentHandler:
     self.log.info ("Updating ports until %f" % time_interval)
     try:
         now = self.client.CMI_get_current_time ()
-        port_queue_dt = 1.
+        #port_queue_dt = 1.
+        port_queue_dt = self._port_queue_dt
 
         times = np.arange (now, time_interval, port_queue_dt) + port_queue_dt
         try:

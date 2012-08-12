@@ -502,6 +502,21 @@ class CMIPortQueue:
         self.disable_port (port)
 # DO-NOT-DELETE splicer.end(disable_ports)
 
+  def get_active_port_count(self):
+    #
+    # sidl EXPECTED RETURN VALUE(s)
+    # =============================
+    # int _return
+    #
+
+# DO-NOT-DELETE splicer.begin(get_active_port_count)
+    count = 0
+    for (name, port) in self._ports.items ():
+        if hasattr (port, 'CMI_run'):
+            count += 1
+    return count
+# DO-NOT-DELETE splicer.end(get_active_port_count)
+
   def check_time_spans(self, start, end):
     #
     # sidl EXPECTED INCOMING TYPES

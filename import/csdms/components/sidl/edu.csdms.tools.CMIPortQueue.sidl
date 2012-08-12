@@ -81,6 +81,8 @@ package edu version 0.0 {
                 
                 void disable_ports(in array<string> ports);	                	
 
+                int get_active_port_count ();
+
                 
                 bool check_time_spans(in double start, in double end);	                	
 
