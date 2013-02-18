@@ -1,0 +1,25 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+
+  <xi:include href="openmi_interface.xml" parse="xml"/>
+  <xi:include href="openmi_impl.xml" parse="xml"/>
+  <xi:include href="csdms_ports.xml" parse="xml"/>
+  <xi:include href="csdms_tools.xml" parse="xml"/>
+
+  <component name="models.Marssim" language="f90">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.IRFPort@MARSSIM</provides>
+    <!--requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>tools.Verbose</requires-->
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.TemplateFiles</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+
+</project>

@@ -1,0 +1,15 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms_ports">
+
+  <xi:include href="../services/cmi_interface.xml" parse="xml"/>
+
+  <port name="ports.CMIPort">
+    <requires>IGrid</requires>
+    <!--requires>IElementSet</requires>
+    <requires>IValueSet</requires>
+    <requires>ElementType</requires>
+    <requires>ISpatialReference</requires-->
+    <import-sidl/>
+  </port>
+
+</project>

@@ -1,0 +1,54 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+
+  <xi:include href="openmi_interface.xml" parse="xml"/>
+  <xi:include href="openmi_impl.xml" parse="xml"/>
+  <xi:include href="csdms_ports.xml" parse="xml"/>
+  <xi:include href="csdms_tools.xml" parse="xml"/>
+
+  <!-- Model components
+    -->
+  <component name="models.RiverReader" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.IRFPort@River</provides>
+    <requires>ScalarSet</requires>
+    <!--requires>tools.nctsfiles</requires-->
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.Verbose</requires>
+    <requires>tools.TemplateFiles</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+  <component name="models.CEM" language="c">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.ports.IRFPort@River</uses>
+    <uses>edu.csdms.ports.IRFPort@Waves</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.IRFPort@Elevation</provides>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <!--requires>tools.irfports</requires>
+    <requires>tools.ncgsfiles</requires-->
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>tools.Verbose</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+  <component name="models.Waves" language="c">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.IRFPort@Waves</provides>
+    <requires>ScalarSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.Verbose</requires>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </component>
+
+</project>

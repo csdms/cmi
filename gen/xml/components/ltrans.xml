@@ -1,0 +1,27 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+
+  <xi:include href="openmi_interface.xml" parse="xml"/>
+  <xi:include href="openmi_impl.xml" parse="xml"/>
+  <xi:include href="csdms_ports.xml" parse="xml"/>
+  <xi:include href="csdms_tools.xml" parse="xml"/>
+
+  <component name="models.LTRANS" language="f90">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.ports.CMIPort@Ocean</uses>
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.CMIPort@xyz</provides>
+    <requires>ScalarSet</requires>
+    <requires>IScalarSet</requires>
+    <requires>ValueSet</requires>
+    <requires>tools.PrintQueue</requires>
+    <requires>tools.ConfigDialog</requires>
+    <requires>tools.IRFPortQueue</requires>
+    <requires>edu.csdms.ports.CMIPort</requires>
+    <requires>tools.Verbose</requires>
+    <requires>tools.TemplateFiles</requires>
+    <extras>make.vars.user</extras>
+    <import-impl/>
+  </component>
+
+</project>

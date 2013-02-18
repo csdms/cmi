@@ -1,0 +1,23 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+  <!--
+  <extras>make.vars.user</extras>
+  -->
+
+  <xi:include href="../services/csdms_ports.xml" parse="xml"/>
+  <xi:include href="../services/csdms_services.xml" parse="xml"/>
+
+  <component name="models.Plume" language="c++">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+    <uses>edu.csdms.ports.CMIPort@River</uses>
+
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.CMIPort@Deposition</provides>
+
+    <requires>cmi.ComponentHandler</requires>
+    <requires>tools.Verbose</requires>
+    <requires>tools.CMIGridUniformRectilinear</requires>
+
+    <extras>make.vars.user</extras>
+  </component>
+</project>
