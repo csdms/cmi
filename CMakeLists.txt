@@ -36,6 +36,7 @@ set (PROJECTS
   cmi_examples
   hydrotrend
   nced_2012
+  overeem_2012
 )
 
 if (NOT DEFINED MODULE_NAME)
@@ -45,7 +46,7 @@ endif (NOT DEFINED MODULE_NAME)
 ##
 # Set locations of input and output
 set (SRCDIR ${CMAKE_SOURCE_DIR}/import/csdms)
-set (PRJDIR ${CMAKE_SOURCE_DIR}/gen/xml)
+set (PRJDIR ${CMAKE_SOURCE_DIR}/gen/xml/collections)
 set (DESTDIR ${CMAKE_BINARY_DIR})
 set (PROJECT_TOP_DIR ${CMAKE_BINARY_DIR}/csdms)
 set (CONFIG_DIR ${CMAKE_SOURCE_DIR}/share/cmt/gui)
