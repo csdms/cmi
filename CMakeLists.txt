@@ -37,6 +37,9 @@ set (PROJECTS
   hydrotrend
   nced_2012
   overeem_2012
+  overeem_2013_hydrotrend
+  overeem_2013_plume
+  just_hydrotrend
 )
 
 if (NOT DEFINED MODULE_NAME)
@@ -45,6 +48,7 @@ endif (NOT DEFINED MODULE_NAME)
 
 ##
 # Set locations of input and output
+#set (SRCDIR /scratch/huttone/cca-projects/cem/0.1/src/_build/csdms)
 set (SRCDIR ${CMAKE_SOURCE_DIR}/import/csdms)
 set (PRJDIR ${CMAKE_SOURCE_DIR}/gen/xml/collections)
 set (DESTDIR ${CMAKE_BINARY_DIR})
