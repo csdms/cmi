@@ -1,0 +1,8 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="bmi" language="java">
+
+  <port name="csdms.bmi.Port">
+    <import-sidl/>
+  </port>
+
+</project>

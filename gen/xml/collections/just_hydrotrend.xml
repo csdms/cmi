@@ -1,0 +1,48 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="csdms">
+
+  <!--xi:include href="../services/csdms_ports.xml" parse="xml"/>
+  <xi:include href="../services/csdms_services.xml" parse="xml"/-->
+
+  <!--xi:include href="../components/hydrotrend.xml" parse="xml"/-->
+  <!--xi:include href="../components/cem.xml" parse="xml"/>
+  <xi:include href="../components/waves.xml" parse="xml"/>
+  <xi:include href="../components/coastal.xml" parse="xml"/>
+  <xi:include href="../components/avulsion.xml" parse="xml"/-->
+
+  <!--xi:include href="../services/csdms_ports.xml" parse="xml"/-->
+  <!--xi:include href="../services/csdms_services.xml" parse="xml"/-->
+
+  <interface name="core.Bmi">
+    <import-sidl/>
+  </interface>
+
+  <class name="model.Hydrotrend" language="c">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="model.Sedflux2d" language="c">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="model.Sedflux3d" language="c">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="model.Child" language="cxx">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+</project>

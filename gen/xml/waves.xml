@@ -1,16 +1,17 @@
 <project xmlns:xi="http://www.w3.org/2001/XInclude"
   name="csdms" language="java" package="edu.csdms">
+  <!--
+  <extras>make.vars.user</extras>
+  -->
 
   <xi:include href="csdms_ports.xml" parse="xml"/>
   <xi:include href="csdms_services.xml" parse="xml"/>
 
-  <component name="models.CEM" language="c++">
+  <component name="models.Waves" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
-    <uses>edu.csdms.ports.CMIPort@River</uses>
-    <uses>edu.csdms.ports.CMIPort@Waves</uses>
 
     <provides>gov.cca.ports.GoPort@Run</provides>
-    <provides>edu.csdms.ports.CMIPort@Elevation</provides>
+    <provides>edu.csdms.ports.CMIPort@Waves</provides>
 
     <requires>cmi.ComponentHandler</requires>
     <requires>tools.Verbose</requires>
@@ -18,5 +19,4 @@
 
     <extras>make.vars.user</extras>
   </component>
-
 </project>

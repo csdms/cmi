@@ -1,0 +1,15 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+
+  <xi:include href="csdms_ports.xml" parse="xml"/>
+  <xi:include href="csdms_services.xml" parse="xml"/>
+
+  <xi:include href="hydrotrend.xml" parse="xml"/>
+  <xi:include href="sedflux.xml" parse="xml"/>
+  <xi:include href="plume.xml" parse="xml"/>
+  <xi:include href="avulsion.xml" parse="xml"/>
+  <xi:include href="waves.xml" parse="xml"/>
+  <xi:include href="cem.xml" parse="xml"/>
+
+</project>
+

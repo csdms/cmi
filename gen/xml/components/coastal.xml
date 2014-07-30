@@ -1,0 +1,21 @@
+<project xmlns:xi="http://www.w3.org/2001/XInclude"
+  name="csdms" language="java" package="edu.csdms">
+
+  <xi:include href="../services/csdms_ports.xml" parse="xml"/>
+  <xi:include href="../services/csdms_services.xml" parse="xml"/>
+
+  <component name="env.Coastal" language="python">
+    <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
+
+    <provides>gov.cca.ports.GoPort@Run</provides>
+    <provides>edu.csdms.ports.CMIPort@CoastalEnvironment</provides>
+
+    <requires>tools.Verbose</requires>
+    <requires>tools.CMIGridPoints</requires>
+    <requires>cmi.ComponentHandler</requires>
+
+    <extras>make.vars.user</extras>
+  </component>
+
+</project>
+

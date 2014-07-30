@@ -15,5 +15,8 @@
     <import-sidl/>
     <requires>IGrid</requires>
   </interface>
+  <interface name="bmi.Port">
+    <import-sidl/>
+  </interface>
 
 </project>

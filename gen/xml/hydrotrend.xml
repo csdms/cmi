@@ -4,7 +4,7 @@
   <xi:include href="csdms_ports.xml" parse="xml"/>
   <xi:include href="csdms_services.xml" parse="xml"/>
 
-  <component name="models.HydroTrend" language="c">
+  <component name="models.HydroTrend" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
 
     <provides>gov.cca.ports.GoPort@Run</provides>

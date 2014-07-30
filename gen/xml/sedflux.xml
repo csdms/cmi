@@ -7,7 +7,7 @@
   <xi:include href="csdms_ports.xml" parse="xml"/>
   <xi:include href="csdms_services.xml" parse="xml"/>
 
-  <component name="models.Sedflux3D" language="c">
+  <component name="models.Sedflux3D" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <uses>edu.csdms.ports.CMIPort@CoastalEnvironment</uses>
     <uses>edu.csdms.ports.CMIPort@SubaerialDelta</uses>
@@ -23,7 +23,7 @@
     <extras>make.vars.user</extras>
   </component>
 
-  <component name="models.Sedflux2D" language="c">
+  <component name="models.Sedflux2D" language="c++">
     <uses>gov.cca.ports.ParameterPortFactory@ppf</uses>
     <uses>edu.csdms.ports.CMIPort@CoastalEnvironment</uses>
     <uses>edu.csdms.ports.CMIPort@SubaerialDelta</uses>

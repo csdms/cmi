@@ -8,6 +8,12 @@
     <import-sidl/>
   </interface>
 
+  <class name="models.HT" language="python">
+    <implements>edu.csdms.bmi.Port</implements>
+    <import-sidl/>
+    <import-impl/>
+  </class>
+
   <class name="tools.Verbose" language="python">
     <implements>IMessageLogger</implements>
     <import-sidl/>
