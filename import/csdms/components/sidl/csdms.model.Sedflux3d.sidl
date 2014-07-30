@@ -1,0 +1,35 @@
+
+// DO-NOT-DELETE bocca.splicer.begin(csdms.comment)
+
+// Insert-UserCode-Here {csdms.comment} (Insert your package comments here)
+// DO-NOT-DELETE bocca.splicer.end(csdms.comment)
+package csdms version 0.0 {
+
+    // DO-NOT-DELETE bocca.splicer.begin(csdms.model.comment)
+    
+// Insert-UserCode-Here {csdms.model.comment} (Insert your package comments here)
+    // DO-NOT-DELETE bocca.splicer.end(csdms.model.comment)
+    package model version 0.0 {
+
+        // DO-NOT-DELETE bocca.splicer.begin(csdms.model.Sedflux3d.comment)
+        
+// Insert-UserCode-Here {csdms.model.Sedflux3d.comment} (Insert your class comments here)
+        // DO-NOT-DELETE bocca.splicer.end(csdms.model.Sedflux3d.comment)
+        class Sedflux3d implements-all csdms.core.Bmi
+        {
+            // DO-NOT-DELETE bocca.splicer.begin(csdms.model.Sedflux3d.methods)
+            
+// Insert-UserCode-Here {csdms.model.Sedflux3d.methods} (Insert your class methods here)
+            // DO-NOT-DELETE bocca.splicer.end(csdms.model.Sedflux3d.methods)
+
+
+            //-----------------------------------------------------------------------------
+            // DO-NOT-DELETE bocca.protected.begin(bocca:csdms.model.Sedflux3d:boccaPrivateMethods)
+            // DO-NOT-EDIT
+            /** This function should never be called, but helps babel generate better code. */
+            void boccaForceUsePortInclude();
+            // DO-NOT-DELETE bocca.protected.end(bocca:csdms.model.Sedflux3d:boccaPrivateMethods)
+            //-----------------------------------------------------------------------------
+        }
+    }
+}
