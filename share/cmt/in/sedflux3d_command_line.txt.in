@@ -1,0 +1,2 @@
+sedflux -3 ${sedflux_options} --init-file=${sedflux3d_init_file} --input-dir=${sedflux_input_dir}
+

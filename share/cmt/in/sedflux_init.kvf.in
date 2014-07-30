@@ -1,0 +1,17 @@
+[ global ]                                                                                                                                                                                                                               
+margin name:            ${simulation_name}
+vertical resolution:    ${z_resolution}
+x resolution:           ${x_resolution}
+y resolution:           ${y_resolution}
+bathymetry file:        ${bathymetry_file}
+sediment file:          ${sedflux_sediment_file}
+    
+[ epoch ]
+number:           1
+duration:         ${run_duration}d
+time step:        1y
+process file:     ${sedflux_process_file}
+
+
+
+
