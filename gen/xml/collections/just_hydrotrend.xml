@@ -44,5 +44,26 @@
     <import-impl/>
     <extras>make.vars.user</extras>
   </class>
+  
+  <class name="model.Waves" language="c">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="model.Avulsion" language="c">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
+  <class name="model.Plume" language="c">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
 
 </project>
