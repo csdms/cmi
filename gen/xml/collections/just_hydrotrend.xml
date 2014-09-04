@@ -59,6 +59,13 @@
     <extras>make.vars.user</extras>
   </class>
 
+  <class name="model.Cem" language="c">
+    <implements>csdms.core.Bmi</implements>
+    <import-sidl/>
+    <import-impl/>
+    <extras>make.vars.user</extras>
+  </class>
+
   <class name="model.Plume" language="c">
     <implements>csdms.core.Bmi</implements>
     <import-sidl/>
